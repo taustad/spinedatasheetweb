@@ -1,0 +1,27 @@
+node_modules/
+
+# frontend
+/.pnp
+.pnp.js
+/coverage
+/build
+
+# Editors
+.vscode
+.idea
+/.idea/
+
+# Environment variables
+.env
+
+# Python
+venv
+
+#Cypress
+frontend/cypress/videos
+frontend/cypress/screenshots
+
+#MacOS
+.DS_Store
+
+.dccache
