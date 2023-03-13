@@ -25,7 +25,14 @@
       "ahmab@equinor.com",
       "toaus@equinor.com",
       "dboh@equinor.com"
-    ]
+    ],
+    "owners": [
+      "eriei@equinor.com",
+      "eisande@equinor.com",
+      "ahmab@equinor.com",
+      "toaus@equinor.com",
+      "dboh@equinor.com"
+  ]
   },
   "dependencies": {
     "@equinor/eds-core-react": "^0.28.0",
