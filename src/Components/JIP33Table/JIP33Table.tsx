@@ -18,6 +18,9 @@ function JIP33Table({
 }: Props) {
     useAgGridStyles()
 
+    const red = "#e6b8b7"
+    const grey = "#aeaaaa"
+
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
         filter: true,
@@ -28,9 +31,9 @@ function JIP33Table({
     const columns = [
         { field: "refClause", headerName: "Ref. Clause" },
         { field: "description", headerName: "Description", width: 400 },
-        { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: { backgroundColor: "#e6b8b7" }, width: 220 }, // backgroundColor needs to be set by data params, not general.
+        { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: { backgroundColor: red }, width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", width: 220 },
-        { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: { backgroundColor: "#aeaaaa" }, width: 220 }, // backgroundColor needs to be set by data params, not general.
+        { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: { backgroundColor: grey }, width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "supplierOfferedValUOM", headerName: "Supplier offered value UOM", width: 220 },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1 },
     ]
@@ -48,7 +51,7 @@ function JIP33Table({
                     rowSelection="multiple"
                     suppressMovableColumns
                     headerHeight={48}
-                    rowHeight={50}
+                    rowHeight={35}
                     modules={[ClientSideRowModelModule]}
                 />
             </div>

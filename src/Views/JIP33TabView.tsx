@@ -7,6 +7,8 @@ import { Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useState } from "react"
 import JIP33Table from "../Components/JIP33Table/JIP33Table"
+import { accessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
+import { performanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -39,6 +41,8 @@ function JIP33TabView({
                         <Tab>Operating conditions</Tab>
                         <Tab>Body/element/sensor</Tab>
                         <Tab>Transmitter</Tab>
+                        <Tab>Performance</Tab>
+                        <Tab>Accessories</Tab>
                     </List>
                     <Panels>
                         <StyledTabPanel>
@@ -55,6 +59,12 @@ function JIP33TabView({
                         </StyledTabPanel>
                         <StyledTabPanel>
                             <JIP33Table rowData={transmitterRowData} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33Table rowData={performanceRowData} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33Table rowData={accessoriesRowData} />
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
