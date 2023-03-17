@@ -1,3 +1,5 @@
+import { ColorLegendEnum } from "../JIP33ColorLegendEnums";
+
 export const accessoriesRowData = [
     {
         refClause: "",
@@ -5,6 +7,7 @@ export const accessoriesRowData = [
         purchaserReq: "select",
         purchaserReqUOM: "",
         supplierOfferedVal: "select",
+        supplierOfferedValColor: ColorLegendEnum.SpineModification,
         supplierOfferedValUOM: "",
         additionalNotes: "",
     },
@@ -14,6 +17,7 @@ export const accessoriesRowData = [
         purchaserReq: "select",
         purchaserReqUOM: "",
         supplierOfferedVal: "select",
+        supplierOfferedValColor: ColorLegendEnum.SpineModification,
         supplierOfferedValUOM: "",
         additionalNotes: "",
     },
@@ -23,6 +27,7 @@ export const accessoriesRowData = [
         purchaserReq: "select",
         purchaserReqUOM: "",
         supplierOfferedVal: "select",
+        supplierOfferedValColor: ColorLegendEnum.SpineModification,
         supplierOfferedValUOM: "",
         additionalNotes: "",
     },
@@ -32,6 +37,7 @@ export const accessoriesRowData = [
         purchaserReq: "no",
         purchaserReqUOM: "",
         supplierOfferedVal: "no",
+        supplierOfferedValColor: ColorLegendEnum.SpineModification,
         supplierOfferedValUOM: "",
         additionalNotes: "",
     },
@@ -41,6 +47,7 @@ export const accessoriesRowData = [
         purchaserReq: "no",
         purchaserReqUOM: "",
         supplierOfferedVal: "no",
+        supplierOfferedValColor: ColorLegendEnum.SpineModification,
         supplierOfferedValUOM: "",
         additionalNotes: "",
     },

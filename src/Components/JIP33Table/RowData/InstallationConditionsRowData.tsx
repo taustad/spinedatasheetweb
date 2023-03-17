@@ -1,3 +1,5 @@
+import { ColorLegendEnum } from "../JIP33ColorLegendEnums";
+
 export const installationConditionsRowData = [
     {
         refClause: "",
@@ -13,8 +15,10 @@ export const installationConditionsRowData = [
         description: "Upstream/high-side line size:",
         purchaserReq: "input data",
         purchaserReqUOM: "select",
+        purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
         supplierOfferedVal: "input data",
         supplierOfferedValUOM: "select",
+        supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
         additionalNotes: "",
     },
     {
@@ -58,8 +62,10 @@ export const installationConditionsRowData = [
         description: "Design pressure, maximum:",
         purchaserReq: "input data",
         purchaserReqUOM: "select",
+        purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
         supplierOfferedVal: "input data",
         supplierOfferedValUOM: "select",
+        supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
         additionalNotes: "",
     },
     {
@@ -67,8 +73,10 @@ export const installationConditionsRowData = [
         description: "Design pressure, minimum:",
         purchaserReq: "input data",
         purchaserReqUOM: "select",
+        purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
         supplierOfferedVal: "input data",
         supplierOfferedValUOM: "select",
+        supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
         additionalNotes: "",
     },
     {
@@ -76,8 +84,10 @@ export const installationConditionsRowData = [
         description: "Design temperature, maximum:",
         purchaserReq: "input data",
         purchaserReqUOM: "select",
+        purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
         supplierOfferedVal: "input data",
         supplierOfferedValUOM: "select",
+        supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
         additionalNotes: "",
     },
     {
@@ -85,8 +95,10 @@ export const installationConditionsRowData = [
         description: "Design temperature, minimum:",
         purchaserReq: "input data",
         purchaserReqUOM: "select",
+        purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
         supplierOfferedVal: "input data",
         supplierOfferedValUOM: "select",
+        supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
         additionalNotes: "",
     },
     {

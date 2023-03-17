@@ -9,6 +9,7 @@ import { useState } from "react"
 import JIP33Table from "../Components/JIP33Table/JIP33Table"
 import { accessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
 import { performanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
+import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -68,6 +69,7 @@ function JIP33TabView({
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
+                <JIP33LegendModal />
             </WrapperTabs >
         </>
     )
