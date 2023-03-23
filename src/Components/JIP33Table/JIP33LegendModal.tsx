@@ -81,7 +81,7 @@ function JIP33LegendModal({
         { legend: "UOM", color: ColorLegendEnum.UOMFixedUnitGrey, description: "Fixed unit of measure" },
         { legend: "UOM", color: ColorLegendEnum.UOMFixedUnitWhite, description: "Fixed unit of measure" },
         { legend: "", description: "No unit of measure (null)" },
-        { legend: "", color: ColorLegendEnum.SpineModification, description: "Spine modification - Supplier must confirm required value or better if posible " }
+        { legend: "", color: ColorLegendEnum.SpineModification, description: "Spine modification - Supplier must confirm required value or better if possible " }
 
     ]
 
