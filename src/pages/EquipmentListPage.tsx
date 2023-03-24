@@ -1,5 +1,6 @@
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
+import { BackButton } from "../Components/BackButton"
 import EquipmentListTable from "../Components/EquipmentListTable"
 
 const Wrapper = styled.div`
@@ -13,7 +14,10 @@ const Wrapper = styled.div`
 function EquipmentListPage() {
     return (
         <Wrapper>
-            <Typography variant="h3">Tag info</Typography>
+            <Typography variant="h3">
+                <BackButton />
+                Tag info
+            </Typography>
             <EquipmentListTable />
         </Wrapper>
     )
