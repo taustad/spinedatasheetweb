@@ -27,13 +27,40 @@ function EquipmentListTable() {
     const columns = [
         { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
         { field: "description", headerName: "Description", flex: 1 },
+        { field: "category", headerName: "Category" },
+        { field: "area", headerName: "Area" },
+        { field: "dicipline", headerName: "Dicipline", flex: 1 },
     ]
 
     const rowData = [
-        { tagNo: "4568snf875", description: "Datasheet 1" },
-        { tagNo: "268fp875", description: "Datasheet 2" },
-        { tagNo: "enfu785648", description: "Datasheet 3" },
-        { tagNo: "ilu78548-45", description: "Datasheet 4" },
+        {
+            tagNo: "4568snf875",
+            description: "Datasheet 1 with some describing text",
+            category: "Heat trace cable",
+            area: "PB15",
+            dicipline: "Electrical Mechanical",
+        },
+        {
+            tagNo: "268fp875",
+            description: "Datasheet 2 this dataseet has some properties and a very long text with great detail about the process as a whole",
+            category: "Heat trace cable",
+            area: "PB15",
+            dicipline: "Electrical Mechanical",
+        },
+        {
+            tagNo: "enfu785648",
+            description: "Datasheet 3",
+            category: "Heat trace cable",
+            area: "PB15",
+            dicipline: "Electrical Mechanical",
+        },
+        {
+            tagNo: "ilu78548-45",
+            description: "Datasheet 4",
+            category: "Heat trace cable",
+            area: "PB15",
+            dicipline: "Electrical Mechanical",
+        },
     ]
 
     return (
