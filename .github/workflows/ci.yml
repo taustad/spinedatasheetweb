@@ -13,12 +13,12 @@ on:
 
 env:
   FUSION_APP_KEY: spinedatasheet
-  NODE_VERSION: ${{ '16' }}
+  NODE_VERSION: ${{ '18' }}
 
 jobs:
   build:
     name: Build
-    uses: equinor/spinedatasheetweb/.github/workflows/build.yml@cicd
+    uses: equinor/spinedatasheetweb/.github/workflows/build.yml@main
     
   release_please:
     name: 🔖 Release Please

@@ -4,7 +4,7 @@ on:
 
 env:
   ARTIFACT_NAME: spinedatasheet.zip
-  NODE_VERSION: '16'
+  NODE_VERSION: '18'
 
 jobs:
   build:

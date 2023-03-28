@@ -96,22 +96,5 @@
     "tslint": "^6.1.3",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.9.4"
-  },
-  "overrides": {
-    "@equinor/fusion-components": {
-      "history": "^5.3.0",
-      "react-router": "^6.6.2",
-      "react-router-dom": "^6.6.2"
-    },
-    "@equinor/fusion-cli": {
-      "react-router": "^6.6.2",
-      "react-router-dom": "^6.6.2",
-      "@equinor/fusion-framework-react": "^2.1.0"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
