@@ -5,9 +5,10 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColDef } from "@ag-grid-community/core"
 import { Link } from "react-router-dom"
 import { tokens } from "@equinor/eds-tokens"
+import { Datasheet } from "../Models/Datasheet"
 
 interface Props {
-    tags: any[],
+    tags: Datasheet[],
 }
 
 function EquipmentListTable({ tags }: Props) {
@@ -36,44 +37,13 @@ function EquipmentListTable({ tags }: Props) {
         { field: "dicipline", headerName: "Dicipline", flex: 1 },
     ]
 
-    const rowData = [
-        {
-            tagNo: "4568snf875",
-            description: "Datasheet 1 with some describing text",
-            category: "Heat trace cable",
-            area: "PB15",
-            dicipline: "Electrical Mechanical",
-        },
-        {
-            tagNo: "268fp875",
-            description: "Datasheet 2 this dataseet has some properties and a very long text with great detail about the process as a whole",
-            category: "Heat trace cable",
-            area: "PB15",
-            dicipline: "Electrical Mechanical",
-        },
-        {
-            tagNo: "enfu785648",
-            description: "Datasheet 3",
-            category: "Heat trace cable",
-            area: "PB15",
-            dicipline: "Electrical Mechanical",
-        },
-        {
-            tagNo: "ilu78548-45",
-            description: "Datasheet 4",
-            category: "Heat trace cable",
-            area: "PB15",
-            dicipline: "Electrical Mechanical",
-        },
-    ]
-
     return (
         <div
             className="ag-theme-alpine ag-theme-datasheetTable"
             style={{ flex: "1 1 auto", marginTop: 20, width: "1200px" }}
         >
-            <AgGridReact
-                rowData={rowData}
+            <AgGridReact<Datasheet>
+                rowData={tags}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
                 animateRows

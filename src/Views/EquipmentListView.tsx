@@ -5,6 +5,7 @@ import styled from "styled-components"
 import { GetDatasheetService } from "../api/DatasheetService"
 import { BackButton } from "../Components/BackButton"
 import EquipmentListTable from "../Components/EquipmentListTable"
+import { Datasheet } from "../Models/Datasheet"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 `
 
 function EquipmentListView() {
-    const [tags, setTags] = useState<any[]>([])
+    const [tags, setTags] = useState<Datasheet[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -28,7 +29,7 @@ function EquipmentListView() {
             if (currentProject !== null && currentProject.externalId !== null) {
                 try {
                     setIsLoading(true)
-                    const datasheets = await (await GetDatasheetService())
+                    const datasheets: Datasheet[] = await (await GetDatasheetService())
                         .getDatasheetsForProject(currentProject.externalId)
                     setTags(datasheets)
                     console.log("Datasheets retrieved from server: ", datasheets)
