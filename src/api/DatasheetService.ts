@@ -1,16 +1,22 @@
+import { Datasheet } from "../Models/Datasheet"
 import { BaseService } from "./BaseService"
 
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class DatasheetService extends BaseService {
     async getDatasheets() {
-        const datasheets: any[] = await this.get<any[]>("")
-        return datasheets
+        const datasheets: any = await this.get("")
+        return datasheets.value
     }
 
     async getDatasheetsForProject(id: string) {
-        const datasheet: any = await this.get<any>(`project/${id}`)
-        return datasheet
+        const result: any = await this.get(`project/${id}`)
+        return result.value
+    }
+
+    async getDatasheet(id: string) {
+        const result: any = await this.get(id)
+        return result.value
     }
 }
 
