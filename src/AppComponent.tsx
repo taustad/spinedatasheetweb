@@ -3,7 +3,7 @@ import { FC, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { buildConfig, StoreAppScope } from "./api/config";
 import { ResolveConfiguration } from "./api/environmentConfig";
-import LandingPage from "./pages/landingPage/LandingPage";
+import AppRouter from "./AppRouter";
 
 const AppComponent: FC = () => {
     const fusionEnvironment = useFusionEnvironment()
@@ -13,10 +13,8 @@ const AppComponent: FC = () => {
     const currentUser = useCurrentUser();
 
     if (!currentUser) {
-        return null;
+        return <div>User not logged in</div>
     }
-
-    console.log(fusionEnvironment.env)
 
     const config = ResolveConfiguration(fusionEnvironment.env)
 
@@ -25,7 +23,7 @@ const AppComponent: FC = () => {
 
     return (
         <BrowserRouter basename={basename}>
-            <LandingPage />
+            <AppRouter />
         </BrowserRouter>
     );
 };

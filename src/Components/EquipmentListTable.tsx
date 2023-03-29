@@ -5,8 +5,12 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColDef } from "@ag-grid-community/core"
 import { Link } from "react-router-dom"
 import { tokens } from "@equinor/eds-tokens"
-function EquipmentListTable() {
 
+interface Props {
+    tags: any[],
+}
+
+function EquipmentListTable({ tags }: Props) {
     useAgGridStyles()
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,

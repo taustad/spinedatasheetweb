@@ -4,12 +4,12 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class DatasheetService extends BaseService {
     async getDatasheets() {
-        const datasheets: any[] = await this.get<any[]>("GetAll")
+        const datasheets: any[] = await this.get<any[]>("")
         return datasheets
     }
 
-    async getProjectByID(id: string) {
-        const datasheet: any = await this.get<any>(`/${id}`)
+    async getDatasheetsForProject(id: string) {
+        const datasheet: any = await this.get<any>(`project/${id}`)
         return datasheet
     }
 }

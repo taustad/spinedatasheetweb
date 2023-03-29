@@ -28,7 +28,6 @@ export function StoreAppScope(appScope: string) {
 
 export function GetToken(keyName: string) {
     const scopes = [[window.sessionStorage.getItem("appScope") || ""][0]]
-    console.log("Scopes: ", scopes)
     if (scopes[0] === "") {
         console.log("No app scope found. Using default scope.")
         scopes[0] = "api://412803ed-0c05-44a9-b433-b270706a6099/Datasheet.Write"
