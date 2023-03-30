@@ -6,7 +6,8 @@ import EquipmentListView from "./Views/EquipmentListView"
 const AppRouter: FC = () => (
     <Routes>
         <Route path="/" element={<EquipmentListView />} />
-        <Route path="/JIP33" element={<JIP33TabView />} />
+        <Route path="/:projectId" element={<EquipmentListView />} />
+        <Route path=":projectId/JIP33/:tagId" element={<JIP33TabView />} />
     </Routes>
 )
 

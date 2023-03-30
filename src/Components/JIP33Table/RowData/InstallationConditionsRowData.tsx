@@ -1,4 +1,6 @@
+import { Datasheet } from "../../../Models/Datasheet";
 import { ColorLegendEnum } from "../JIP33ColorLegendEnums";
+import { TableRow } from "./TableRow";
 
 export const installationConditionsRowData = [
     {
@@ -111,3 +113,117 @@ export const installationConditionsRowData = [
         additionalNotes: "",
     },
 ]
+
+export const generateInstallationConditionsRowData = (datasheet: Datasheet): TableRow[] => {
+    return [
+        {
+            refClause: "",
+            description: "Upstream/high-side pipe schedule:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSidePipeSchedule,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "select",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Upstream/high-side line size:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineSize,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Upstream/high-side line equipment:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineEquipmentRating,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "select",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Upstream/high-side line connection type:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineConnectionType,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "select",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Upstream/high-side connection orientation:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideConnectionOrientation,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Upstream/high-side material type:",
+            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideMaterialType,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Design pressure, maximum:",
+            purchaserReq: datasheet.purchaserRequirement?.designPressureMaximum,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Design pressure, minimum:",
+            purchaserReq: datasheet.purchaserRequirement?.designPressureMinimum,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Design temperature, maximum:",
+            purchaserReq: datasheet.purchaserRequirement?.designTemperatureMaximum,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Design temperature, minimum:",
+            purchaserReq: datasheet.purchaserRequirement?.designTemperatureMinimum,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: "input data",
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Sour service specification:",
+            purchaserReq: datasheet.purchaserRequirement?.sourServiceSpecification,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "not applicable",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+    ]
+}

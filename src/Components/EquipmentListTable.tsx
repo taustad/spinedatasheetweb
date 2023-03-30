@@ -20,21 +20,24 @@ function EquipmentListTable({ tags }: Props) {
         editable: false,
     }), [])
 
-    const linkToDocument = (params: any) => (
-        <Link
-            to="/JIP33"
-            style={{ color: tokens.colors.text.static_icons__default.rgba }}
-        >
-            {params.value}
-        </Link>
-    )
+    const linkToDocument = (params: any) => {
+        console.log(params.data.id)
+        return (
+            <Link
+                to={`JIP33/${params.data.id}`}
+                style={{ color: tokens.colors.text.static_icons__default.rgba }}
+            >
+                {params.value}
+            </Link>
+        )
+    }
 
     const columns = [
         {
             headerName: "Tag info",
             children: [
                 { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
-                { field: "contractNo", headerName: "ContractNo"},
+                { field: "contractNo", headerName: "ContractNo" },
                 { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
                 { field: "category", headerName: "Category" },
                 { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
