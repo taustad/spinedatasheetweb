@@ -4,6 +4,8 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { GetDatasheetService } from "../api/DatasheetService"
+import TotalReviewStatus from "../Components/Charts/TotalReviewStatus"
+import TotalTagRequirement from "../Components/Charts/TotalTagRequirement"
 import EquipmentListTable from "../Components/EquipmentListTable"
 import { Datasheet } from "../Models/Datasheet"
 
@@ -12,6 +14,14 @@ const Wrapper = styled.div`
     display: flex;
     float: left;
     flex-direction: column;
+    padding: 20px;
+`
+
+const WrapperColumn = styled.div`
+    width: 100%;
+    display: flex;
+    float: left;
+    flex-direction: row;
     padding: 20px;
 `
 
@@ -67,6 +77,10 @@ function EquipmentListView() {
 
     return (
         <Wrapper>
+            <WrapperColumn>
+                <TotalTagRequirement></TotalTagRequirement>
+                <TotalReviewStatus></TotalReviewStatus>
+            </WrapperColumn>
             <Typography variant="h3">
                 Tag info
             </Typography>
