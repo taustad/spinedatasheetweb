@@ -23,14 +23,10 @@ registerApp("spinedatasheet", {
   AppComponent: createLegacyApp(AppComponent, (config) => enableAgGrid(config)),
   context: {
     types: [ContextTypes.ProjectMaster],
-    // buildUrl: (context: Context | null) => {
-    //   console.log("context in buildUrl", context)
-    //   return context ? `/${context.id}` : ""
-    // },
-    // getContextFromUrl: (url: string) => {
-    //   console.log("url in getContextFromUrl", url)
-    //   return url.split("/")[1]
-    // },
+    nullable: true,
+    filterContexts: (context: Array<Context>) => {
+      return context.filter((x) => x.title.toUpperCase().indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1);
+    },
   },
 })
 
