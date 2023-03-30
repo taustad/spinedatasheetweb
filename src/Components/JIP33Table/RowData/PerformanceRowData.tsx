@@ -1,4 +1,6 @@
+import { Datasheet } from "../../../Models/Datasheet";
 import { ColorLegendEnum } from "../JIP33ColorLegendEnums";
+import { TableRow } from "./TableRow";
 
 export const performanceRowData = [
     {
@@ -74,3 +76,80 @@ export const performanceRowData = [
         additionalNotes: "",
     },
 ]
+
+export const generatePerformanceRowData = (datasheet: Datasheet): TableRow[] => {
+    return [
+        {
+            refClause: "7.1.5, 8.1.4, Table 11, Table 15",
+            description: "Accuracy:",
+            purchaserReq: datasheet.purchaserRequirement?.accuracy,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "% of span",
+            purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.accuracy,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "% of span",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Repeatability:",
+            purchaserReq: datasheet.purchaserRequirement?.repeatability,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "select",
+            purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.repeatability,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "select",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Step response:",
+            purchaserReq: datasheet.purchaserRequirement?.stepResponse,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "ms",
+            purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.stepResponse,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "ms",
+            supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Long term drift:",
+            purchaserReq: datasheet.purchaserRequirement?.longTermDrift,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "",
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.longTermDrift,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Long term stability:",
+            purchaserReq: datasheet.purchaserRequirement?.longTermStability,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "",
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.longTermStability,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+        {
+            refClause: "",
+            description: "Vibration:",
+            purchaserReq: datasheet.purchaserRequirement?.vibration,
+            purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            purchaserReqUOM: "",
+            supplierOfferedVal: datasheet.supplierOfferedProduct?.vibration,
+            supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+        },
+    ]
+}

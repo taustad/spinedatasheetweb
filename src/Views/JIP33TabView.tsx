@@ -1,14 +1,14 @@
-import { generalRowData } from "../Components/JIP33Table/RowData/GeneralRowData"
-import { installationConditionsRowData } from "../Components/JIP33Table/RowData/InstallationConditionsRowData"
-import { operatingConditionsRowData } from "../Components/JIP33Table/RowData/OperatingConditionsRowData"
-import { bodyElementSensorRowData } from "../Components/JIP33Table/RowData/BodyElementSensorRowData"
-import { transmitterRowData } from "../Components/JIP33Table/RowData/TransmitterRowData"
+import { generateGeneralRowData } from "../Components/JIP33Table/RowData/GeneralRowData"
+import { generateInstallationConditionsRowData } from "../Components/JIP33Table/RowData/InstallationConditionsRowData"
+import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/OperatingConditionsRowData"
+import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/BodyElementSensorRowData"
+import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/TransmitterRowData"
 import { Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 import JIP33Table from "../Components/JIP33Table/JIP33Table"
-import { accessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
-import { performanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
+import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
+import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
 import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
@@ -70,6 +70,10 @@ function JIP33TabView({
         return <div>Loading tag...</div>
     }
 
+    if (tag === undefined) {
+        return <div>No tag selected</div>
+    }
+
     return (
         <>
             <WrapperTabs>
@@ -89,25 +93,25 @@ function JIP33TabView({
                     </List>
                     <Panels>
                         <StyledTabPanel>
-                            <JIP33Table rowData={generalRowData} />
+                            <JIP33Table rowData={generateGeneralRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={installationConditionsRowData} />
+                            <JIP33Table rowData={generateInstallationConditionsRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={operatingConditionsRowData} />
+                            <JIP33Table rowData={generateOperatingConditionsRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={bodyElementSensorRowData} />
+                            <JIP33Table rowData={generateBodyElementSensorRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={transmitterRowData} />
+                            <JIP33Table rowData={generateTransmitterRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={performanceRowData} />
+                            <JIP33Table rowData={generatePerformanceRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={accessoriesRowData} />
+                            <JIP33Table rowData={generateAccessoriesRowData(tag)} />
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
