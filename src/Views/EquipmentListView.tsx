@@ -66,7 +66,6 @@ function EquipmentListView() {
     return (
         <Wrapper>
             <Typography variant="h3">
-                <BackButton />
                 Tag info
             </Typography>
             <EquipmentListTable tags={tags} />
