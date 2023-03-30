@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0](https://github.com/equinor/spinedatasheetweb/compare/v1.1.0...v1.2.0) (2023-03-30)
+
+
+### Features
+
+* Add datasheet frontend model ([#22](https://github.com/equinor/spinedatasheetweb/issues/22)) ([34d77ad](https://github.com/equinor/spinedatasheetweb/commit/34d77add46c0c0618a2911c0762b8f862e751541))
+* Added review info to tag view ([061f019](https://github.com/equinor/spinedatasheetweb/commit/061f01939d083e6358a4ec5bcecc8878aaedf6e3))
+* Query server for tags after selecting project ([#21](https://github.com/equinor/spinedatasheetweb/issues/21)) ([e82cdd8](https://github.com/equinor/spinedatasheetweb/commit/e82cdd81ed153b28cff5b82aafa3d247cefc8e47))
+* Use data from server in tag table ([#23](https://github.com/equinor/spinedatasheetweb/issues/23)) ([322b645](https://github.com/equinor/spinedatasheetweb/commit/322b6458b604a83ee96122bd452d5fad1690151f))
+* Use dummy data jip33 ([#26](https://github.com/equinor/spinedatasheetweb/issues/26)) ([a80b5ec](https://github.com/equinor/spinedatasheetweb/commit/a80b5ec201d198a856c9980fac9b00eae43f1812))
+
+
+### Bug Fixes
+
+* Remove package overrides ([#20](https://github.com/equinor/spinedatasheetweb/issues/20)) ([93b4c3a](https://github.com/equinor/spinedatasheetweb/commit/93b4c3a2492a8f63e69485f12e75e9ddb77d91cf))
+* Update fusion react packages ([#18](https://github.com/equinor/spinedatasheetweb/issues/18)) ([ef885f5](https://github.com/equinor/spinedatasheetweb/commit/ef885f5111b5937e96c60943f14b2c0552111e75))
+
 ## [1.1.0](https://github.com/equinor/spinedatasheetweb/compare/v1.0.0...v1.1.0) (2023-03-24)
 
 
