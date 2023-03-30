@@ -5,12 +5,15 @@ import { bodyElementSensorRowData } from "../Components/JIP33Table/RowData/BodyE
 import { transmitterRowData } from "../Components/JIP33Table/RowData/TransmitterRowData"
 import { Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import JIP33Table from "../Components/JIP33Table/JIP33Table"
 import { accessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
 import { performanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
 import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
 import { BackButton } from "../Components/BackButton"
+import { useParams } from "react-router-dom"
+import { Datasheet } from "../Models/Datasheet"
+import { GetDatasheetService } from "../api/DatasheetService"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -31,6 +34,41 @@ const StyledTabPanel = styled(Panel)`
 function JIP33TabView({
 }) {
     const [activeTab, setActiveTab] = useState(0)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [error, setError] = useState<boolean>(false)
+
+    const [tag, setTag] = useState<Datasheet>()
+
+    const { tagId } = useParams<Record<string, string | undefined>>()
+
+    useEffect(() => {
+        (async () => {
+            setError(false)
+            setIsLoading(false)
+            if (tagId !== null && tagId !== undefined) {
+                try {
+                    setIsLoading(true)
+                    const datasheets: Datasheet = await (await GetDatasheetService())
+                        .getDatasheet(tagId)
+                    setTag(datasheets)
+                    console.log("Datasheet retrieved from server: ", datasheets)
+                    setIsLoading(false)
+                } catch {
+                    console.error("Error loading tags")
+                    setError(true)
+                }
+            }
+        })()
+    }, [])
+
+
+    if (error) {
+        return <div>Error loading tag</div>
+    }
+
+    if (isLoading) {
+        return <div>Loading tag...</div>
+    }
 
     return (
         <>

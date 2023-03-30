@@ -16,7 +16,7 @@ class DatasheetService extends BaseService {
 
     async getDatasheet(id: string) {
         const result: any = await this.get(id)
-        return result.value
+        return result
     }
 }
 
