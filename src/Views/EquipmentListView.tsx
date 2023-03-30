@@ -1,9 +1,9 @@
 import { Progress, Typography } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion"
 import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { GetDatasheetService } from "../api/DatasheetService"
-import { BackButton } from "../Components/BackButton"
 import EquipmentListTable from "../Components/EquipmentListTable"
 import { Datasheet } from "../Models/Datasheet"
 
@@ -19,6 +19,8 @@ function EquipmentListView() {
     const [tags, setTags] = useState<Datasheet[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
+
+    const { projectId } = useParams<Record<string, string | undefined>>()
 
     const currentProject = useCurrentContext()
 
@@ -42,7 +44,7 @@ function EquipmentListView() {
         })()
     }, [currentProject])
 
-    if (currentProject === null) {
+    if (currentProject === null || projectId === null || projectId === undefined) {
         return <div>No project selected</div>
     }
 

@@ -1,5 +1,5 @@
 import { useCurrentUser, useFusionEnvironment } from "@equinor/fusion";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { buildConfig, StoreAppScope } from "./api/config";
 import { ResolveConfiguration } from "./api/environmentConfig";
@@ -8,7 +8,7 @@ import AppRouter from "./AppRouter";
 const AppComponent: FC = () => {
     const fusionEnvironment = useFusionEnvironment()
 
-    const basename = fusionEnvironment.env === "dev" ? "/" : "/apps/spinedatasheet";
+    const basename = "/apps/spinedatasheet";
 
     const currentUser = useCurrentUser();
 
