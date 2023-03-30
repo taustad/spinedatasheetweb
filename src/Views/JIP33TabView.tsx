@@ -14,6 +14,7 @@ import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
 import { GetDatasheetService } from "../api/DatasheetService"
+import { generateFlowRowData } from "../Components/JIP33Table/RowData/FlowRowData"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -90,6 +91,9 @@ function JIP33TabView({
                         <Tab>Transmitter</Tab>
                         <Tab>Performance</Tab>
                         <Tab>Accessories</Tab>
+                        <Tab>Flow</Tab>
+                        <Tab>Temperature</Tab>
+                        <Tab>Pressure</Tab>
                     </List>
                     <Panels>
                         <StyledTabPanel>
@@ -112,6 +116,15 @@ function JIP33TabView({
                         </StyledTabPanel>
                         <StyledTabPanel>
                             <JIP33Table rowData={generateAccessoriesRowData(tag)} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33Table rowData={generateFlowRowData(tag)} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33Table rowData={[]} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33Table rowData={[]} />
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
