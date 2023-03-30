@@ -30,17 +30,34 @@ function EquipmentListTable({ tags }: Props) {
     )
 
     const columns = [
-        { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
-        { field: "description", headerName: "Description", flex: 1 },
-        { field: "category", headerName: "Category" },
-        { field: "area", headerName: "Area" },
-        { field: "dicipline", headerName: "Dicipline", flex: 1 },
+        {
+            headerName: "Tag info",
+            children: [
+                { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
+                { field: "contractNo", headerName: "ContractNo"},
+                { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
+                { field: "category", headerName: "Category" },
+                { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
+                { field: "dicipline", headerName: "Dicipline" },
+            ]
+
+        },
+        {
+            headerName: "Review info",
+            children: [
+                { field: "requirementMatch", headerName: "Requirement match" },
+                { field: "commentResponsible", headerName: "Comment responsible" },
+                { field: "reviewers", headerName: "Reviewers" },
+                { field: "reviewDeadline", headerName: "Review deadline" },
+                { field: "reviewStatus", headerName: "Review status" },
+            ]
+        }
     ]
 
     return (
         <div
             className="ag-theme-alpine ag-theme-datasheetTable"
-            style={{ flex: "1 1 auto", marginTop: 20, width: "1200px" }}
+            style={{ flex: "1 1 auto", marginTop: 20, width: "1700px" }}
         >
             <AgGridReact<Datasheet>
                 rowData={tags}
