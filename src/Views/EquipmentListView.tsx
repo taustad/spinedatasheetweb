@@ -44,7 +44,6 @@ function EquipmentListView() {
                     const datasheets: Datasheet[] = await (await GetDatasheetService())
                         .getDatasheetsForProject(currentProject.externalId)
                     setTags(datasheets)
-                    console.log("Datasheets retrieved from server: ", datasheets)
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -52,7 +51,7 @@ function EquipmentListView() {
                 }
             }
         })()
-    }, [currentProject])
+    }, [currentProject, projectId])
 
     if (currentProject === null || projectId === null || projectId === undefined) {
         return <div>No project selected</div>

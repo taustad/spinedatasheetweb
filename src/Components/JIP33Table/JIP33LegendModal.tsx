@@ -3,8 +3,6 @@ import { AgGridReact } from '@ag-grid-community/react'
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 
-import "../../AgGridTable.css"
-
 import {
     ColDef,
   } from '@ag-grid-community/core'

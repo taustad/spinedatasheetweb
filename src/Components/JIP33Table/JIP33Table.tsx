@@ -2,6 +2,8 @@ import { useMemo } from 'react'
 import { AgGridReact } from '@ag-grid-community/react'
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
+import '@ag-grid-community/styles/ag-grid.css';
+import '@ag-grid-community/styles/ag-theme-alpine.css';
 
 import "../../AgGridTable.css"
 
@@ -21,9 +23,9 @@ function JIP33Table({
 
     const red = "#e6b8b7"
     const lightBlue = "#b7dee8"
-    const grey = "#aeaaaa"
+    const grey = "#bfbfbf"
     const lightGreen = "#d8e4bc"
-    const green = "#a2fc82"
+    const green = "#92d050"
     const lightOrange = "#fcd5b4"
     const white = "white"
 
@@ -75,7 +77,7 @@ function JIP33Table({
     }
 
     const columns = [
-        { field: "refClause", headerName: "Ref. Clause" },
+        { field: "refClause", headerName: "Ref. Clause", hide: true },
         { field: "description", headerName: "Description", width: 400 },
         { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: (params:any) => reqColor(params.data.purchaserReqColor, red), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", cellStyle: (params:any) => reqColor(params.data.purchaserReqUOMColor, white), width: 220 },

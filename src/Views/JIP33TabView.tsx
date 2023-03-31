@@ -52,7 +52,6 @@ function JIP33TabView({
                     const datasheets: Datasheet = await (await GetDatasheetService())
                         .getDatasheet(tagId)
                     setTag(datasheets)
-                    console.log("Datasheet retrieved from server: ", datasheets)
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")

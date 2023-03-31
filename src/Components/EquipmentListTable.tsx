@@ -21,7 +21,6 @@ function EquipmentListTable({ tags }: Props) {
     }), [])
 
     const linkToDocument = (params: any) => {
-        console.log(params.data.id)
         return (
             <Link
                 to={`JIP33/${params.data.id}`}

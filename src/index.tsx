@@ -6,10 +6,19 @@ import { enableAgGrid } from "@equinor/fusion-framework-module-ag-grid"
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import '@ag-grid-community/styles/ag-grid.css'
 import '@ag-grid-community/styles/ag-theme-alpine.css'
-import { LicenseManager } from "ag-grid-enterprise"
+import { LicenseManager } from "@ag-grid-enterprise/core"
+import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
+import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
+import { FiltersToolPanelModule } from '@ag-grid-enterprise/filter-tool-panel';
+import { MenuModule } from '@ag-grid-enterprise/menu';
+
 
 ModuleRegistry.registerModules([
-  ClientSideRowModelModule
+  ClientSideRowModelModule,
+  SetFilterModule,
+  MenuModule,
+  ColumnsToolPanelModule,
+  FiltersToolPanelModule,
 ]);
 
 // @ts-ignore
