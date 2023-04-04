@@ -1,25 +1,9 @@
 import { Context, ContextTypes, registerApp } from "@equinor/fusion"
 import AppComponent from './AppComponent';
-import { ModuleRegistry } from '@ag-grid-community/core'
 import { createLegacyApp } from "@equinor/fusion-framework-react-app"
 import { enableAgGrid } from "@equinor/fusion-framework-module-ag-grid"
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
-import '@ag-grid-community/styles/ag-grid.css'
-import '@ag-grid-community/styles/ag-theme-alpine.css'
-import { LicenseManager } from "@ag-grid-enterprise/core"
-import { SetFilterModule } from '@ag-grid-enterprise/set-filter';
-import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
-import { FiltersToolPanelModule } from '@ag-grid-enterprise/filter-tool-panel';
-import { MenuModule } from '@ag-grid-enterprise/menu';
+import { LicenseManager } from "ag-grid-enterprise"
 
-
-ModuleRegistry.registerModules([
-  ClientSideRowModelModule,
-  SetFilterModule,
-  MenuModule,
-  ColumnsToolPanelModule,
-  FiltersToolPanelModule,
-]);
 
 // @ts-ignore
 if (window.Fusion?.modules?.agGrid?.licenseKey) {

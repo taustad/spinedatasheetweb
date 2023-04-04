@@ -1,11 +1,8 @@
 import { useMemo } from 'react'
-import { AgGridReact } from '@ag-grid-community/react'
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-
-import {
-    ColDef,
-  } from '@ag-grid-community/core'
+import { AgGridReact } from "ag-grid-react"
+import { ColDef } from "ag-grid-community"
+import "ag-grid-enterprise"
 import { ColorLegendEnum } from './JIP33ColorLegendEnums'
 
 function JIP33LegendModal({
@@ -103,7 +100,6 @@ function JIP33LegendModal({
                     suppressHorizontalScroll
                     headerHeight={48}
                     rowHeight={35}
-                    modules={[ClientSideRowModelModule]}
                 />
             </div>
         </>

@@ -1,15 +1,8 @@
-import { useMemo } from 'react'
-import { AgGridReact } from '@ag-grid-community/react'
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
+import { useCallback, useMemo, useState } from 'react'
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import '@ag-grid-community/styles/ag-grid.css';
-import '@ag-grid-community/styles/ag-theme-alpine.css';
-
-import "../../AgGridTable.css"
-
-import {
-    ColDef,
-  } from '@ag-grid-community/core'
+import { AgGridReact } from "ag-grid-react"
+import { ColDef } from "ag-grid-community"
+import "ag-grid-enterprise"
 import { ColorLegendEnum } from './JIP33ColorLegendEnums'
 
 interface Props {
@@ -36,7 +29,7 @@ function JIP33Table({
         editable: false,
     }), [])
 
-    const reqColor = (reqColor:any, remainingColor: string) => {
+    const reqColor = (reqColor: any, remainingColor: string) => {
         if (reqColor === ColorLegendEnum.SelectPurComDropDown) {
             return { backgroundColor: red }
         }
@@ -79,10 +72,10 @@ function JIP33Table({
     const columns = [
         { field: "refClause", headerName: "Ref. Clause", hide: true },
         { field: "description", headerName: "Description", width: 400 },
-        { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: (params:any) => reqColor(params.data.purchaserReqColor, red), width: 220 }, // backgroundColor needs to be set by data params, not general.
-        { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", cellStyle: (params:any) => reqColor(params.data.purchaserReqUOMColor, white), width: 220 },
-        { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params:any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
-        { field: "supplierOfferedValUOM", headerName: "Supplier offered value UOM", cellStyle: (params:any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 220 },
+        { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: (params: any) => reqColor(params.data.purchaserReqColor, red), width: 220 }, // backgroundColor needs to be set by data params, not general.
+        { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 220 },
+        { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
+        { field: "supplierOfferedValUOM", headerName: "Supplier offered value UOM", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 220 },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1 },
     ]
 
@@ -100,7 +93,6 @@ function JIP33Table({
                     suppressMovableColumns
                     headerHeight={48}
                     rowHeight={35}
-                    modules={[ClientSideRowModelModule]}
                 />
             </div>
         </>

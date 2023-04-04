@@ -1,13 +1,8 @@
 import { useMemo } from 'react'
-import { AgGridReact } from '@ag-grid-community/react'
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import '@ag-grid-community/styles/ag-grid.css';
-import '@ag-grid-community/styles/ag-theme-alpine.css';
-
-import {
-    ColDef,
-} from '@ag-grid-community/core'
+import { AgGridReact } from "ag-grid-react"
+import { ColDef } from "ag-grid-community"
+import "ag-grid-enterprise"
 import { Datasheet } from '../../Models/Datasheet';
 import { comparisonGeneralColumnDefs } from './GeneralColumnDefs';
 
@@ -29,9 +24,7 @@ function TagComparisonTable({
 
     const newColumns = comparisonGeneralColumnDefs()
 
-    const tagRows = tags.map((tag) => {
-        return tag.purchaserRequirement
-    })
+    const tagRows = tags.map((tag) => { tag.purchaserRequirement })
 
     return (
         <>
@@ -47,7 +40,6 @@ function TagComparisonTable({
                     suppressMovableColumns
                     headerHeight={48}
                     rowHeight={35}
-                    modules={[ClientSideRowModelModule]}
                 />
             </div>
         </>
