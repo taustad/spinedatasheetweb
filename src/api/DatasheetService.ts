@@ -6,7 +6,7 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 class DatasheetService extends BaseService {
     async getDatasheets() {
         const datasheets: any = await this.get("")
-        return datasheets.value
+        return datasheets
     }
 
     async getDatasheetsForProject(id: string) {

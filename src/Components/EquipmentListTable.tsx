@@ -1,8 +1,8 @@
 import { useMemo } from "react"
-import { AgGridReact } from "@ag-grid-community/react"
-import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
+import { AgGridReact } from "ag-grid-react"
+import { ColDef } from "ag-grid-community"
+import "ag-grid-enterprise"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { ColDef } from "@ag-grid-community/core"
 import { Link } from "react-router-dom"
 import { tokens } from "@equinor/eds-tokens"
 import { Datasheet } from "../Models/Datasheet"
@@ -21,7 +21,6 @@ function EquipmentListTable({ tags }: Props) {
     }), [])
 
     const linkToDocument = (params: any) => {
-        console.log(params.data.id)
         return (
             <Link
                 to={`JIP33/${params.data.id}`}
@@ -73,7 +72,6 @@ function EquipmentListTable({ tags }: Props) {
                 suppressMovableColumns
                 headerHeight={48}
                 rowHeight={35}
-                modules={[ClientSideRowModelModule]}
             />
         </div>
     )
