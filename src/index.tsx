@@ -15,8 +15,10 @@ registerApp("spinedatasheet", {
   name: "Spine data sheets",
   AppComponent: createLegacyApp(AppComponent, (config) => enableAgGrid(config)),
   context: {
+    buildUrl: (context: Context | null) => (context ? `/${context.id}` : ""),
+    getContextFromUrl: (url: string) => url.split("/")[1],
     types: [ContextTypes.ProjectMaster],
-    nullable: true,
+    nullable: false,
     filterContexts: (context: Array<Context>) => {
       return context.filter((x) => x.title.toUpperCase().indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1);
     },

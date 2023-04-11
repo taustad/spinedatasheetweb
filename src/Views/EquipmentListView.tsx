@@ -53,7 +53,7 @@ function EquipmentListView() {
         })()
     }, [currentProject, projectId])
 
-    if (currentProject === null || projectId === null || projectId === undefined) {
+    if (currentProject === null && (projectId === null || projectId === undefined)) {
         return <div>No project selected</div>
     }
 
