@@ -76,12 +76,12 @@ function JIP33Table({
         { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 220 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "supplierOfferedValUOM", headerName: "Supplier offered value UOM", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 220 },
-        { field: "additionalNotes", headerName: "Additional notes", flex: 1 },
+        { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) },
     ]
 
     return (
         <>
-            <div className="ag-theme-alpine ag-theme-datasheetTable" style={{ flex: "1 1 auto", marginTop: 20, width: "90%" }}>
+            <div className="ag-theme-alpine ag-theme-datasheetTable" style={{ flex: "1 1 auto", width: "100%" }}>
                 <AgGridReact
                     rowData={rowData}
                     columnDefs={columns}

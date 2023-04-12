@@ -13,17 +13,19 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 const Wrapper = styled.div`
     width: 100%;
     display: flex;
-    float: left;
+    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 0;
 `
 
 const WrapperColumn = styled.div`
     width: 100%;
     display: flex;
-    float: left;
     flex-direction: row;
-    padding: 20px;
+    padding: 20px 0;
+    justify-content: center;
+    align-items: center;
 `
 
 const { Panel } = Tabs
@@ -91,7 +93,7 @@ function EquipmentListView() {
                 <TotalTagRequirement></TotalTagRequirement>
                 <TotalReviewStatus></TotalReviewStatus>
             </WrapperColumn>
-            <Tabs activeTab={activeTab} onChange={setActiveTab}>
+            <Tabs style={{ width: "100%" }} activeTab={activeTab} onChange={setActiveTab}>
                 <List>
                     <Tab>Tag info</Tab>
                     <Tab>Tag comparison</Tab>

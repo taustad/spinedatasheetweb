@@ -21,14 +21,13 @@ const WrapperTabs = styled.div`
     display: flex;
     float: left;
     flex-direction: column;
-    padding: 20px;
 `
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
 
 const StyledTabPanel = styled(Panel)`
-    padding-top: 0px;
+    padding-top: 0;
     border-top: 1px solid LightGray;
 `
 

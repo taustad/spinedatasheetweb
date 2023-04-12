@@ -82,12 +82,12 @@ function JIP33LegendModal({
 
     const columns = [
         { field: "legend", headerName: "Legend", cellStyle: (params:any) => reqColor(params) },
-        { field: "description", headerName: "Description", width: 800 },
+        { field: "description", headerName: "Description", flex: 1},
     ]
 
     return (
         <>
-            <div className="ag-theme-alpine ag-theme-datasheetTable" style={{ flex: "1 1 auto", marginTop: 20, width: "1000px" }}>
+            <div className="ag-theme-alpine ag-theme-datasheetTable" style={{ flex: "1 1 auto", width: "100%" }}>
                 <AgGridReact
                     rowData={rowData}
                     columnDefs={columns}

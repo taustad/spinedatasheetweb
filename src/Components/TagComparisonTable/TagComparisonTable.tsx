@@ -28,7 +28,7 @@ function TagComparisonTable({
 
     return (
         <>
-            <div className="ag-theme-alpine" style={{ flex: "1 1 auto", marginTop: 20, width: "90%" }}>
+            <div className="ag-theme-alpine" style={{ flex: "1 1 auto", width: "90%" }}>
                 <AgGridReact
                     rowData={tagRows}
                     columnDefs={newColumns}

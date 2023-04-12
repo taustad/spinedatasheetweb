@@ -6,10 +6,19 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { Link } from "react-router-dom"
 import { tokens } from "@equinor/eds-tokens"
 import { Datasheet } from "../Models/Datasheet"
+import { Icon } from '@equinor/eds-core-react'
+import { tag } from '@equinor/eds-icons'
+import styled from "styled-components"
 
 interface Props {
     tags: Datasheet[],
 }
+
+const TagIcon = styled(Icon)`
+    position: relative;
+    top: 4px;
+    padding-right: 9px;
+`
 
 function EquipmentListTable({ tags }: Props) {
     useAgGridStyles()
@@ -26,6 +35,7 @@ function EquipmentListTable({ tags }: Props) {
                 to={`JIP33/${params.data.id}`}
                 style={{ color: tokens.colors.text.static_icons__default.rgba }}
             >
+                <TagIcon data={tag} color={'green'} size={18} />
                 {params.value}
             </Link>
         )
@@ -59,7 +69,7 @@ function EquipmentListTable({ tags }: Props) {
     return (
         <div
             className="ag-theme-alpine ag-theme-datasheetTable"
-            style={{ flex: "1 1 auto", marginTop: 20, width: "1700px" }}
+            style={{ flex: "1 1 auto", width: "100%" }}
         >
             <AgGridReact<Datasheet>
                 rowData={tags}
