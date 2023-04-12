@@ -23,7 +23,7 @@ export const comparisonGeneralColumnDefs = () => {
             headerName: "Service description",
         },
         {
-            field: "manufacturer", // getPropertyName<PurchaserRequirement>("manufacturer"),
+            field: getPropertyName<PurchaserRequirement>("manufacturer"),
             headerName: "Manufacturer",
         },
         {
