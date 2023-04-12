@@ -70,9 +70,9 @@ export const generateAccessoriesRowData = (datasheet: Datasheet): TableRow[] => 
         {
             refClause: "",
             description: "Mounting bracket:",
-            purchaserReq: "MISSING DUMMY DATA",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
-            supplierOfferedVal: "MISSING DUMMY DATA",
+            supplierOfferedVal: "N/A",
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
@@ -80,9 +80,9 @@ export const generateAccessoriesRowData = (datasheet: Datasheet): TableRow[] => 
         {
             refClause: "",
             description: "Mounting bracket material:",
-            purchaserReq: "MISSING DUMMY DATA",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
-            supplierOfferedVal: "MISSING DUMMY DATA",
+            supplierOfferedVal: "N/A",
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",

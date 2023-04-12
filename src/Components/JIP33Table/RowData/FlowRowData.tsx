@@ -7,7 +7,7 @@ export const generateFlowRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Minimum operating mass flow",
-            purchaserReq: "MISSING DUMMY DATA",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValColor: ColorLegendEnum.SelectNoInputExp,
@@ -17,9 +17,9 @@ export const generateFlowRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Normal operating mass flow",
-            purchaserReq: "MISSING DUMMY DATA",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
-            supplierOfferedVal: "MISSING DUMMY DATA",
+            supplierOfferedVal: "N/A",
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
@@ -27,9 +27,9 @@ export const generateFlowRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Maximum operating mass flow",
-            purchaserReq: "MISSING DUMMY DATA",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
-            supplierOfferedVal: "MISSING DUMMY DATA",
+            supplierOfferedVal: "N/A",
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
