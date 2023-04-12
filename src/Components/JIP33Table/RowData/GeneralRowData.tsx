@@ -298,7 +298,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "4.12.1",
             description: "Tag number:",
-            purchaserReq: datasheet.purchaserRequirement?.tagNumber,
+            purchaserReq: datasheet.tagNo,
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",

@@ -24,7 +24,7 @@ function TagComparisonTable({
 
     const newColumns = comparisonGeneralColumnDefs()
 
-    const tagRows = tags.map((tag) => { return (tag.purchaserRequirement) })
+    const tagRows = tags.map((tag) => { return ({...tag.purchaserRequirement, tagNumber: tag.tagNo}) })
 
     return (
         <>
