@@ -489,7 +489,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid vapour pressure:",
-            purchaserReq: "N/A?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -500,7 +500,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating mass flow:",
-            purchaserReq: "N/A?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
