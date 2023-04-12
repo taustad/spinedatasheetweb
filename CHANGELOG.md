@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.3.0](https://github.com/equinor/spinedatasheetweb/compare/v1.2.0...v1.3.0) (2023-04-12)
+
+
+### Features
+
+* Add flow tab ([#30](https://github.com/equinor/spinedatasheetweb/issues/30)) ([bf2271e](https://github.com/equinor/spinedatasheetweb/commit/bf2271e7a83f2d2eeb63290983ac798e23d96d9b))
+* Add tag comparison table ([#32](https://github.com/equinor/spinedatasheetweb/issues/32)) ([0a284fa](https://github.com/equinor/spinedatasheetweb/commit/0a284fa126fbe37327d1f415ac0b7f950fef3b58))
+* Added graphs for requirements and review ([848f3c7](https://github.com/equinor/spinedatasheetweb/commit/848f3c745a87b7d2ab731e9fcb6cae9533a16979))
+* Comparison view tab ([#39](https://github.com/equinor/spinedatasheetweb/issues/39)) ([42276f6](https://github.com/equinor/spinedatasheetweb/commit/42276f69cec8cc2484020959056d04eef98fb42e))
+* update frontend models ([d4b9a1c](https://github.com/equinor/spinedatasheetweb/commit/d4b9a1c669998d3b730cdc5217a65a0d78b744b4))
+* updated models ([b35e490](https://github.com/equinor/spinedatasheetweb/commit/b35e490a40837c4a72a47f0179e327b3073cb2ef))
+
+
+### Bug Fixes
+
+* Filter context to only contain snhvit ([#28](https://github.com/equinor/spinedatasheetweb/issues/28)) ([9f5b629](https://github.com/equinor/spinedatasheetweb/commit/9f5b62995e21e0abca36f1ee50db110ebae2d8eb))
+* Fix tagno mapping ([#42](https://github.com/equinor/spinedatasheetweb/issues/42)) ([2ad3d7f](https://github.com/equinor/spinedatasheetweb/commit/2ad3d7ff034958aa1ac0a1e31555cb3870d66ba4))
+* fixed sizing of tables in JIP33 page ([2d36a6b](https://github.com/equinor/spinedatasheetweb/commit/2d36a6b83d99ef6ec2578a82b9d1d5aba138b6e0))
+* navigation ([e786294](https://github.com/equinor/spinedatasheetweb/commit/e786294056d968941e75bd8d9e15ec6c9984bd4c))
+* Remove "missing dummy data" text ([#41](https://github.com/equinor/spinedatasheetweb/issues/41)) ([8104925](https://github.com/equinor/spinedatasheetweb/commit/81049254b2f6b474ac111ec8f7ee6687370ab8df))
+* removed yellow highlight on chart hover ([389cb87](https://github.com/equinor/spinedatasheetweb/commit/389cb872cd911c797e013ab0d0b4fc5a2a777c46))
+
 ## [1.2.0](https://github.com/equinor/spinedatasheetweb/compare/v1.1.0...v1.2.0) (2023-03-30)
 
 
