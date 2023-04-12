@@ -41,6 +41,18 @@ function TotalReviewStatus() {
                         margin: 4,
                     },
                 ],
+                highlightStyle: {
+                    item: {
+                        fill: undefined,
+                        stroke: undefined,
+                        strokeWidth: 0,
+                    },
+                    series: {
+                        enabled: false,
+                        dimOpacity: 0.2,
+                        strokeWidth: 0,
+                    },
+                },
                 innerCircle: {
                     fill: '#dff3ea',
                 },
@@ -49,7 +61,7 @@ function TotalReviewStatus() {
     })
 
     return (
-        <AgChartsReact options={options}/>
+        <AgChartsReact options={options} />
     )
 }
 
