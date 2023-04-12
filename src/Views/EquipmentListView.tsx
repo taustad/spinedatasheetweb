@@ -1,4 +1,4 @@
-import { Progress, Typography } from "@equinor/eds-core-react"
+import { Progress, Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
@@ -8,6 +8,7 @@ import TotalReviewStatus from "../Components/Charts/TotalReviewStatus"
 import TotalTagRequirement from "../Components/Charts/TotalTagRequirement"
 import EquipmentListTable from "../Components/EquipmentListTable"
 import { Datasheet } from "../Models/Datasheet"
+import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -25,7 +26,17 @@ const WrapperColumn = styled.div`
     padding: 20px;
 `
 
+const { Panel } = Tabs
+const { List, Tab, Panels } = Tabs
+
+const StyledTabPanel = styled(Panel)`
+    padding-top: 0px;
+    border-top: 1px solid LightGray;
+`
+
 function EquipmentListView() {
+    const [activeTab, setActiveTab] = useState(0)
+
     const [tags, setTags] = useState<Datasheet[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
@@ -42,7 +53,7 @@ function EquipmentListView() {
                 try {
                     setIsLoading(true)
                     const datasheets: Datasheet[] = await (await GetDatasheetService())
-                        .getDatasheetsForProject(currentProject.externalId)
+                        .getDatasheets()
                     setTags(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -80,10 +91,20 @@ function EquipmentListView() {
                 <TotalTagRequirement></TotalTagRequirement>
                 <TotalReviewStatus></TotalReviewStatus>
             </WrapperColumn>
-            <Typography variant="h3">
-                Tag info
-            </Typography>
-            <EquipmentListTable tags={tags} />
+            <Tabs activeTab={activeTab} onChange={setActiveTab}>
+                <List>
+                    <Tab>Tag info</Tab>
+                    <Tab>Tag comparison</Tab>
+                </List>
+                <Panels>
+                    <StyledTabPanel>
+                        <EquipmentListTable tags={tags} />
+                    </StyledTabPanel>
+                    <StyledTabPanel>
+                        <TagComparisonTable tags={tags} />
+                    </StyledTabPanel>
+                </Panels>
+            </Tabs >
         </Wrapper>
     )
 }
