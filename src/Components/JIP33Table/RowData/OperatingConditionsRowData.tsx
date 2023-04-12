@@ -489,7 +489,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid vapour pressure:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -500,7 +500,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating mass flow:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -544,7 +544,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating liquid specific gravity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -553,7 +553,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating liquid viscosity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -564,7 +564,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating vapour molecular weight:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "g/mol",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -575,7 +575,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating vapour compressibility factor:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -584,7 +584,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating vapour actual density:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "kg/m2",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -595,7 +595,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating vapour viscosity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -606,7 +606,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating mass flow:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -650,7 +650,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating liquid specific gravity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -670,7 +670,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating vapour molecular weight:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "g/mol",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -681,7 +681,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating vapour compressibility factor:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -690,7 +690,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating vapour actual density:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "kg/m2",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -701,7 +701,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating vapour viscosity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -712,7 +712,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating mass flow:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
@@ -756,7 +756,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating liquid specific gravity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -776,7 +776,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating vapour molecular weight:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "g/mol",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -787,7 +787,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating vapour compressibility factor:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "",
             supplierOfferedVal: "input data",
             supplierOfferedValUOM: "",
@@ -796,7 +796,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating vapour actual density:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "kg/m2",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "input data",
@@ -807,7 +807,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating vapour viscosity:",
-            purchaserReq: "MISSING IN DUMMY DATA?",
+            purchaserReq: "N/A",
             purchaserReqUOM: "select",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "input data",
