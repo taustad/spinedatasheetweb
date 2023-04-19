@@ -1,10 +1,11 @@
+import { ColDef } from "ag-grid-enterprise";
 import { PurchaserRequirement } from "../../Models/PurchaserRequirement"
 
 function getPropertyName<T>(property: keyof T): keyof T {
     return property;
 }
 
-export const comparisonGeneralColumnDefs = () => {
+export const comparisonGeneralColumnDefs = (): ColDef[] => {
     return [
         {
             field: getPropertyName<PurchaserRequirement>("codeRequirement"),
@@ -17,6 +18,7 @@ export const comparisonGeneralColumnDefs = () => {
         {
             field: getPropertyName<PurchaserRequirement>("tagNumber"),
             headerName: "Tag number",
+            pinned: "left",
         },
         {
             field: getPropertyName<PurchaserRequirement>("serviceDescription"),

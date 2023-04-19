@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { AgGridReact } from "ag-grid-react"
-import { ColDef } from "ag-grid-community"
+import { ColDef } from "ag-grid-enterprise"
 import "ag-grid-enterprise"
 import { Datasheet } from '../../Models/Datasheet';
 import { comparisonGeneralColumnDefs } from './GeneralColumnDefs';
