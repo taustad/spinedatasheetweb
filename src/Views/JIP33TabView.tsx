@@ -33,6 +33,11 @@ const StyledTabPanel = styled(Panel)`
     border-top: 1px solid LightGray;
 `
 
+const StyledTab = styled(Tab)`
+    background-color: #f8f8f8;
+    border: 1px solid gray;
+`
+
 function JIP33TabView({
 }) {
     const [activeTab, setActiveTab] = useState(0)
@@ -91,9 +96,9 @@ function JIP33TabView({
                         <Tab>Transmitter</Tab>
                         <Tab>Performance</Tab>
                         <Tab>Accessories</Tab>
-                        <Tab>Flow</Tab>
-                        <Tab>Temperature</Tab>
-                        <Tab>Pressure</Tab>
+                        <StyledTab>Flow</StyledTab>
+                        <StyledTab>Temperature</StyledTab>
+                        <StyledTab>Pressure</StyledTab>
                     </List>
                     <Panels>
                         <StyledTabPanel>
