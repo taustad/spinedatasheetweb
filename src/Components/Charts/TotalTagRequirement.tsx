@@ -22,6 +22,8 @@ const percentage = (value: number) => `${((value / total) * 100).toFixed()}%`
 function TotalTagRequirement() {
     const [options] = useState<AgChartOptions>({
         data,
+        width: 300,
+        height: 300,
         series: [
             {
                 type: 'pie',

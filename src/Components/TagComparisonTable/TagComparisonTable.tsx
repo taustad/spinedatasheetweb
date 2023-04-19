@@ -3,8 +3,8 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { AgGridReact } from "ag-grid-react"
 import { ColDef } from "ag-grid-enterprise"
 import "ag-grid-enterprise"
-import { Datasheet } from '../../Models/Datasheet';
-import { comparisonGeneralColumnDefs } from './GeneralColumnDefs';
+import { Datasheet } from '../../Models/Datasheet'
+import { comparisonGeneralColumnDefs } from './GeneralColumnDefs'
 
 interface Props {
     tags: Datasheet[],
@@ -28,7 +28,7 @@ function TagComparisonTable({
 
     return (
         <>
-            <div className="ag-theme-alpine" style={{ flex: "1 1 auto", width: "90%" }}>
+            <div className="ag-theme-alpine" style={{ flex: "1 1 auto", width: "100%" }}>
                 <AgGridReact
                     rowData={tagRows}
                     columnDefs={newColumns}

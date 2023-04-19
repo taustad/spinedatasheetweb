@@ -14,12 +14,12 @@ function JIP33Table({
 }: Props) {
     useAgGridStyles()
 
-    const red = "#e6b8b7"
-    const lightBlue = "#b7dee8"
-    const grey = "#bfbfbf"
-    const lightGreen = "#d8e4bc"
-    const green = "#92d050"
-    const lightOrange = "#fcd5b4"
+    const red = "white" //"#e6b8b7"
+    const lightBlue = "white" //"#b7dee8"
+    const grey = "white" // "#bfbfbf"
+    const lightGreen = "white" // "#d8e4bc"
+    const green = "white" //"#92d050"
+    const lightOrange = "white" // "#fcd5b4"
     const white = "white"
 
     const defaultColDef = useMemo<ColDef>(() => ({
@@ -75,6 +75,8 @@ function JIP33Table({
         { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: (params: any) => reqColor(params.data.purchaserReqColor, red), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "purchaserReqUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 140 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
+        { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
+        { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) },
         { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) },
     ]

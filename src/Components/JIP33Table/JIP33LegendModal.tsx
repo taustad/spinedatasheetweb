@@ -9,12 +9,12 @@ function JIP33LegendModal({
 }) {
     useAgGridStyles()
 
-    const red = "#e6b8b7"
-    const lightBlue = "#b7dee8"
-    const grey = "#aeaaaa"
-    const lightGreen = "#d8e4bc"
-    const green = "#a2fc82"
-    const lightOrange = "#fcd5b4"
+    const red = "white" // "#e6b8b7"
+    const lightBlue = "white" // "#b7dee8"
+    const grey = "white" // "#aeaaaa"
+    const lightGreen = "white" // "#d8e4bc"
+    const green = "white" // "#a2fc82"
+    const lightOrange = "white" // "#fcd5b4"
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,

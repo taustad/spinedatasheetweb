@@ -1,5 +1,5 @@
-import { PurchaserRequirement } from "./PurchaserRequirement";
-import { SupplierOfferedProduct } from "./SupplierOfferedProduct";
+import { PurchaserRequirement } from "./PurchaserRequirement"
+import { SupplierOfferedProduct } from "./SupplierOfferedProduct"
 
 export class Datasheet implements Components.Schemas.DatasheetDto {
     id?: string; // uuid
@@ -11,8 +11,8 @@ export class Datasheet implements Components.Schemas.DatasheetDto {
     dicipline?: string | null;
     purchaserRequirement?: PurchaserRequirement;
     supplierOfferedProduct?: SupplierOfferedProduct;
-    
+
     constructor(init?: Partial<Datasheet>) {
-        Object.assign(this, init);
+        Object.assign(this, init)
     }
 }
