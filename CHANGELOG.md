@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.0](https://github.com/equinor/spinedatasheetweb/compare/v1.3.0...v1.4.0) (2023-04-19)
+
+
+### Features
+
+* Added properties to JIP33 Temperature and Pressure tabs ([8a1cd56](https://github.com/equinor/spinedatasheetweb/commit/8a1cd5659c5bcf56c614ec284fa36c2c56e98e8b))
+* Highlght custom JIP33 tabs ([#50](https://github.com/equinor/spinedatasheetweb/issues/50)) ([f59a807](https://github.com/equinor/spinedatasheetweb/commit/f59a807d9cb520cba9bb3b270888fe88aff4cd75))
+* Pin tag column in comparison view ([#46](https://github.com/equinor/spinedatasheetweb/issues/46)) ([ce9c87e](https://github.com/equinor/spinedatasheetweb/commit/ce9c87e825c521b42f03e5c616d23455297c3714))
+* Rename uom ([#49](https://github.com/equinor/spinedatasheetweb/issues/49)) ([04ab3bd](https://github.com/equinor/spinedatasheetweb/commit/04ab3bd987cc5a260c047cb075deef035f27aa51))
+
+
+### Bug Fixes
+
+* Remove unnecessary data ([ccda871](https://github.com/equinor/spinedatasheetweb/commit/ccda8711e574dd71a68798e4bc3da89af692b589))
+
 ## [1.3.0](https://github.com/equinor/spinedatasheetweb/compare/v1.2.0...v1.3.0) (2023-04-12)
 
 
