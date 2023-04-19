@@ -73,9 +73,9 @@ function JIP33Table({
         { field: "refClause", headerName: "Ref. Clause", hide: true },
         { field: "description", headerName: "Description", width: 400 },
         { field: "purchaserReq", headerName: "Purchaser requirement", cellStyle: (params: any) => reqColor(params.data.purchaserReqColor, red), width: 220 }, // backgroundColor needs to be set by data params, not general.
-        { field: "purchaserReqUOM", headerName: "Purchaser requirement UOM", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 220 },
+        { field: "purchaserReqUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 140 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
-        { field: "supplierOfferedValUOM", headerName: "Supplier offered value UOM", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 220 },
+        { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) },
     ]
 
