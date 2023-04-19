@@ -1,5 +1,5 @@
 import { Context, ContextTypes, registerApp } from "@equinor/fusion"
-import AppComponent from './AppComponent';
+import AppComponent from './AppComponent'
 import { createLegacyApp } from "@equinor/fusion-framework-react-app"
 import { enableAgGrid } from "@equinor/fusion-framework-module-ag-grid"
 import { LicenseManager } from "ag-grid-enterprise"
@@ -20,11 +20,11 @@ registerApp("spinedatasheet", {
     types: [ContextTypes.ProjectMaster],
     nullable: false,
     filterContexts: (context: Array<Context>) => {
-      return context.filter((x) => x.title.toUpperCase().indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1);
-    },
-  },
+      return context.filter((x) => x.title.toUpperCase().indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1)
+    }
+  }
 })
 
 if (module.hot) {
-  module.hot.accept();
+  module.hot.accept()
 }

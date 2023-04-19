@@ -9,7 +9,7 @@ import { useEffect, useState } from "react"
 import JIP33Table from "../Components/JIP33Table/JIP33Table"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/PerformanceRowData"
-import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
+// import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
@@ -128,7 +128,7 @@ function JIP33TabView({
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
-                <JIP33LegendModal />
+                {/*<JIP33LegendModal />*/}
             </WrapperTabs >
         </>
     )
