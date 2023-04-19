@@ -15,6 +15,8 @@ import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
 import { GetDatasheetService } from "../api/DatasheetService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/FlowRowData"
+import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/TemperatureRowData"
+import { generatePressureRowData } from "../Components/JIP33Table/RowData/PressureRowData"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -119,10 +121,10 @@ function JIP33TabView({
                             <JIP33Table rowData={generateFlowRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={[]} />
+                            <JIP33Table rowData={generateTemperatureRowData(tag)} />
                         </StyledTabPanel>
                         <StyledTabPanel>
-                            <JIP33Table rowData={[]} />
+                            <JIP33Table rowData={generatePressureRowData(tag)} />
                         </StyledTabPanel>
                     </Panels>
                 </Tabs >
