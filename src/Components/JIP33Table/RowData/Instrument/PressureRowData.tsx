@@ -1,5 +1,5 @@
-import { Datasheet } from "../../../Models/Datasheet"
-import { TableRow } from "./TableRow"
+import { Datasheet } from "../../../../Models/Datasheet"
+import { TableRow } from "../TableRow"
 
 export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
     return [

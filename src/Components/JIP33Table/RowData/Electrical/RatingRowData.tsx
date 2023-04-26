@@ -1,0 +1,38 @@
+export const ratingRowData = [
+    {
+        refClause: "",
+        description: "Frame size:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Rated power output:",
+        purchaserReq: "",
+        purchaserReqUOM: "select",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "select",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Service factor:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Full load current (FLC):",
+        purchaserReq: "",
+        purchaserReqUOM: "A",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "A",
+        additionalNotes: "",
+    },
+]

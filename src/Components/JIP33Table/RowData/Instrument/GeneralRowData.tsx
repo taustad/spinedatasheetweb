@@ -1,6 +1,6 @@
-import { Datasheet } from "../../../Models/Datasheet"
-import { ColorLegendEnum } from "../JIP33ColorLegendEnums"
-import { TableRow } from "./TableRow"
+import { Datasheet } from "../../../../Models/Datasheet"
+import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
+import { TableRow } from "../TableRow"
 
 export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
     return [

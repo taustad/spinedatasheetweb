@@ -1,0 +1,38 @@
+export const motorsForHazardousLocationsRowData = [
+    {
+        refClause: "",
+        description: "Hazardous area classification:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "  UL 674 listing:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Temperature group:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Gas/dust group:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+]
