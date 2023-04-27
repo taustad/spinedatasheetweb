@@ -4,6 +4,7 @@ import JIP33TabView from "./Views/JIP33TabView"
 import EquipmentListView from "./Views/EquipmentListView"
 import TagComparisonView from "./Views/TagComparisonView"
 import JIP33ElectricalTabView from "./Views/JIP33ElectricalTabView"
+import JIP33MechanicalTabView from "./Views/JIP33MechanicalTabView"
 
 const AppRouter: FC = () => (
     <>
@@ -13,6 +14,7 @@ const AppRouter: FC = () => (
             <Route path="/:projectId" element={<EquipmentListView />} />
             <Route path=":projectId/JIP33/:tagId" element={<JIP33TabView />} />
             <Route path="/JIP33Electrical" element={<JIP33ElectricalTabView />} />
+            <Route path="/JIP33Mechanical" element={<JIP33MechanicalTabView />} />
         </Routes>
     </>
 );

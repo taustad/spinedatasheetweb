@@ -1,0 +1,38 @@
+export const shipmentRowData = [
+    {
+        refClause: "",
+        description: "Preservation and packing specification:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Preservation and packing suitable for:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Export boxing:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+    {
+        refClause: "",
+        description: "Outdoor storage:",
+        purchaserReq: "",
+        purchaserReqUOM: "",
+        supplierOfferedVal: "",
+        supplierOfferedValUOM: "",
+        additionalNotes: "",
+    },
+]
