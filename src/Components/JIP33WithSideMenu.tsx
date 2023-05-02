@@ -72,13 +72,21 @@ const StyledTabPanel = styled.div`
 interface Props {
     sideMenuList: string[]
     rowDataList: object[][]
-
+    customTabList?: string[]
 }
 
-const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList }) => {
+const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customTabList }) => {
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba
     const backgroundColor = "rgba(0, 112, 121, 0.1)"
+
+    const sideMenuBorder = (sideMenuName: string) => {
+        if (customTabList && customTabList.includes(sideMenuName)) {
+            return "outset"
+        }
+        return "none"
+    }
+
     return (
         <Wrapper>
             <Body>
@@ -87,7 +95,10 @@ const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList }) => {
                         <MenuItems>
                             {sideMenuList.map((sideMenuName, index) => (
                                 <Item
-                                    style={{ backgroundColor: activeTab === index ? backgroundColor : "" }}
+                                    style={{
+                                        backgroundColor: activeTab === index ? backgroundColor : "",
+                                        borderStyle: sideMenuBorder(sideMenuName),
+                                    }}
                                     onClick={() => setActiveTab(index)}
                                 >
                                     <LinkWithoutStyle color={activeTab === index ? selectedColor : ""}>{sideMenuName}</LinkWithoutStyle>
