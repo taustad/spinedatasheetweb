@@ -10,12 +10,16 @@ const configuration = {
     },
     ContractService: {
         BASE_URL: "",
+    },
+    CommentService: {
+        BASE_URL: "",
     }
 }
 
 export const buildConfig = (baseUrl: string) => {
     configuration.DatasheetService.BASE_URL = `${baseUrl}/datasheets`
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
+    configuration.CommentService.BASE_URL = `${baseUrl}/comments`
 }
 
 export const config = Object.freeze(configuration)

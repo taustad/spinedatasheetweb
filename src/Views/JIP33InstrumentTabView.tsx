@@ -3,7 +3,7 @@ import { generateInstallationConditionsRowData } from "../Components/JIP33Table/
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
 import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/Instrument/BodyElementSensorRowData"
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
-import { Typography } from "@equinor/eds-core-react"
+import { Button, Input, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
@@ -17,6 +17,8 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
+import { GetCommentService } from "../api/CommentService"
+import { ReviewComment } from "../Models/ReviewComment"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -37,6 +39,8 @@ function JIP33InstrumentTabView({
     const [tag, setTag] = useState<Datasheet>()
 
     const { tagId } = useParams<Record<string, string | undefined>>()
+    const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
+    const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
 
     useEffect(() => {
         (async () => {
@@ -45,6 +49,7 @@ function JIP33InstrumentTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
+                    await getCommentsForTag(tagId)
                     const datasheets: Datasheet = await (await GetDatasheetService())
                         .getDatasheet(tagId)
                     setTag(datasheets)
@@ -56,6 +61,11 @@ function JIP33InstrumentTabView({
             }
         })()
     }, [])
+
+    const getCommentsForTag = async (tagId: string) => {
+        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(tagId)
+        setReviewComments(comments)
+    }
 
     if (error) {
         return <div>Error loading tag</div>
@@ -87,8 +97,32 @@ function JIP33InstrumentTabView({
         generateTemperatureRowData(tag), generatePressureRowData(tag),
     ]
 
+    const handleSubmit = async () => {
+        const comment = { ...newReviewComment }
+        comment.tagDataId = tagId
+        comment.commentLevel = 0
+        await (await GetCommentService()).createComment(comment)
+    }
+
+    const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const comment = { ...newReviewComment }
+        comment.text = event.target.value
+        setNewReviewComment(comment)
+    }
+
     return (
         <Body>
+            <p>Comments</p>
+            <Input type="text" onChange={handleCommentChange} ></Input>
+            <Button onClick={handleSubmit}>Submit</Button>
+            <p>Comments:</p>
+            {reviewComments.map((comment) => {
+                return (
+                    <div>
+                        <p>{comment.text}</p>
+                    </div>
+                )
+            })}
             <TopBar>
                 <Typography variant="h3">
                     <BackButton />
