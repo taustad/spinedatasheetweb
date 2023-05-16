@@ -1,32 +1,40 @@
-import { generalRowData } from "../Components/JIP33Table/RowData/Electrical/GeneralRowData"
+import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Electrical/GeneralRowData"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
-import { purchaserInformationRowData } from "../Components/JIP33Table/RowData/Electrical/PurchaserInformationRowData"
-import { electricalOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Electrical/ElectricalOperatingConditionsRowData"
-import { ratingRowData } from "../Components/JIP33Table/RowData/Electrical/RatingRowData"
-import { aSDFedMotorDataRowData } from "../Components/JIP33Table/RowData/Electrical/ASDFedMotorDataRowData"
-import { siteConditionsLocationEnvironmentRowData } from "../Components/JIP33Table/RowData/Electrical/SiteConditionsLocationEnvironmentRowData"
-import { startingPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/StartingPerformanceRowData"
-import { operatingPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/OperatingPerformanceRowData"
-import { noiseRowData } from "../Components/JIP33Table/RowData/Electrical/NoiseRowData"
-import { motorConstructionRowData } from "../Components/JIP33Table/RowData/Electrical/MotorConstructionRowData"
-import { fanRowData } from "../Components/JIP33Table/RowData/Electrical/FanRowData"
-import { mailTerminalBoxRowData } from "../Components/JIP33Table/RowData/Electrical/MainTerminalBoxRowData"
-import { bearingsRowData } from "../Components/JIP33Table/RowData/Electrical/BearingsRowData"
-import { spaceHeatersRowData } from "../Components/JIP33Table/RowData/Electrical/SpaceHeatersRowData"
-import { mountingRowData } from "../Components/JIP33Table/RowData/Electrical/MountingRowData"
-import { instrumentationRowData } from "../Components/JIP33Table/RowData/Electrical/InstrumentationRowData"
-import { surfaceProtectionRowData } from "../Components/JIP33Table/RowData/Electrical/SurfaceProtectionRowData"
-import { motorsForHazardousLocationsRowData } from "../Components/JIP33Table/RowData/Electrical/MotorsForHazardousLocationsRowData"
-import { testingAndInspectionRowData } from "../Components/JIP33Table/RowData/Electrical/TestingAndInspectionRowData"
-import { preservationAndStorageRowData } from "../Components/JIP33Table/RowData/Electrical/PreservationAndStorageRowData"
-import { documentationRowData } from "../Components/JIP33Table/RowData/Electrical/DocumentationRowData"
-import { informationRowData } from "../Components/JIP33Table/RowData/Electrical/InformationRowData"
+import { generatePurchaserInformationRowData } from "../Components/JIP33Table/RowData/Electrical/PurchaserInformationRowData"
+import { generateElectricalOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Electrical/ElectricalOperatingConditionsRowData"
+import { generateRatingRowData } from "../Components/JIP33Table/RowData/Electrical/RatingRowData"
+import { generateASDFedMotorDataRowData } from "../Components/JIP33Table/RowData/Electrical/ASDFedMotorDataRowData"
+import { generateSiteConditionsLocationEnvironmentRowData } from "../Components/JIP33Table/RowData/Electrical/SiteConditionsLocationEnvironmentRowData"
+import { generateStartingPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/StartingPerformanceRowData"
+import { generateOperatingPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/OperatingPerformanceRowData"
+import { generateNoiseRowData } from "../Components/JIP33Table/RowData/Electrical/NoiseRowData"
+import { generateMotorConstructionRowData } from "../Components/JIP33Table/RowData/Electrical/MotorConstructionRowData"
+import { generateFanRowData } from "../Components/JIP33Table/RowData/Electrical/FanRowData"
+import { generateMainTerminalBoxRowData } from "../Components/JIP33Table/RowData/Electrical/MainTerminalBoxRowData"
+import { generateBearingsRowData } from "../Components/JIP33Table/RowData/Electrical/BearingsRowData"
+import { generateMountingRowData } from "../Components/JIP33Table/RowData/Electrical/MountingRowData"
+import { generateInstrumentationRowData } from "../Components/JIP33Table/RowData/Electrical/InstrumentationRowData"
+import { generateSurfaceProtectionRowData } from "../Components/JIP33Table/RowData/Electrical/SurfaceProtectionRowData"
+import { generateMotorsForHazardousLocationsRowData } from "../Components/JIP33Table/RowData/Electrical/MotorsForHazardousLocationsRowData"
+import { generateTestingAndInspectionRowData } from "../Components/JIP33Table/RowData/Electrical/TestingAndInspectionRowData"
+import { generatePreservationAndStorageRowData } from "../Components/JIP33Table/RowData/Electrical/PreservationAndStorageRowData"
+import { generateDocumentationRowData } from "../Components/JIP33Table/RowData/Electrical/DocumentationRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
+import { GetDatasheetService } from "../api/DatasheetService"
+import { generateDutyRowData } from "../Components/JIP33Table/RowData/Electrical/DutyRowData"
+import { generateThermalPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/ThermalPerformanceRowData"
+import { generateRotorRowData } from "../Components/JIP33Table/RowData/Electrical/RotorRowData"
+import { generateSpaceHeatersRowData } from "../Components/JIP33Table/RowData/Electrical/SpaceHeatersRowData"
+import { generateCoolingRowData } from "../Components/JIP33Table/RowData/Electrical/CoolingRowData"
+import { generateVibrationRowData } from "../Components/JIP33Table/RowData/Electrical/VibrationRowData"
+import { generateTemperatureMonitoringRowData } from "../Components/JIP33Table/RowData/Electrical/TemperatureMonitoringRowData"
+import { generateConverterFedMotorDataRowData } from "../Components/JIP33Table/RowData/Electrical/ConverterFedMotorDataRowData"
+import { generateMiscellaneousRowData } from "../Components/JIP33Table/RowData/Electrical/MiscellaneousRowData"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -48,55 +56,58 @@ function JIP33ElectricalTabView({
 
     const { tagId } = useParams<Record<string, string | undefined>>()
 
-    // useEffect(() => {
-    //     (async () => {
-    //         setError(false)
-    //         setIsLoading(false)
-    //         if (tagId !== null && tagId !== undefined) {
-    //             try {
-    //                 setIsLoading(true)
-    //                 const datasheets: Datasheet = await (await GetDatasheetService())
-    //                     .getDatasheet(tagId)
-    //                 setTag(datasheets)
-    //                 setIsLoading(false)
-    //             } catch {
-    //                 console.error("Error loading tags")
-    //                 setError(true)
-    //             }
-    //         }
-    //     })()
-    // }, [])
+    useEffect(() => {
+        (async () => {
+            setError(false)
+            setIsLoading(false)
+            if (tagId !== null && tagId !== undefined) {
+                try {
+                    setIsLoading(true)
+                    const datasheets: Datasheet = await (await GetDatasheetService())
+                        .getDatasheet(tagId)
+                    setTag(datasheets)
+                    setIsLoading(false)
+                } catch {
+                    console.error("Error loading tags")
+                    setError(true)
+                }
+            }
+        })()
+    }, [])
 
-    // if (error) {
-    //     return <div>Error loading tag</div>
-    // }
+    if (error) {
+        return <div>Error loading tag</div>
+    }
 
-    // if (isLoading) {
-    //     return <div>Loading tag...</div>
-    // }
+    if (isLoading) {
+        return <div>Loading tag...</div>
+    }
 
-    // if (tag === undefined) {
-    //     return <div>No tag selected</div>
-    // }
+    if (tag === undefined) {
+        return <div>No tag selected</div>
+    }
 
     const sideMenuList = [
-        "Information", "Purchaser information", "General",
+        "General", "Purchaser information", "Duty",
         "Electrical operating conditions", "Rating", "ASD fed motor data",
-        "Site conditions / location environment", "Starting performance",
-        "Operating performance", "Noise", "Motor construction", "Fan",
-        "Main terminal box", "Bearings", "Space heaters", "Mounting",
-        "Instrumentation", "Surface protection", "Motors for hazardous locations",
-        "Testing and inspection", "Preservation and storage", "Documentation",
+        "Site conditions / location environment", "Thermal performance", "Starting performance",
+        "Operating performance", "Noise", "Motor construction", "Rotor", "Fan",
+        "Main terminal box", "Bearings", "Space heaters", "Mounting", "Cooling", "Vibration",
+        "Instrumentation", "Surface protection", "Temperature monitoring", "Converter-fed motor data", 
+        "Motors for hazardous locations", "Testing and inspection", "Preservation and storage",
+        "Documentation", "Miscellaneous",
     ]
 
     const rowDataList = [
-        informationRowData, purchaserInformationRowData, generalRowData,
-        electricalOperatingConditionsRowData, ratingRowData, aSDFedMotorDataRowData,
-        siteConditionsLocationEnvironmentRowData, startingPerformanceRowData,
-        operatingPerformanceRowData, noiseRowData, motorConstructionRowData, fanRowData,
-        mailTerminalBoxRowData, bearingsRowData, spaceHeatersRowData, mountingRowData,
-        instrumentationRowData, surfaceProtectionRowData, motorsForHazardousLocationsRowData,
-        testingAndInspectionRowData, preservationAndStorageRowData, documentationRowData,
+        generateGeneralRowData(tag), generatePurchaserInformationRowData(tag), generateDutyRowData(tag),
+        generateElectricalOperatingConditionsRowData(tag), generateRatingRowData(tag), generateASDFedMotorDataRowData(tag),
+        generateSiteConditionsLocationEnvironmentRowData(tag), generateThermalPerformanceRowData(tag), generateStartingPerformanceRowData(tag),
+        generateOperatingPerformanceRowData(tag), generateNoiseRowData(tag), generateMotorConstructionRowData(tag), generateRotorRowData(tag),
+        generateFanRowData(tag), generateMainTerminalBoxRowData(tag), generateBearingsRowData(tag), generateSpaceHeatersRowData(tag),
+        generateMountingRowData(tag), generateCoolingRowData(tag), generateVibrationRowData(tag), generateInstrumentationRowData(tag),
+        generateSurfaceProtectionRowData(tag), generateTemperatureMonitoringRowData(tag), generateConverterFedMotorDataRowData(tag),
+        generateMotorsForHazardousLocationsRowData(tag), generateTestingAndInspectionRowData(tag),
+        generatePreservationAndStorageRowData(tag), generateDocumentationRowData(tag), generateMiscellaneousRowData(tag),
     ]
 
     return (

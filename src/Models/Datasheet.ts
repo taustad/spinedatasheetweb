@@ -11,6 +11,8 @@ export class Datasheet implements Components.Schemas.DatasheetDto {
     dicipline?: string | null;
     purchaserRequirement?: PurchaserRequirement;
     supplierOfferedProduct?: SupplierOfferedProduct;
+    electricalPurchaserRequirement?: Components.Schemas.ElectricalPurchaserRequirement;
+    electricalSupplierOfferedProduct?: Components.Schemas.ElectricalSupplierOfferedProduct;
 
     constructor(init?: Partial<Datasheet>) {
         Object.assign(this, init)

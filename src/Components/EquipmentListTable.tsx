@@ -29,10 +29,21 @@ function EquipmentListTable({ tags }: Props) {
         editable: false,
     }), [])
 
+    const typeOfJIP33 = (params: any) => {
+        const dicipline = params.data.dicipline
+        if (dicipline === "Mechanical") {
+            return "JIP33Mechanical"
+        }
+        if (dicipline === "Electrical") {
+            return "JIP33Electrical"
+        }
+        return "JIP33Instrument"
+    }
+
     const linkToDocument = (params: any) => {
         return (
             <Link
-                to={`JIP33/${params.data.id}`}
+                to={`${typeOfJIP33(params)}/${params.data.id}`}
                 style={{ color: tokens.colors.text.static_icons__default.rgba }}
             >
                 <TagIcon data={tag} color={'green'} size={18} />
