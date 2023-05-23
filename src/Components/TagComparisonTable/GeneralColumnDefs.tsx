@@ -1,4 +1,4 @@
-import { ColDef } from "ag-grid-enterprise";
+import { ColDef } from "@ag-grid-community/core";
 import { PurchaserRequirement } from "../../Models/PurchaserRequirement"
 
 function getPropertyName<T>(property: keyof T): keyof T {

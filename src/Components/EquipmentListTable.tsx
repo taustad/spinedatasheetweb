@@ -1,14 +1,12 @@
 import { useMemo } from "react"
-import { AgGridReact } from "ag-grid-react"
-import { ColDef } from "ag-grid-community"
-import "ag-grid-enterprise"
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
+import { AgGridReact } from '@ag-grid-community/react';
 import { Link } from "react-router-dom"
 import { tokens } from "@equinor/eds-tokens"
 import { Datasheet } from "../Models/Datasheet"
 import { Icon } from '@equinor/eds-core-react'
 import { tag } from '@equinor/eds-icons'
 import styled from "styled-components"
+import { ColDef } from "@ag-grid-community/core";
 
 interface Props {
     tags: Datasheet[],
@@ -21,7 +19,6 @@ const TagIcon = styled(Icon)`
 `
 
 function EquipmentListTable({ tags }: Props) {
-    useAgGridStyles()
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
         filter: true,
@@ -82,7 +79,7 @@ function EquipmentListTable({ tags }: Props) {
             className="ag-theme-alpine ag-theme-datasheetTable"
             style={{ flex: "1 1 auto", width: "100%" }}
         >
-            <AgGridReact<Datasheet>
+            <AgGridReact
                 rowData={tags}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}

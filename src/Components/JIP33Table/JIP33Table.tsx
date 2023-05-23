@@ -1,9 +1,8 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { AgGridReact } from "ag-grid-react"
-import { ColDef } from "ag-grid-community"
-import "ag-grid-enterprise"
 import { ColorLegendEnum } from './JIP33ColorLegendEnums'
+import { ColDef } from '@ag-grid-community/core'
+import { AgGridReact } from '@ag-grid-community/react'
 
 interface Props {
     rowData: object[],

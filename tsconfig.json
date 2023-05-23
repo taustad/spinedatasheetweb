@@ -3,19 +3,25 @@
     "declaration": true,
     "importHelpers": true,
     "sourceMap": true,
-    "module": "ES6",
-    "moduleResolution": "Node",
+    "module": "ESNext",
     "outDir": "lib",
     "rootDir": "src",
     "strict": true,
-    "target": "ES2021",
+    "target": "ES6",
     "composite": false,
     "skipLibCheck": true,
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "noEmit": true
+    "noEmit": true,
+    "moduleResolution": "node"
   },
-  "include": ["src/**/*", "./css-modules.d.ts", "./decs.d.ts"],
-  "types": ["lodash"]
+  "include": [
+    "src/**/*",
+    "./css-modules.d.ts",
+    "./decs.d.ts"
+  ],
+  "types": [
+    "lodash"
+  ]
 }
