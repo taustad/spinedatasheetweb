@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.5.0](https://github.com/equinor/spinedatasheetweb/compare/v1.4.0...v1.5.0) (2023-05-23)
+
+
+### Features
+
+* Added JIP33 electrical view with side menu ([0c078e6](https://github.com/equinor/spinedatasheetweb/commit/0c078e61814fb612367e3808f3ea6463c1f8212c))
+* Added JIP33 Electrical with routing, backend data and updated properties ([e0b3fba](https://github.com/equinor/spinedatasheetweb/commit/e0b3fba132050c490b44a16786fbe9b00b87301d))
+* Added JIP33 mechanical view with side menu ([d7bf4b2](https://github.com/equinor/spinedatasheetweb/commit/d7bf4b274fbc7799e674fc55f9d04bb3192ed40d))
+* Change JIP33 instrument to use side menu system ([df7443f](https://github.com/equinor/spinedatasheetweb/commit/df7443f3a94a69e3b52730026e9157a3074691fb))
+
+
+### Bug Fixes
+
+* Remove createLegacyApp, add render function ([#58](https://github.com/equinor/spinedatasheetweb/issues/58)) ([46bacf0](https://github.com/equinor/spinedatasheetweb/commit/46bacf0ab0531b1872da6179bec05ac15ab8029a))
+
 ## [1.4.0](https://github.com/equinor/spinedatasheetweb/compare/v1.3.0...v1.4.0) (2023-04-19)
 
 
