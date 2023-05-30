@@ -67,6 +67,17 @@ function JIP33InstrumentTabView({
         setReviewComments(comments)
     }
 
+    useEffect(() => {
+        if (tagId !== null && tagId !== undefined) {
+            const intervalId = setInterval(async () => {
+                const newComments = await (await GetCommentService()).getCommentsForTag(tagId);
+                setReviewComments(newComments);
+            }, 5000);
+
+            return () => clearInterval(intervalId);
+        }
+    }, []);
+
     if (error) {
         return <div>Error loading tag</div>
     }
@@ -101,6 +112,7 @@ function JIP33InstrumentTabView({
         const comment = { ...newReviewComment }
         comment.tagDataId = tagId
         comment.commentLevel = 0
+        comment.property = "codeRequirement"
         await (await GetCommentService()).createComment(comment)
     }
 
@@ -133,6 +145,7 @@ function JIP33InstrumentTabView({
                 sideMenuList={sideMenuList}
                 rowDataList={rowDataList}
                 customTabList={customTabList}
+                reviewComments={reviewComments}
             />
         </Body>
     )

@@ -12,6 +12,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "codeRequirement",
         },
         {
             refClause: "",

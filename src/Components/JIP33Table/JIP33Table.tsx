@@ -3,13 +3,18 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColorLegendEnum } from './JIP33ColorLegendEnums'
 import { ColDef } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
+import { ReviewComment } from '../../Models/ReviewComment'
+import { Icon } from "@equinor/eds-core-react"
+import { comment, comment_chat } from "@equinor/eds-icons"
+
 
 interface Props {
     rowData: object[],
+    reviewComments?: ReviewComment[] | undefined,
 }
 
 function JIP33Table({
-    rowData,
+    rowData, reviewComments
 }: Props) {
     useAgGridStyles()
 
@@ -68,6 +73,14 @@ function JIP33Table({
         return { backgroundColor: remainingColor }
     }
 
+    const commentIcon = (params: any) => {
+        console.log("params", params)
+        if (params.data.property === "codeRequirement") {
+            return <Icon data={comment_chat} color="#007079" />
+        }
+        return <Icon data={comment} color="#007079" />
+    }
+
     const columns = [
         { field: "refClause", headerName: "Ref. Clause", hide: true },
         { field: "description", headerName: "Description", width: 400 },
@@ -75,6 +88,7 @@ function JIP33Table({
         { field: "purchaserReqUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 140 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
+        { field: "comment", headerName: "Comment", cellStyle: (params: any) => reqColor(params.data.commentColor, white), cellRenderer: commentIcon, },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) }
     ]
 

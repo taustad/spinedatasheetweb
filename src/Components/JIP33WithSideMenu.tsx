@@ -3,6 +3,7 @@ import { tokens } from "@equinor/eds-tokens"
 import { useState } from "react"
 import styled from "styled-components"
 import JIP33Table from "./JIP33Table/JIP33Table"
+import { ReviewComment } from "../Models/ReviewComment"
 
 const Wrapper = styled.div`
     display: flex;
@@ -73,9 +74,10 @@ interface Props {
     sideMenuList: string[]
     rowDataList: object[][]
     customTabList?: string[]
+    reviewComments?: ReviewComment[]
 }
 
-const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customTabList }) => {
+const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customTabList, reviewComments }) => {
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba
     const backgroundColor = "rgba(0, 112, 121, 0.1)"
@@ -109,7 +111,7 @@ const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customT
                 </SidebarDiv>
                 <MainView>
                     <StyledTabPanel>
-                        <JIP33Table rowData={rowDataList[activeTab]} />
+                        <JIP33Table rowData={rowDataList[activeTab]} reviewComments={reviewComments} />
                     </StyledTabPanel>
                 </MainView>
             </Body>

@@ -12,6 +12,7 @@ export class TableRow {
     supplierOfferedValUOM?: string
     supplierOfferedValUOMColor?: ColorLegendEnum
     additionalNotes?: string
+    property?: string | null
 
     constructor(init?: Partial<TableRow>) {
         Object.assign(this, init)
