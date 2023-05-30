@@ -36,5 +36,6 @@ export function GetToken(keyName: string) {
         console.log("No app scope found. Using default scope.")
         scopes[0] = "api://412803ed-0c05-44a9-b433-b270706a6099/Datasheet.Write"
     }
+    // @ts-ignore
     return window.Fusion.modules.auth.acquireAccessToken({ scopes })
 }
