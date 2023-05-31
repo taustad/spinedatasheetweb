@@ -1,33 +1,34 @@
-import { generalRowData } from "../Components/JIP33Table/RowData/Mechanical/GeneralRowData"
+import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Mechanical/GeneralRowData"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { siteDataRowData } from "../Components/JIP33Table/RowData/Mechanical/SiteDataRowData"
-import { utilityConditionsRowData } from "../Components/JIP33Table/RowData/Mechanical/UtilityConditionsRowData"
-import { liquidCharacteristicsRowData } from "../Components/JIP33Table/RowData/Mechanical/LiquidCharacteristicsRowData"
-import { operatingConditionsRowData } from "../Components/JIP33Table/RowData/Mechanical/OperatingConditionsRowData"
-import { performanceRowData } from "../Components/JIP33Table/RowData/Mechanical/PerformanceRowData"
-import { constructionRowData } from "../Components/JIP33Table/RowData/Mechanical/ConstructionRowData"
-import { verticalPumpConstructionRowData } from "../Components/JIP33Table/RowData/Mechanical/VerticalPumpConstructionRowData"
-import { verticalPumpSumpDimensionsRowData } from "../Components/JIP33Table/RowData/Mechanical/VerticalPumpSumpDimensionsRowData"
-import { bearingsAndLubricationRowData } from "../Components/JIP33Table/RowData/Mechanical/BearingsAndLubricationRowData"
-import { materialsRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialsRowData"
-import { materialsAddForVerticalPumpsRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialsAddForVerticalPumpsRowData"
-import { materialInspectionRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialInspectionRowData"
-import { baseplateRowData } from "../Components/JIP33Table/RowData/Mechanical/BaseplateRowData"
-import { mechanicalSealRowData } from "../Components/JIP33Table/RowData/Mechanical/MechanicalSealRowData"
-import { couplingRowData } from "../Components/JIP33Table/RowData/Mechanical/CouplingRowData"
-import { driverAndGearRowData } from "../Components/JIP33Table/RowData/Mechanical/DriverAndGearRowData"
-import { instrumentationRowData } from "../Components/JIP33Table/RowData/Mechanical/InstrumentationRowData"
-import { testingRowData } from "../Components/JIP33Table/RowData/Mechanical/TestingRowData"
-import { surfacePreperationAndPaintingRowData } from "../Components/JIP33Table/RowData/Mechanical/SurfacePreperationAndPaintingRowData"
-import { otherPurchaserRequirementsRowData } from "../Components/JIP33Table/RowData/Mechanical/OtherPurchaserRequirementsRowData"
-import { sparePartsRowData } from "../Components/JIP33Table/RowData/Mechanical/SparePartsRowData"
-import { shipmentRowData } from "../Components/JIP33Table/RowData/Mechanical/ShipmentRowData"
+import { generateSiteDataRowData } from "../Components/JIP33Table/RowData/Mechanical/SiteDataRowData"
+import { generateUtilityConditionsRowData } from "../Components/JIP33Table/RowData/Mechanical/UtilityConditionsRowData"
+import { generateLiquidCharacteristicsRowData } from "../Components/JIP33Table/RowData/Mechanical/LiquidCharacteristicsRowData"
+import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Mechanical/OperatingConditionsRowData"
+import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Mechanical/PerformanceRowData"
+import { generateConstructionRowData } from "../Components/JIP33Table/RowData/Mechanical/ConstructionRowData"
+import { generateVerticalPumpConstructionRowData } from "../Components/JIP33Table/RowData/Mechanical/VerticalPumpConstructionRowData"
+import { generateVerticalPumpSumpDimensionsRowData } from "../Components/JIP33Table/RowData/Mechanical/VerticalPumpSumpDimensionsRowData"
+import { generateBearingsAndLubricationRowData } from "../Components/JIP33Table/RowData/Mechanical/BearingsAndLubricationRowData"
+import { generateMaterialsRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialsRowData"
+import { generateMaterialsAddForVerticalPumpsRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialsAddForVerticalPumpsRowData"
+import { generateMaterialInspectionRowData } from "../Components/JIP33Table/RowData/Mechanical/MaterialInspectionRowData"
+import { generateBaseplateRowData } from "../Components/JIP33Table/RowData/Mechanical/BaseplateRowData"
+import { generateMechanicalSealRowData } from "../Components/JIP33Table/RowData/Mechanical/MechanicalSealRowData"
+import { generateCouplingRowData } from "../Components/JIP33Table/RowData/Mechanical/CouplingRowData"
+import { generateDriverAndGearRowData } from "../Components/JIP33Table/RowData/Mechanical/DriverAndGearRowData"
+import { generateInstrumentationRowData } from "../Components/JIP33Table/RowData/Mechanical/InstrumentationRowData"
+import { generateTestingRowData } from "../Components/JIP33Table/RowData/Mechanical/TestingRowData"
+import { generateSurfacePreperationAndPaintingRowData } from "../Components/JIP33Table/RowData/Mechanical/SurfacePreperationAndPaintingRowData"
+import { generateOtherPurchaserRequirementsRowData } from "../Components/JIP33Table/RowData/Mechanical/OtherPurchaserRequirementsRowData"
+import { generateSparePartsRowData } from "../Components/JIP33Table/RowData/Mechanical/SparePartsRowData"
+import { generateShipmentRowData } from "../Components/JIP33Table/RowData/Mechanical/ShipmentRowData"
+import { GetDatasheetService } from "../api/DatasheetService"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -49,36 +50,36 @@ function JIP33MechanicalTabView({
 
     const { tagId } = useParams<Record<string, string | undefined>>()
 
-    // useEffect(() => {
-    //     (async () => {
-    //         setError(false)
-    //         setIsLoading(false)
-    //         if (tagId !== null && tagId !== undefined) {
-    //             try {
-    //                 setIsLoading(true)
-    //                 const datasheets: Datasheet = await (await GetDatasheetService())
-    //                     .getDatasheet(tagId)
-    //                 setTag(datasheets)
-    //                 setIsLoading(false)
-    //             } catch {
-    //                 console.error("Error loading tags")
-    //                 setError(true)
-    //             }
-    //         }
-    //     })()
-    // }, [])
+    useEffect(() => {
+        (async () => {
+            setError(false)
+            setIsLoading(false)
+            if (tagId !== null && tagId !== undefined) {
+                try {
+                    setIsLoading(true)
+                    const datasheets: Datasheet = await (await GetDatasheetService())
+                        .getDatasheet(tagId)
+                    setTag(datasheets)
+                    setIsLoading(false)
+                } catch {
+                    console.error("Error loading tags")
+                    setError(true)
+                }
+            }
+        })()
+    }, [])
 
-    // if (error) {
-    //     return <div>Error loading tag</div>
-    // }
+    if (error) {
+        return <div>Error loading tag</div>
+    }
 
-    // if (isLoading) {
-    //     return <div>Loading tag...</div>
-    // }
+    if (isLoading) {
+        return <div>Loading tag...</div>
+    }
 
-    // if (tag === undefined) {
-    //     return <div>No tag selected</div>
-    // }
+    if (tag === undefined) {
+        return <div>No tag selected</div>
+    }
 
     const sideMenuList = [
         "General", "Side data", "Utility conditions", "Liquid characteristics",
@@ -91,13 +92,14 @@ function JIP33MechanicalTabView({
     ]
 
     const rowDataList = [
-        generalRowData, siteDataRowData, utilityConditionsRowData, liquidCharacteristicsRowData,
-        operatingConditionsRowData, performanceRowData, constructionRowData, verticalPumpConstructionRowData,
-        verticalPumpSumpDimensionsRowData, bearingsAndLubricationRowData, materialsRowData,
-        materialsAddForVerticalPumpsRowData, materialInspectionRowData, baseplateRowData,
-        mechanicalSealRowData, couplingRowData, driverAndGearRowData, instrumentationRowData, testingRowData,
-        surfacePreperationAndPaintingRowData, otherPurchaserRequirementsRowData, sparePartsRowData,
-        shipmentRowData,
+        generateGeneralRowData(tag), generateSiteDataRowData(tag), generateUtilityConditionsRowData(tag),
+        generateLiquidCharacteristicsRowData(tag), generateOperatingConditionsRowData(tag), generatePerformanceRowData(tag),
+        generateConstructionRowData(tag), generateVerticalPumpConstructionRowData(tag), generateVerticalPumpSumpDimensionsRowData(tag),
+        generateBearingsAndLubricationRowData(tag), generateMaterialsRowData(tag), generateMaterialsAddForVerticalPumpsRowData(tag),
+        generateMaterialInspectionRowData(tag), generateBaseplateRowData(tag), generateMechanicalSealRowData(tag),
+        generateCouplingRowData(tag), generateDriverAndGearRowData(tag), generateInstrumentationRowData(tag),
+        generateTestingRowData(tag), generateSurfacePreperationAndPaintingRowData(tag), generateOtherPurchaserRequirementsRowData(tag),
+        generateSparePartsRowData(tag), generateShipmentRowData(tag),
     ]
 
     return (

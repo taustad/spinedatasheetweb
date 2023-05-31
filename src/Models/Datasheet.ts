@@ -13,6 +13,8 @@ export class Datasheet implements Components.Schemas.DatasheetDto {
     supplierOfferedProduct?: SupplierOfferedProduct;
     electricalPurchaserRequirement?: Components.Schemas.ElectricalPurchaserRequirement;
     electricalSupplierOfferedProduct?: Components.Schemas.ElectricalSupplierOfferedProduct;
+    mechanicalPurchaserRequirement?: Components.Schemas.MechanicalPurchaserRequirement;
+    mechanicalSupplierOfferedProduct?: Components.Schemas.MechanicalSupplierOfferedProduct;
 
     constructor(init?: Partial<Datasheet>) {
         Object.assign(this, init)
