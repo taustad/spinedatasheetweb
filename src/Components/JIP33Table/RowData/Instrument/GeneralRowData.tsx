@@ -22,6 +22,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "0",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "conformityAssessmentSystemLevel",
         },
         {
             refClause: "4.12.1",
@@ -31,6 +32,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "tagNo",
         },
         {
             refClause: "",
@@ -40,6 +42,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "serviceDescription",
         },
         {
             refClause: "",
@@ -51,6 +54,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "manufacturer",
         },
         {
             refClause: "",
@@ -62,6 +66,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.InputDataSupCom,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "modelNumber",
         },
         {
             refClause: "",
@@ -73,6 +78,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.InputDataSupCom,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "equipmentManufacturerSerialNumber",
         },
         {
             refClause: "",
@@ -82,6 +88,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "projectCountry",
         },
         {
             refClause: "",
@@ -91,6 +98,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "projectRegion",
         },
         {
             refClause: "",
@@ -100,6 +108,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "plantEnvironmentalLocation",
         },
         {
             refClause: "",
@@ -109,6 +118,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "pidNumber",
         },
         {
             refClause: "",
@@ -118,6 +128,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "lineOrEquipmentNumber",
         },
         {
             refClause: "",
@@ -130,6 +141,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValUOM: "",
             supplierOfferedValUOMColor: ColorLegendEnum.SpineModification,
             additionalNotes: "",
+            property: "minimumAmbientTemperature",
         },
         {
             refClause: "",
@@ -142,6 +154,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValUOM: "",
             supplierOfferedValUOMColor: ColorLegendEnum.SpineModification,
             additionalNotes: "",
+            property: "maximumAmbientTemperature",
         },
         {
             refClause: "",
@@ -151,6 +164,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "baseConditions",
         },
         {
             refClause: "",
@@ -162,6 +176,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValUOM: "",
             supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
             additionalNotes: "",
+            property: "baseTemperature",
         },
         {
             refClause: "",
@@ -173,6 +188,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValUOM: "",
             supplierOfferedValUOMColor: ColorLegendEnum.SelectNoInputExp,
             additionalNotes: "",
+            property: "basePressure",
         },
         {
             refClause: "",
@@ -182,6 +198,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "coatingDurability",
         },
         {
             refClause: "4.3,1.2.1",
@@ -193,6 +210,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "pressureRetainingBoltMaterial",
         },
         {
             refClause: "4.3,1.2.1",
@@ -204,6 +222,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "pressureRetainingNutMaterial",
         },
         {
             refClause: "4.1.4",
@@ -214,6 +233,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "silRating",
         },
         {
             refClause: "4.1.6,6.2.1",
@@ -224,6 +244,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "ingressProtection",
         },
         {
             refClause: "4.3.3.1",
@@ -234,6 +255,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "exProtection",
         },
         {
             refClause: "4.3.3.1",
@@ -244,6 +266,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "hazardousAreaClassificationStandard",
         },
         {
             refClause: "4.3.3.1",
@@ -254,6 +277,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "explosionHazardClassification",
         },
         {
             refClause: "4.3.3.1",
@@ -264,6 +288,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "explosionGroup",
         },
         {
             refClause: "4.3.3.1",
@@ -274,6 +299,7 @@ export const generateGeneralRowData = (datasheet: Datasheet): TableRow[] => {
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
+            property: "temperatureClass",
         },
     ]
 }

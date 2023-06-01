@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColorLegendEnum } from './JIP33ColorLegendEnums'
 import { ColDef } from '@ag-grid-community/core'
@@ -11,10 +11,12 @@ import { comment, comment_chat } from "@equinor/eds-icons"
 interface Props {
     rowData: object[],
     reviewComments?: ReviewComment[] | undefined,
+    setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined,
+    setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined,
 }
 
 function JIP33Table({
-    rowData, reviewComments
+    rowData, reviewComments, setReviewSideSheetOpen, setCurrentProperty
 }: Props) {
     useAgGridStyles()
 
@@ -75,10 +77,22 @@ function JIP33Table({
 
     const commentIcon = (params: any) => {
         console.log("params", params)
-        if (params.data.property === "codeRequirement") {
-            return <Icon data={comment_chat} color="#007079" />
+        const commentsExist = reviewComments?.some(c => c.property === params.data.property)
+        if (commentsExist && setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
+            return <Icon data={comment_chat} onClick={() => {
+                setReviewSideSheetOpen(true)
+                setCurrentProperty(params.data.property)
+            }
+            } color="#007079" />
         }
-        return <Icon data={comment} color="#007079" />
+        if (setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
+            return <Icon data={comment} onClick={() => {
+                setReviewSideSheetOpen(true)
+                setCurrentProperty(params.data.property)
+            }
+            } color="#007079" />
+        }
+        return <></>
     }
 
     const columns = [

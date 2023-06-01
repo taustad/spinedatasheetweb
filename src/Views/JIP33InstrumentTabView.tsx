@@ -3,9 +3,9 @@ import { generateInstallationConditionsRowData } from "../Components/JIP33Table/
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
 import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/Instrument/BodyElementSensorRowData"
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
-import { Button, Input, Typography } from "@equinor/eds-core-react"
+import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
 // import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
@@ -17,8 +17,9 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { GetCommentService } from "../api/CommentService"
 import { ReviewComment } from "../Models/ReviewComment"
+import { GetCommentService } from "../api/CommentService"
+import ReviewCommentsSideSheet from "../Components/ReviewCommentsSideSheet"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -40,7 +41,12 @@ function JIP33InstrumentTabView({
 
     const { tagId } = useParams<Record<string, string | undefined>>()
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
-    const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
+    const [open, setOpen] = useState(false);
+    const onCloseReviewSideSheet = useCallback(() => {
+        setOpen(false);
+    }, [setOpen]);
+
+    const [currentProperty, setCurrentProperty] = useState<string>("")
 
     useEffect(() => {
         (async () => {
@@ -108,46 +114,39 @@ function JIP33InstrumentTabView({
         generateTemperatureRowData(tag), generatePressureRowData(tag),
     ]
 
-    const handleSubmit = async () => {
-        const comment = { ...newReviewComment }
-        comment.tagDataId = tagId
-        comment.commentLevel = 0
-        comment.property = "codeRequirement"
-        await (await GetCommentService()).createComment(comment)
-    }
-
-    const handleCommentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const comment = { ...newReviewComment }
-        comment.text = event.target.value
-        setNewReviewComment(comment)
-    }
-
     return (
-        <Body>
-            <p>Comments</p>
-            <Input type="text" onChange={handleCommentChange} ></Input>
-            <Button onClick={handleSubmit}>Submit</Button>
-            <p>Comments:</p>
-            {reviewComments.map((comment) => {
-                return (
-                    <div>
-                        <p>{comment.text}</p>
-                    </div>
-                )
-            })}
-            <TopBar>
-                <Typography variant="h3">
-                    <BackButton />
-                    JIP33 table
-                </Typography>
-            </TopBar>
-            <JIP33WithSideMenu
-                sideMenuList={sideMenuList}
-                rowDataList={rowDataList}
-                customTabList={customTabList}
+        <>
+            <ReviewCommentsSideSheet
+                isOpen={open}
+                onClose={onCloseReviewSideSheet}
                 reviewComments={reviewComments}
+                currentProperty={currentProperty}
             />
-        </Body>
+            <Body>
+                <p>All Comments:</p>
+                {reviewComments.map((comment) => {
+                    return (
+                        <div>
+                            <p>{comment.text}</p>
+                        </div>
+                    )
+                })}
+                <TopBar>
+                    <Typography variant="h3">
+                        <BackButton />
+                        JIP33 table
+                    </Typography>
+                </TopBar>
+                <JIP33WithSideMenu
+                    sideMenuList={sideMenuList}
+                    rowDataList={rowDataList}
+                    customTabList={customTabList}
+                    reviewComments={reviewComments}
+                    setCurrentProperty={setCurrentProperty}
+                    setReviewSideSheetOpen={setOpen}
+                />
+            </Body>
+        </>
     )
 }
 

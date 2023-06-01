@@ -1,6 +1,6 @@
 import { Typography } from "@equinor/eds-core-react"
 import { tokens } from "@equinor/eds-tokens"
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 import styled from "styled-components"
 import JIP33Table from "./JIP33Table/JIP33Table"
 import { ReviewComment } from "../Models/ReviewComment"
@@ -75,9 +75,18 @@ interface Props {
     rowDataList: object[][]
     customTabList?: string[]
     reviewComments?: ReviewComment[]
+    setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined,
+    setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined,
 }
 
-const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customTabList, reviewComments }) => {
+const JIP33WithSideMenu: React.FC<Props> = ({
+    sideMenuList,
+    rowDataList,
+    customTabList,
+    reviewComments,
+    setCurrentProperty,
+    setReviewSideSheetOpen
+}) => {
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba
     const backgroundColor = "rgba(0, 112, 121, 0.1)"
@@ -111,7 +120,12 @@ const JIP33WithSideMenu: React.FC<Props> = ({ sideMenuList, rowDataList, customT
                 </SidebarDiv>
                 <MainView>
                     <StyledTabPanel>
-                        <JIP33Table rowData={rowDataList[activeTab]} reviewComments={reviewComments} />
+                        <JIP33Table
+                            rowData={rowDataList[activeTab]}
+                            reviewComments={reviewComments}
+                            setCurrentProperty={setCurrentProperty}
+                            setReviewSideSheetOpen={setReviewSideSheetOpen}
+                        />
                     </StyledTabPanel>
                 </MainView>
             </Body>
