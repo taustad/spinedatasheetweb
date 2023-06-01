@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/equinor/spinedatasheetweb/compare/v1.5.0...v1.6.0) (2023-06-01)
+
+
+### Features
+
+* Added JIP33 Mechanical dummy data ([2cd2389](https://github.com/equinor/spinedatasheetweb/commit/2cd2389d18da337bb0290045ba4160457f274b72))
+
 ## [1.5.0](https://github.com/equinor/spinedatasheetweb/compare/v1.4.0...v1.5.0) (2023-05-23)
 
 
