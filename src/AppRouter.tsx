@@ -14,7 +14,7 @@ const AppRouter: FC = () => (
             <Route path="/:projectId/JIP33Instrument/:tagId" element={<JIP33InstrumentTabView />} />
             <Route path="/:projectId/JIP33Electrical/:tagId" element={<JIP33ElectricalTabView />} />
             <Route path="/:projectId" element={<EquipmentListView />} />
-            <Route path="/JIP33Mechanical" element={<JIP33MechanicalTabView />} />
+            <Route path="/:projectId/JIP33Mechanical/:tagId" element={<JIP33MechanicalTabView />} />
         </Routes>
     </>
 );
