@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Button } from '@equinor/fusion-components';
 import { SideSheet } from '@equinor/fusion-react-side-sheet';
 import { GetCommentService } from "../api/CommentService"
@@ -11,13 +11,15 @@ type ReviewCommentsSideSheetProps = {
     onClose: () => void;
     currentProperty: string;
     reviewComments: ReviewComment[]
+    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
 };
 
 const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     isOpen,
     onClose,
     currentProperty,
-    reviewComments
+    reviewComments,
+    setReviewComments
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
     const { tagId } = useParams<Record<string, string | undefined>>()
@@ -51,6 +53,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
         try {
             const service = await GetCommentService()
             await service.createComment(comment)
+            setReviewComments([...reviewComments, comment])
         } catch (error) {
             console.log(`Error creating comment: ${error}`)
         }

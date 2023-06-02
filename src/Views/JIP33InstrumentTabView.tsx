@@ -121,6 +121,7 @@ function JIP33InstrumentTabView({
                 onClose={onCloseReviewSideSheet}
                 reviewComments={reviewComments}
                 currentProperty={currentProperty}
+                setReviewComments={setReviewComments}
             />
             <Body>
                 <p>All Comments:</p>
