@@ -5,6 +5,7 @@ import { GetCommentService } from "../api/CommentService"
 import { ReviewComment } from '../Models/ReviewComment';
 import { Input } from '@equinor/eds-core-react';
 import { useParams } from 'react-router-dom';
+import { useCurrentUser } from '@equinor/fusion';
 
 type ReviewCommentsSideSheetProps = {
     isOpen: boolean;
@@ -23,7 +24,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
     const { tagId } = useParams<Record<string, string | undefined>>()
-
+    const currentUser: any = useCurrentUser()
 
     const getCommentsForProperty = (property: string) => {
         return reviewComments.filter((comment) => comment.property === property)
@@ -44,7 +45,9 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
             return (
                 <div key={comment.id}>
                     <p>{formattedDate}</p>
+                    <p>User: {comment.userId}</p>
                     <p>{comment.text}</p>
+                    <br />
                 </div>
             );
         });
@@ -62,6 +65,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
+        comment.userId = currentUser?._info.localAccountId
         try {
             const service = await GetCommentService()
             await service.createComment(comment)

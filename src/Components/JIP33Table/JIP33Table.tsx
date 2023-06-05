@@ -76,7 +76,6 @@ function JIP33Table({
     }
 
     const commentIcon = (params: any) => {
-        console.log("params", params)
         const commentsExist = reviewComments?.some(c => c.property === params.data.property)
         if (commentsExist && setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
             return <Icon data={comment_chat} onClick={() => {
