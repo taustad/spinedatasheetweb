@@ -1,4 +1,4 @@
-export class PurchaserRequirement implements Components.Schemas.PurchaserRequirement {
+export class InstrumentPurchaserRequirement implements Components.Schemas.InstrumentPurchaserRequirement {
     codeRequirement?: number | null; // int32
             conformityAssessmentSystemLevel?: number | null; // int32
             tagNumber?: string | null;
@@ -123,7 +123,7 @@ export class PurchaserRequirement implements Components.Schemas.PurchaserRequire
             ruptureDiscBurstPressure?: string | null;
             processSecondaryContainment?: string | null;
     
-    constructor(init?: Partial<PurchaserRequirement>) {
+    constructor(init?: Partial<InstrumentPurchaserRequirement>) {
         Object.assign(this, init);
     }
 }

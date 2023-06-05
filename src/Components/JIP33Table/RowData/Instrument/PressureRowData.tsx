@@ -6,7 +6,7 @@ export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Design pressure, maximum:",
-            purchaserReq: datasheet.purchaserRequirement?.designPressureMaximum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designPressureMaximum,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -15,7 +15,7 @@ export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Design pressure, minimum:",
-            purchaserReq: datasheet.purchaserRequirement?.designPressureMinimum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designPressureMinimum,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -24,7 +24,7 @@ export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Minimum operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.minimumOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.minimumOperatingPressure,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -33,7 +33,7 @@ export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Normal operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.normalOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.normalOperatingPressure,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -42,7 +42,7 @@ export const generatePressureRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Maximum operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumOperatingPressure,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",

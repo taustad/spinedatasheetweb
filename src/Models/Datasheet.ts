@@ -1,5 +1,5 @@
-import { PurchaserRequirement } from "./PurchaserRequirement"
-import { SupplierOfferedProduct } from "./SupplierOfferedProduct"
+import { InstrumentPurchaserRequirement } from "./InstrumentPurchaserRequirement"
+import { InstrumentSupplierOfferedProduct } from "./InstrumentSupplierOfferedProduct"
 
 export class Datasheet implements Components.Schemas.DatasheetDto {
     id?: string; // uuid
@@ -9,8 +9,8 @@ export class Datasheet implements Components.Schemas.DatasheetDto {
     category?: string | null;
     area?: string | null;
     dicipline?: string | null;
-    purchaserRequirement?: PurchaserRequirement;
-    supplierOfferedProduct?: SupplierOfferedProduct;
+    instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
+    instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
     electricalPurchaserRequirement?: Components.Schemas.ElectricalPurchaserRequirement;
     electricalSupplierOfferedProduct?: Components.Schemas.ElectricalSupplierOfferedProduct;
     mechanicalPurchaserRequirement?: Components.Schemas.MechanicalPurchaserRequirement;

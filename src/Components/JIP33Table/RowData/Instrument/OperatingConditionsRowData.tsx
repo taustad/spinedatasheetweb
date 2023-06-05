@@ -7,7 +7,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid(s):",
-            purchaserReq: datasheet.purchaserRequirement?.processFluids,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processFluids,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -16,7 +16,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid state:",
-            purchaserReq: datasheet.purchaserRequirement?.processFluidState,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processFluidState,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -25,7 +25,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Service description:",
-            purchaserReq: datasheet.purchaserRequirement?.serviceDescription,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.serviceDescription,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -34,7 +34,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid corrosive compounds:",
-            purchaserReq: datasheet.purchaserRequirement?.processFluidCorrosiveCompounds,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processFluidCorrosiveCompounds,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -43,7 +43,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid erosion possibility:",
-            purchaserReq: datasheet.purchaserRequirement?.processFluidErosionPossibility,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processFluidErosionPossibility,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -52,7 +52,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process fluid specific heat ration Cp/Cv:",
-            purchaserReq: datasheet.purchaserRequirement?.processFluidSpecificHeatRatio,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processFluidSpecificHeatRatio,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -61,7 +61,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Process vacuum possibility:",
-            purchaserReq: datasheet.purchaserRequirement?.processVacuumPossibility,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.processVacuumPossibility,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -92,7 +92,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating velocity:",
-            purchaserReq: datasheet.purchaserRequirement?.minimumOperatingVelocity,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.minimumOperatingVelocity,
             purchaserReqUOM: "m/s",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "",
@@ -103,7 +103,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating temperature:",
-            purchaserReq: datasheet.purchaserRequirement?.minimumOperatingTemperature,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.minimumOperatingTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -114,7 +114,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Minimum operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.minimumOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.minimumOperatingPressure,
             purchaserReqUOM: "bara",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -198,7 +198,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating velocity:",
-            purchaserReq: datasheet.purchaserRequirement?.normalOperatingVelocity,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.normalOperatingVelocity,
             purchaserReqUOM: "m/s",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "",
@@ -209,7 +209,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating temperature:",
-            purchaserReq: datasheet.purchaserRequirement?.normalOperatingTemperature,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.normalOperatingTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -220,7 +220,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.normalOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.normalOperatingPressure,
             purchaserReqUOM: "bara",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -240,7 +240,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Normal operating liquid viscosity:",
-            purchaserReq: datasheet.purchaserRequirement?.normalOperatingLiquidViscosity,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.normalOperatingLiquidViscosity,
             purchaserReqUOM: "cP",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -304,7 +304,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating velocity:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumOperatingVelocity,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumOperatingVelocity,
             purchaserReqUOM: "m/s",
             purchaserReqUOMColor: ColorLegendEnum.SelectNoInputExp,
             supplierOfferedVal: "",
@@ -315,7 +315,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating temperature:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumOperatingTemperature,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumOperatingTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -326,7 +326,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating pressure:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumOperatingPressure,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumOperatingPressure,
             purchaserReqUOM: "bara",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -346,7 +346,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum operating liquid viscosity:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumOperatingLiquidViscosity,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumOperatingLiquidViscosity,
             purchaserReqUOM: "cP",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -399,7 +399,7 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum recoverable pressure drop:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumRecoverablePressureDrop,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumRecoverablePressureDrop,
             purchaserReqUOM: "",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -410,11 +410,11 @@ export const generateOperatingConditionsRowData = (datasheet: Datasheet): TableR
         {
             refClause: "",
             description: "Maximum unrecoverable pressure loss:",
-            purchaserReq: datasheet.purchaserRequirement?.maximumUnrecoverablePressureLoss,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumUnrecoverablePressureLoss,
             purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
             purchaserReqUOM: "bar",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
-            supplierOfferedVal: datasheet.supplierOfferedProduct?.maximumUnrecoverablePressureLoss,
+            supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.maximumUnrecoverablePressureLoss,
             supplierOfferedValColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
             supplierOfferedValUOM: "bar",
             supplierOfferedValUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,

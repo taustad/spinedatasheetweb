@@ -37,9 +37,9 @@ export const generateFlowRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Measurement range, minimum",
-            purchaserReq: datasheet.purchaserRequirement?.measurementRangeMinimum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.measurementRangeMinimum,
             purchaserReqUOM: "",
-            supplierOfferedVal: datasheet.supplierOfferedProduct?.measurementRangeMinimum,
+            supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.measurementRangeMinimum,
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",
@@ -47,9 +47,9 @@ export const generateFlowRowData = (datasheet: Datasheet): TableRow[] => {
         {
             refClause: "",
             description: "Measurement range, maximum:",
-            purchaserReq: datasheet.purchaserRequirement?.measurementRangeMaximum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.measurementRangeMaximum,
             purchaserReqUOM: "",
-            supplierOfferedVal: datasheet.supplierOfferedProduct?.measurementRangeMaximum,
+            supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.measurementRangeMaximum,
             supplierOfferedValColor: ColorLegendEnum.SpineModification,
             supplierOfferedValUOM: "",
             additionalNotes: "",

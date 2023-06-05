@@ -1,4 +1,4 @@
-export class SupplierOfferedProduct implements Components.Schemas.SupplierOfferedProduct {
+export class InstrumentSupplierOfferedProduct implements Components.Schemas.InstrumentSupplierOfferedProduct {
     manufacturer?: string | null;
             modelNumber?: string | null;
             equipmentManufacturerSerialNumber?: string | null;
@@ -123,7 +123,7 @@ export class SupplierOfferedProduct implements Components.Schemas.SupplierOffere
             ruptureDiscBurstPressure?: string | null;
             processSecondaryContainment?: string | null;
 
-    constructor(init?: Partial<SupplierOfferedProduct>) {
+    constructor(init?: Partial<InstrumentSupplierOfferedProduct>) {
         Object.assign(this, init);
     }
 }

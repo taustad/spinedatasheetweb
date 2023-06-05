@@ -1,5 +1,5 @@
 import { ColDef } from "@ag-grid-community/core";
-import { PurchaserRequirement } from "../../Models/PurchaserRequirement"
+import { InstrumentPurchaserRequirement } from "../../Models/InstrumentPurchaserRequirement"
 
 function getPropertyName<T>(property: keyof T): keyof T {
     return property;
@@ -8,96 +8,96 @@ function getPropertyName<T>(property: keyof T): keyof T {
 export const comparisonGeneralColumnDefs = (): ColDef[] => {
     return [
         {
-            field: getPropertyName<PurchaserRequirement>("codeRequirement"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("codeRequirement"),
             headerName: "Code requirement",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("conformityAssessmentSystemLevel"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("conformityAssessmentSystemLevel"),
             headerName: "Conformity assessment system (CAS) level",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("tagNumber"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("tagNumber"),
             headerName: "Tag number",
             pinned: "left",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("serviceDescription"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("serviceDescription"),
             headerName: "Service description",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("manufacturer"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("manufacturer"),
             headerName: "Manufacturer",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("projectCountry"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("projectCountry"),
             headerName: "Project country",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("projectRegion"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("projectRegion"),
             headerName: "Project region",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("plantEnvironmentalLocation"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("plantEnvironmentalLocation"),
             headerName: "Plant environmental location",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("pidNumber"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("pidNumber"),
             headerName: "P&ID number",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("lineOrEquipmentNumber"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("lineOrEquipmentNumber"),
             headerName: "Line or equipment number",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("minimumAmbientTemperature"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("minimumAmbientTemperature"),
             headerName: "Minimum ambient temperature",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("maximumAmbientTemperature"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("maximumAmbientTemperature"),
             headerName: "Maximum ambient temperature",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("baseConditions"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("baseConditions"),
             headerName: "Base conditions",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("baseTemperature"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("baseTemperature"),
             headerName: "Base temperature",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("basePressure"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("basePressure"),
             headerName: "Base pressure",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("coatingDurability"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("coatingDurability"),
             headerName: "Coating durability",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("silRating"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("silRating"),
             headerName: "SIL rating",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("ingressProtection"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("ingressProtection"),
             headerName: "Ingress protection",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("exProtection"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("exProtection"),
             headerName: "EX protection",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("hazardousAreaClassificationStandard"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("hazardousAreaClassificationStandard"),
             headerName: "Hazardous area classification standard",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("explosionHazardClassification"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("explosionHazardClassification"),
             headerName: "Explosion hazard classification",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("explosionGroup"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("explosionGroup"),
             headerName: "Explosion group",
         },
         {
-            field: getPropertyName<PurchaserRequirement>("temperatureClass"),
+            field: getPropertyName<InstrumentPurchaserRequirement>("temperatureClass"),
             headerName: "Temperature class",
         },
     ]

@@ -7,7 +7,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side pipe schedule:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSidePipeSchedule,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSidePipeSchedule,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -16,7 +16,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side line size:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineSize,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSideLineSize,
             purchaserReqUOM: "in",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -27,7 +27,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side line equipment:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineEquipmentRating,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSideLineEquipmentRating,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -36,7 +36,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side line connection type:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideLineConnectionType,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSideLineConnectionType,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -45,7 +45,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side connection orientation:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideConnectionOrientation,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSideConnectionOrientation,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -54,7 +54,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Upstream/high-side material type:",
-            purchaserReq: datasheet.purchaserRequirement?.upstreamHighSideMaterialType,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.upstreamHighSideMaterialType,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
@@ -63,7 +63,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Design pressure, maximum:",
-            purchaserReq: datasheet.purchaserRequirement?.designPressureMaximum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designPressureMaximum,
             purchaserReqUOM: "barg",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -74,7 +74,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Design pressure, minimum:",
-            purchaserReq: datasheet.purchaserRequirement?.designPressureMinimum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designPressureMinimum,
             purchaserReqUOM: "barg",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -85,7 +85,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Design temperature, maximum:",
-            purchaserReq: datasheet.purchaserRequirement?.designTemperatureMaximum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designTemperatureMaximum,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -96,7 +96,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Design temperature, minimum:",
-            purchaserReq: datasheet.purchaserRequirement?.designTemperatureMinimum,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.designTemperatureMinimum,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
             supplierOfferedVal: "",
@@ -107,7 +107,7 @@ export const generateInstallationConditionsRowData = (datasheet: Datasheet): Tab
         {
             refClause: "",
             description: "Sour service specification:",
-            purchaserReq: datasheet.purchaserRequirement?.sourServiceSpecification,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.sourServiceSpecification,
             purchaserReqUOM: "",
             supplierOfferedVal: "N/A",
             supplierOfferedValUOM: "",
