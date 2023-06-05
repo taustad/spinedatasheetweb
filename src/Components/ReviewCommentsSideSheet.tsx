@@ -31,8 +31,19 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const listCommentsForProperty = (property: string) => {
         return getCommentsForProperty(property).map((comment) => {
+            const date = new Date(comment.createdDate ?? "")
+            const formattedDate = date.toLocaleString(undefined, {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: false,
+              });
             return (
                 <div key={comment.id}>
+                    <p>{formattedDate}</p>
                     <p>{comment.text}</p>
                 </div>
             );
@@ -50,6 +61,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
         comment.tagDataId = tagId
         comment.commentLevel = 0
         comment.property = currentProperty
+        comment.createdDate = new Date().toISOString()
         try {
             const service = await GetCommentService()
             await service.createComment(comment)

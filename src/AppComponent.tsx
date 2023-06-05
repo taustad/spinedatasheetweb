@@ -18,7 +18,7 @@ const AppComponent: FC = () => {
 
     const fusionEnvironment = useFusionEnvironment()
 
-    const basename = "/apps/spinedatasheet"
+    const basename = fusionEnvironment.env === "dev" ? "/" : "/apps/spinedatasheet"
 
     const currentUser = useCurrentUser()
 
