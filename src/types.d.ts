@@ -1,5 +1,16 @@
 declare namespace Components {
     namespace Schemas {
+        export interface Comment {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            userId?: string; // uuid
+            tagDataId?: string; // uuid
+            text?: string | null;
+            property?: string | null;
+            commentLevel?: CommentLevel /* int32 */;
+        }
+        export type CommentLevel = 0 | 1 | 2; // int32
         export interface Contract {
             tags?: string[] | null;
         }
@@ -1289,6 +1300,46 @@ declare namespace Components {
     }
 }
 declare namespace Paths {
+    namespace CreateComment {
+        export type RequestBody = Components.Schemas.Comment;
+        namespace Responses {
+            export type $200 = Components.Schemas.Comment;
+        }
+    }
+    namespace GetComment {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        export interface QueryParameters {
+            id?: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Comment;
+        }
+    }
+    namespace GetComments {
+        namespace Responses {
+            export type $200 = Components.Schemas.Comment[];
+        }
+    }
+    namespace GetCommentsForTag {
+        namespace Parameters {
+            export type Id = string;
+            export type TagId = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            tagId?: Parameters.TagId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Comment[];
+        }
+    }
     namespace GetContract {
         namespace Parameters {
             export type Id = string; // uuid

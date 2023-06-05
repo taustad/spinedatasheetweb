@@ -1,15 +1,22 @@
-import { useMemo } from 'react'
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { ColorLegendEnum } from './JIP33ColorLegendEnums'
-import { ColDef } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
+import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
+import { ColDef } from "@ag-grid-community/core"
+import { AgGridReact } from "@ag-grid-community/react"
+import { ReviewComment } from "../../Models/ReviewComment"
+import { Icon } from "@equinor/eds-core-react"
+import { comment, comment_chat } from "@equinor/eds-icons"
+
 
 interface Props {
     rowData: object[],
+    reviewComments?: ReviewComment[] | undefined,
+    setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined,
+    setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined,
 }
 
 function JIP33Table({
-    rowData,
+    rowData, reviewComments, setReviewSideSheetOpen, setCurrentProperty,
 }: Props) {
     useAgGridStyles()
 
@@ -68,6 +75,25 @@ function JIP33Table({
         return { backgroundColor: remainingColor }
     }
 
+    const commentIcon = (params: any) => {
+        const commentsExist = reviewComments?.some((c) => c.property === params.data.property)
+        if (commentsExist && setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
+            return <Icon data={comment_chat} onClick={() => {
+                setReviewSideSheetOpen(true)
+                setCurrentProperty(params.data.property)
+            }
+            } color="#007079" />
+        }
+        if (setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
+            return <Icon data={comment} onClick={() => {
+                setReviewSideSheetOpen(true)
+                setCurrentProperty(params.data.property)
+            }
+            } color="#007079" />
+        }
+        return <></>
+    }
+
     const columns = [
         { field: "refClause", headerName: "Ref. Clause", hide: true },
         { field: "description", headerName: "Description", width: 400 },
@@ -75,6 +101,7 @@ function JIP33Table({
         { field: "purchaserReqUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 140 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
+        { field: "comment", headerName: "Comment", cellStyle: (params: any) => reqColor(params.data.commentColor, white), cellRenderer: commentIcon },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) }
     ]
 
