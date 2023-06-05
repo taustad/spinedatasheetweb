@@ -85,7 +85,7 @@ const JIP33WithSideMenu: React.FC<Props> = ({
     customTabList,
     reviewComments,
     setCurrentProperty,
-    setReviewSideSheetOpen
+    setReviewSideSheetOpen,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba

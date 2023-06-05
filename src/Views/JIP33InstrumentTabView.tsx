@@ -8,7 +8,6 @@ import styled from "styled-components"
 import { useCallback, useEffect, useState } from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
-// import JIP33LegendModal from "../Components/JIP33Table/JIP33LegendModal"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { Datasheet } from "../Models/Datasheet"
@@ -22,14 +21,14 @@ import { GetCommentService } from "../api/CommentService"
 import ReviewCommentsSideSheet from "../Components/ReviewCommentsSideSheet"
 
 const TopBar = styled.div`
-    padding-top: 0;
-    border-bottom: 1px solid LightGray;
-    z-index: 100;
-    padding-top: 20px;
+    padding-top: 0
+    border-bottom: 1px solid LightGray
+    z-index: 100
+    padding-top: 20px
 `
 
 const Body = styled.div`
-    height: 92%;
+    height: 92%
 `
 
 function JIP33InstrumentTabView({
@@ -41,12 +40,17 @@ function JIP33InstrumentTabView({
 
     const { tagId } = useParams<Record<string, string | undefined>>()
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
     const onCloseReviewSideSheet = useCallback(() => {
-        setOpen(false);
-    }, [setOpen]);
+        setOpen(false)
+    }, [setOpen])
 
     const [currentProperty, setCurrentProperty] = useState<string>("")
+
+    const getCommentsForTag = async (id: string) => {
+        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(id)
+        setReviewComments(comments)
+    }
 
     useEffect(() => {
         (async () => {
@@ -68,21 +72,16 @@ function JIP33InstrumentTabView({
         })()
     }, [])
 
-    const getCommentsForTag = async (tagId: string) => {
-        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(tagId)
-        setReviewComments(comments)
-    }
-
     useEffect(() => {
         if (tagId !== null && tagId !== undefined) {
             const intervalId = setInterval(async () => {
-                const newComments = await (await GetCommentService()).getCommentsForTag(tagId);
-                setReviewComments(newComments);
-            }, 5000);
+                const newComments = await (await GetCommentService()).getCommentsForTag(tagId)
+                setReviewComments(newComments)
+            }, 5000)
 
-            return () => clearInterval(intervalId);
+            return () => clearInterval(intervalId)
         }
-    }, []);
+    }, [])
 
     if (error) {
         return <div>Error loading tag</div>
@@ -125,13 +124,13 @@ function JIP33InstrumentTabView({
             />
             <Body>
                 <p>All Comments:</p>
-                {reviewComments.map((comment) => {
-                    return (
-                        <div>
-                            <p>{comment.text}</p>
-                        </div>
-                    )
-                })}
+                {reviewComments.map((comment) =>
+                (
+                    <div>
+                        <p>{comment.text}</p>
+                    </div>
+                )
+                )}
                 <TopBar>
                     <Typography variant="h3">
                         <BackButton />

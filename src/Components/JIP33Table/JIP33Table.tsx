@@ -1,9 +1,9 @@
-import { Dispatch, SetStateAction, useMemo } from 'react'
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { ColorLegendEnum } from './JIP33ColorLegendEnums'
-import { ColDef } from '@ag-grid-community/core'
-import { AgGridReact } from '@ag-grid-community/react'
-import { ReviewComment } from '../../Models/ReviewComment'
+import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
+import { ColDef } from "@ag-grid-community/core"
+import { AgGridReact } from "@ag-grid-community/react"
+import { ReviewComment } from "../../Models/ReviewComment"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 function JIP33Table({
-    rowData, reviewComments, setReviewSideSheetOpen, setCurrentProperty
+    rowData, reviewComments, setReviewSideSheetOpen, setCurrentProperty,
 }: Props) {
     useAgGridStyles()
 
@@ -76,7 +76,7 @@ function JIP33Table({
     }
 
     const commentIcon = (params: any) => {
-        const commentsExist = reviewComments?.some(c => c.property === params.data.property)
+        const commentsExist = reviewComments?.some((c) => c.property === params.data.property)
         if (commentsExist && setReviewSideSheetOpen !== undefined && setCurrentProperty !== undefined) {
             return <Icon data={comment_chat} onClick={() => {
                 setReviewSideSheetOpen(true)
@@ -101,7 +101,7 @@ function JIP33Table({
         { field: "purchaserReqUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white), width: 140 },
         { field: "supplierOfferedVal", headerName: "Supplier offered value", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey), width: 220 }, // backgroundColor needs to be set by data params, not general.
         { field: "supplierOfferedValUOM", headerName: "Unit of measure", cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white), width: 140 },
-        { field: "comment", headerName: "Comment", cellStyle: (params: any) => reqColor(params.data.commentColor, white), cellRenderer: commentIcon, },
+        { field: "comment", headerName: "Comment", cellStyle: (params: any) => reqColor(params.data.commentColor, white), cellRenderer: commentIcon },
         { field: "additionalNotes", headerName: "Additional notes", flex: 1, cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white) }
     ]
 

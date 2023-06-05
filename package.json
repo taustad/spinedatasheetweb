@@ -41,7 +41,7 @@
     "@ag-grid-community/csv-export": "^27.3.0",
     "@ag-grid-community/react": "^27.3.0",
     "@ag-grid-enterprise/column-tool-panel": "^27.3.0",
-    "@ag-grid-enterprise/core": "^28.2.0",
+    "@ag-grid-enterprise/core": "^27.3.0",
     "@ag-grid-enterprise/excel-export": "^27.3.0",
     "@ag-grid-enterprise/filter-tool-panel": "^27.3.0",
     "@emotion/css": "^11.11.0",
