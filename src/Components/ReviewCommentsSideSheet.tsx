@@ -75,6 +75,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     const sideSheetContent = (property: string) => {
         return (
             <>
+                {currentProperty !== "" && <h2>{property}</h2>}
                 {listCommentsForProperty(property)}
                 <Input type="text" onChange={handleCommentChange} value={newReviewComment?.text ?? ""} ></Input>
                 <Button onClick={handleSubmit}>Submit</Button>

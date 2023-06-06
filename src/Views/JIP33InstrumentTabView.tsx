@@ -3,7 +3,7 @@ import { generateInstallationConditionsRowData } from "../Components/JIP33Table/
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
 import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/Instrument/BodyElementSensorRowData"
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
-import { Typography } from "@equinor/eds-core-react"
+import { Icon, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useCallback, useEffect, useState } from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
@@ -19,6 +19,8 @@ import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
 import { ReviewComment } from "../Models/ReviewComment"
 import { GetCommentService } from "../api/CommentService"
 import ReviewCommentsSideSheet from "../Components/ReviewCommentsSideSheet"
+import { comment_chat } from "@equinor/eds-icons"
+
 
 const TopBar = styled.div`
     padding-top: 0
@@ -123,18 +125,15 @@ function JIP33InstrumentTabView({
                 setReviewComments={setReviewComments}
             />
             <Body>
-                <p>All Comments:</p>
-                {reviewComments.map((comment) =>
-                (
-                    <div>
-                        <p>{comment.text}</p>
-                    </div>
-                )
-                )}
                 <TopBar>
                     <Typography variant="h3">
                         <BackButton />
                         JIP33 table
+                        <Icon data={comment_chat} onClick={() => {
+                            setOpen(true)
+                            setCurrentProperty("")
+                        }
+                        } color="#007079" />
                     </Typography>
                 </TopBar>
                 <JIP33WithSideMenu
