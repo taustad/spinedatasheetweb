@@ -1,5 +1,5 @@
 import { Progress, Tabs } from "@equinor/eds-core-react"
-import { useCurrentContext } from "@equinor/fusion"
+import { useCurrentContext } from '@equinor/fusion-framework-react-app/context';
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
@@ -38,7 +38,7 @@ function EquipmentListView() {
         (async () => {
             setError(false)
             setIsLoading(false)
-            if (currentProject !== null && currentProject.externalId !== null) {
+            if (currentProject !== null && currentProject.currentContext?.externalId !== null) {
                 try {
                     setIsLoading(true)
                     const datasheets: Datasheet[] = await (
