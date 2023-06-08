@@ -32,13 +32,13 @@ function EquipmentListView() {
     const [error, setError] = useState<boolean>(false)
 
     const { projectId } = useParams<Record<string, string | undefined>>()
-    const currentProject = useCurrentContext();
+    // const currentProject = useCurrentContext();
 
     useEffect(() => {
         (async () => {
             setError(false)
             setIsLoading(false)
-            if (currentProject !== null && currentProject.currentContext?.externalId !== null) {
+            if (projectId !== null && projectId !== null) {
                 try {
                     setIsLoading(true)
                     const datasheets: Datasheet[] = await (
@@ -52,12 +52,12 @@ function EquipmentListView() {
                 }
             }
         })()
-    }, [currentProject, projectId])
+    }, [projectId])
 
     if (
-        currentProject === null &&
         (projectId === null || projectId === undefined)
     ) {
+        console.log("projectId", projectId)
         return <div>No project selected</div>
     }
 
