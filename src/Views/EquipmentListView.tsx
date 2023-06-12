@@ -1,13 +1,13 @@
 import { Progress, Tabs } from "@equinor/eds-core-react"
-import { useCurrentContext } from '@equinor/fusion-framework-react-app/context';
+import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
 import styled from "styled-components"
 import { GetDatasheetService } from "../api/DatasheetService"
 import EquipmentListTable from "../Components/EquipmentListTable"
 import { Datasheet } from "../Models/Datasheet"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import Header from "../Components/Header/Header"
+import { useNavigate, useParams } from "react-router-dom"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -30,22 +30,27 @@ function EquipmentListView() {
     const [tags, setTags] = useState<Datasheet[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-    const [externalId, setExternalId] = useState<string | undefined>("")
+    const [externalId, setExternalId] = useState<string | undefined>()
 
     const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext();
 
+    const navigate = useNavigate()
+
     useEffect(() => {
+        console.error("currentProject in useEffect", currentProject)
         if (currentProject.currentContext?.externalId !== externalId) {
+            console.error("changing externalId")
+            console.error("externalId before", externalId)
             setExternalId(currentProject.currentContext?.externalId)
         }
     }, [currentProject])
 
     useEffect(() => {
         (async () => {
-            setError(false)
-            setIsLoading(false)
             if (externalId !== undefined) {
+                setError(false)
+                setIsLoading(false)
                 try {
                     setIsLoading(true)
                     const datasheets: Datasheet[] = await (
@@ -61,12 +66,13 @@ function EquipmentListView() {
         })()
     }, [externalId])
 
-    if (
-        currentProject === null &&
-        (projectId === null || projectId === undefined)
-    ) {
-        console.log("projectId", projectId)
+    if (currentProject.currentContext === null || currentProject.currentContext === undefined) {
         return <div>No project selected</div>
+    }
+
+    if (currentProject?.currentContext !== null && currentProject.currentContext !== undefined
+        && (projectId === null || projectId === undefined)) {
+        navigate(`/${currentProject.currentContext.id}`)
     }
 
     if (error) {

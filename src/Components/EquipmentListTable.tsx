@@ -1,12 +1,12 @@
 import { useMemo } from "react"
-import { AgGridReact } from '@ag-grid-community/react';
-import { Link, useLocation } from "react-router-dom"
+import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Datasheet } from "../Models/Datasheet"
-import { Icon } from '@equinor/eds-core-react'
-import { tag } from '@equinor/eds-icons'
+import { Icon } from "@equinor/eds-core-react"
+import { tag } from "@equinor/eds-icons"
 import styled from "styled-components"
-import { ColDef } from "@ag-grid-community/core";
+import { ColDef } from "@ag-grid-community/core"
+import { Link, useLocation } from "react-router-dom"
 
 interface Props {
     tags: Datasheet[],
@@ -39,19 +39,13 @@ function EquipmentListTable({ tags }: Props) {
         return "JIP33Instrument"
     }
 
-    const getLastCharacter = (str: string) => {
-        return str.charAt(str.length - 1)
-    }
-
     const getTagLink = (params: any) => {
-        console.log("location", location)
-        if (getLastCharacter(location.pathname) === "/") {
+        const lastChar = location.pathname.charAt(location.pathname.length - 1)
+        if (lastChar === "/") {
             const result = ({ ...location, pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.id}` })
-            console.log("result", result)
             return result
         }
         const result = ({ ...location, pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.id}` })
-        console.log("result", result)
         return result
     }
 
