@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Button } from "@equinor/fusion-components"
 import { SideSheet } from "@equinor/fusion-react-side-sheet"
 import { GetCommentService } from "../api/CommentService"
@@ -6,6 +6,8 @@ import { ReviewComment } from "../Models/ReviewComment"
 import { Input } from "@equinor/eds-core-react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
+import { useApiClients } from "@equinor/fusion"
+
 
 type ReviewCommentsSideSheetProps = {
     isOpen: boolean
@@ -26,7 +28,31 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
 
+    const apiClients = useApiClients()
+    const [users, setUsers] = useState<any[]>([])
+
     const getCommentsForProperty = (property: string) => reviewComments.filter((comment) => comment.property === property)
+
+    useEffect(() => {
+        const commentsInReview = getCommentsForProperty(currentProperty)
+
+        commentsInReview.forEach((comment) => {
+            if (comment.userId === undefined) {
+                return
+            }
+            apiClients.people.getPersonDetailsAsync(comment.userId).then(response => {
+                const personDetails = response.data
+                const user = {
+                    id: personDetails.azureUniqueId,
+                    name: personDetails.name,
+                }
+                setUsers([...users, user])
+            })
+        })
+
+
+    }, [currentProperty])
+
 
     const listCommentsForProperty = (property: string) => getCommentsForProperty(property).map((comment) => {
         const date = new Date(comment.createdDate ?? "")
@@ -39,10 +65,13 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
             second: "2-digit",
             hour12: false,
         })
+
+        const user = users.find(u => u.id === comment.userId)
+
         return (
             <div key={comment.id}>
                 <p>{formattedDate}</p>
-                <p>User: {comment.userId}</p>
+                <p>{user?.name}</p>
                 <p>{comment.text}</p>
                 <br />
             </div>
