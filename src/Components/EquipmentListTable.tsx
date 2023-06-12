@@ -1,12 +1,12 @@
 import { useMemo } from "react"
-import { AgGridReact } from '@ag-grid-community/react';
-import { Link } from "react-router-dom"
+import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Datasheet } from "../Models/Datasheet"
-import { Icon } from '@equinor/eds-core-react'
-import { tag } from '@equinor/eds-icons'
+import { Icon } from "@equinor/eds-core-react"
+import { tag } from "@equinor/eds-icons"
 import styled from "styled-components"
-import { ColDef } from "@ag-grid-community/core";
+import { ColDef } from "@ag-grid-community/core"
+import { Link, useLocation } from "react-router-dom"
 
 interface Props {
     tags: Datasheet[],
@@ -19,6 +19,8 @@ const TagIcon = styled(Icon)`
 `
 
 function EquipmentListTable({ tags }: Props) {
+    const location = useLocation()
+
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
         filter: true,
@@ -37,10 +39,20 @@ function EquipmentListTable({ tags }: Props) {
         return "JIP33Instrument"
     }
 
+    const getTagLink = (params: any) => {
+        const lastChar = location.pathname.charAt(location.pathname.length - 1)
+        if (lastChar === "/") {
+            const result = ({ ...location, pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.id}` })
+            return result
+        }
+        const result = ({ ...location, pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.id}` })
+        return result
+    }
+
     const linkToDocument = (params: any) => {
         return (
             <Link
-                to={`${typeOfJIP33(params)}/${params.data.id}`}
+                to={getTagLink(params)}
                 style={{ color: tokens.colors.text.static_icons__default.rgba }}
             >
                 <TagIcon data={tag} color={'green'} size={18} />
