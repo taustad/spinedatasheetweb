@@ -9,5 +9,7 @@ export const configurator: AppModuleInitiator = (config: any) => {
   enableNavigation(config, window.location.pathname.match(/^\/?apps/) ? '/apps/spinedatasheet' : '/');
   enableContext(config, (builder) => {
     builder.setContextType(['ProjectMaster']);
+    builder.setContextFilter((items) => {
+      return items.filter(item => item.title !== undefined && item.title.toUpperCase().indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1)});
   });
 };
