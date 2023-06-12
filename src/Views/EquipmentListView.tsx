@@ -38,10 +38,7 @@ function EquipmentListView() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.error("currentProject in useEffect", currentProject)
         if (currentProject.currentContext?.externalId !== externalId) {
-            console.error("changing externalId")
-            console.error("externalId before", externalId)
             setExternalId(currentProject.currentContext?.externalId)
         }
     }, [currentProject])
