@@ -5,6 +5,7 @@ import { BackButton } from "../Components/BackButton"
 import { TagData } from "../Models/TagData"
 import { GetDatasheetService } from "../api/DatasheetService"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
+import { InstrumentTagData } from "../Models/InstrumentTagData"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -28,7 +29,7 @@ function TagComparisonView({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const [tags, setTags] = useState<TagData[]>([])
+    const [tags, setTags] = useState<InstrumentTagData[]>([])
 
 
     useEffect(() => {
@@ -38,7 +39,7 @@ function TagComparisonView({
             if (tags === undefined || tags.length === 0) {
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData[] = await (await GetDatasheetService())
+                    const datasheets: InstrumentTagData[] = await (await GetDatasheetService())
                         .getDatasheets()
                     setTags(datasheets)
                     setIsLoading(false)
