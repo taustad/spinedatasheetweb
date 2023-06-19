@@ -1,8 +1,9 @@
-import { Datasheet } from "../../../../Models/Datasheet"
+import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
+import { TagData } from "../../../../Models/TagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateBodyElementSensorRowData = (datasheet: Datasheet): TableRow[] => {
+export const generateBodyElementSensorRowData = (datasheet: InstrumentTagData): TableRow[] => {
     return [
         {
             refClause: "",

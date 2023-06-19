@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { GetDatasheetService } from "../api/DatasheetService"
 import EquipmentListTable from "../Components/EquipmentListTable"
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
@@ -27,7 +27,7 @@ const StyledTabPanel = styled(Panel)`
 
 function EquipmentListView() {
     const [activeTab, setActiveTab] = useState(0)
-    const [tags, setTags] = useState<Datasheet[]>([])
+    const [tags, setTags] = useState<TagData[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [externalId, setExternalId] = useState<string | undefined>()
@@ -50,7 +50,7 @@ function EquipmentListView() {
                 setIsLoading(false)
                 try {
                     setIsLoading(true)
-                    const datasheets: Datasheet[] = await (
+                    const datasheets: TagData[] = await (
                         await GetDatasheetService()
                     ).getDatasheets()
                     setTags(datasheets)

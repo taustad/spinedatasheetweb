@@ -16,21 +16,6 @@ declare namespace Components {
         export interface Contract {
             tags?: string[] | null;
         }
-        export interface DatasheetDto {
-            id?: string; // uuid
-            projectId?: string; // uuid
-            tagNo?: string | null;
-            description?: string | null;
-            category?: string | null;
-            area?: string | null;
-            dicipline?: string | null;
-            instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
-            instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
-            electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
-            electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
-            mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
-            mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
-        }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
             tagNumber?: string | null;
@@ -345,6 +330,17 @@ declare namespace Components {
             motorClassification?: string | null;
             loadDrive?: string | null;
         }
+        export interface ElectricalTagDataDto {
+            id?: string; // uuid
+            projectId?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
+            electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
+        }
         export interface InstrumentPurchaserRequirement {
             codeRequirement?: number | null; // int32
             conformityAssessmentSystemLevel?: number | null; // int32
@@ -594,6 +590,17 @@ declare namespace Components {
             coriolisOuterCasingBurstPressure?: string | null;
             ruptureDiscBurstPressure?: string | null;
             processSecondaryContainment?: string | null;
+        }
+        export interface InstrumentTagDataDto {
+            id?: string; // uuid
+            projectId?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
+            instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
         }
         export interface MechanicalPurchaserRequirement {
             conformityAssesmentSystemLevel?: string | null;
@@ -1299,6 +1306,26 @@ declare namespace Components {
             baseplateMounting?: string | null;
             stainlessSteelPlateThickness02In5mmMinimumUnderAllPumpFeet?: string | null;
         }
+        export interface MechanicalTagDataDto {
+            id?: string; // uuid
+            projectId?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
+            mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
+        }
+        export interface TagDataDto {
+            id?: string; // uuid
+            projectId?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+        }
     }
 }
 declare namespace Paths {
@@ -1306,6 +1333,12 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.Comment;
         namespace Responses {
             export type $200 = Components.Schemas.Comment;
+        }
+    }
+    namespace GetAllTagData {
+        namespace Responses {
+            export interface $200 {
+            }
         }
     }
     namespace GetComment {
@@ -1371,7 +1404,27 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Contract[];
         }
     }
-    namespace GetDatasheet {
+    namespace GetDefaultTagDataModel {
+        namespace Responses {
+            export type $200 = Components.Schemas.TagDataDto;
+        }
+    }
+    namespace GetElectricalTagDataModel {
+        namespace Responses {
+            export type $200 = Components.Schemas.ElectricalTagDataDto;
+        }
+    }
+    namespace GetInstrumentTagDataModel {
+        namespace Responses {
+            export type $200 = Components.Schemas.InstrumentTagDataDto;
+        }
+    }
+    namespace GetMechanicalTagDataModel {
+        namespace Responses {
+            export type $200 = Components.Schemas.MechanicalTagDataDto;
+        }
+    }
+    namespace GetTagDataById {
         namespace Parameters {
             export type Id = string; // uuid
         }
@@ -1379,15 +1432,11 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.DatasheetDto;
+            export interface $200 {
+            }
         }
     }
-    namespace GetDatasheets {
-        namespace Responses {
-            export type $200 = Components.Schemas.DatasheetDto[];
-        }
-    }
-    namespace GetDatasheetsForProject {
+    namespace GetTagDataForProject {
         namespace Parameters {
             export type Id = string; // uuid
         }
@@ -1398,7 +1447,8 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.DatasheetDto[];
+            export interface $200 {
+            }
         }
     }
 }

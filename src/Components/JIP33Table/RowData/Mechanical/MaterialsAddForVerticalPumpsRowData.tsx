@@ -1,7 +1,8 @@
-import { Datasheet } from "../../../../Models/Datasheet";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
+import { TagData } from "../../../../Models/TagData";
 import { TableRow } from "../TableRow";
 
-export const generateMaterialsAddForVerticalPumpsRowData = (datasheet: Datasheet): TableRow[] => {
+export const generateMaterialsAddForVerticalPumpsRowData = (datasheet: MechanicalTagData): TableRow[] => {
     return [
         {
             refClause: "",

@@ -1,7 +1,8 @@
-import { Datasheet } from "../../../../Models/Datasheet";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
+import { TagData } from "../../../../Models/TagData";
 import { TableRow } from "../TableRow";
 
-export const generateUtilityConditionsRowData = (datasheet: Datasheet): TableRow[] => {
+export const generateUtilityConditionsRowData = (datasheet: MechanicalTagData): TableRow[] => {
     return [
         {
             refClause: "",

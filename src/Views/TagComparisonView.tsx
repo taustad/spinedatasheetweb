@@ -2,7 +2,7 @@ import { Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { BackButton } from "../Components/BackButton"
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import { GetDatasheetService } from "../api/DatasheetService"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 
@@ -28,7 +28,7 @@ function TagComparisonView({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const [tags, setTags] = useState<Datasheet[]>([])
+    const [tags, setTags] = useState<TagData[]>([])
 
 
     useEffect(() => {
@@ -38,7 +38,7 @@ function TagComparisonView({
             if (tags === undefined || tags.length === 0) {
                 try {
                     setIsLoading(true)
-                    const datasheets: Datasheet[] = await (await GetDatasheetService())
+                    const datasheets: TagData[] = await (await GetDatasheetService())
                         .getDatasheets()
                     setTags(datasheets)
                     setIsLoading(false)

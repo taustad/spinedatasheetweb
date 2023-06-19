@@ -1,4 +1,4 @@
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import { BaseService } from "./BaseService"
 
 import { config, GetToken, LoginAccessTokenKey } from "./config"

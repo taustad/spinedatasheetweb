@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { Datasheet } from '../../Models/Datasheet'
+import { TagData } from '../../Models/TagData'
 import { comparisonGeneralColumnDefs } from './GeneralColumnDefs'
 import { ColDef } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
+import { InstrumentTagData } from '../../Models/InstrumentTagData'
 
 interface Props {
-    tags: Datasheet[],
+    tags: InstrumentTagData[],
 }
 
 function TagComparisonTable({

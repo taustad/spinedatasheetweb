@@ -10,7 +10,7 @@ import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Ins
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import { GetDatasheetService } from "../api/DatasheetService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument/FlowRowData"
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
@@ -38,7 +38,7 @@ function JIP33InstrumentTabView({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const [tag, setTag] = useState<Datasheet>()
+    const [tag, setTag] = useState<TagData>()
 
     const { tagId } = useParams<Record<string, string | undefined>>()
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
@@ -62,7 +62,7 @@ function JIP33InstrumentTabView({
                 try {
                     setIsLoading(true)
                     await getCommentsForTag(tagId)
-                    const datasheets: Datasheet = await (await GetDatasheetService())
+                    const datasheets: TagData = await (await GetDatasheetService())
                         .getDatasheet(tagId)
                     setTag(datasheets)
                     setIsLoading(false)

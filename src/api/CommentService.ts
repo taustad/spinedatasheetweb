@@ -1,4 +1,4 @@
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import { ReviewComment } from "../Models/ReviewComment"
 import { BaseService } from "./BaseService"
 
