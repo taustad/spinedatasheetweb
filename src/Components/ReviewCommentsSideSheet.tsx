@@ -42,7 +42,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
         return (
             <div key={comment.id}>
                 <p>{formattedDate}</p>
-                <p>User: {comment.userId}</p>
+                <p>{comment.commenterName}</p>
                 <p>{comment.text}</p>
                 <br />
             </div>
@@ -62,6 +62,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
         comment.userId = currentUser?._info.localAccountId
+        comment.commenterName = currentUser?._info.name
         try {
             const service = await GetCommentService()
             await service.createComment(comment)
