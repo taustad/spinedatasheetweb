@@ -5,7 +5,7 @@ export type ServiceConfig = {
 }
 
 const configuration = {
-    DatasheetService: {
+    TagDataService: {
         BASE_URL: "",
     },
     ContractService: {
@@ -17,7 +17,7 @@ const configuration = {
 }
 
 export const buildConfig = (baseUrl: string) => {
-    configuration.DatasheetService.BASE_URL = `${baseUrl}/datasheets`
+    configuration.TagDataService.BASE_URL = `${baseUrl}/tagdata`
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
     configuration.CommentService.BASE_URL = `${baseUrl}/comments`
 }

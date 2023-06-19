@@ -28,7 +28,7 @@ import { generateSurfacePreperationAndPaintingRowData } from "../Components/JIP3
 import { generateOtherPurchaserRequirementsRowData } from "../Components/JIP33Table/RowData/Mechanical/OtherPurchaserRequirementsRowData"
 import { generateSparePartsRowData } from "../Components/JIP33Table/RowData/Mechanical/SparePartsRowData"
 import { generateShipmentRowData } from "../Components/JIP33Table/RowData/Mechanical/ShipmentRowData"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -57,8 +57,8 @@ function JIP33MechanicalTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData = await (await GetDatasheetService())
-                        .getDatasheet(tagId)
+                    const datasheets: TagData = await (await GetTagDataService())
+                        .getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {

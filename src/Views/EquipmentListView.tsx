@@ -2,7 +2,7 @@ import { Progress, Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 import EquipmentListTable from "../Components/EquipmentListTable"
 import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
@@ -51,8 +51,8 @@ function EquipmentListView() {
                 try {
                     setIsLoading(true)
                     const datasheets: TagData[] = await (
-                        await GetDatasheetService()
-                    ).getDatasheets()
+                        await GetTagDataService()
+                    ).getAllTagData()
                     setTags(datasheets)
                     setIsLoading(false)
                 } catch {

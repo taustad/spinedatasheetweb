@@ -11,7 +11,7 @@ import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Ins
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
 import { TagData } from "../Models/TagData"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument/FlowRowData"
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
@@ -62,8 +62,8 @@ function JIP33InstrumentTabView({
                 try {
                     setIsLoading(true)
                     await getCommentsForTag(tagId)
-                    const datasheets: TagData = await (await GetDatasheetService())
-                        .getDatasheet(tagId)
+                    const datasheets: TagData = await (await GetTagDataService())
+                        .getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {

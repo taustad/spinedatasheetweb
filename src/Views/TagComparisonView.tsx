@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { BackButton } from "../Components/BackButton"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import { InstrumentTagData } from "../Models/InstrumentTagData"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -38,8 +38,8 @@ function TagComparisonView({
             if (tags === undefined || tags.length === 0) {
                 try {
                     setIsLoading(true)
-                    const datasheets: InstrumentTagData[] = await (await GetDatasheetService())
-                        .getDatasheets()
+                    const datasheets: InstrumentTagData[] = await (await GetTagDataService())
+                        .getAllTagData()
                     setTags(datasheets)
                     setIsLoading(false)
                 } catch {

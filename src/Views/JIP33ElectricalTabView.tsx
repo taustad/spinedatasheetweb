@@ -25,7 +25,7 @@ import { generateTestingAndInspectionRowData } from "../Components/JIP33Table/Ro
 import { generatePreservationAndStorageRowData } from "../Components/JIP33Table/RowData/Electrical/PreservationAndStorageRowData"
 import { generateDocumentationRowData } from "../Components/JIP33Table/RowData/Electrical/DocumentationRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 import { generateDutyRowData } from "../Components/JIP33Table/RowData/Electrical/DutyRowData"
 import { generateThermalPerformanceRowData } from "../Components/JIP33Table/RowData/Electrical/ThermalPerformanceRowData"
 import { generateRotorRowData } from "../Components/JIP33Table/RowData/Electrical/RotorRowData"
@@ -63,8 +63,8 @@ function JIP33ElectricalTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData = await (await GetDatasheetService())
-                        .getDatasheet(tagId)
+                    const datasheets: TagData = await (await GetTagDataService())
+                        .getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -93,7 +93,7 @@ function JIP33ElectricalTabView({
         "Site conditions / location environment", "Thermal performance", "Starting performance",
         "Operating performance", "Noise", "Motor construction", "Rotor", "Fan",
         "Main terminal box", "Bearings", "Space heaters", "Mounting", "Cooling", "Vibration",
-        "Instrumentation", "Surface protection", "Temperature monitoring", "Converter-fed motor data", 
+        "Instrumentation", "Surface protection", "Temperature monitoring", "Converter-fed motor data",
         "Motors for hazardous locations", "Testing and inspection", "Preservation and storage",
         "Documentation", "Miscellaneous",
     ]
