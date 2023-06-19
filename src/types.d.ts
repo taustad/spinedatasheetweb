@@ -5,10 +5,12 @@ declare namespace Components {
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             userId?: string; // uuid
+            commenterName?: string | null;
             tagDataId?: string; // uuid
             text?: string | null;
             property?: string | null;
             commentLevel?: CommentLevel /* int32 */;
+            external?: boolean;
         }
         export type CommentLevel = 0 | 1 | 2; // int32
         export interface Contract {
