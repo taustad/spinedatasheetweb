@@ -1,10 +1,9 @@
-import { useMemo } from 'react'
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { TagData } from '../../Models/TagData'
-import { comparisonGeneralColumnDefs } from './GeneralColumnDefs'
 import { ColDef } from '@ag-grid-community/core'
 import { AgGridReact } from '@ag-grid-community/react'
+import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
+import { useMemo } from 'react'
 import { InstrumentTagData } from '../../Models/InstrumentTagData'
+import { comparisonGeneralColumnDefs } from './GeneralColumnDefs'
 
 interface Props {
     tags: InstrumentTagData[],
@@ -24,7 +23,7 @@ function TagComparisonTable({
 
     const newColumns = comparisonGeneralColumnDefs()
 
-    const tagRows = tags.map((tag) => { return ({...tag.instrumentPurchaserRequirement, tagNumber: tag.tagNo}) })
+    const tagRows = tags.map((tag) => { return ({ ...tag.instrumentPurchaserRequirement, tagNumber: tag.tagNo }) })
 
     return (
         <>

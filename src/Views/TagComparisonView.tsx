@@ -1,11 +1,10 @@
 import { Tabs, Typography } from "@equinor/eds-core-react"
-import styled from "styled-components"
 import { useEffect, useState } from "react"
+import styled from "styled-components"
 import { BackButton } from "../Components/BackButton"
-import { TagData } from "../Models/TagData"
-import { GetDatasheetService } from "../api/DatasheetService"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import { InstrumentTagData } from "../Models/InstrumentTagData"
+import { GetDatasheetService } from "../api/DatasheetService"
 
 const WrapperTabs = styled.div`
     width: 100%;

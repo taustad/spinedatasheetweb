@@ -1,5 +1,4 @@
 import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TagData } from "../../../../Models/TagData";
 import { TableRow } from "../TableRow";
 
 export const generateGeneralRowData = (datasheet: MechanicalTagData): TableRow[] => {

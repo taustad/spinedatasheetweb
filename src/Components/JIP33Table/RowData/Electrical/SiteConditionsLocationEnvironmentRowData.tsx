@@ -1,5 +1,4 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
-import { TagData } from "../../../../Models/TagData"
 import { TableRow } from "../TableRow"
 
 export const generateSiteConditionsLocationEnvironmentRowData = (datasheet: ElectricalTagData): TableRow[] => {

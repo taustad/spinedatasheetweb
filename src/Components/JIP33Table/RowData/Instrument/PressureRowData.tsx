@@ -1,5 +1,4 @@
 import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
-import { TagData } from "../../../../Models/TagData"
 import { TableRow } from "../TableRow"
 
 export const generatePressureRowData = (datasheet: InstrumentTagData): TableRow[] => {

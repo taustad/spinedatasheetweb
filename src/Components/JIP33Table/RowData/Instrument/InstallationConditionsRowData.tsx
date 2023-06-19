@@ -1,5 +1,4 @@
 import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
-import { TagData } from "../../../../Models/TagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
