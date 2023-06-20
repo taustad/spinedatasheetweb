@@ -7,6 +7,7 @@ declare namespace Components {
             userId?: string; // uuid
             commenterName?: string | null;
             tagDataId?: string; // uuid
+            reviewId?: string; // uuid
             text?: string | null;
             property?: string | null;
             commentLevel?: CommentLevel /* int32 */;
@@ -1317,6 +1318,18 @@ declare namespace Components {
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
         }
+        export interface Review {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            status?: ReviewStatusEnum /* int32 */;
+            tagId?: string; // uuid
+            revisionId?: string; // uuid
+            userId?: string; // uuid
+            conflict?: boolean;
+            approved?: boolean;
+        }
+        export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
         export interface TagDataDto {
             id?: string; // uuid
             projectId?: string; // uuid
@@ -1335,10 +1348,15 @@ declare namespace Paths {
             export type $200 = Components.Schemas.Comment;
         }
     }
+    namespace CreateReview {
+        export type RequestBody = Components.Schemas.Review;
+        namespace Responses {
+            export type $200 = Components.Schemas.Review;
+        }
+    }
     namespace GetAllTagData {
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = any[];
         }
     }
     namespace GetComment {
@@ -1422,6 +1440,50 @@ declare namespace Paths {
     namespace GetMechanicalTagDataModel {
         namespace Responses {
             export type $200 = Components.Schemas.MechanicalTagDataDto;
+        }
+    }
+    namespace GetReview {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        export interface QueryParameters {
+            id?: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Review;
+        }
+    }
+    namespace GetReviews {
+        namespace Responses {
+            export type $200 = Components.Schemas.Review[];
+        }
+    }
+    namespace GetReviewsForProject {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        export interface QueryParameters {
+            id?: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Review[];
+        }
+    }
+    namespace GetReviewsForTag {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.Review[];
         }
     }
     namespace GetTagDataById {
