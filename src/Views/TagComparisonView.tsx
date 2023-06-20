@@ -1,10 +1,10 @@
 import { Tabs, Typography } from "@equinor/eds-core-react"
-import styled from "styled-components"
 import { useEffect, useState } from "react"
+import styled from "styled-components"
 import { BackButton } from "../Components/BackButton"
-import { Datasheet } from "../Models/Datasheet"
-import { GetDatasheetService } from "../api/DatasheetService"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
+import { InstrumentTagData } from "../Models/InstrumentTagData"
+import { GetTagDataService } from "../api/TagDataService"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -28,7 +28,7 @@ function TagComparisonView({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const [tags, setTags] = useState<Datasheet[]>([])
+    const [tags, setTags] = useState<InstrumentTagData[]>([])
 
 
     useEffect(() => {
@@ -38,8 +38,8 @@ function TagComparisonView({
             if (tags === undefined || tags.length === 0) {
                 try {
                     setIsLoading(true)
-                    const datasheets: Datasheet[] = await (await GetDatasheetService())
-                        .getDatasheets()
+                    const datasheets: InstrumentTagData[] = await (await GetTagDataService())
+                        .getAllTagData()
                     setTags(datasheets)
                     setIsLoading(false)
                 } catch {

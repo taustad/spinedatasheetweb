@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { useEffect, useState } from "react"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
 import { generateSiteDataRowData } from "../Components/JIP33Table/RowData/Mechanical/SiteDataRowData"
 import { generateUtilityConditionsRowData } from "../Components/JIP33Table/RowData/Mechanical/UtilityConditionsRowData"
@@ -28,7 +28,7 @@ import { generateSurfacePreperationAndPaintingRowData } from "../Components/JIP3
 import { generateOtherPurchaserRequirementsRowData } from "../Components/JIP33Table/RowData/Mechanical/OtherPurchaserRequirementsRowData"
 import { generateSparePartsRowData } from "../Components/JIP33Table/RowData/Mechanical/SparePartsRowData"
 import { generateShipmentRowData } from "../Components/JIP33Table/RowData/Mechanical/ShipmentRowData"
-import { GetDatasheetService } from "../api/DatasheetService"
+import { GetTagDataService } from "../api/TagDataService"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -46,7 +46,7 @@ function JIP33MechanicalTabView({
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const [tag, setTag] = useState<Datasheet>()
+    const [tag, setTag] = useState<TagData>()
 
     const { tagId } = useParams<Record<string, string | undefined>>()
 
@@ -57,8 +57,8 @@ function JIP33MechanicalTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    const datasheets: Datasheet = await (await GetDatasheetService())
-                        .getDatasheet(tagId)
+                    const datasheets: TagData = await (await GetTagDataService())
+                        .getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {

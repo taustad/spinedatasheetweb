@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
-import { Datasheet } from "../Models/Datasheet"
+import { TagData } from "../Models/TagData"
 import { Icon } from "@equinor/eds-core-react"
 import { tag } from "@equinor/eds-icons"
 import styled from "styled-components"
@@ -9,7 +9,7 @@ import { ColDef } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 
 interface Props {
-    tags: Datasheet[],
+    tags: TagData[],
 }
 
 const TagIcon = styled(Icon)`
@@ -29,11 +29,11 @@ function EquipmentListTable({ tags }: Props) {
     }), [])
 
     const typeOfJIP33 = (params: any) => {
-        const dicipline = params.data.dicipline
-        if (dicipline === "Mechanical") {
+        const discipline = params.data.discipline
+        if (discipline === "Mechanical") {
             return "JIP33Mechanical"
         }
-        if (dicipline === "Electrical") {
+        if (discipline === "Electrical") {
             return "JIP33Electrical"
         }
         return "JIP33Instrument"
@@ -70,7 +70,7 @@ function EquipmentListTable({ tags }: Props) {
                 { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
                 { field: "category", headerName: "Category" },
                 { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
-                { field: "dicipline", headerName: "Dicipline" },
+                { field: "discipline", headerName: "Discipline" },
             ]
 
         },

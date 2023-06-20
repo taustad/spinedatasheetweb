@@ -1,7 +1,7 @@
-import { Datasheet } from "../../../../Models/Datasheet"
+import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateMainTerminalBoxRowData = (datasheet: Datasheet): TableRow[] => {
+export const generateMainTerminalBoxRowData = (datasheet: ElectricalTagData): TableRow[] => {
     return [
         {
             refClause: "",

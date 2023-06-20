@@ -1,8 +1,8 @@
-import { Datasheet } from "../../../../Models/Datasheet"
+import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generatePerformanceRowData = (datasheet: Datasheet): TableRow[] => {
+export const generatePerformanceRowData = (datasheet: InstrumentTagData): TableRow[] => {
     return [
         {
             refClause: "7.1.5, 8.1.4, Table 11, Table 15",

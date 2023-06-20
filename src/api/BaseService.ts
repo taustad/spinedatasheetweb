@@ -1,19 +1,19 @@
-import axios, { AxiosRequestConfig, ResponseType } from "axios"
+import axios, { AxiosRequestConfig } from "axios"
 import { ServiceConfig } from "./config"
 
 type RequestOptions = {
     credentials?: RequestCredentials
     headers?: Record<string, string>
     method?: "GET"
-        | "DELETE"
-        | "HEAD"
-        | "OPTIONS"
-        | "POST"
-        | "PUT"
-        | "PATCH"
-        | "PURGE"
-        | "LINK"
-        | "UNLINK"
+    | "DELETE"
+    | "HEAD"
+    | "OPTIONS"
+    | "POST"
+    | "PUT"
+    | "PATCH"
+    | "PURGE"
+    | "LINK"
+    | "UNLINK"
     body?: Record<string, any>
 }
 
