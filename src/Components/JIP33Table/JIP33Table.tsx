@@ -7,7 +7,6 @@ import { ReviewComment } from "../../Models/ReviewComment"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 
-
 interface Props {
     rowData: object[],
     reviewComments?: ReviewComment[] | undefined,
@@ -30,7 +29,7 @@ function JIP33Table({
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
-        filter: true,
+        filter: "agMultiColumnFilter",
         resizable: true,
         editable: false,
     }), [])
@@ -119,6 +118,8 @@ function JIP33Table({
                     suppressMovableColumns
                     headerHeight={48}
                     rowHeight={35}
+                    enableRangeSelection
+                    suppressCopySingleCellRanges
                 />
             </div>
         </>

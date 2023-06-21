@@ -23,7 +23,7 @@ function EquipmentListTable({ tags }: Props) {
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
-        filter: true,
+        filter: "agMultiColumnFilter",
         resizable: true,
         editable: false,
     }), [])
@@ -102,6 +102,8 @@ function EquipmentListTable({ tags }: Props) {
                 suppressMovableColumns
                 headerHeight={48}
                 rowHeight={35}
+                enableRangeSelection
+                suppressCopySingleCellRanges
             />
         </div>
     )
