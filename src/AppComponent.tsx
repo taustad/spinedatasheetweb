@@ -9,8 +9,22 @@ import { ClientSideRowModelModule } from '@ag-grid-community/client-side-row-mod
 import { ColumnsToolPanelModule } from '@ag-grid-enterprise/column-tool-panel';
 import { FiltersToolPanelModule } from '@ag-grid-enterprise/filter-tool-panel';
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
+import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection'
+import { ClipboardModule } from '@ag-grid-enterprise/clipboard'
+import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter'
+import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
+import { MenuModule } from '@ag-grid-enterprise/menu'
 
-ModuleRegistry.registerModules([ClientSideRowModelModule, ColumnsToolPanelModule, FiltersToolPanelModule]);
+ModuleRegistry.registerModules([
+    ClientSideRowModelModule,
+    ColumnsToolPanelModule,
+    FiltersToolPanelModule,
+    RangeSelectionModule,
+    ClipboardModule,
+    MultiFilterModule,
+    SetFilterModule,
+    MenuModule,
+]);
 
 
 const AppComponent: FC = () => {

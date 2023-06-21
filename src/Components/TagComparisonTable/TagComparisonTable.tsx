@@ -4,7 +4,6 @@ import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { useMemo } from "react"
 import { InstrumentTagData } from "../../Models/InstrumentTagData"
 import { comparisonGeneralColumnDefs } from "./GeneralColumnDefs"
-
 interface Props {
     tags: InstrumentTagData[],
 }
@@ -16,7 +15,7 @@ function TagComparisonTable({
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
-        filter: true,
+        filter: "agMultiColumnFilter",
         resizable: true,
         editable: false,
     }), [])
@@ -39,6 +38,8 @@ function TagComparisonTable({
                     suppressMovableColumns
                     headerHeight={48}
                     rowHeight={35}
+                    enableRangeSelection
+                    suppressCopySingleCellRanges
                 />
             </div>
         </>
