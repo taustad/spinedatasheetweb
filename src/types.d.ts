@@ -15,7 +15,10 @@ declare namespace Components {
         }
         export type CommentLevel = 0 | 1 | 2; // int32
         export interface Contract {
-            tags?: string[] | null;
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            packages?: Package[] | null;
         }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
@@ -339,6 +342,8 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            revisionNumber?: number; // int32
+            review?: Review;
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
         }
@@ -600,6 +605,8 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            revisionNumber?: number; // int32
+            review?: Review;
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
             instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
         }
@@ -1315,21 +1322,44 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            revisionNumber?: number; // int32
+            review?: Review;
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
+        }
+        export interface Package {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            tags?: TagData[] | null;
         }
         export interface Review {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            status?: ReviewStatusEnum /* int32 */;
             tagId?: string; // uuid
             revisionId?: string; // uuid
-            userId?: string; // uuid
-            conflict?: boolean;
+            status?: ReviewStatusEnum /* int32 */;
+            approverId?: string; // uuid
+            commentResponsible?: string; // uuid
             approved?: boolean;
+            comments?: Comment[] | null;
         }
         export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
+        export interface TagData {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            projectId?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            revisionNumber?: number; // int32
+            package?: Package;
+            review?: Review;
+        }
         export interface TagDataDto {
             id?: string; // uuid
             projectId?: string; // uuid
@@ -1338,6 +1368,8 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            revisionNumber?: number; // int32
+            review?: Review;
         }
     }
 }

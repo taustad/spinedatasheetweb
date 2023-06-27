@@ -66,7 +66,8 @@ function EquipmentListTable({ tags }: Props) {
             headerName: "Tag info",
             children: [
                 { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
-                { field: "contractNo", headerName: "ContractNo" },
+                { field: "revisionNumber", headerName: "Revision number" },
+                { field: "package.contract.contractName", headerName: "Contract" },
                 { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
                 { field: "category", headerName: "Category" },
                 { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
