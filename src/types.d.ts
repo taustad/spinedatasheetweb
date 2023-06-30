@@ -18,7 +18,7 @@ declare namespace Components {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            packages?: Package[] | null;
+            contractName?: string | null;
         }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
@@ -344,6 +344,7 @@ declare namespace Components {
             discipline?: string | null;
             revisionNumber?: number; // int32
             review?: Review;
+            revisionPackage?: RevisionPackage;
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
         }
@@ -607,6 +608,7 @@ declare namespace Components {
             discipline?: string | null;
             revisionNumber?: number; // int32
             review?: Review;
+            revisionPackage?: RevisionPackage;
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
             instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
         }
@@ -1324,14 +1326,9 @@ declare namespace Components {
             discipline?: string | null;
             revisionNumber?: number; // int32
             review?: Review;
+            revisionPackage?: RevisionPackage;
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
-        }
-        export interface Package {
-            id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            tags?: TagData[] | null;
         }
         export interface Review {
             id?: string; // uuid
@@ -1346,19 +1343,11 @@ declare namespace Components {
             comments?: Comment[] | null;
         }
         export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
-        export interface TagData {
+        export interface RevisionPackage {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            projectId?: string; // uuid
-            tagNo?: string | null;
-            description?: string | null;
-            category?: string | null;
-            area?: string | null;
-            discipline?: string | null;
-            revisionNumber?: number; // int32
-            package?: Package;
-            review?: Review;
+            contract?: Contract;
         }
         export interface TagDataDto {
             id?: string; // uuid
@@ -1370,6 +1359,7 @@ declare namespace Components {
             discipline?: string | null;
             revisionNumber?: number; // int32
             review?: Review;
+            revisionPackage?: RevisionPackage;
         }
     }
 }

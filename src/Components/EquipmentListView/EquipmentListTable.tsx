@@ -1,15 +1,19 @@
-import { useMemo } from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
-import { TagData } from "../Models/TagData"
 import { Icon } from "@equinor/eds-core-react"
-import { tag } from "@equinor/eds-icons"
+import { add, block, done, tag } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
+import { TagData } from "../../Models/TagData"
+import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
 
 interface Props {
     tags: TagData[],
+    setReviewModalOpen: Dispatch<SetStateAction<boolean>>,
+    setTagInReview: Dispatch<SetStateAction<string | undefined>>
+    setRevisionInReview: Dispatch<SetStateAction<string | undefined>>
 }
 
 const TagIcon = styled(Icon)`
@@ -18,7 +22,12 @@ const TagIcon = styled(Icon)`
     padding-right: 9px;
 `
 
-function EquipmentListTable({ tags }: Props) {
+function EquipmentListTable({
+    tags,
+    setReviewModalOpen,
+    setTagInReview,
+    setRevisionInReview
+}: Props) {
     const location = useLocation()
 
     const defaultColDef = useMemo<ColDef>(() => ({
@@ -61,13 +70,28 @@ function EquipmentListTable({ tags }: Props) {
         )
     }
 
+    const reviewStatusRenderer = (params: any) => {
+        const status = params.data.review?.status
+        switch (status) {
+            case 3:
+                return <Icon data={done} color="green" />
+            case 4:
+                return <Icon data={block} color="red" />
+            default:
+                return null
+        }
+    }
+
+
     const columns = [
         {
             headerName: "Tag info",
             children: [
                 { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
-                { field: "revisionNumber", headerName: "Revision number" },
-                { field: "package.contract.contractName", headerName: "Contract" },
+                { field: "version", headerName: "Version number" },
+                { field: "revisionPackage.revisionNumber", headerName: "Revision number" },
+                { field: "revisionPackage.packageName", headerName: "Package name" },
+                { field: "revisionPackage.contract.contractName", headerName: "Contract" },
                 { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
                 { field: "category", headerName: "Category" },
                 { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
@@ -78,11 +102,11 @@ function EquipmentListTable({ tags }: Props) {
         {
             headerName: "Review info",
             children: [
-                { field: "requirementMatch", headerName: "Requirement match" },
-                { field: "commentResponsible", headerName: "Comment responsible" },
-                { field: "reviewers", headerName: "Reviewers" },
+                { field: "", headerName: "Review", cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview) },
+                { field: "review.status", headerName: "Review status", cellRenderer: (params: any) => reviewStatusRenderer(params) },
+                { field: "review.commentResponsible", headerName: "Comment responsible" },
+                { field: "review.approverId", headerName: "Reviewers" },
                 { field: "reviewDeadline", headerName: "Review deadline" },
-                { field: "reviewStatus", headerName: "Review status" },
             ]
         }
     ]
