@@ -82,6 +82,12 @@ function EquipmentListTable({
         }
     }
 
+    const reviewDeadlineRenderer = (params: any) => {
+        const packageDate = new Date(params.data.revisionPackage.packageDate)
+        const deadline = new Date(packageDate.setDate(packageDate.getDate() + 10))
+        return deadline.toISOString().slice(0, 10)
+    }
+
 
     const columns = [
         {
@@ -104,9 +110,9 @@ function EquipmentListTable({
             children: [
                 { field: "", headerName: "Review", cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview) },
                 { field: "review.status", headerName: "Review status", cellRenderer: (params: any) => reviewStatusRenderer(params) },
-                { field: "review.commentResponsible", headerName: "Comment responsible" },
                 { field: "review.approverId", headerName: "Reviewers" },
-                { field: "reviewDeadline", headerName: "Review deadline" },
+                { field: "review.commentResponsible", headerName: "Comment responsible" },
+                { field: "reviewDeadline", headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params) },
             ]
         }
     ]

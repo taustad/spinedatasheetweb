@@ -342,8 +342,8 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
-            revisionNumber?: number; // int32
-            review?: Review;
+            version?: number; // int32
+            review?: TagDataReview;
             revisionPackage?: RevisionPackage;
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
@@ -606,8 +606,8 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
-            revisionNumber?: number; // int32
-            review?: Review;
+            version?: number; // int32
+            review?: TagDataReview;
             revisionPackage?: RevisionPackage;
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
             instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
@@ -1324,23 +1324,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
-            revisionNumber?: number; // int32
-            review?: Review;
+            version?: number; // int32
+            review?: TagDataReview;
             revisionPackage?: RevisionPackage;
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
-        }
-        export interface Review {
-            id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            tagId?: string; // uuid
-            revisionId?: string; // uuid
-            status?: ReviewStatusEnum /* int32 */;
-            approverId?: string; // uuid
-            commentResponsible?: string; // uuid
-            approved?: boolean;
-            comments?: Comment[] | null;
         }
         export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
         export interface RevisionPackage {
@@ -1348,6 +1336,9 @@ declare namespace Components {
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             contract?: Contract;
+            packageName?: string | null;
+            packageDate?: string; // date-time
+            revisionNumber?: number; // int32
         }
         export interface TagDataDto {
             id?: string; // uuid
@@ -1357,9 +1348,22 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
-            revisionNumber?: number; // int32
-            review?: Review;
+            version?: number; // int32
+            review?: TagDataReview;
             revisionPackage?: RevisionPackage;
+        }
+        export interface TagDataReview {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            tagId?: string; // uuid
+            revisionId?: string; // uuid
+            status?: ReviewStatusEnum /* int32 */;
+            approverId?: string; // uuid
+            commentResponsible?: string; // uuid
+            approved?: boolean;
+            tagDataVersion?: boolean;
+            comments?: Comment[] | null;
         }
     }
 }
@@ -1371,9 +1375,9 @@ declare namespace Paths {
         }
     }
     namespace CreateReview {
-        export type RequestBody = Components.Schemas.Review;
+        export type RequestBody = Components.Schemas.TagDataReview;
         namespace Responses {
-            export type $200 = Components.Schemas.Review;
+            export type $200 = Components.Schemas.TagDataReview;
         }
     }
     namespace GetAllTagData {
@@ -1475,12 +1479,12 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Review;
+            export type $200 = Components.Schemas.TagDataReview;
         }
     }
     namespace GetReviews {
         namespace Responses {
-            export type $200 = Components.Schemas.Review[];
+            export type $200 = Components.Schemas.TagDataReview[];
         }
     }
     namespace GetReviewsForProject {
@@ -1494,7 +1498,7 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Review[];
+            export type $200 = Components.Schemas.TagDataReview[];
         }
     }
     namespace GetReviewsForTag {
@@ -1505,7 +1509,7 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Review[];
+            export type $200 = Components.Schemas.TagDataReview[];
         }
     }
     namespace GetTagDataById {
