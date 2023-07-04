@@ -1,0 +1,77 @@
+import { InstrumentTagData } from "../../../Models/InstrumentTagData"
+import { TableRow } from "../../JIP33Table/RowData/TableRow"
+
+export const instrumentCharacteristicsRowData = (datasheet: InstrumentTagData): TableRow[] => {
+    return [
+        {
+            refClause: "",
+            description: "Calibrated Range",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.calibratedRange,
+            purchaserReqUOM: "kg/h",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Characteristics",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.characteristics,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Accuracy",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.accuracy,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Linearity",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.linearity,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Repeatability",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.repeatability,
+            purchaserReqUOM: "",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Min/Max range limits",
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.minMaxRangeLimit,
+            purchaserReqUOM: "kg/h",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+        {
+            refClause: "",
+            description: "Other",
+            purchaserReq: "NA",
+            purchaserReqUOM: "",
+            supplierOfferedVal: "",
+            supplierOfferedValUOM: "",
+            additionalNotes: "",
+            property: "",
+        },
+    ]
+}

@@ -3,7 +3,7 @@ import { generateInstallationConditionsRowData } from "../Components/JIP33Table/
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
 import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/Instrument/BodyElementSensorRowData"
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
-import { Icon, Typography } from "@equinor/eds-core-react"
+import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useCallback, useEffect, useState } from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
@@ -20,6 +20,13 @@ import { ReviewComment } from "../Models/ReviewComment"
 import { GetCommentService } from "../api/CommentService"
 import ReviewCommentsSideSheet from "../Components/ReviewCommentsSideSheet"
 import { comment_chat } from "@equinor/eds-icons"
+import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
+import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
+import { instrumentCharacteristicsRowData } from "../Components/NORSOKTable/RowData/InstrumentCharacteristicsRowData"
+import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRowData"
+import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
+import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
+import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
 
 
 const TopBar = styled.div`
@@ -31,6 +38,14 @@ const TopBar = styled.div`
 
 const Body = styled.div`
     height: 92%
+`
+
+const { Panel } = Tabs
+const { List, Tab, Panels } = Tabs
+
+const StyledTabPanel = styled(Panel)`
+    padding-top: 0px;
+    border-top: 1px solid LightGray;
 `
 
 function JIP33InstrumentTabView({
@@ -48,6 +63,8 @@ function JIP33InstrumentTabView({
     }, [setOpen])
 
     const [currentProperty, setCurrentProperty] = useState<string>("")
+
+    const [activeTab, setActiveTab] = useState(0)
 
     const getCommentsForTag = async (id: string) => {
         const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(id)
@@ -97,7 +114,7 @@ function JIP33InstrumentTabView({
         return <div>No tag selected</div>
     }
 
-    const sideMenuList = [
+    const sideMenuListJIP33 = [
         "General", "Installation conditions", "Operating conditions",
         "Body/element/sensor", "Transmitter", "Performance", "Accessories",
         "Flow", "Temperature", "Pressure",
@@ -107,12 +124,24 @@ function JIP33InstrumentTabView({
         "Flow", "Temperature", "Pressure",
     ]
 
-    const rowDataList = [
+    const rowDataListJIP33 = [
         generateGeneralRowData(tag), generateInstallationConditionsRowData(tag),
         generateOperatingConditionsRowData(tag), generateBodyElementSensorRowData(tag),
         generateTransmitterRowData(tag), generatePerformanceRowData(tag),
         generateAccessoriesRowData(tag), generateFlowRowData(tag),
         generateTemperatureRowData(tag), generatePressureRowData(tag),
+    ]
+
+    const sideMenuListNORSOK = [
+        "General", "Instrument characteristics", "Meter body", "Transmitter",
+        "Equipment conditions", "Operating conditions - Minimum flow",
+        "Operating conditions - Maximum flow",
+    ]
+
+    const rowDataListNORSOK = [
+        generalRowData(tag), instrumentCharacteristicsRowData(tag), meterBodyRowData(tag),
+        transmitterRowData(tag), equipmentConditionsRowData(tag), operatingConditionsMinimumFlowRowData(tag),
+        operatingConditionsMaximumFlowRowData(tag),
     ]
 
     return (
@@ -128,7 +157,7 @@ function JIP33InstrumentTabView({
                 <TopBar>
                     <Typography variant="h3">
                         <BackButton />
-                        JIP33 table
+                        {tag.tagNo}
                         <Icon data={comment_chat} onClick={() => {
                             setOpen(true)
                             setCurrentProperty("")
@@ -136,14 +165,33 @@ function JIP33InstrumentTabView({
                         } color="#007079" />
                     </Typography>
                 </TopBar>
-                <JIP33WithSideMenu
-                    sideMenuList={sideMenuList}
-                    rowDataList={rowDataList}
-                    customTabList={customTabList}
-                    reviewComments={reviewComments}
-                    setCurrentProperty={setCurrentProperty}
-                    setReviewSideSheetOpen={setOpen}
-                />
+                <Tabs activeTab={activeTab} onChange={setActiveTab}>
+                    <List>
+                        <Tab>NORSOK</Tab>
+                        <Tab>JIP33</Tab>
+                    </List>
+                    <Panels>
+                        <StyledTabPanel>
+                            <JIP33WithSideMenu
+                                sideMenuList={sideMenuListNORSOK}
+                                rowDataList={rowDataListNORSOK}
+                                reviewComments={reviewComments}
+                                setCurrentProperty={setCurrentProperty}
+                                setReviewSideSheetOpen={setOpen}
+                            />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <JIP33WithSideMenu
+                                sideMenuList={sideMenuListJIP33}
+                                rowDataList={rowDataListJIP33}
+                                customTabList={customTabList}
+                                reviewComments={reviewComments}
+                                setCurrentProperty={setCurrentProperty}
+                                setReviewSideSheetOpen={setOpen}
+                            />
+                        </StyledTabPanel>
+                    </Panels>
+                </Tabs>
             </Body>
         </>
     )
