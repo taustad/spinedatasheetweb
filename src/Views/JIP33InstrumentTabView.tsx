@@ -66,8 +66,8 @@ function JIP33InstrumentTabView({
 
     const [activeTab, setActiveTab] = useState(0)
 
-    const getCommentsForTag = async (id: string) => {
-        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(id)
+    const getCommentsForTagReview = async (id: string) => {
+        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTagReview(id)
         setReviewComments(comments)
     }
 
@@ -78,10 +78,14 @@ function JIP33InstrumentTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    await getCommentsForTag(tagId)
-                    const datasheets: TagData = await (await GetTagDataService())
-                        .getTagData(tagId)
-                    setTag(datasheets)
+                    const tagData: TagData = await (await GetTagDataService()).getTagData(tagId)
+                    console.log("tagData", tagData)
+                    const tagDataReviewId = tagData.review?.id
+                    if (tagDataReviewId !== null && tagDataReviewId !== undefined) {
+                        await getCommentsForTagReview(tagDataReviewId)
+                    }
+
+                    setTag(tagData)
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -91,16 +95,16 @@ function JIP33InstrumentTabView({
         })()
     }, [])
 
-    useEffect(() => {
-        if (tagId !== null && tagId !== undefined) {
-            const intervalId = setInterval(async () => {
-                const newComments = await (await GetCommentService()).getCommentsForTag(tagId)
-                setReviewComments(newComments)
-            }, 5000)
+    // useEffect(() => {
+    //     if (tagId !== null && tagId !== undefined) {
+    //         const intervalId = setInterval(async () => {
+    //             const newComments = await (await GetCommentService()).getCommentsForTagReview(tagId)
+    //             setReviewComments(newComments)
+    //         }, 5000)
 
-            return () => clearInterval(intervalId)
-        }
-    }, [])
+    //         return () => clearInterval(intervalId)
+    //     }
+    // }, [])
 
     if (error) {
         return <div>Error loading tag</div>

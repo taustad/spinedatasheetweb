@@ -1,4 +1,4 @@
-import { Review } from "../Models/Review"
+import { TagDataReview } from "../Models/TagDataReview"
 import { BaseService } from "./BaseService"
 
 import { config, GetToken, LoginAccessTokenKey } from "./config"
@@ -19,7 +19,7 @@ class RevisionReviewService extends BaseService {
         return result
     }
 
-    async createRevisionReview(review: Review) {
+    async createRevisionReview(review: TagDataReview) {
         const result: any = await this.post("", {
             body: review,
         })

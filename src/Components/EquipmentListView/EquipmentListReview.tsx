@@ -3,9 +3,10 @@ import { arrow_back } from "@equinor/eds-icons"
 import { Button, Icon } from "@equinor/eds-core-react"
 import { Dispatch, SetStateAction } from "react"
 import { TagData } from "../../Models/TagData"
-import { Review } from "../../Models/Review"
+import { TagDataReview } from "../../Models/TagDataReview"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetRevisionReviewService } from "../../api/RevisionReviewService"
+import { RevisionContainerReview } from "../../Models/RevisionContainerReview"
 
 interface Props {
     tags: TagData[],
@@ -26,15 +27,14 @@ function EquipmentListReview({
 }: Props) {
 
     const buildTagReview = () => {
-        const newReview = new Review()
-        newReview.tagId = tagInReview
-        newReview.revisionId = revisionInReview
+        const newReview = new TagDataReview()
+        newReview.tagDataId = tagInReview
         return newReview
     }
 
     const buildPackageReview = () => {
-        const newReview = new Review()
-        newReview.revisionId = revisionInReview
+        const newReview: RevisionContainerReview = {}
+        newReview.revisionContainerId = revisionInReview
         return newReview
     }
 

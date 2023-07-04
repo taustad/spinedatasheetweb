@@ -56,8 +56,9 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     }
 
     const handleSubmit = async () => {
+        console.log("Tag",)
         const comment = { ...newReviewComment }
-        comment.tagDataId = tagId
+        // comment.tagDataId = tagId
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
