@@ -344,7 +344,7 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReview;
-            revisionPackage?: RevisionPackage;
+            revisionContainer?: RevisionContainer;
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
         }
@@ -608,7 +608,7 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReview;
-            revisionPackage?: RevisionPackage;
+            revisionContainer?: RevisionContainer;
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
             instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
         }
@@ -1326,18 +1326,18 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReview;
-            revisionPackage?: RevisionPackage;
+            revisionContainer?: RevisionContainer;
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
         }
         export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
-        export interface RevisionPackage {
+        export interface RevisionContainer {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             contract?: Contract;
-            packageName?: string | null;
-            packageDate?: string; // date-time
+            revisionContainerName?: string | null;
+            revisionContainerDate?: string; // date-time
             revisionNumber?: number; // int32
         }
         export interface TagDataDto {
@@ -1350,7 +1350,7 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReview;
-            revisionPackage?: RevisionPackage;
+            revisionContainer?: RevisionContainer;
         }
         export interface TagDataReview {
             id?: string; // uuid

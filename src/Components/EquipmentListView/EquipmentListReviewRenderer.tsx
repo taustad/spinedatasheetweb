@@ -12,7 +12,7 @@ export default (
     const buttonClicked = () => {
         setReviewModalOpen(true);
         setTagInReview(props.data.id)
-        setRevisionInReview(props.data.revisionPackage.id)
+        setRevisionInReview(props.data.revisionContainer.id)
         console.log("Props in review renderer", props)
     };
 

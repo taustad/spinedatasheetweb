@@ -4,7 +4,8 @@ import { Button, Icon } from "@equinor/eds-core-react"
 import { Dispatch, SetStateAction } from "react"
 import { TagData } from "../../Models/TagData"
 import { Review } from "../../Models/Review"
-import { GetReviewService } from "../../api/ReviewService"
+import { GetTagDataReviewService } from "../../api/TagDataReviewService"
+import { GetRevisionReviewService } from "../../api/RevisionReviewService"
 
 interface Props {
     tags: TagData[],
@@ -24,26 +25,40 @@ function EquipmentListReview({
     revisionInReview
 }: Props) {
 
-    const buildReview = () => {
+    const buildTagReview = () => {
         const newReview = new Review()
         newReview.tagId = tagInReview
         newReview.revisionId = revisionInReview
         return newReview
     }
 
+    const buildPackageReview = () => {
+        const newReview = new Review()
+        newReview.revisionId = revisionInReview
+        return newReview
+    }
+
     const approveTag = async () => {
-        const review = buildReview()
+        const review = buildTagReview()
         review.status = 3
-        const result = await (await GetReviewService()).createReview(review)
+        const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         console.log("result", result)
     }
 
     const rejectTag = async () => {
-        const review = buildReview()
+        const review = buildTagReview()
         review.status = 4
-        const result = await (await GetReviewService()).createReview(review)
+        const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         console.log("result", result)
     }
+
+    const approvePackage = async () => {
+        const review = buildPackageReview()
+        review.status = 3
+        const result = await (await GetRevisionReviewService()).createRevisionReview(review)
+        console.log("result", result)
+    }
+
 
     return (
         <div>
@@ -51,6 +66,10 @@ function EquipmentListReview({
 
             <Button onClick={approveTag}>Approve</Button>
             <Button color="danger" onClick={rejectTag}>Reject</Button>
+
+            <h1>Package review: {revisionInReview}</h1>
+            <Button onClick={approvePackage}>Approve</Button>
+
         </div>
     )
 }

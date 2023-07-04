@@ -83,8 +83,18 @@ function EquipmentListTable({
     }
 
     const reviewDeadlineRenderer = (params: any) => {
-        const packageDate = new Date(params.data.revisionPackage.packageDate)
+        if (params.data.revisionContainer === null || params.data.revisionContainer === undefined) {
+            return null
+        }
+        const packageDate = new Date(params.data.revisionContainer.revisionContainerDate)
         const deadline = new Date(packageDate.setDate(packageDate.getDate() + 10))
+        if (deadline < new Date()) {
+            return <>
+                <Icon data={block} color="red" />
+                {deadline.toISOString().slice(0, 10)}
+            </>
+        }
+
         return deadline.toISOString().slice(0, 10)
     }
 
@@ -95,9 +105,9 @@ function EquipmentListTable({
             children: [
                 { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
                 { field: "version", headerName: "Version number" },
-                { field: "revisionPackage.revisionNumber", headerName: "Revision number" },
-                { field: "revisionPackage.packageName", headerName: "Package name" },
-                { field: "revisionPackage.contract.contractName", headerName: "Contract" },
+                { field: "revisionContainer.revisionNumber", headerName: "Revision number" },
+                { field: "revisionContainer.revisionContainerName", headerName: "Collection group" },
+                { field: "revisionContainer.contract.contractName", headerName: "Contract" },
                 { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
                 { field: "category", headerName: "Category" },
                 { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },

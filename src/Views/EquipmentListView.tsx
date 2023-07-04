@@ -9,7 +9,7 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
-import { GetReviewService } from "../api/ReviewService"
+import { GetTagDataReviewService } from "../api/TagDataReviewService"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -56,7 +56,7 @@ function EquipmentListView() {
 
     useEffect(() => {
         (async () => {
-            await (await GetReviewService()).getReviews()
+            await (await GetTagDataReviewService()).getTagDataReviews()
 
             if (externalId !== undefined) {
                 setError(false)
