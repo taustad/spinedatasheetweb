@@ -386,8 +386,8 @@ declare namespace Components {
             processVacuumPossibility?: boolean | null;
             processFluidVapourPressure?: string | null;
             minimumOperatingVolumetricFlow?: number | null; // int32
-            minimumOperatingVelocity?: number | null; // int32
-            minimumOperatingTemperature?: number | null; // int32
+            minimumOperatingVelocity?: number | null; // double
+            minimumOperatingTemperature?: string | null;
             minimumOperatingPressure?: number | null; // int32
             normalOperatingVolumetricFlow?: number | null; // int32
             normalOperatingVelocity?: number | null; // double
@@ -421,7 +421,7 @@ declare namespace Components {
             measurementRangeMaximum?: number | null; // double
             spanAndZeroAdjustment?: string | null;
             accuracy?: string | null;
-            repeatability?: number | null; // double
+            repeatability?: string | null;
             stepResponse?: number | null; // double
             longTermDrift?: number | null; // double
             longTermStability?: string | null;
@@ -465,6 +465,69 @@ declare namespace Components {
             coriolisOuterCasingBurstPressure?: string | null;
             ruptureDiscBurstPressure?: string | null;
             processSecondaryContainment?: string | null;
+            pipeClassSheet?: string | null;
+            setAlarmPoint?: string | null;
+            poNumber?: string | null;
+            type?: string | null;
+            operatingTemperatureLimits?: string | null;
+            operatingPressureLimit?: string | null;
+            pressureLossAtFullRange?: string | null;
+            mounting?: string | null;
+            weight?: number | null; // double
+            calibratedRange?: string | null;
+            characteristics?: string | null;
+            linearity?: string | null;
+            minMaxRangeLimit?: string | null;
+            bodyNominalSize?: number | null; // double
+            processConnectionSizeType?: string | null;
+            pressureRating?: number | null; // double
+            faceToFaceDimension?: number | null; // double
+            numberOfTubeRuns?: number | null; // double
+            tubeInnerDiameter?: number | null; // double
+            materialTube?: string | null;
+            materialFlangeConnection?: string | null;
+            materialTubeCover?: string | null;
+            bodyEnclosureProtection?: string | null;
+            bodyProtectiveCoatingColor?: string | null;
+            transmitterCableConnection?: string | null;
+            transmitterDimension?: string | null;
+            transmitterEnclosureProtection?: string | null;
+            transmitterExClassification?: string | null;
+            transmitterProtectiveCoating?: string | null;
+            transmitterConsumption?: string | null;
+            transmitterLoadLimitation?: string | null;
+            transmitterFlowRange?: string | null;
+            lineNominalSize?: number | null; // double
+            lineInnerDiameter?: number | null; // double
+            lineMaterial?: string | null;
+            flangeStandardOrCode?: string | null;
+            flangeSize?: number | null; // double
+            flangePressureClass?: string | null;
+            flangeFacing?: string | null;
+            pipingDesignTemperature?: string | null;
+            pipingDesignPressure?: string | null;
+            fluid?: string | null;
+            phase?: string | null;
+            corrosiveCompounds?: string | null;
+            maximumPressureLoss?: number | null; // double
+            minimumFlowRate?: number | null; // double
+            minimumInletPressure?: number | null; // double
+            minimumDensityAtTAndP?: string | null;
+            minimumViscosityAtT?: string | null;
+            minimumOperatingVapourMolecularWeight?: string | null;
+            minimumVapourCompressFactor?: string | null;
+            minimumVapourSpecificHeatRatio?: string | null;
+            maximumFlowRate?: number | null; // double
+            maximumInletPressure?: number | null; // double
+            maximumDensityAtTAndP?: string | null;
+            maximumViscosityAtT?: string | null;
+            maximumVapourCompressFactor?: string | null;
+            maximumVapourSpecificHeatRatio?: string | null;
+            maxDistanceMeterTrans?: string | null;
+            transmitterIndicator?: string | null;
+            transmitterOutputSignal?: string | null;
+            lineEquipmentNumber?: string | null;
+            pAndID?: string | null;
         }
         export interface InstrumentSupplierOfferedProduct {
             manufacturer?: string | null;
@@ -521,7 +584,7 @@ declare namespace Components {
             lowerRangeLimit?: number | null; // double
             upperRangeLimit?: number | null; // double
             accuracy?: string | null;
-            repeatability?: number | null; // double
+            repeatability?: string | null;
             stepResponse?: number | null; // double
             longTermDrift?: number | null; // double
             longTermStability?: string | null;
@@ -565,8 +628,8 @@ declare namespace Components {
             processVacuumPossibility?: boolean | null;
             processFluidVapourPressure?: string | null;
             minimumOperatingVolumetricFlow?: number | null; // int32
-            minimumOperatingVelocity?: number | null; // int32
-            minimumOperatingTemperature?: number | null; // int32
+            minimumOperatingVelocity?: number | null; // double
+            minimumOperatingTemperature?: string | null;
             minimumOperatingPressure?: number | null; // int32
             normalOperatingVolumetricFlow?: number | null; // int32
             normalOperatingVelocity?: number | null; // double
@@ -590,6 +653,69 @@ declare namespace Components {
             coriolisOuterCasingBurstPressure?: string | null;
             ruptureDiscBurstPressure?: string | null;
             processSecondaryContainment?: string | null;
+            pipeClassSheet?: string | null;
+            setAlarmPoint?: string | null;
+            poNumber?: string | null;
+            type?: string | null;
+            operatingTemperatureLimits?: string | null;
+            operatingPressureLimit?: string | null;
+            pressureLossAtFullRange?: string | null;
+            mounting?: string | null;
+            weight?: number | null; // double
+            calibratedRange?: string | null;
+            characteristics?: string | null;
+            linearity?: string | null;
+            minMaxRangeLimit?: string | null;
+            bodyNominalSize?: number | null; // double
+            processConnectionSizeType?: string | null;
+            pressureRating?: number | null; // double
+            faceToFaceDimension?: number | null; // double
+            numberOfTubeRuns?: number | null; // double
+            tubeInnerDiameter?: number | null; // double
+            materialTube?: string | null;
+            materialFlangeConnection?: string | null;
+            materialTubeCover?: string | null;
+            bodyEnclosureProtection?: string | null;
+            bodyProtectiveCoatingColor?: string | null;
+            transmitterCableConnection?: string | null;
+            transmitterDimension?: string | null;
+            transmitterEnclosureProtection?: string | null;
+            transmitterExClassification?: string | null;
+            transmitterProtectiveCoating?: string | null;
+            transmitterConsumption?: string | null;
+            transmitterLoadLimitation?: string | null;
+            transmitterFlowRange?: string | null;
+            lineNominalSize?: number | null; // double
+            lineInnerDiameter?: number | null; // double
+            lineMaterial?: string | null;
+            flangeStandardOrCode?: string | null;
+            flangeSize?: number | null; // double
+            flangePressureClass?: string | null;
+            flangeFacing?: string | null;
+            pipingDesignTemperature?: string | null;
+            pipingDesignPressure?: string | null;
+            fluid?: string | null;
+            phase?: string | null;
+            corrosiveCompounds?: string | null;
+            maximumPressureLoss?: number | null; // double
+            minimumFlowRate?: number | null; // double
+            minimumInletPressure?: number | null; // double
+            minimumDensityAtTAndP?: string | null;
+            minimumViscosityAtT?: string | null;
+            minimumOperatingVapourMolecularWeight?: string | null;
+            minimumVapourCompressFactor?: string | null;
+            minimumVapourSpecificHeatRatio?: string | null;
+            maximumFlowRate?: number | null; // double
+            maximumInletPressure?: number | null; // double
+            maximumDensityAtTAndP?: string | null;
+            maximumViscosityAtT?: string | null;
+            maximumVapourCompressFactor?: string | null;
+            maximumVapourSpecificHeatRatio?: string | null;
+            maxDistanceMeterTrans?: string | null;
+            transmitterIndicator?: string | null;
+            transmitterOutputSignal?: string | null;
+            lineEquipmentNumber?: string | null;
+            pAndID?: string | null;
         }
         export interface InstrumentTagDataDto {
             id?: string; // uuid
@@ -1337,8 +1463,7 @@ declare namespace Paths {
     }
     namespace GetAllTagData {
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = any[];
         }
     }
     namespace GetComment {
