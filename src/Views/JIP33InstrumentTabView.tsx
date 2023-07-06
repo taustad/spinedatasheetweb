@@ -18,7 +18,6 @@ import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instru
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
 import { ReviewComment } from "../Models/ReviewComment"
 import { GetCommentService } from "../api/CommentService"
-import ReviewCommentsSideSheet from "../Components/ReviewCommentsSideSheet"
 import { comment_chat } from "@equinor/eds-icons"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
@@ -27,7 +26,7 @@ import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRow
 import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
-
+import SheetContainer from "../Components/SideSheet/SheetContainer"
 
 const TopBar = styled.div`
     padding-top: 0
@@ -36,9 +35,14 @@ const TopBar = styled.div`
     padding-top: 20px
 `
 
-const Body = styled.div`
-    height: 92%
+const View = styled.div`
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 `
+
+const TableView = styled.div``
+
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
@@ -46,10 +50,14 @@ const { List, Tab, Panels } = Tabs
 const StyledTabPanel = styled(Panel)`
     padding-top: 0px;
     border-top: 1px solid LightGray;
+    width: 70vw;
+`
+const Content = styled.div`
+    display: flex;
+    flex-direction: row;
 `
 
-function JIP33InstrumentTabView({
-}) {
+function JIP33InstrumentTabView({}) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -67,20 +75,23 @@ function JIP33InstrumentTabView({
     const [activeTab, setActiveTab] = useState(0)
 
     const getCommentsForTag = async (id: string) => {
-        const comments: ReviewComment[] = await (await GetCommentService()).getCommentsForTag(id)
+        const comments: ReviewComment[] = await (
+            await GetCommentService()
+        ).getCommentsForTag(id)
         setReviewComments(comments)
     }
 
     useEffect(() => {
-        (async () => {
+        ;(async () => {
             setError(false)
             setIsLoading(false)
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
                     await getCommentsForTag(tagId)
-                    const datasheets: TagData = await (await GetTagDataService())
-                        .getTagData(tagId)
+                    const datasheets: TagData = await (
+                        await GetTagDataService()
+                    ).getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -94,7 +105,9 @@ function JIP33InstrumentTabView({
     useEffect(() => {
         if (tagId !== null && tagId !== undefined) {
             const intervalId = setInterval(async () => {
-                const newComments = await (await GetCommentService()).getCommentsForTag(tagId)
+                const newComments = await (
+                    await GetCommentService()
+                ).getCommentsForTag(tagId)
                 setReviewComments(newComments)
             }, 5000)
 
@@ -115,54 +128,68 @@ function JIP33InstrumentTabView({
     }
 
     const sideMenuListJIP33 = [
-        "General", "Installation conditions", "Operating conditions",
-        "Body/element/sensor", "Transmitter", "Performance", "Accessories",
-        "Flow", "Temperature", "Pressure",
+        "General",
+        "Installation conditions",
+        "Operating conditions",
+        "Body/element/sensor",
+        "Transmitter",
+        "Performance",
+        "Accessories",
+        "Flow",
+        "Temperature",
+        "Pressure",
     ]
 
-    const customTabList = [
-        "Flow", "Temperature", "Pressure",
-    ]
+    const customTabList = ["Flow", "Temperature", "Pressure"]
 
     const rowDataListJIP33 = [
-        generateGeneralRowData(tag), generateInstallationConditionsRowData(tag),
-        generateOperatingConditionsRowData(tag), generateBodyElementSensorRowData(tag),
-        generateTransmitterRowData(tag), generatePerformanceRowData(tag),
-        generateAccessoriesRowData(tag), generateFlowRowData(tag),
-        generateTemperatureRowData(tag), generatePressureRowData(tag),
+        generateGeneralRowData(tag),
+        generateInstallationConditionsRowData(tag),
+        generateOperatingConditionsRowData(tag),
+        generateBodyElementSensorRowData(tag),
+        generateTransmitterRowData(tag),
+        generatePerformanceRowData(tag),
+        generateAccessoriesRowData(tag),
+        generateFlowRowData(tag),
+        generateTemperatureRowData(tag),
+        generatePressureRowData(tag),
     ]
 
     const sideMenuListNORSOK = [
-        "General", "Instrument characteristics", "Meter body", "Transmitter",
-        "Equipment conditions", "Operating conditions - Minimum flow",
+        "General",
+        "Instrument characteristics",
+        "Meter body",
+        "Transmitter",
+        "Equipment conditions",
+        "Operating conditions - Minimum flow",
         "Operating conditions - Maximum flow",
     ]
 
     const rowDataListNORSOK = [
-        generalRowData(tag), instrumentCharacteristicsRowData(tag), meterBodyRowData(tag),
-        transmitterRowData(tag), equipmentConditionsRowData(tag), operatingConditionsMinimumFlowRowData(tag),
+        generalRowData(tag),
+        instrumentCharacteristicsRowData(tag),
+        meterBodyRowData(tag),
+        transmitterRowData(tag),
+        equipmentConditionsRowData(tag),
+        operatingConditionsMinimumFlowRowData(tag),
         operatingConditionsMaximumFlowRowData(tag),
     ]
 
     return (
-        <>
-            <ReviewCommentsSideSheet
-                isOpen={open}
-                onClose={onCloseReviewSideSheet}
-                reviewComments={reviewComments}
-                currentProperty={currentProperty}
-                setReviewComments={setReviewComments}
-            />
-            <Body>
+        <View id="View">
+            <TableView>
                 <TopBar>
                     <Typography variant="h3">
                         <BackButton />
                         {tag.tagNo}
-                        <Icon data={comment_chat} onClick={() => {
-                            setOpen(true)
-                            setCurrentProperty("")
-                        }
-                        } color="#007079" />
+                        <Icon
+                            data={comment_chat}
+                            onClick={() => {
+                                setOpen(true)
+                                setCurrentProperty("")
+                            }}
+                            color="#007079"
+                        />
                     </Typography>
                 </TopBar>
                 <Tabs activeTab={activeTab} onChange={setActiveTab}>
@@ -170,30 +197,39 @@ function JIP33InstrumentTabView({
                         <Tab>NORSOK</Tab>
                         <Tab>JIP33</Tab>
                     </List>
-                    <Panels>
-                        <StyledTabPanel>
-                            <JIP33WithSideMenu
-                                sideMenuList={sideMenuListNORSOK}
-                                rowDataList={rowDataListNORSOK}
-                                reviewComments={reviewComments}
-                                setCurrentProperty={setCurrentProperty}
-                                setReviewSideSheetOpen={setOpen}
-                            />
-                        </StyledTabPanel>
-                        <StyledTabPanel>
-                            <JIP33WithSideMenu
-                                sideMenuList={sideMenuListJIP33}
-                                rowDataList={rowDataListJIP33}
-                                customTabList={customTabList}
-                                reviewComments={reviewComments}
-                                setCurrentProperty={setCurrentProperty}
-                                setReviewSideSheetOpen={setOpen}
-                            />
-                        </StyledTabPanel>
-                    </Panels>
+                    <Content>
+                        <Panels>
+                            <StyledTabPanel>
+                                <JIP33WithSideMenu
+                                    sideMenuList={sideMenuListNORSOK}
+                                    rowDataList={rowDataListNORSOK}
+                                    reviewComments={reviewComments}
+                                    setCurrentProperty={setCurrentProperty}
+                                    setReviewSideSheetOpen={setOpen}
+                                />
+                            </StyledTabPanel>
+                            <StyledTabPanel>
+                                <JIP33WithSideMenu
+                                    sideMenuList={sideMenuListJIP33}
+                                    rowDataList={rowDataListJIP33}
+                                    customTabList={customTabList}
+                                    reviewComments={reviewComments}
+                                    setCurrentProperty={setCurrentProperty}
+                                    setReviewSideSheetOpen={setOpen}
+                                />
+                            </StyledTabPanel>
+                        </Panels>
+                    </Content>
                 </Tabs>
-            </Body>
-        </>
+            </TableView>
+            <SheetContainer
+                onClose={onCloseReviewSideSheet}
+                isOpen={open}
+                currentProperty={currentProperty}
+                reviewComments={reviewComments}
+                setReviewComments={setReviewComments}
+            />
+        </View>
     )
 }
 

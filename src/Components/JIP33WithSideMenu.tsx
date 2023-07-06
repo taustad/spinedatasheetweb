@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 100%;
-    width: 100vw;
+    width: 100%;
     z-index: 100;
 `
 
@@ -106,6 +106,7 @@ const JIP33WithSideMenu: React.FC<Props> = ({
                         <MenuItems>
                             {sideMenuList.map((sideMenuName, index) => (
                                 <Item
+                                    key={sideMenuName}
                                     style={{
                                         backgroundColor: activeTab === index ? backgroundColor : "",
                                         borderStyle: sideMenuBorder(sideMenuName),
