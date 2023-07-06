@@ -1,13 +1,14 @@
-import { Dispatch, SetStateAction, useMemo } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"
 import { add, block, done, tag } from "@equinor/eds-icons"
 import styled from "styled-components"
-import { ColDef } from "@ag-grid-community/core"
+import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
 import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
+import { useAppContext } from "../../contexts/AppContext"
 
 interface Props {
     tags: TagData[],
@@ -29,6 +30,8 @@ function EquipmentListTable({
     setRevisionInReview
 }: Props) {
     const location = useLocation()
+
+    const { tagData } = useAppContext()
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
@@ -70,7 +73,12 @@ function EquipmentListTable({
         )
     }
 
-    const reviewStatusRenderer = (params: any) => {
+    useEffect(() => {
+        console.log("tags in equipmentlisttable", tagData)
+    }, [tagData])
+
+    const tagDataReviewStatusRenderer = (params: any) => {
+        console.log("params", params)
         const status = params.data.review?.status
         switch (status) {
             case 3:
@@ -82,7 +90,19 @@ function EquipmentListTable({
         }
     }
 
-    const reviewDeadlineRenderer = (params: any) => {
+    const revisionContainerReviewStatusRenderer = (params: ICellRendererParams) => {
+        const status = params.data.revisionContainer?.revisionContainerReview?.status
+        switch (status) {
+            case 3:
+                return <Icon data={done} color="green" />
+            case 4:
+                return <Icon data={block} color="red" />
+            default:
+                return null
+        }
+    }
+
+    const reviewDeadlineRenderer = (params: ICellRendererParams) => {
         if (params.data.revisionContainer === null || params.data.revisionContainer === undefined) {
             return null
         }
@@ -119,7 +139,8 @@ function EquipmentListTable({
             headerName: "Review info",
             children: [
                 { field: "", headerName: "Review", cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview) },
-                { field: "review.status", headerName: "Review status", cellRenderer: (params: any) => reviewStatusRenderer(params) },
+                { field: "revisionContainer.revisionContainerReview.status", headerName: "Revision container review status", cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params) },
+                { field: "review.status", headerName: "Review status", cellRenderer: (params: any) => tagDataReviewStatusRenderer(params) },
                 { field: "review.approverId", headerName: "Reviewers" },
                 { field: "review.commentResponsible", headerName: "Comment responsible" },
                 { field: "reviewDeadline", headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params) },
@@ -133,7 +154,7 @@ function EquipmentListTable({
             style={{ flex: "1 1 auto", width: "100%" }}
         >
             <AgGridReact
-                rowData={tags}
+                rowData={tagData}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
                 animateRows

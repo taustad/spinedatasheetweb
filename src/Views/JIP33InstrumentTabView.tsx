@@ -27,6 +27,7 @@ import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRow
 import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
+import AppContext, { useAppContext } from "../contexts/AppContext"
 
 
 const TopBar = styled.div`
@@ -50,6 +51,8 @@ const StyledTabPanel = styled(Panel)`
 
 function JIP33InstrumentTabView({
 }) {
+    const { activeTagData: tagData, setActiveTagData: setTagData } = useAppContext()
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -86,6 +89,9 @@ function JIP33InstrumentTabView({
                     }
 
                     setTag(tagData)
+                    if (setTagData !== undefined) {
+                        setTagData(tagData)
+                    }
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -94,6 +100,10 @@ function JIP33InstrumentTabView({
             }
         })()
     }, [])
+
+    useEffect(() => {
+        console.log("tagData from useEffect in InstrumentTabView", tagData)
+    }, [tagData])
 
     // useEffect(() => {
     //     if (tagId !== null && tagId !== undefined) {

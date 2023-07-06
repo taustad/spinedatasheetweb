@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo } from "react"
+import { Dispatch, SetStateAction, useEffect, useMemo } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ColDef } from "@ag-grid-community/core"
@@ -6,6 +6,7 @@ import { AgGridReact } from "@ag-grid-community/react"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
+import { useAppContext } from "../../contexts/AppContext"
 
 interface Props {
     rowData: object[],
@@ -18,6 +19,12 @@ function JIP33Table({
     rowData, reviewComments, setReviewSideSheetOpen, setCurrentProperty,
 }: Props) {
     useAgGridStyles()
+
+    const { activeTagData: tagData } = useAppContext()
+
+    useEffect(() => {
+        console.log("JIP33Table tagData", tagData)
+    }, [tagData])
 
     const red = "white" //"#e6b8b7"
     const lightBlue = "white" //"#b7dee8"

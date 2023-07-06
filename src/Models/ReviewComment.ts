@@ -1,3 +1,6 @@
+import { RevisionContainerReview } from "./RevisionContainerReview";
+import { TagDataReview } from "./TagDataReview";
+
 export class ReviewComment implements Components.Schemas.Comment {
     id?: string; // uuid
     createdDate?: string; // date-time
@@ -9,8 +12,8 @@ export class ReviewComment implements Components.Schemas.Comment {
     commentLevel?: Components.Schemas.CommentLevel /* int32 */;
     tagDataReviewId?: string | null; // uuid
     revisionContainerReviewId?: string | null; // uuid
-    tagDataReview?: Components.Schemas.TagDataReview;
-    revisionContainerReview?: Components.Schemas.RevisionContainerReview;
+    tagDataReview?: TagDataReview;
+    revisionContainerReview?: RevisionContainerReview;
     isTagDataReviewComment?: boolean;
     isRevisionContainerReviewComment?: boolean;
 

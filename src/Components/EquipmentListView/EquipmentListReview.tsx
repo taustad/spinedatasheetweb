@@ -7,6 +7,8 @@ import { TagDataReview } from "../../Models/TagDataReview"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetRevisionReviewService } from "../../api/RevisionReviewService"
 import { RevisionContainerReview } from "../../Models/RevisionContainerReview"
+import { GetTagDataService } from "../../api/TagDataService"
+import { useAppContext } from "../../contexts/AppContext"
 
 interface Props {
     tags: TagData[],
@@ -26,6 +28,15 @@ function EquipmentListReview({
     revisionInReview
 }: Props) {
 
+    const { setTagData } = useAppContext()
+
+
+    const updateTagData = async () => {
+        const tagData = await (await GetTagDataService()).getAllTagData()
+        if (setTagData === undefined) throw new Error("setTagData is undefined")
+        setTagData(tagData)
+    }
+
     const buildTagReview = () => {
         const newReview = new TagDataReview()
         newReview.tagDataId = tagInReview
@@ -43,6 +54,7 @@ function EquipmentListReview({
         review.status = 3
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         console.log("result", result)
+        await updateTagData()
     }
 
     const rejectTag = async () => {
@@ -50,6 +62,7 @@ function EquipmentListReview({
         review.status = 4
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         console.log("result", result)
+        await updateTagData()
     }
 
     const approvePackage = async () => {
@@ -57,6 +70,16 @@ function EquipmentListReview({
         review.status = 3
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         console.log("result", result)
+        await updateTagData()
+
+    }
+
+    const rejectPackage = async () => {
+        const review = buildPackageReview()
+        review.status = 4
+        const result = await (await GetRevisionReviewService()).createRevisionReview(review)
+        console.log("result", result)
+        await updateTagData()
     }
 
 
@@ -69,6 +92,8 @@ function EquipmentListReview({
 
             <h1>Package review: {revisionInReview}</h1>
             <Button onClick={approvePackage}>Approve</Button>
+            <Button color="danger" onClick={rejectPackage}>Reject</Button>
+
 
         </div>
     )
