@@ -5,44 +5,48 @@ import { useMemo } from "react"
 import { InstrumentTagData } from "../../Models/InstrumentTagData"
 import { comparisonGeneralColumnDefs } from "./GeneralColumnDefs"
 interface Props {
-    tags: InstrumentTagData[],
+    tags: InstrumentTagData[]
 }
 
-function TagComparisonTable({
-    tags,
-}: Props) {
+function TagComparisonTable({ tags }: Props) {
     useAgGridStyles()
 
-    const defaultColDef = useMemo<ColDef>(() => ({
-        sortable: true,
-        filter: "agMultiColumnFilter",
-        resizable: true,
-        editable: false,
-    }), [])
+    const defaultColDef = useMemo<ColDef>(
+        () => ({
+            sortable: true,
+            filter: "agMultiColumnFilter",
+            resizable: true,
+            editable: false,
+        }),
+        []
+    )
 
     const newColumns = comparisonGeneralColumnDefs()
 
-    const tagRows = tags.map((tag) => { return ({ ...tag.instrumentPurchaserRequirement, tagNumber: tag.tagNo }) })
+    const tagRows = tags.map((tag) => {
+        return { ...tag.instrumentPurchaserRequirement, tagNumber: tag.tagNo }
+    })
 
     return (
-        <>
-            <div className="ag-theme-alpine" style={{ flex: "1 1 auto", width: "100%" }}>
-                <AgGridReact
-                    rowData={tagRows}
-                    columnDefs={newColumns}
-                    defaultColDef={defaultColDef}
-                    animateRows
-                    domLayout="autoHeight"
-                    enableCellChangeFlash
-                    rowSelection="multiple"
-                    suppressMovableColumns
-                    headerHeight={48}
-                    rowHeight={35}
-                    enableRangeSelection
-                    suppressCopySingleCellRanges
-                />
-            </div>
-        </>
+        <div
+            className="ag-theme-alpine"
+            style={{ flex: "1 1 auto", width: "100%" }}
+        >
+            <AgGridReact
+                rowData={tagRows}
+                columnDefs={newColumns}
+                defaultColDef={defaultColDef}
+                animateRows
+                domLayout="autoHeight"
+                enableCellChangeFlash
+                rowSelection="multiple"
+                suppressMovableColumns
+                headerHeight={48}
+                rowHeight={35}
+                enableRangeSelection
+                suppressCopySingleCellRanges
+            />
+        </div>
     )
 }
 
