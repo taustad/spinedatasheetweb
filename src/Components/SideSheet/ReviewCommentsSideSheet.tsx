@@ -74,7 +74,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        comment.tagDataId = tagId
+        comment.tagDataReviewId = tagId
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
@@ -85,7 +85,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
             await service.createComment(comment)
             setReviewComments([...reviewComments, comment])
         } catch (error) {
-            console.log(`Error creating comment: ${error}`)
+            console.error(`Error creating comment: ${error}`)
         }
         setNewReviewComment(undefined)
     }

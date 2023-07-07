@@ -9,8 +9,6 @@ import AppContext from "./contexts/AppContext"
 import { TagData } from "./Models/TagData"
 
 const AppRouter: FC = () => {
-    console.log("AppRouter")
-
     const [activeTagData, setActiveTagData] = useState<TagData | undefined>(undefined)
     const [tagData, setTagData] = useState<TagData[]>([])
 

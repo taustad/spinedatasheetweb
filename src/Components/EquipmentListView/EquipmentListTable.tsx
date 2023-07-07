@@ -73,12 +73,7 @@ function EquipmentListTable({
         )
     }
 
-    useEffect(() => {
-        console.log("tags in equipmentlisttable", tagData)
-    }, [tagData])
-
     const tagDataReviewStatusRenderer = (params: any) => {
-        console.log("params", params)
         const status = params.data.review?.status
         switch (status) {
             case 3:

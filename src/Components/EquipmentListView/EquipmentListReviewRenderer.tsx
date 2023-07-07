@@ -13,7 +13,6 @@ export default (
         setReviewModalOpen(true);
         setTagInReview(props.data.id)
         setRevisionInReview(props.data.revisionContainer.id)
-        console.log("Props in review renderer", props)
     };
 
     return (

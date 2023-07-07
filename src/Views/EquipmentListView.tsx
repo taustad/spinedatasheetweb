@@ -30,7 +30,6 @@ const StyledTabPanel = styled(Panel)`
 
 function EquipmentListView() {
     const [activeTab, setActiveTab] = useState(0)
-    // const [tags, setTags] = useState<TagData[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [externalId, setExternalId] = useState<string | undefined>()
@@ -46,12 +45,6 @@ function EquipmentListView() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("reviewModalOpen in useEffect", reviewModalOpen)
-        console.log("tagInReview in useEffect", tagInReview)
-        console.log("revisionInReview in useEffect", revisionInReview)
-    }, [reviewModalOpen, tagInReview, revisionInReview])
-
-    useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)
         }
@@ -59,8 +52,6 @@ function EquipmentListView() {
 
     useEffect(() => {
         (async () => {
-            // await (await GetTagDataReviewService()).getTagDataReviews()
-
             if (externalId !== undefined) {
                 setError(false)
                 setIsLoading(false)

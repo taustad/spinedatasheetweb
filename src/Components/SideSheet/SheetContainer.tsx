@@ -53,12 +53,12 @@ const SideSheetContainer: React.FC<Props> = ({
     setReviewComments,
 }) => {
     const [width, setWidth] = useState<number>(30)
-  const [activeTab, setActiveTab] = useState(0)
+    const [activeTab, setActiveTab] = useState(0)
 
-  const handleChange = (index: number) => {
-    console.log(index)
-      setActiveTab(index)
-  }
+    const handleChange = (index: number) => {
+        console.log(index)
+        setActiveTab(index)
+    }
     return (
         <SheetContent className="sideSheetContent">
             <TabsContainer

@@ -92,7 +92,6 @@ function JIP33InstrumentTabView({
                 try {
                     setIsLoading(true)
                     const tagData: TagData = await (await GetTagDataService()).getTagData(tagId)
-                    console.log("tagData", tagData)
                     const tagDataReviewId = tagData.review?.id
                     if (tagDataReviewId !== null && tagDataReviewId !== undefined) {
                         await getCommentsForTagReview(tagDataReviewId)
@@ -110,10 +109,6 @@ function JIP33InstrumentTabView({
             }
         })()
     }, [])
-
-    useEffect(() => {
-        console.log("tagData from useEffect in InstrumentTabView", tagData)
-    }, [tagData])
 
     // useEffect(() => {
     //     if (tagId !== null && tagId !== undefined) {

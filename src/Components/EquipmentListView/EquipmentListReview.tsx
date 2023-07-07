@@ -53,7 +53,6 @@ function EquipmentListReview({
         const review = buildTagReview()
         review.status = 3
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
-        console.log("result", result)
         await updateTagData()
     }
 
@@ -61,7 +60,6 @@ function EquipmentListReview({
         const review = buildTagReview()
         review.status = 4
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
-        console.log("result", result)
         await updateTagData()
     }
 
@@ -69,7 +67,6 @@ function EquipmentListReview({
         const review = buildPackageReview()
         review.status = 3
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
-        console.log("result", result)
         await updateTagData()
 
     }
@@ -78,7 +75,6 @@ function EquipmentListReview({
         const review = buildPackageReview()
         review.status = 4
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
-        console.log("result", result)
         await updateTagData()
     }
 

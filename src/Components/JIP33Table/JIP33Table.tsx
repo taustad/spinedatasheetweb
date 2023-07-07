@@ -20,12 +20,6 @@ function JIP33Table({
 }: Props) {
     useAgGridStyles()
 
-    const { activeTagData: tagData } = useAppContext()
-
-    useEffect(() => {
-        console.log("JIP33Table tagData", tagData)
-    }, [tagData])
-
     const red = "white" //"#e6b8b7"
     const lightBlue = "white" //"#b7dee8"
     const grey = "white" // "#bfbfbf"
