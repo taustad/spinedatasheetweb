@@ -8,6 +8,7 @@ import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
+import { ViewContextProvider } from "../Context/ViewContext"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -33,9 +34,13 @@ function EquipmentListView() {
     const [externalId, setExternalId] = useState<string | undefined>()
 
     const { projectId } = useParams<Record<string, string | undefined>>()
-    const currentProject = useCurrentContext();
+    const currentProject = useCurrentContext()
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        console.log("tags", tags)
+    }, [tags])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -63,12 +68,18 @@ function EquipmentListView() {
         })()
     }, [externalId])
 
-    if (currentProject.currentContext === null || currentProject.currentContext === undefined) {
+    if (
+        currentProject.currentContext === null ||
+        currentProject.currentContext === undefined
+    ) {
         return <div>No project selected</div>
     }
 
-    if (currentProject?.currentContext !== null && currentProject.currentContext !== undefined
-        && (projectId === null || projectId === undefined)) {
+    if (
+        currentProject?.currentContext !== null &&
+        currentProject.currentContext !== undefined &&
+        (projectId === null || projectId === undefined)
+    ) {
         navigate(`/${currentProject.currentContext.id}`)
     }
 
@@ -90,27 +101,29 @@ function EquipmentListView() {
     }
 
     return (
-        <Wrapper>
-            <Header />
-            <Tabs
-                style={{ width: "100%" }}
-                activeTab={activeTab}
-                onChange={setActiveTab}
-            >
-                <List>
-                    <Tab>Tag info</Tab>
-                    <Tab>Tag comparison</Tab>
-                </List>
-                <Panels>
-                    <StyledTabPanel>
-                        <EquipmentListTable tags={tags} />
-                    </StyledTabPanel>
-                    <StyledTabPanel>
-                        <TagComparisonTable tags={tags} />
-                    </StyledTabPanel>
-                </Panels>
-            </Tabs>
-        </Wrapper>
+        <ViewContextProvider>
+            <Wrapper>
+                <Header />
+                <Tabs
+                    style={{ width: "100%" }}
+                    activeTab={activeTab}
+                    onChange={setActiveTab}
+                >
+                    <List>
+                        <Tab>Tag info</Tab>
+                        <Tab>Tag comparison</Tab>
+                    </List>
+                    <Panels>
+                        <StyledTabPanel>
+                            <EquipmentListTable tags={tags} />
+                        </StyledTabPanel>
+                        <StyledTabPanel>
+                            <TagComparisonTable tags={tags} />
+                        </StyledTabPanel>
+                    </Panels>
+                </Tabs>
+            </Wrapper>
+        </ViewContextProvider>
     )
 }
 export default EquipmentListView

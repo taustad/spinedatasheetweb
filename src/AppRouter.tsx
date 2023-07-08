@@ -7,7 +7,7 @@ import JIP33MechanicalTabView from "./Views/JIP33MechanicalTabView"
 import JIP33InstrumentTabView from "./Views/JIP33InstrumentTabView"
 
 const AppRouter: FC = () => (
-    <>
+    
         <Routes>
             <Route path="/" element={<EquipmentListView />} />
             <Route path="/comparison" element={<TagComparisonView />} />
@@ -16,7 +16,7 @@ const AppRouter: FC = () => (
             <Route path="/:projectId" element={<EquipmentListView />} />
             <Route path="/:projectId/JIP33Mechanical/:tagId" element={<JIP33MechanicalTabView />} />
         </Routes>
-    </>
+    
 );
 
 export default AppRouter;

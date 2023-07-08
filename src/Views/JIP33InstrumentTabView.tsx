@@ -38,41 +38,46 @@ const TopBar = styled.div`
 const View = styled.div`
     display: flex;
     flex-direction: row;
-    height: 100%;
 `
 
-const TableView = styled.div``
-
+const TableView = styled.div`
+`
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
 
-const StyledTabPanel = styled(Panel)`
+
+interface StyledTabPanelProps {
+    sheetWidth: number
+}
+
+const StyledTabPanel = styled(Panel)<StyledTabPanelProps>`
     padding-top: 0px;
     border-top: 1px solid LightGray;
-    width: 70vw;
+    width: calc(100vw - ${(props) => `${props.sheetWidth}px`});
 `
+
 const Content = styled.div`
     display: flex;
     flex-direction: row;
 `
 
 function JIP33InstrumentTabView({}) {
+    const { tagId } = useParams<Record<string, string | undefined>>()
+
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-
     const [tag, setTag] = useState<TagData>()
-
-    const { tagId } = useParams<Record<string, string | undefined>>()
-    const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
     const [open, setOpen] = useState(false)
+    const [currentProperty, setCurrentProperty] = useState<string>("")
+    const [activeTab, setActiveTab] = useState(0)
+    const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
+    const [sheetWidth, setSheetWidth] = useState(0)
+
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
+        setSheetWidth(0)
     }, [setOpen])
-
-    const [currentProperty, setCurrentProperty] = useState<string>("")
-
-    const [activeTab, setActiveTab] = useState(0)
 
     const getCommentsForTag = async (id: string) => {
         const comments: ReviewComment[] = await (
@@ -82,7 +87,7 @@ function JIP33InstrumentTabView({}) {
     }
 
     useEffect(() => {
-        ;(async () => {
+        (async () => {
             setError(false)
             setIsLoading(false)
             if (tagId !== null && tagId !== undefined) {
@@ -199,16 +204,18 @@ function JIP33InstrumentTabView({}) {
                     </List>
                     <Content>
                         <Panels>
-                            <StyledTabPanel>
+                            <StyledTabPanel sheetWidth={sheetWidth}>
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListNORSOK}
                                     rowDataList={rowDataListNORSOK}
                                     reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
+                                    setWidth={setSheetWidth}
+                                    width={sheetWidth}
                                 />
                             </StyledTabPanel>
-                            <StyledTabPanel>
+                            <StyledTabPanel sheetWidth={sheetWidth}>
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListJIP33}
                                     rowDataList={rowDataListJIP33}
@@ -216,6 +223,8 @@ function JIP33InstrumentTabView({}) {
                                     reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
+                                    setWidth={setSheetWidth}
+                                    width={sheetWidth}
                                 />
                             </StyledTabPanel>
                         </Panels>
@@ -228,6 +237,9 @@ function JIP33InstrumentTabView({}) {
                 currentProperty={currentProperty}
                 reviewComments={reviewComments}
                 setReviewComments={setReviewComments}
+                tag={tag}
+                width={sheetWidth}
+                setWidth={setSheetWidth}
             />
         </View>
     )
