@@ -61,8 +61,6 @@ const Content = styled.div`
 
 function JIP33InstrumentTabView({
 }) {
-    const { activeTagData: tagData, setActiveTagData: setTagData } = useAppContext()
-
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -98,9 +96,6 @@ function JIP33InstrumentTabView({
                     }
 
                     setTag(tagData)
-                    if (setTagData !== undefined) {
-                        setTagData(tagData)
-                    }
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")

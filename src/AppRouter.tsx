@@ -9,14 +9,11 @@ import AppContext from "./contexts/AppContext"
 import { TagData } from "./Models/TagData"
 
 const AppRouter: FC = () => {
-    const [activeTagData, setActiveTagData] = useState<TagData | undefined>(undefined)
     const [tagData, setTagData] = useState<TagData[]>([])
 
     return (
         <>
             <AppContext.Provider value={{
-                activeTagData: activeTagData,
-                setActiveTagData: setActiveTagData,
                 tagData: tagData,
                 setTagData: setTagData
             }}>

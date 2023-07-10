@@ -6,6 +6,7 @@ import { Input } from "@equinor/eds-core-react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
+import { useAppContext } from "../../contexts/AppContext"
 
 
 const CommentView = styled.div`
@@ -35,6 +36,8 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     setReviewComments,
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
+    const { tagData } = useAppContext()
+
     const [width, setWidth] = useState<number>(500)
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
@@ -74,7 +77,13 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        comment.tagDataReviewId = tagId
+        console.log("Tagdata: ", tagData)
+        console.log("tagId: ", tagId)
+        const activeTag = tagData?.find((tag) => tag.id === tagId)
+        console.log("activeTag: ", activeTag)
+        const reviewId = activeTag?.review?.id
+        console.log("reviewId: ", reviewId)
+        comment.tagDataReviewId = reviewId
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()

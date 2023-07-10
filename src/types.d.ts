@@ -16,6 +16,18 @@ declare namespace Components {
             isTagDataReviewComment?: boolean;
             isRevisionContainerReviewComment?: boolean;
         }
+        export interface CommentDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            userId?: string; // uuid
+            commenterName?: string | null;
+            text?: string | null;
+            property?: string | null;
+            commentLevel?: CommentLevel /* int32 */;
+            tagDataReviewId?: string | null; // uuid
+            revisionContainerReviewId?: string | null; // uuid
+        }
         export type CommentLevel = 0 | 1 | 2; // int32
         export interface Contract {
             id?: string; // uuid
@@ -26,6 +38,15 @@ declare namespace Components {
             projectId?: string; // uuid
             project?: Project;
             revisionContainers?: RevisionContainer[] | null;
+        }
+        export interface ContractDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            contractName?: string | null;
+            contractorId?: string; // uuid
+            projectId?: string; // uuid
+            revisionContainers?: RevisionContainerDto[] | null;
         }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
@@ -343,7 +364,6 @@ declare namespace Components {
         }
         export interface ElectricalTagDataDto {
             id?: string; // uuid
-            projectId?: string; // uuid
             tagNo?: string | null;
             description?: string | null;
             category?: string | null;
@@ -351,9 +371,33 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainer;
+            revisionContainer?: RevisionContainerDto;
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
+        }
+        export interface ITagData {
+            id?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            version?: number; // int32
+            tagDataReview?: TagDataReview;
+            revisionContainer?: RevisionContainer;
+        }
+        export interface ITagDataDto {
+            id?: string; // uuid
+            tagNo?: string | null;
+            description?: string | null;
+            category?: string | null;
+            area?: string | null;
+            discipline?: string | null;
+            version?: number; // int32
+            review?: TagDataReviewDto;
+            revisionContainer?: RevisionContainerDto;
         }
         export interface InstrumentPurchaserRequirement {
             codeRequirement?: number | null; // int32
@@ -733,7 +777,6 @@ declare namespace Components {
         }
         export interface InstrumentTagDataDto {
             id?: string; // uuid
-            projectId?: string; // uuid
             tagNo?: string | null;
             description?: string | null;
             category?: string | null;
@@ -741,7 +784,9 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainer;
+            revisionContainer?: RevisionContainerDto;
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
             instrumentSupplierOfferedProduct?: InstrumentSupplierOfferedProduct;
         }
@@ -1451,7 +1496,6 @@ declare namespace Components {
         }
         export interface MechanicalTagDataDto {
             id?: string; // uuid
-            projectId?: string; // uuid
             tagNo?: string | null;
             description?: string | null;
             category?: string | null;
@@ -1459,7 +1503,9 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainer;
+            revisionContainer?: RevisionContainerDto;
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
         }
@@ -1469,6 +1515,12 @@ declare namespace Components {
             modifiedDate?: string; // date-time
             contracts?: Contract[] | null;
         }
+        export interface ProjectDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            contracts?: ContractDto[] | null;
+        }
         export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
         export interface RevisionContainer {
             id?: string; // uuid
@@ -1477,10 +1529,22 @@ declare namespace Components {
             revisionContainerName?: string | null;
             revisionNumber?: number; // int32
             revisionContainerDate?: string; // date-time
-            tagData?: TagData[] | null;
+            tagData?: ITagData[] | null;
             revisionContainerReview?: RevisionContainerReview;
             contractId?: string; // uuid
             contract?: Contract;
+        }
+        export interface RevisionContainerDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            revisionContainerName?: string | null;
+            revisionNumber?: number; // int32
+            revisionContainerDate?: string; // date-time
+            tagData?: ITagDataDto[] | null;
+            revisionContainerReview?: RevisionContainerReviewDto;
+            contractId?: string; // uuid
+            contract?: ContractDto;
         }
         export interface RevisionContainerReview {
             id?: string; // uuid
@@ -1494,6 +1558,19 @@ declare namespace Components {
             revisionContainerId?: string; // uuid
             revisionContainer?: RevisionContainer;
             comments?: Comment[] | null;
+        }
+        export interface RevisionContainerReviewDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            status?: ReviewStatusEnum /* int32 */;
+            approverId?: string; // uuid
+            commentResponsible?: string; // uuid
+            approved?: boolean;
+            revisionContainerVersion?: number; // int32
+            revisionContainerId?: string; // uuid
+            revisionContainer?: RevisionContainerDto;
+            comments?: CommentDto[] | null;
         }
         export interface TagData {
             id?: string; // uuid
@@ -1511,7 +1588,6 @@ declare namespace Components {
         }
         export interface TagDataDto {
             id?: string; // uuid
-            projectId?: string; // uuid
             tagNo?: string | null;
             description?: string | null;
             category?: string | null;
@@ -1519,7 +1595,9 @@ declare namespace Components {
             discipline?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainer;
+            revisionContainer?: RevisionContainerDto;
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
         }
         export interface TagDataReview {
             id?: string; // uuid
@@ -1535,14 +1613,16 @@ declare namespace Components {
             comments?: Comment[] | null;
         }
         export interface TagDataReviewDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
             tagId?: string; // uuid
-            revisionId?: string; // uuid
             status?: ReviewStatusEnum /* int32 */;
             approverId?: string; // uuid
             commentResponsible?: string; // uuid
             approved?: boolean;
             tagDataVersion?: number; // int32
-            comments?: Comment[] | null;
+            comments?: CommentDto[] | null;
         }
     }
 }
@@ -1567,8 +1647,7 @@ declare namespace Paths {
     }
     namespace GetAllTagData {
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.ITagDataDto[];
         }
     }
     namespace GetComment {
@@ -1652,6 +1731,17 @@ declare namespace Paths {
     namespace GetMechanicalTagDataModel {
         namespace Responses {
             export type $200 = Components.Schemas.MechanicalTagDataDto;
+        }
+    }
+    namespace GetProject {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.ProjectDto;
         }
     }
     namespace GetReview {
@@ -1750,8 +1840,7 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.ITagDataDto;
         }
     }
     namespace GetTagDataForProject {
@@ -1765,8 +1854,7 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export interface $200 {
-            }
+            export type $200 = Components.Schemas.ITagDataDto[];
         }
     }
 }
