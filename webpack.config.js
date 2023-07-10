@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 let isProduction = false;
-if (process.env.NODE_ENV && process.env.NODE_ENV === 'production') {
+if (process.env.BUILD_MODE && process.env.BUILD_MODE === 'production') {
   isProduction = true;
 }
 
@@ -27,6 +27,7 @@ module.exports = {
       }
     ]
   },
+
   mode: mode,
   plugins: [
     new webpack.DefinePlugin({
@@ -34,5 +35,6 @@ module.exports = {
       'process.env.RTL_SKIP_AUTO_CLEANUP': false
     })
   ],
-  devtool: isProduction ? false : 'eval-source-map'
+  // devtool: isProduction ? false : 'eval-source-map',
+  devtool: 'eval-source-map'
 };
