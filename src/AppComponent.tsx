@@ -14,6 +14,7 @@ import { ClipboardModule } from '@ag-grid-enterprise/clipboard'
 import { MultiFilterModule } from '@ag-grid-enterprise/multi-filter'
 import { SetFilterModule } from '@ag-grid-enterprise/set-filter'
 import { MenuModule } from '@ag-grid-enterprise/menu'
+import { ViewContextProvider } from "./Context/ViewContext"
 
 ModuleRegistry.registerModules([
     ClientSideRowModelModule,
@@ -41,15 +42,16 @@ const AppComponent: FC = () => {
     }
 
     const config = ResolveConfiguration(fusionEnvironment.env)
-    //const config = ResolveConfiguration("CI")
 
     buildConfig(config.REACT_APP_API_BASE_URL)
     StoreAppScope(config.BACKEND_APP_SCOPE[0])
 
     return (
-        <BrowserRouter basename={basename}>
-            <AppRouter />
-        </BrowserRouter>
+        <ViewContextProvider>
+            <BrowserRouter basename={basename}>
+                <AppRouter />
+            </BrowserRouter>
+        </ViewContextProvider>
     )
 }
 

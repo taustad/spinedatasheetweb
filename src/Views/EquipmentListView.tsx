@@ -9,10 +9,6 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
-import { GetTagDataReviewService } from "../api/TagDataReviewService"
-import { useAppContext } from "../Context/AppContext"
-import { GetProjectService } from "../api/ProjectService"
-import { ViewContextProvider } from "../Context/ViewContext"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -38,8 +34,7 @@ function EquipmentListView() {
     const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false)
     const [tagInReview, setTagInReview] = useState<string | undefined>(undefined)
     const [revisionInReview, setRevisionInReview] = useState<string | undefined>(undefined)
-
-    const { tagData, setTagData } = useAppContext()
+    const [tagData, setTagData] = useState<TagData[] | undefined>(undefined)
 
     const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext()
@@ -59,12 +54,10 @@ function EquipmentListView() {
                 setIsLoading(false)
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData[] = await (
-                        await GetTagDataService()
-                    ).getAllTagData()
-                    if (setTagData !== undefined) {
-                        setTagData(datasheets)
-                    }
+
+                    const allTagData = await (await GetTagDataService()).getAllTagData()
+                    setTagData(allTagData)
+
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -107,44 +100,42 @@ function EquipmentListView() {
     }
 
     return (
-        <>
-            <ViewContextProvider>
-                <Wrapper>
-                    <Header />
-                    <Tabs
-                        style={{ width: "100%" }}
-                        activeTab={activeTab}
-                        onChange={setActiveTab}
-                    >
-                        <List>
-                            <Tab>Tag info</Tab>
-                            <Tab>Tag comparison</Tab>
-                        </List>
-                        <Panels>
-                            <StyledTabPanel>
-                                <EquipmentListTable
-                                    tags={tagData}
-                                    setReviewModalOpen={setReviewModalOpen}
-                                    setTagInReview={setTagInReview}
-                                    setRevisionInReview={setRevisionInReview}
-                                />
-                            </StyledTabPanel>
-                            <StyledTabPanel>
-                                <TagComparisonTable tags={tagData} />
-                            </StyledTabPanel>
-                        </Panels>
-                    </Tabs>
-                    {reviewModalOpen && <EquipmentListReview
-                        tags={tagData}
-                        setReviewModalOpen={setReviewModalOpen}
-                        setTagInReview={setTagInReview}
-                        tagInReview={tagInReview}
-                        setRevisionInReview={setRevisionInReview}
-                        revisionInReview={revisionInReview}
-                    />}
-                </Wrapper>
-            </ViewContextProvider>
-        </>
+        <Wrapper>
+            <Header />
+            <Tabs
+                style={{ width: "100%" }}
+                activeTab={activeTab}
+                onChange={setActiveTab}
+            >
+                <List>
+                    <Tab>Tag info</Tab>
+                    <Tab>Tag comparison</Tab>
+                </List>
+                <Panels>
+                    <StyledTabPanel>
+                        <EquipmentListTable
+                            tags={tagData}
+                            setReviewModalOpen={setReviewModalOpen}
+                            setTagInReview={setTagInReview}
+                            setRevisionInReview={setRevisionInReview}
+                        />
+                    </StyledTabPanel>
+                    <StyledTabPanel>
+                        <TagComparisonTable tags={tagData} />
+                    </StyledTabPanel>
+                </Panels>
+            </Tabs>
+            {reviewModalOpen && <EquipmentListReview
+                tags={tagData}
+                setReviewModalOpen={setReviewModalOpen}
+                setTagInReview={setTagInReview}
+                tagInReview={tagInReview}
+                setRevisionInReview={setRevisionInReview}
+                revisionInReview={revisionInReview}
+            />}
+        </Wrapper>
     )
 }
+
 export default EquipmentListView
+

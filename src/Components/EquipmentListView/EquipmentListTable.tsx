@@ -16,7 +16,6 @@ import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
 import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
-import { useAppContext } from "../../Context/AppContext"
 
 interface Props {
     tags: TagData[],
@@ -38,8 +37,6 @@ function EquipmentListTable({
     setRevisionInReview,
 }: Props) {
     const location = useLocation()
-
-    const { tagData } = useAppContext()
 
     const defaultColDef = useMemo<ColDef>(() => ({
         sortable: true,
@@ -183,7 +180,7 @@ function EquipmentListTable({
             style={{ flex: "1 1 auto", width: "100%" }}
         >
             <AgGridReact
-                rowData={tagData}
+                rowData={tags}
                 columnDefs={columns}
                 defaultColDef={defaultColDef}
                 animateRows

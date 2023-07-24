@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { Button } from "@equinor/eds-core-react"
 import { GetCommentService } from "../../api/CommentService"
 import { ReviewComment } from "../../Models/ReviewComment"
@@ -6,8 +6,7 @@ import { Input } from "@equinor/eds-core-react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
-import { useAppContext } from "../../Context/AppContext"
-
+import { ViewContext } from "../../Context/ViewContext"
 
 const CommentView = styled.div`
     padding: 0 20px;
@@ -36,7 +35,8 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     setReviewComments,
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
-    const { tagData } = useAppContext()
+
+    const { activeTagData } = useContext(ViewContext)
 
     const [width, setWidth] = useState<number>(500)
     const { tagId } = useParams<Record<string, string | undefined>>()
@@ -77,12 +77,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        console.log("Tagdata: ", tagData)
-        console.log("tagId: ", tagId)
-        const activeTag = tagData?.find((tag) => tag.id === tagId)
-        console.log("activeTag: ", activeTag)
-        const reviewId = activeTag?.review?.id
-        console.log("reviewId: ", reviewId)
+        const reviewId = activeTagData?.review?.id
         comment.tagDataReviewId = reviewId
         comment.commentLevel = 0
         comment.property = currentProperty

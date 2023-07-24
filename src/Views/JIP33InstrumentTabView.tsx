@@ -5,12 +5,16 @@ import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowDa
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
 import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useCallback, useEffect, useState } from "react"
+import {
+    useCallback,
+    useContext,
+    useEffect,
+    useState
+} from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
 import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
-import { TagData } from "../Models/TagData"
 import { GetTagDataService } from "../api/TagDataService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument/FlowRowData"
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
@@ -26,9 +30,9 @@ import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRow
 import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
-import AppContext, { useAppContext } from "../Context/AppContext"
 
 import SheetContainer from "../Components/SideSheet/SheetContainer"
+import { ViewContext } from "../Context/ViewContext"
 
 const TopBar = styled.div`
     padding-top: 0
@@ -69,14 +73,13 @@ function JIP33InstrumentTabView({ }) {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-    const [tag, setTag] = useState<TagData>()
     const [open, setOpen] = useState(false)
     const [currentProperty, setCurrentProperty] = useState<string>("")
     const [activeTab, setActiveTab] = useState(0)
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
-    const { tagData, setTagData } = useAppContext()
+    const { activeTagData, setActiveTagData } = useContext(ViewContext)
 
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
@@ -96,18 +99,16 @@ function JIP33InstrumentTabView({ }) {
             setIsLoading(false)
             if (tagId !== null && tagId !== undefined) {
                 try {
-                    const allTagData = await (await GetTagDataService()).getAllTagData()
-                    if (setTagData === undefined) throw new Error("setTagData is undefined")
-                    setTagData(allTagData)
-
                     setIsLoading(true)
-                    const currentTagData: TagData = allTagData.find((tag: TagData) => tag.id === tagId)
-                    const tagDataReviewId = currentTagData?.review?.id
+
+                    const tagData = await (await GetTagDataService()).getTagData(tagId)
+                    setActiveTagData(tagData)
+
+                    const tagDataReviewId = tagData?.review?.id
                     if (tagDataReviewId !== null && tagDataReviewId !== undefined) {
                         await getCommentsForTagReview(tagDataReviewId)
                     }
 
-                    setTag(currentTagData)
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -136,7 +137,7 @@ function JIP33InstrumentTabView({ }) {
         return <div>Loading tag...</div>
     }
 
-    if (tag === undefined) {
+    if (activeTagData === undefined) {
         return <div>No tag selected</div>
     }
 
@@ -156,16 +157,16 @@ function JIP33InstrumentTabView({ }) {
     const customTabList = ["Flow", "Temperature", "Pressure"]
 
     const rowDataListJIP33 = [
-        generateGeneralRowData(tag),
-        generateInstallationConditionsRowData(tag),
-        generateOperatingConditionsRowData(tag),
-        generateBodyElementSensorRowData(tag),
-        generateTransmitterRowData(tag),
-        generatePerformanceRowData(tag),
-        generateAccessoriesRowData(tag),
-        generateFlowRowData(tag),
-        generateTemperatureRowData(tag),
-        generatePressureRowData(tag),
+        generateGeneralRowData(activeTagData),
+        generateInstallationConditionsRowData(activeTagData),
+        generateOperatingConditionsRowData(activeTagData),
+        generateBodyElementSensorRowData(activeTagData),
+        generateTransmitterRowData(activeTagData),
+        generatePerformanceRowData(activeTagData),
+        generateAccessoriesRowData(activeTagData),
+        generateFlowRowData(activeTagData),
+        generateTemperatureRowData(activeTagData),
+        generatePressureRowData(activeTagData),
     ]
 
     const sideMenuListNORSOK = [
@@ -179,13 +180,13 @@ function JIP33InstrumentTabView({ }) {
     ]
 
     const rowDataListNORSOK = [
-        generalRowData(tag),
-        instrumentCharacteristicsRowData(tag),
-        meterBodyRowData(tag),
-        transmitterRowData(tag),
-        equipmentConditionsRowData(tag),
-        operatingConditionsMinimumFlowRowData(tag),
-        operatingConditionsMaximumFlowRowData(tag),
+        generalRowData(activeTagData),
+        instrumentCharacteristicsRowData(activeTagData),
+        meterBodyRowData(activeTagData),
+        transmitterRowData(activeTagData),
+        equipmentConditionsRowData(activeTagData),
+        operatingConditionsMinimumFlowRowData(activeTagData),
+        operatingConditionsMaximumFlowRowData(activeTagData),
     ]
 
     return (
@@ -194,7 +195,7 @@ function JIP33InstrumentTabView({ }) {
                 <TopBar>
                     <Typography variant="h3">
                         <BackButton />
-                        {tag.tagNo}
+                        {activeTagData.tagNo}
                         <Icon
                             data={comment_chat}
                             onClick={() => {
@@ -245,7 +246,7 @@ function JIP33InstrumentTabView({ }) {
                 currentProperty={currentProperty}
                 reviewComments={reviewComments}
                 setReviewComments={setReviewComments}
-                tag={tag}
+                tag={activeTagData}
                 width={sheetWidth}
                 setWidth={setSheetWidth}
             />
