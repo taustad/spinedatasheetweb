@@ -47,10 +47,6 @@ function EquipmentListView() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        console.log("tags", tags)
-    }, [tags])
-
-    useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)
         }
@@ -118,40 +114,6 @@ function EquipmentListView() {
 
     return (
         <>
-            <Wrapper>
-                <Header />
-                <Tabs
-                    style={{ width: "100%" }}
-                    activeTab={activeTab}
-                    onChange={setActiveTab}
-                >
-                    <List>
-                        <Tab>Tag info</Tab>
-                        <Tab>Tag comparison</Tab>
-                    </List>
-                    <Panels>
-                        <StyledTabPanel>
-                            <EquipmentListTable
-                                tags={tagData}
-                                setReviewModalOpen={setReviewModalOpen}
-                                setTagInReview={setTagInReview}
-                                setRevisionInReview={setRevisionInReview}
-                            />
-                        </StyledTabPanel>
-                        <StyledTabPanel>
-                            <TagComparisonTable tags={tagData} />
-                        </StyledTabPanel>
-                    </Panels>
-                </Tabs>
-                {reviewModalOpen && <EquipmentListReview
-                    tags={tagData}
-                    setReviewModalOpen={setReviewModalOpen}
-                    setTagInReview={setTagInReview}
-                    tagInReview={tagInReview}
-                    setRevisionInReview={setRevisionInReview}
-                    revisionInReview={revisionInReview}
-                />}
-            </Wrapper>
             <ViewContextProvider>
                 <Wrapper>
                     <Header />
@@ -166,16 +128,26 @@ function EquipmentListView() {
                         </List>
                         <Panels>
                             <StyledTabPanel>
-                                <EquipmentListTable tags={tagData}
+                                <EquipmentListTable
+                                    tags={tagData}
                                     setReviewModalOpen={setReviewModalOpen}
                                     setTagInReview={setTagInReview}
-                                    setRevisionInReview={setRevisionInReview} />
+                                    setRevisionInReview={setRevisionInReview}
+                                />
                             </StyledTabPanel>
                             <StyledTabPanel>
                                 <TagComparisonTable tags={tagData} />
                             </StyledTabPanel>
                         </Panels>
                     </Tabs>
+                    {reviewModalOpen && <EquipmentListReview
+                        tags={tagData}
+                        setReviewModalOpen={setReviewModalOpen}
+                        setTagInReview={setTagInReview}
+                        tagInReview={tagInReview}
+                        setRevisionInReview={setRevisionInReview}
+                        revisionInReview={revisionInReview}
+                    />}
                 </Wrapper>
             </ViewContextProvider>
         </>

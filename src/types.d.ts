@@ -1628,9 +1628,9 @@ declare namespace Components {
 }
 declare namespace Paths {
     namespace CreateComment {
-        export type RequestBody = Components.Schemas.Comment;
+        export type RequestBody = Components.Schemas.CommentDto;
         namespace Responses {
-            export type $200 = Components.Schemas.Comment;
+            export type $200 = Components.Schemas.CommentDto;
         }
     }
     namespace CreateReview {
@@ -1640,9 +1640,9 @@ declare namespace Paths {
         }
     }
     namespace CreateRevisionReview {
-        export type RequestBody = Components.Schemas.RevisionContainerReview;
+        export type RequestBody = Components.Schemas.RevisionContainerReviewDto;
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReview;
+            export type $200 = Components.Schemas.RevisionContainerReviewDto;
         }
     }
     namespace GetAllTagData {
@@ -1661,12 +1661,12 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Comment;
+            export type $200 = Components.Schemas.CommentDto;
         }
     }
     namespace GetComments {
         namespace Responses {
-            export type $200 = Components.Schemas.Comment[];
+            export type $200 = Components.Schemas.CommentDto[];
         }
     }
     namespace GetCommentsForTagReview {
@@ -1677,7 +1677,7 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.Comment[];
+            export type $200 = Components.Schemas.CommentDto[];
         }
     }
     namespace GetContract {
@@ -1799,12 +1799,12 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReview;
+            export type $200 = Components.Schemas.RevisionContainerReviewDto;
         }
     }
     namespace GetRevisionReviews {
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReview[];
+            export type $200 = Components.Schemas.RevisionContainerReviewDto[];
         }
     }
     namespace GetRevisionReviewsForProject {
@@ -1818,7 +1818,7 @@ declare namespace Paths {
             id?: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReview[];
+            export type $200 = Components.Schemas.RevisionContainerReviewDto[];
         }
     }
     namespace GetRevisionReviewsForTag {
@@ -1829,7 +1829,7 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReview[];
+            export type $200 = Components.Schemas.RevisionContainerReviewDto[];
         }
     }
     namespace GetTagDataById {
