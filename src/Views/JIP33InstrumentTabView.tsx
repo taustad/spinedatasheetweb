@@ -118,16 +118,18 @@ function JIP33InstrumentTabView({ }) {
         })()
     }, [])
 
-    // useEffect(() => {
-    //     if (tagId !== null && tagId !== undefined) {
-    //         const intervalId = setInterval(async () => {
-    //             const newComments = await (await GetCommentService()).getCommentsForTagReview(tagId)
-    //             setReviewComments(newComments)
-    //         }, 5000)
+    useEffect(() => {
+        if (tagId !== null && tagId !== undefined) {
+            const intervalId = setInterval(async () => {
+                const tagDataReviewId = activeTagData?.review?.id
+                if (tagDataReviewId === undefined || tagDataReviewId === null) { return }
+                const newComments = await (await GetCommentService()).getCommentsForTagReview(tagDataReviewId)
+                setReviewComments(newComments)
+            }, 5000)
 
-    //         return () => clearInterval(intervalId)
-    //     }
-    // }, [])
+            return () => clearInterval(intervalId)
+        }
+    }, [activeTagData])
 
     if (error) {
         return <div>Error loading tag</div>
