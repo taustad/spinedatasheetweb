@@ -11,7 +11,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "tagNo",
         },
         {
             refClause: "",
@@ -21,27 +21,27 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "serviceDescription",
         },
         {
             refClause: "",
             description: "P&ID",
-            purchaserReq: datasheet.instrumentPurchaserRequirement?.pAndID,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.pidNumber,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "pidNumber",
         },
         {
             refClause: "",
             description: "Line/equipment no",
-            purchaserReq: datasheet.instrumentPurchaserRequirement?.lineEquipmentNumber,
+            purchaserReq: datasheet.instrumentPurchaserRequirement?.lineOrEquipmentNumber,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "lineOrEquipmentNumber",
         },
         {
             refClause: "",
@@ -51,7 +51,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "pipeClassSheet",
         },
         {
             refClause: "",
@@ -61,7 +61,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "setalarmPoint",
         },
         {
             refClause: "",
@@ -71,7 +71,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "area",
         },
         {
             refClause: "",
@@ -81,7 +81,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "poNumber",
         },
         {
             refClause: "",
@@ -91,7 +91,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "type",
         },
         {
             refClause: "",
@@ -101,7 +101,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "manufacturer",
         },
         {
             refClause: "",
@@ -111,7 +111,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "operatingTemperatureLimits",
         },
         {
             refClause: "",
@@ -121,7 +121,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "operatingPressureLimit",
         },
         {
             refClause: "",
@@ -131,7 +131,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "pressureLossAtFullRange",
         },
         {
             refClause: "",
@@ -141,7 +141,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "mounting",
         },
         {
             refClause: "",
@@ -151,7 +151,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             supplierOfferedVal: "",
             supplierOfferedValUOM: "",
             additionalNotes: "",
-            property: "",
+            property: "weight",
         },
         {
             refClause: "",

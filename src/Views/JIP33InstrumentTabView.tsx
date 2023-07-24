@@ -26,7 +26,7 @@ import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRow
 import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
-import AppContext, { useAppContext } from "../contexts/AppContext"
+import AppContext, { useAppContext } from "../Context/AppContext"
 
 import SheetContainer from "../Components/SideSheet/SheetContainer"
 
@@ -76,6 +76,8 @@ function JIP33InstrumentTabView({ }) {
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
+    const { tagData, setTagData } = useAppContext()
+
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
         setSheetWidth(0)
@@ -94,14 +96,18 @@ function JIP33InstrumentTabView({ }) {
             setIsLoading(false)
             if (tagId !== null && tagId !== undefined) {
                 try {
+                    const allTagData = await (await GetTagDataService()).getAllTagData()
+                    if (setTagData === undefined) throw new Error("setTagData is undefined")
+                    setTagData(allTagData)
+
                     setIsLoading(true)
-                    const tagData: TagData = await (await GetTagDataService()).getTagData(tagId)
-                    const tagDataReviewId = tagData.review?.id
+                    const currentTagData: TagData = allTagData.find((tag: TagData) => tag.id === tagId)
+                    const tagDataReviewId = currentTagData?.review?.id
                     if (tagDataReviewId !== null && tagDataReviewId !== undefined) {
                         await getCommentsForTagReview(tagDataReviewId)
                     }
 
-                    setTag(tagData)
+                    setTag(currentTagData)
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")

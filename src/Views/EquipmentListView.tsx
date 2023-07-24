@@ -10,7 +10,7 @@ import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import { GetTagDataReviewService } from "../api/TagDataReviewService"
-import { useAppContext } from "../contexts/AppContext"
+import { useAppContext } from "../Context/AppContext"
 import { GetProjectService } from "../api/ProjectService"
 import { ViewContextProvider } from "../Context/ViewContext"
 
@@ -59,12 +59,6 @@ function EquipmentListView() {
                 setIsLoading(false)
                 try {
                     setIsLoading(true)
-                    try {
-                        const project = await (await GetProjectService()).getProject(externalId)
-                    }
-                    catch {
-                        console.error("Project not found", externalId)
-                    }
                     const datasheets: TagData[] = await (
                         await GetTagDataService()
                     ).getAllTagData()

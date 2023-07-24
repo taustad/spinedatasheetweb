@@ -1,7 +1,7 @@
 import {
     Dispatch,
     SetStateAction,
-    useMemo
+    useMemo,
 } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
@@ -9,14 +9,14 @@ import { Icon } from "@equinor/eds-core-react"
 import {
     block,
     done,
-    tag
+    tag,
 } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
 import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
-import { useAppContext } from "../../contexts/AppContext"
+import { useAppContext } from "../../Context/AppContext"
 
 interface Props {
     tags: TagData[],
@@ -69,15 +69,13 @@ function EquipmentListTable({
     }
 
     const linkToDocument = (params: any) =>
-    (
-        <Link
-            to={getTagLink(params)}
-            style={{ color: tokens.colors.text.static_icons__default.rgba }}
-        >
-            <TagIcon data={tag} color={"green"} size={18} />
-            {params.value}
-        </Link>
-    )
+    (<Link
+        to={getTagLink(params)}
+        style={{ color: tokens.colors.text.static_icons__default.rgba }}
+    >
+        <TagIcon data={tag} color={"green"} size={18} />
+        {params.value}
+    </Link>)
 
     const tagDataReviewStatusRenderer = (params: any) => {
         const status = params.data.review?.status
@@ -132,7 +130,7 @@ function EquipmentListTable({
                     field: "description",
                     headerName: "Description",
                     flex: 1,
-                    minWidth: 100
+                    minWidth: 100,
                 },
                 { field: "category", headerName: "Category" },
                 {
@@ -140,7 +138,7 @@ function EquipmentListTable({
                     headerName: "Area",
                     flex: 1,
                     maxWidth: 100,
-                    minWidth: 80
+                    minWidth: 80,
                 },
                 { field: "discipline", headerName: "Discipline" },
             ],
@@ -151,29 +149,29 @@ function EquipmentListTable({
                 {
                     field: "",
                     headerName: "Review",
-                    cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview)
+                    cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview),
                 },
                 {
                     field: "revisionContainer.revisionContainerReview.status",
                     headerName: "Revision container review status",
-                    cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params)
+                    cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params),
                 },
                 {
                     field: "review.status",
                     headerName: "Review status",
-                    cellRenderer: (params: any) => tagDataReviewStatusRenderer(params)
+                    cellRenderer: (params: any) => tagDataReviewStatusRenderer(params),
                 },
                 {
                     field: "review.approverId",
-                    headerName: "Reviewers"
+                    headerName: "Reviewers",
                 },
                 {
                     field: "review.commentResponsible",
-                    headerName: "Comment responsible"
+                    headerName: "Comment responsible",
                 },
                 {
                     field: "reviewDeadline",
-                    headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params)
+                    headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params),
                 },
             ],
         },

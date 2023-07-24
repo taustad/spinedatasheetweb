@@ -6,7 +6,7 @@ import { useCurrentUser } from "@equinor/fusion"
 import DialogueBox from "./DialogueBox"
 import InputController from "./InputController"
 import styled from "styled-components"
-import { useAppContext } from "../../../contexts/AppContext"
+import { useAppContext } from "../../../Context/AppContext"
 
 const CommentView = styled.div`
     overflow-y: auto;

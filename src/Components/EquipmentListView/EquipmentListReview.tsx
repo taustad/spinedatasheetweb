@@ -6,7 +6,7 @@ import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetRevisionReviewService } from "../../api/RevisionReviewService"
 import { RevisionContainerReview } from "../../Models/RevisionContainerReview"
 import { GetTagDataService } from "../../api/TagDataService"
-import { useAppContext } from "../../contexts/AppContext"
+import { useAppContext } from "../../Context/AppContext"
 
 interface Props {
     tags: TagData[],
@@ -23,7 +23,7 @@ function EquipmentListReview({
     setTagInReview,
     tagInReview,
     setRevisionInReview,
-    revisionInReview
+    revisionInReview,
 }: Props) {
     const { setTagData } = useAppContext()
 
@@ -83,7 +83,6 @@ function EquipmentListReview({
             <h1>Package review: {revisionInReview}</h1>
             <Button onClick={approvePackage}>Approve</Button>
             <Button color="danger" onClick={rejectPackage}>Reject</Button>
-
 
         </div>
     )

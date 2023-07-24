@@ -6,7 +6,7 @@ import { Input } from "@equinor/eds-core-react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
-import { useAppContext } from "../../contexts/AppContext"
+import { useAppContext } from "../../Context/AppContext"
 
 
 const CommentView = styled.div`

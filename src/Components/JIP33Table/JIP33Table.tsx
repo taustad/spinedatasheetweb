@@ -1,7 +1,7 @@
 import {
     Dispatch,
     SetStateAction,
-    useMemo
+    useMemo,
 } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
