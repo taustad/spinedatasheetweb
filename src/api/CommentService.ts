@@ -14,8 +14,8 @@ class CommentService extends BaseService {
         return result
     }
 
-    async getCommentsForTag(id: string) {
-        const result: any = await this.get(`tag/${id}`)
+    async getCommentsForTagReview(id: string) {
+        const result: any = await this.get(`tagreview/${id}`)
         return result
     }
 

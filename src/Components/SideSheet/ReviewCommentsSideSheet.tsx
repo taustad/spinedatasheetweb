@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { Button } from "@equinor/eds-core-react"
 import { GetCommentService } from "../../api/CommentService"
 import { ReviewComment } from "../../Models/ReviewComment"
@@ -6,7 +6,7 @@ import { Input } from "@equinor/eds-core-react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
-
+import { ViewContext } from "../../Context/ViewContext"
 
 const CommentView = styled.div`
     padding: 0 20px;
@@ -35,6 +35,9 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     setReviewComments,
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
+
+    const { activeTagData } = useContext(ViewContext)
+
     const [width, setWidth] = useState<number>(500)
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
@@ -74,7 +77,8 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        comment.tagDataId = tagId
+        const reviewId = activeTagData?.review?.id
+        comment.tagDataReviewId = reviewId
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
@@ -85,7 +89,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
             await service.createComment(comment)
             setReviewComments([...reviewComments, comment])
         } catch (error) {
-            console.log(`Error creating comment: ${error}`)
+            console.error(`Error creating comment: ${error}`)
         }
         setNewReviewComment(undefined)
     }

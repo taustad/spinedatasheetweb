@@ -80,8 +80,8 @@ function JIP33LegendModal({
     ]
 
     const columns = [
-        { field: "legend", headerName: "Legend", cellStyle: (params:any) => reqColor(params) },
-        { field: "description", headerName: "Description", flex: 1},
+        { field: "legend", headerName: "Legend", cellStyle: (params: any) => reqColor(params) },
+        { field: "description", headerName: "Description", flex: 1 },
     ]
 
     return (

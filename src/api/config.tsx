@@ -5,6 +5,9 @@ export type ServiceConfig = {
 }
 
 const configuration = {
+    ProjectService: {
+        BASE_URL: "",
+    },
     TagDataService: {
         BASE_URL: "",
     },
@@ -13,13 +16,22 @@ const configuration = {
     },
     CommentService: {
         BASE_URL: "",
+    },
+    TagDataReviewService: {
+        BASE_URL: "",
+    },
+    RevisionReviewService: {
+        BASE_URL: "",
     }
 }
 
 export const buildConfig = (baseUrl: string) => {
+    configuration.ProjectService.BASE_URL = `${baseUrl}/projects`
     configuration.TagDataService.BASE_URL = `${baseUrl}/tagdata`
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
     configuration.CommentService.BASE_URL = `${baseUrl}/comments`
+    configuration.TagDataReviewService.BASE_URL = `${baseUrl}/tagdatareviews`
+    configuration.RevisionReviewService.BASE_URL = `${baseUrl}/revisionreviews`
 }
 
 export const config = Object.freeze(configuration)

@@ -1,6 +1,22 @@
-import React, { createContext, useState, ReactNode } from "react"
+import React,
+{
+    createContext,
+    useState,
+    ReactNode,
+    Dispatch,
+    SetStateAction
+} from "react"
+import { TagData } from "../Models/TagData"
 
-export const ViewContext = createContext<any>({})
+interface ViewContextProps {
+    activeTagData: TagData | undefined;
+    setActiveTagData: Dispatch<SetStateAction<TagData | undefined>>;
+}
+
+export const ViewContext = createContext<ViewContextProps>({
+    activeTagData: undefined,
+    setActiveTagData: () => { },
+})
 
 interface ViewContextProviderProps {
     children: ReactNode
@@ -8,8 +24,15 @@ interface ViewContextProviderProps {
 
 export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     children,
-}) => {
-    const value = {}
+}: ViewContextProviderProps) => {
+    const [activeTagData, setActiveTagData] = useState<TagData>()
 
-    return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
+    const value = {
+        activeTagData,
+        setActiveTagData,
+    }
+
+    return <ViewContext.Provider value={value}>
+        {children}
+    </ViewContext.Provider>
 }

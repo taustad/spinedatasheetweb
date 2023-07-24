@@ -3,12 +3,12 @@ import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { GetTagDataService } from "../api/TagDataService"
-import EquipmentListTable from "../Components/EquipmentListTable"
+import EquipmentListTable from "../Components/EquipmentListView/EquipmentListTable"
 import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import Header from "../Components/Header/Header"
 import { useNavigate, useParams } from "react-router-dom"
-import { ViewContextProvider } from "../Context/ViewContext"
+import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 
 const Wrapper = styled.div`
     width: 100%;
@@ -28,19 +28,18 @@ const StyledTabPanel = styled(Panel)`
 
 function EquipmentListView() {
     const [activeTab, setActiveTab] = useState(0)
-    const [tags, setTags] = useState<TagData[]>([])
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [externalId, setExternalId] = useState<string | undefined>()
+    const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false)
+    const [tagInReview, setTagInReview] = useState<string | undefined>(undefined)
+    const [revisionInReview, setRevisionInReview] = useState<string | undefined>(undefined)
+    const [tagData, setTagData] = useState<TagData[] | undefined>(undefined)
 
     const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext()
 
     const navigate = useNavigate()
-
-    useEffect(() => {
-        console.log("tags", tags)
-    }, [tags])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -55,10 +54,10 @@ function EquipmentListView() {
                 setIsLoading(false)
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData[] = await (
-                        await GetTagDataService()
-                    ).getAllTagData()
-                    setTags(datasheets)
+
+                    const allTagData = await (await GetTagDataService()).getAllTagData()
+                    setTagData(allTagData)
+
                     setIsLoading(false)
                 } catch {
                     console.error("Error loading tags")
@@ -96,34 +95,47 @@ function EquipmentListView() {
         )
     }
 
-    if (tags.length === 0) {
+    if (tagData === undefined || tagData.length === 0) {
         return <div>No tags found for this project</div>
     }
 
     return (
-        <ViewContextProvider>
-            <Wrapper>
-                <Header />
-                <Tabs
-                    style={{ width: "100%" }}
-                    activeTab={activeTab}
-                    onChange={setActiveTab}
-                >
-                    <List>
-                        <Tab>Tag info</Tab>
-                        <Tab>Tag comparison</Tab>
-                    </List>
-                    <Panels>
-                        <StyledTabPanel>
-                            <EquipmentListTable tags={tags} />
-                        </StyledTabPanel>
-                        <StyledTabPanel>
-                            <TagComparisonTable tags={tags} />
-                        </StyledTabPanel>
-                    </Panels>
-                </Tabs>
-            </Wrapper>
-        </ViewContextProvider>
+        <Wrapper>
+            <Header />
+            <Tabs
+                style={{ width: "100%" }}
+                activeTab={activeTab}
+                onChange={setActiveTab}
+            >
+                <List>
+                    <Tab>Tag info</Tab>
+                    <Tab>Tag comparison</Tab>
+                </List>
+                <Panels>
+                    <StyledTabPanel>
+                        <EquipmentListTable
+                            tags={tagData}
+                            setReviewModalOpen={setReviewModalOpen}
+                            setTagInReview={setTagInReview}
+                            setRevisionInReview={setRevisionInReview}
+                        />
+                    </StyledTabPanel>
+                    <StyledTabPanel>
+                        <TagComparisonTable tags={tagData} />
+                    </StyledTabPanel>
+                </Panels>
+            </Tabs>
+            {reviewModalOpen && <EquipmentListReview
+                tags={tagData}
+                setReviewModalOpen={setReviewModalOpen}
+                setTagInReview={setTagInReview}
+                tagInReview={tagInReview}
+                setRevisionInReview={setRevisionInReview}
+                revisionInReview={revisionInReview}
+            />}
+        </Wrapper>
     )
 }
+
 export default EquipmentListView
+

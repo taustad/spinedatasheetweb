@@ -4,7 +4,7 @@ import styled from "styled-components"
 import ReviewCommentsSideSheet from "./Comments/ReviewCommentsSideSheet"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { TagData } from "../../Models/TagData"
-import { tag as tagIcon }  from "@equinor/eds-icons"
+import { tag as tagIcon } from "@equinor/eds-icons"
 import { close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
 
@@ -46,7 +46,7 @@ const SheetHeader = styled.div`
     h4 {
         margin-bottom: 5px;
     }
-` 
+`
 
 const TagInfo = styled.div`
     display: flex;
@@ -105,7 +105,7 @@ const SheetContainer: React.FC<Props> = ({
         return null
     }
 
-    
+
     return (
         <Resizable
             style={{ position: "sticky", right: 0, top: 0, height: "100%" }}

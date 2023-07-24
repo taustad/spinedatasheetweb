@@ -6,7 +6,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
     return [
         {
             refClause: "5.12,5.13,6.12",
-            description: "Code requirement:",
+            description: "Code requirement",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.codeRequirement,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -16,7 +16,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Conformity assessment system (CAS) level:",
+            description: "Conformity assessment system (CAS) level",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.conformityAssessmentSystemLevel,
             purchaserReqUOM: "",
             supplierOfferedVal: "0",
@@ -26,7 +26,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.12.1",
-            description: "Tag number:",
+            description: "Tag number",
             purchaserReq: datasheet.tagNo,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -36,7 +36,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Service description:",
+            description: "Service description",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.serviceDescription,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -46,7 +46,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Manufacturer:",
+            description: "Manufacturer",
             purchaserReq: "",
             purchaserReqColor: ColorLegendEnum.InputDataEitherPurOrSupCom,
             purchaserReqUOM: "",
@@ -58,7 +58,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Model number:",
+            description: "Model number",
             purchaserReq: "",
             purchaserReqColor: ColorLegendEnum.InputDataNoInputExp,
             purchaserReqUOM: "",
@@ -70,7 +70,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Equipment manufacturer serial number:",
+            description: "Equipment manufacturer serial number",
             purchaserReq: "",
             purchaserReqColor: ColorLegendEnum.InputDataNoInputExp,
             purchaserReqUOM: "",
@@ -82,7 +82,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Project country:",
+            description: "Project country",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.projectCountry,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -92,7 +92,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Project region:",
+            description: "Project region",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.projectRegion,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -102,7 +102,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Plant environmental location:",
+            description: "Plant environmental location",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.plantEnvironmentalLocation,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -112,7 +112,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "P&ID number:",
+            description: "P&ID number",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.pidNumber,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -122,7 +122,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Line or equipment number:",
+            description: "Line or equipment number",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.lineOrEquipmentNumber,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -132,7 +132,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Minimum ambient temperature:",
+            description: "Minimum ambient temperature",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.minimumAmbientTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
@@ -145,7 +145,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Maximum ambient temperature:",
+            description: "Maximum ambient temperature",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.maximumAmbientTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
@@ -158,7 +158,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Base conditions:",
+            description: "Base conditions",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.baseConditions,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -168,7 +168,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Base temperature:",
+            description: "Base temperature",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.baseTemperature,
             purchaserReqUOM: "°C",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
@@ -180,7 +180,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Base pressure:",
+            description: "Base pressure",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.basePressure,
             purchaserReqUOM: "barg",
             purchaserReqUOMColor: ColorLegendEnum.SelectUnitsOfDropDown,
@@ -192,7 +192,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "",
-            description: "Coating durability:",
+            description: "Coating durability",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.coatingDurability,
             purchaserReqUOM: "",
             supplierOfferedVal: "",
@@ -202,7 +202,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3,1.2.1",
-            description: "Pressure retaining bolt material:",
+            description: "Pressure retaining bolt material",
             purchaserReq: "",
             purchaserReqColor: ColorLegendEnum.SelectNoInputExp,
             purchaserReqUOM: "",
@@ -214,7 +214,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3,1.2.1",
-            description: "Pressure retaining nut material:",
+            description: "Pressure retaining nut material",
             purchaserReq: "",
             purchaserReqColor: ColorLegendEnum.SelectNoInputExp,
             purchaserReqUOM: "",
@@ -226,7 +226,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.1.4",
-            description: "SIL rating:",
+            description: "SIL rating",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.silRating,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.silRating,
@@ -237,7 +237,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.1.6,6.2.1",
-            description: "Ingress protection:",
+            description: "Ingress protection",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.ingressProtection,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.ingressProtection,
@@ -248,7 +248,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3.3.1",
-            description: "EX protection:",
+            description: "EX protection",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.exProtection,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.exProtection,
@@ -259,7 +259,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3.3.1",
-            description: "Hazardous area classification standard:",
+            description: "Hazardous area classification standard",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.hazardousAreaClassificationStandard,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.hazardousAreaClassificationStandard,
@@ -270,7 +270,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3.3.1",
-            description: "Explorsion hazard classification:",
+            description: "Explorsion hazard classification",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.explosionHazardClassification,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.explosionHazardClassification,
@@ -281,7 +281,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3.3.1",
-            description: "Explosion group:",
+            description: "Explosion group",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.explosionGroup,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.explosionGroup,
@@ -292,7 +292,7 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
         },
         {
             refClause: "4.3.3.1",
-            description: "Temperature class:",
+            description: "Temperature class",
             purchaserReq: datasheet.instrumentPurchaserRequirement?.temperatureClass,
             purchaserReqUOM: "",
             supplierOfferedVal: datasheet.instrumentSupplierOfferedProduct?.temperatureClass,

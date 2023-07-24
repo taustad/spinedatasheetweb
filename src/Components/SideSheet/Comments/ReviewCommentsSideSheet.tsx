@@ -1,5 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react"
-import { Button } from "@equinor/eds-core-react"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react"
 import { GetCommentService } from "../../../api/CommentService"
 import { ReviewComment } from "../../../Models/ReviewComment"
 import { useParams } from "react-router-dom"
@@ -7,6 +6,7 @@ import { useCurrentUser } from "@equinor/fusion"
 import DialogueBox from "./DialogueBox"
 import InputController from "./InputController"
 import styled from "styled-components"
+import { ViewContext } from "../../../Context/ViewContext"
 
 const CommentView = styled.div`
     overflow-y: auto;
@@ -24,6 +24,8 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
     setReviewComments,
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
+
+    const { activeTagData } = useContext(ViewContext)
 
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
@@ -56,7 +58,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        comment.tagDataId = tagId
+        comment.tagDataReviewId = activeTagData?.review?.id
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
