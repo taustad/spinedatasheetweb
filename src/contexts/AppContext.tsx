@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react'
-import { TagData } from '../Models/TagData'
+import { createContext, useContext } from "react"
+import { TagData } from "../Models/TagData"
 
 type AppContextType = {
     tagData?: TagData[]

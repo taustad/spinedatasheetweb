@@ -8,8 +8,8 @@ export class TagData implements Components.Schemas.TagDataDto {
     category?: string | null
     area?: string | null
     discipline?: string | null
-    revisionNumber?: number; // int32
-    review?: TagDataReview;
+    revisionNumber?: number // int32
+    review?: TagDataReview
 
 
     constructor(init?: Partial<TagData>) {

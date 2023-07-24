@@ -14,8 +14,8 @@ const AppRouter: FC = () => {
     return (
         <>
             <AppContext.Provider value={{
-                tagData: tagData,
-                setTagData: setTagData
+                tagData,
+                setTagData,
             }}>
                 <Routes>
                     <Route path="/" element={<EquipmentListView />} />

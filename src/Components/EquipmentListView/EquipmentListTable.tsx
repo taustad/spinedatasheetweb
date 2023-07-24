@@ -1,8 +1,16 @@
-import { Dispatch, SetStateAction, useEffect, useMemo } from "react"
+import {
+    Dispatch,
+    SetStateAction,
+    useMemo
+} from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"
-import { add, block, done, tag } from "@equinor/eds-icons"
+import {
+    block,
+    done,
+    tag
+} from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
@@ -27,7 +35,7 @@ function EquipmentListTable({
     tags,
     setReviewModalOpen,
     setTagInReview,
-    setRevisionInReview
+    setRevisionInReview,
 }: Props) {
     const location = useLocation()
 
@@ -40,8 +48,7 @@ function EquipmentListTable({
         editable: false,
     }), [])
 
-    const typeOfJIP33 = (params: any) => {
-        const discipline = params.data.discipline
+    const typeOfJIP33 = ({ data: { discipline } }: any) => {
         if (discipline === "Mechanical") {
             return "JIP33Mechanical"
         }
@@ -61,17 +68,16 @@ function EquipmentListTable({
         return result
     }
 
-    const linkToDocument = (params: any) => {
-        return (
-            <Link
-                to={getTagLink(params)}
-                style={{ color: tokens.colors.text.static_icons__default.rgba }}
-            >
-                <TagIcon data={tag} color={'green'} size={18} />
-                {params.value}
-            </Link>
-        )
-    }
+    const linkToDocument = (params: any) =>
+    (
+        <Link
+            to={getTagLink(params)}
+            style={{ color: tokens.colors.text.static_icons__default.rgba }}
+        >
+            <TagIcon data={tag} color={"green"} size={18} />
+            {params.value}
+        </Link>
+    )
 
     const tagDataReviewStatusRenderer = (params: any) => {
         const status = params.data.review?.status
@@ -113,7 +119,6 @@ function EquipmentListTable({
         return deadline.toISOString().slice(0, 10)
     }
 
-
     const columns = [
         {
             headerName: "Tag info",
@@ -123,24 +128,55 @@ function EquipmentListTable({
                 { field: "revisionContainer.revisionNumber", headerName: "Revision number" },
                 { field: "revisionContainer.revisionContainerName", headerName: "Collection group" },
                 { field: "revisionContainer.contract.contractName", headerName: "Contract" },
-                { field: "description", headerName: "Description", flex: 1, minWidth: 100 },
+                {
+                    field: "description",
+                    headerName: "Description",
+                    flex: 1,
+                    minWidth: 100
+                },
                 { field: "category", headerName: "Category" },
-                { field: "area", headerName: "Area", flex: 1, maxWidth: 100, minWidth: 80 },
+                {
+                    field: "area",
+                    headerName: "Area",
+                    flex: 1,
+                    maxWidth: 100,
+                    minWidth: 80
+                },
                 { field: "discipline", headerName: "Discipline" },
-            ]
-
+            ],
         },
         {
             headerName: "Review info",
             children: [
-                { field: "", headerName: "Review", cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview) },
-                { field: "revisionContainer.revisionContainerReview.status", headerName: "Revision container review status", cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params) },
-                { field: "review.status", headerName: "Review status", cellRenderer: (params: any) => tagDataReviewStatusRenderer(params) },
-                { field: "review.approverId", headerName: "Reviewers" },
-                { field: "review.commentResponsible", headerName: "Comment responsible" },
-                { field: "reviewDeadline", headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params) },
-            ]
-        }
+                {
+                    field: "",
+                    headerName: "Review",
+                    cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview)
+                },
+                {
+                    field: "revisionContainer.revisionContainerReview.status",
+                    headerName: "Revision container review status",
+                    cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params)
+                },
+                {
+                    field: "review.status",
+                    headerName: "Review status",
+                    cellRenderer: (params: any) => tagDataReviewStatusRenderer(params)
+                },
+                {
+                    field: "review.approverId",
+                    headerName: "Reviewers"
+                },
+                {
+                    field: "review.commentResponsible",
+                    headerName: "Comment responsible"
+                },
+                {
+                    field: "reviewDeadline",
+                    headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params)
+                },
+            ],
+        },
     ]
 
     return (

@@ -1,6 +1,4 @@
-import { useNavigate } from "react-router-dom"
-import { arrow_back } from "@equinor/eds-icons"
-import { Button, Icon } from "@equinor/eds-core-react"
+import { Button } from "@equinor/eds-core-react"
 import { Dispatch, SetStateAction } from "react"
 import { TagData } from "../../Models/TagData"
 import { TagDataReview } from "../../Models/TagDataReview"
@@ -27,9 +25,7 @@ function EquipmentListReview({
     setRevisionInReview,
     revisionInReview
 }: Props) {
-
     const { setTagData } = useAppContext()
-
 
     const updateTagData = async () => {
         const tagData = await (await GetTagDataService()).getAllTagData()
@@ -68,7 +64,6 @@ function EquipmentListReview({
         review.status = 3
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         await updateTagData()
-
     }
 
     const rejectPackage = async () => {
@@ -77,7 +72,6 @@ function EquipmentListReview({
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         await updateTagData()
     }
-
 
     return (
         <div>
