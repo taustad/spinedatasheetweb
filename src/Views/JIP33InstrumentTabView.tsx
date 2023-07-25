@@ -58,9 +58,11 @@ interface StyledTabPanelProps {
 }
 
 const StyledTabPanel = styled(Panel) <StyledTabPanelProps>`
-    padding-top: 0px;
+    padding: 0px;
     border-top: 1px solid LightGray;
     width: calc(100vw - ${(props) => `${props.sheetWidth}px`});
+    height: calc(100vh - 175px);
+    overflow:hidden;
 `
 
 const Content = styled.div`

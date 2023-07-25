@@ -1,35 +1,32 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from "react"
-import { Button } from "@equinor/eds-core-react"
-import { GetCommentService } from "../../api/CommentService"
-import { ReviewComment } from "../../Models/ReviewComment"
-import { Input } from "@equinor/eds-core-react"
+import { GetCommentService } from "../../../api/CommentService"
+import { ReviewComment } from "../../../Models/ReviewComment"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
+import DialogueBox from "./DialogueBox"
+import InputController from "./InputController"
 import styled from "styled-components"
-import { ViewContext } from "../../Context/ViewContext"
+import { ViewContext } from "../../../Context/ViewContext"
+
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+`
 
 const CommentView = styled.div`
-    padding: 0 20px;
     overflow-y: auto;
 `
 
-const Controls = styled.div`
-    padding: 20px;
-    position: sticky;
-    bottom: 0;
-    background-color: white;
-    border-top: 1px solid LightGray;
-   display: flex;
-   flex-direction: row;
-`
-
-type ReviewCommentsSideSheetProps = {
+type CommentsSideSheetProps = {
     currentProperty: string
     reviewComments: ReviewComment[]
     setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
 }
 
-const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
+const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
     currentProperty,
     reviewComments,
     setReviewComments,
@@ -38,7 +35,6 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const { activeTagData } = useContext(ViewContext)
 
-    const [width, setWidth] = useState<number>(500)
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
 
@@ -57,18 +53,11 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
                 second: "2-digit",
                 hour12: false,
             })
-            return (
-                <div key={comment.id}>
-                    <p>{formattedDate}</p>
-                    <p>{comment.commenterName}</p>
-                    <p>{comment.text}</p>
-                    <br />
-                </div>
-            )
+            return <DialogueBox comment={comment} formattedDate={formattedDate} />
         })
 
     const handleCommentChange = (
-        event: React.ChangeEvent<HTMLInputElement>
+        event: React.ChangeEvent<HTMLTextAreaElement>
     ) => {
         const comment = { ...newReviewComment }
         comment.text = event.target.value
@@ -77,8 +66,7 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
 
     const handleSubmit = async () => {
         const comment = { ...newReviewComment }
-        const reviewId = activeTagData?.review?.id
-        comment.tagDataReviewId = reviewId
+        comment.tagDataReviewId = activeTagData?.review?.id
         comment.commentLevel = 0
         comment.property = currentProperty
         comment.createdDate = new Date().toISOString()
@@ -89,42 +77,23 @@ const ReviewCommentsSideSheet: React.FC<ReviewCommentsSideSheetProps> = ({
             await service.createComment(comment)
             setReviewComments([...reviewComments, comment])
         } catch (error) {
-            console.error(`Error creating comment: ${error}`)
+            console.log(`Error creating comment: ${error}`)
         }
         setNewReviewComment(undefined)
     }
 
-    const sideSheetContent = (property: string) => {
-        return (
-            <>
-                {currentProperty !== "" && <h2>{property}</h2>}
-                {listCommentsForProperty(property)}
-                <Input
-                    type="text"
-                    onChange={handleCommentChange}
-                    value={newReviewComment?.text ?? ""}
-                ></Input>
-                <Button onClick={handleSubmit}>Submit</Button>
-            </>
-        )
-    }
-
     return (
-        <>
+        <Container>
             <CommentView className="commentView">
-                {currentProperty !== "" && <h2>{currentProperty}</h2>}
                 {listCommentsForProperty(currentProperty)}
             </CommentView>
-            <Controls>
-                <Input
-                    type="text"
-                    onChange={handleCommentChange}
-                    value={newReviewComment?.text ?? ""}
-                ></Input>
-                <Button onClick={handleSubmit}>Submit</Button>
-            </Controls>
-        </>
+            <InputController
+                value={newReviewComment?.text ?? ""}
+                handleCommentChange={handleCommentChange}
+                handleSubmit={handleSubmit}
+            />
+        </Container>
     )
 }
 
-export default ReviewCommentsSideSheet
+export default CommentsSideSheet

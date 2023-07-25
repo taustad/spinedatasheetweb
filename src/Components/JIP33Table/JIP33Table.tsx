@@ -1,8 +1,4 @@
-import {
-    Dispatch,
-    SetStateAction,
-    useMemo,
-} from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ColDef } from "@ag-grid-community/core"
@@ -185,27 +181,25 @@ function JIP33Table({
     ]
 
     return (
-        <>
-            <div
-                className="ag-theme-alpine ag-theme-datasheetTable"
-                style={{ flex: "1 1 auto", width: "100%" }}
-            >
-                <AgGridReact
-                    rowData={rowData}
-                    columnDefs={columns}
-                    defaultColDef={defaultColDef}
-                    animateRows
-                    domLayout="autoHeight"
-                    enableCellChangeFlash
-                    rowSelection="multiple"
-                    suppressMovableColumns
-                    headerHeight={48}
-                    rowHeight={35}
-                    enableRangeSelection
-                    suppressCopySingleCellRanges
-                />
-            </div>
-        </>
+        <div
+            className="ag-theme-alpine ag-theme-datasheetTable"
+            style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
+        >
+            <AgGridReact
+                rowData={rowData}
+                columnDefs={columns}
+                defaultColDef={defaultColDef}
+                animateRows
+                domLayout="normal"
+                enableCellChangeFlash
+                rowSelection="multiple"
+                suppressMovableColumns
+                headerHeight={48}
+                rowHeight={35}
+                enableRangeSelection
+                suppressCopySingleCellRanges
+            />
+        </div>
     )
 }
 

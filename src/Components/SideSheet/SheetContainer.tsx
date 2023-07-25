@@ -1,12 +1,14 @@
 import React, { useState, Dispatch, SetStateAction, useEffect } from "react"
 import { Icon, Tabs, Typography, Button } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import ReviewCommentsSideSheet from "./Comments/ReviewCommentsSideSheet"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { TagData } from "../../Models/TagData"
 import { tag as tagIcon } from "@equinor/eds-icons"
 import { close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
+import InfoStrip from "./InfoStrip"
+import CommentsSideSheet from "./Comments/CommentsSideSheet"
+import AreaSideSheet from "./Area/AreaSideSheet"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -17,18 +19,21 @@ const SheetContent = styled.div`
     justify-content: space-between;
     background-color: #f7f7f7;
 `
+const SheetBody = styled(Tabs.Panels)`
+    flex: 1;
+`
 
 const TabsContainer = styled(Tabs)`
     flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100%;
     overflow-y: auto;
 `
 
 const TabsPanel = styled(Tabs.Panel)`
     padding: 0;
+    height: 100%;
 `
 
 const TabsHeader = styled(Tabs.List)`
@@ -105,16 +110,26 @@ const SheetContainer: React.FC<Props> = ({
         return null
     }
 
+    const placeholder = (
+        <div style={{ height: "100%", width: "100%" }}>
+            <Typography variant="body_short">Work in progress...</Typography>
+        </div>
+    )
 
     return (
         <Resizable
-            style={{ position: "sticky", right: 0, top: 0, height: "100%" }}
+            style={{
+                position: "absolute",
+                right: 0,
+                top: 0,
+                height: "100%",
+            }}
             defaultSize={{
                 width: width,
                 height: "100%",
             }}
-            minWidth={360}
-            maxWidth={900}
+            minWidth={500}
+            maxWidth={1200}
             enable={{
                 top: false,
                 right: false,
@@ -150,31 +165,38 @@ const SheetContainer: React.FC<Props> = ({
                         </Typography>
                     </TagInfo>
                 </SheetHeader>
+                <InfoStrip />
                 <TabsContainer
                     className="TabsContainer"
                     activeTab={activeTab}
                     onChange={handleTabChange}
                 >
                     <TabsHeader>
+                        <Tabs.Tab>Activity</Tabs.Tab>
+                        <Tabs.Tab>Equipment</Tabs.Tab>
+                        <Tabs.Tab>Area</Tabs.Tab>
+                        <Tabs.Tab>Connections</Tabs.Tab>
                         <Tabs.Tab>Comments</Tabs.Tab>
-                        <Tabs.Tab>Requirements</Tabs.Tab>
                         <Tabs.Tab>Changelog</Tabs.Tab>
                     </TabsHeader>
-                    <Tabs.Panels>
+                    <SheetBody>
+                        <TabsPanel>{activeTab === 0 && placeholder}</TabsPanel>
+                        <TabsPanel>{activeTab === 1 && placeholder}</TabsPanel>
+                        <TabsPanel>
+                            {activeTab === 2 && <AreaSideSheet />}
+                        </TabsPanel>
+                        <TabsPanel>{activeTab === 3 && placeholder}</TabsPanel>
                         <TabsPanel className="commentSection">
-                            {activeTab === 0 && (
-                                <ReviewCommentsSideSheet
+                            {activeTab === 4 && (
+                                <CommentsSideSheet
                                     reviewComments={reviewComments}
                                     currentProperty={currentProperty.property}
                                     setReviewComments={setReviewComments}
                                 />
                             )}
                         </TabsPanel>
-                        <TabsPanel>{activeTab === 1 && <h1>hi</h1>}</TabsPanel>
-                        <TabsPanel>
-                            {activeTab === 2 && <h1>also hi</h1>}
-                        </TabsPanel>
-                    </Tabs.Panels>
+                        <TabsPanel>{activeTab === 5 && placeholder}</TabsPanel>
+                    </SheetBody>
                 </TabsContainer>
             </SheetContent>
         </Resizable>
