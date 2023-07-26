@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateTransmitterRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateTransmitterRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Transmitter model number:",
@@ -236,4 +235,3 @@ export const generateTransmitterRowData = (datasheet: InstrumentTagData): TableR
             additionalNotes: "",
         },
     ]
-}

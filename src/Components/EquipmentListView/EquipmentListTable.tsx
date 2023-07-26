@@ -1,16 +1,8 @@
-import {
-    Dispatch,
-    SetStateAction,
-    useMemo,
-} from "react"
+import { Dispatch, SetStateAction, useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"
-import {
-    block,
-    done,
-    tag,
-} from "@equinor/eds-icons"
+import { block, done, tag } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
@@ -18,8 +10,8 @@ import { TagData } from "../../Models/TagData"
 import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
 
 interface Props {
-    tags: TagData[],
-    setReviewModalOpen: Dispatch<SetStateAction<boolean>>,
+    tags: TagData[]
+    setReviewModalOpen: Dispatch<SetStateAction<boolean>>
     setTagInReview: Dispatch<SetStateAction<string | undefined>>
     setRevisionInReview: Dispatch<SetStateAction<string | undefined>>
 }
@@ -38,12 +30,15 @@ function EquipmentListTable({
 }: Props) {
     const location = useLocation()
 
-    const defaultColDef = useMemo<ColDef>(() => ({
-        sortable: true,
-        filter: "agMultiColumnFilter",
-        resizable: true,
-        editable: false,
-    }), [])
+    const defaultColDef = useMemo<ColDef>(
+        () => ({
+            sortable: true,
+            filter: "agMultiColumnFilter",
+            resizable: true,
+            editable: false,
+        }),
+        [],
+    )
 
     const typeOfJIP33 = ({ data: { discipline } }: any) => {
         if (discipline === "Mechanical") {
@@ -58,21 +53,32 @@ function EquipmentListTable({
     const getTagLink = (params: any) => {
         const lastChar = location.pathname.charAt(location.pathname.length - 1)
         if (lastChar === "/") {
-            const result = ({ ...location, pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.id}` })
+            const result = {
+                ...location,
+                pathname: `${location.pathname}${typeOfJIP33(params)}/${
+                    params.data.id
+                }`,
+            }
             return result
         }
-        const result = ({ ...location, pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.id}` })
+        const result = {
+            ...location,
+            pathname: `${location.pathname}/${typeOfJIP33(params)}/${
+                params.data.id
+            }`,
+        }
         return result
     }
 
-    const linkToDocument = (params: any) =>
-    (<Link
-        to={getTagLink(params)}
-        style={{ color: tokens.colors.text.static_icons__default.rgba }}
-    >
-        <TagIcon data={tag} color={"green"} size={18} />
-        {params.value}
-    </Link>)
+    const linkToDocument = (params: any) => (
+        <Link
+            to={getTagLink(params)}
+            style={{ color: tokens.colors.text.static_icons__default.rgba }}
+        >
+            <TagIcon data={tag} color="green" size={18} />
+            {params.value}
+        </Link>
+    )
 
     const tagDataReviewStatusRenderer = (params: any) => {
         const status = params.data.review?.status
@@ -86,7 +92,9 @@ function EquipmentListTable({
         }
     }
 
-    const revisionContainerReviewStatusRenderer = (params: ICellRendererParams) => {
+    const revisionContainerReviewStatusRenderer = (
+        params: ICellRendererParams,
+    ) => {
         const status = params.data.revisionContainer?.revisionContainerReview?.status
         switch (status) {
             case 3:
@@ -99,16 +107,25 @@ function EquipmentListTable({
     }
 
     const reviewDeadlineRenderer = (params: ICellRendererParams) => {
-        if (params.data.revisionContainer === null || params.data.revisionContainer === undefined) {
+        if (
+            params.data.revisionContainer === null
+            || params.data.revisionContainer === undefined
+        ) {
             return null
         }
-        const packageDate = new Date(params.data.revisionContainer.revisionContainerDate)
-        const deadline = new Date(packageDate.setDate(packageDate.getDate() + 10))
+        const packageDate = new Date(
+            params.data.revisionContainer.revisionContainerDate,
+        )
+        const deadline = new Date(
+            packageDate.setDate(packageDate.getDate() + 10),
+        )
         if (deadline < new Date()) {
-            return <>
-                <Icon data={block} color="red" />
-                {deadline.toISOString().slice(0, 10)}
-            </>
+            return (
+                <>
+                    <Icon data={block} color="red" />
+                    {deadline.toISOString().slice(0, 10)}
+                </>
+            )
         }
 
         return deadline.toISOString().slice(0, 10)
@@ -118,11 +135,24 @@ function EquipmentListTable({
         {
             headerName: "Tag info",
             children: [
-                { field: "tagNo", headerName: "Tag number", cellRenderer: (params: any) => linkToDocument(params) },
+                {
+                    field: "tagNo",
+                    headerName: "Tag number",
+                    cellRenderer: (params: any) => linkToDocument(params),
+                },
                 { field: "version", headerName: "Version number" },
-                { field: "revisionContainer.revisionNumber", headerName: "Revision number" },
-                { field: "revisionContainer.revisionContainerName", headerName: "Collection group" },
-                { field: "revisionContainer.contract.contractName", headerName: "Contract" },
+                {
+                    field: "revisionContainer.revisionNumber",
+                    headerName: "Revision number",
+                },
+                {
+                    field: "revisionContainer.revisionContainerName",
+                    headerName: "Collection group",
+                },
+                {
+                    field: "revisionContainer.contract.contractName",
+                    headerName: "Contract",
+                },
                 {
                     field: "description",
                     headerName: "Description",
@@ -146,7 +176,12 @@ function EquipmentListTable({
                 {
                     field: "",
                     headerName: "Review",
-                    cellRenderer: (params: any) => EquipmentListReviewRenderer(params, setReviewModalOpen, setTagInReview, setRevisionInReview),
+                    cellRenderer: (params: any) => EquipmentListReviewRenderer(
+                            params,
+                            setReviewModalOpen,
+                            setTagInReview,
+                            setRevisionInReview,
+                        ),
                 },
                 {
                     field: "revisionContainer.revisionContainerReview.status",
@@ -168,7 +203,8 @@ function EquipmentListTable({
                 },
                 {
                     field: "reviewDeadline",
-                    headerName: "Review deadline", cellRenderer: (params: any) => reviewDeadlineRenderer(params),
+                    headerName: "Review deadline",
+                    cellRenderer: (params: any) => reviewDeadlineRenderer(params),
                 },
             ],
         },

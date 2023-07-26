@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generatePerformanceRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generatePerformanceRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "7.1.5, 8.1.4, Table 11, Table 15",
             description: "Accuracy:",
@@ -77,4 +76,3 @@ export const generatePerformanceRowData = (datasheet: InstrumentTagData): TableR
             additionalNotes: "",
         },
     ]
-}

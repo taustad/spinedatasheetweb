@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateBodyElementSensorRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateBodyElementSensorRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Body/element/sensor manufacturer model number:",
@@ -154,4 +153,3 @@ export const generateBodyElementSensorRowData = (datasheet: InstrumentTagData): 
             additionalNotes: "",
         },
     ]
-}

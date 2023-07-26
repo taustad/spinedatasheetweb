@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateGeneralRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateGeneralRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Conformity assessment system (CAS) level:",
@@ -139,4 +138,3 @@ export const generateGeneralRowData = (datasheet: MechanicalTagData): TableRow[]
             additionalNotes: "",
         },
     ]
-}

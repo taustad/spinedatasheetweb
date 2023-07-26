@@ -1,9 +1,9 @@
-import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Electrical/GeneralRowData"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
+import { BackButton } from "../Components/BackButton"
+import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Electrical/GeneralRowData"
 import { TagData } from "../Models/TagData"
 import { generatePurchaserInformationRowData } from "../Components/JIP33Table/RowData/Electrical/PurchaserInformationRowData"
 import { generateElectricalOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Electrical/ElectricalOperatingConditionsRowData"
@@ -47,8 +47,7 @@ const Body = styled.div`
     height: 92%;
 `
 
-function JIP33ElectricalTabView({
-}) {
+function JIP33ElectricalTabView({}) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -63,8 +62,9 @@ function JIP33ElectricalTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData = await (await GetTagDataService())
-                        .getTagData(tagId)
+                    const datasheets: TagData = await (
+                        await GetTagDataService()
+                    ).getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -88,26 +88,67 @@ function JIP33ElectricalTabView({
     }
 
     const sideMenuList = [
-        "General", "Purchaser information", "Duty",
-        "Electrical operating conditions", "Rating", "ASD fed motor data",
-        "Site conditions / location environment", "Thermal performance", "Starting performance",
-        "Operating performance", "Noise", "Motor construction", "Rotor", "Fan",
-        "Main terminal box", "Bearings", "Space heaters", "Mounting", "Cooling", "Vibration",
-        "Instrumentation", "Surface protection", "Temperature monitoring", "Converter-fed motor data",
-        "Motors for hazardous locations", "Testing and inspection", "Preservation and storage",
-        "Documentation", "Miscellaneous",
+        "General",
+        "Purchaser information",
+        "Duty",
+        "Electrical operating conditions",
+        "Rating",
+        "ASD fed motor data",
+        "Site conditions / location environment",
+        "Thermal performance",
+        "Starting performance",
+        "Operating performance",
+        "Noise",
+        "Motor construction",
+        "Rotor",
+        "Fan",
+        "Main terminal box",
+        "Bearings",
+        "Space heaters",
+        "Mounting",
+        "Cooling",
+        "Vibration",
+        "Instrumentation",
+        "Surface protection",
+        "Temperature monitoring",
+        "Converter-fed motor data",
+        "Motors for hazardous locations",
+        "Testing and inspection",
+        "Preservation and storage",
+        "Documentation",
+        "Miscellaneous",
     ]
 
     const rowDataList = [
-        generateGeneralRowData(tag), generatePurchaserInformationRowData(tag), generateDutyRowData(tag),
-        generateElectricalOperatingConditionsRowData(tag), generateRatingRowData(tag), generateASDFedMotorDataRowData(tag),
-        generateSiteConditionsLocationEnvironmentRowData(tag), generateThermalPerformanceRowData(tag), generateStartingPerformanceRowData(tag),
-        generateOperatingPerformanceRowData(tag), generateNoiseRowData(tag), generateMotorConstructionRowData(tag), generateRotorRowData(tag),
-        generateFanRowData(tag), generateMainTerminalBoxRowData(tag), generateBearingsRowData(tag), generateSpaceHeatersRowData(tag),
-        generateMountingRowData(tag), generateCoolingRowData(tag), generateVibrationRowData(tag), generateInstrumentationRowData(tag),
-        generateSurfaceProtectionRowData(tag), generateTemperatureMonitoringRowData(tag), generateConverterFedMotorDataRowData(tag),
-        generateMotorsForHazardousLocationsRowData(tag), generateTestingAndInspectionRowData(tag),
-        generatePreservationAndStorageRowData(tag), generateDocumentationRowData(tag), generateMiscellaneousRowData(tag),
+        generateGeneralRowData(tag),
+        generatePurchaserInformationRowData(tag),
+        generateDutyRowData(tag),
+        generateElectricalOperatingConditionsRowData(tag),
+        generateRatingRowData(tag),
+        generateASDFedMotorDataRowData(tag),
+        generateSiteConditionsLocationEnvironmentRowData(tag),
+        generateThermalPerformanceRowData(tag),
+        generateStartingPerformanceRowData(tag),
+        generateOperatingPerformanceRowData(tag),
+        generateNoiseRowData(tag),
+        generateMotorConstructionRowData(tag),
+        generateRotorRowData(tag),
+        generateFanRowData(tag),
+        generateMainTerminalBoxRowData(tag),
+        generateBearingsRowData(tag),
+        generateSpaceHeatersRowData(tag),
+        generateMountingRowData(tag),
+        generateCoolingRowData(tag),
+        generateVibrationRowData(tag),
+        generateInstrumentationRowData(tag),
+        generateSurfaceProtectionRowData(tag),
+        generateTemperatureMonitoringRowData(tag),
+        generateConverterFedMotorDataRowData(tag),
+        generateMotorsForHazardousLocationsRowData(tag),
+        generateTestingAndInspectionRowData(tag),
+        generatePreservationAndStorageRowData(tag),
+        generateDocumentationRowData(tag),
+        generateMiscellaneousRowData(tag),
     ]
 
     return (
@@ -118,7 +159,10 @@ function JIP33ElectricalTabView({
                     JIP33 table
                 </Typography>
             </TopBar>
-            <JIP33WithSideMenu sideMenuList={sideMenuList} rowDataList={rowDataList} />
+            <JIP33WithSideMenu
+                sideMenuList={sideMenuList}
+                rowDataList={rowDataList}
+            />
         </Body>
     )
 }

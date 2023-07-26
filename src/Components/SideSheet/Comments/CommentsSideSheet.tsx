@@ -1,11 +1,13 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from "react"
-import { GetCommentService } from "../../../api/CommentService"
-import { ReviewComment } from "../../../Models/ReviewComment"
+import React, {
+ Dispatch, SetStateAction, useContext, useState,
+} from "react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
+import styled from "styled-components"
+import { GetCommentService } from "../../../api/CommentService"
+import { ReviewComment } from "../../../Models/ReviewComment"
 import DialogueBox from "./DialogueBox"
 import InputController from "./InputController"
-import styled from "styled-components"
 import { ViewContext } from "../../../Context/ViewContext"
 
 const Container = styled.div`
@@ -38,11 +40,11 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
 
-    const getCommentsForProperty = (property: string) =>
+    const getCommentsForProperty = (property: string) => (
         reviewComments.filter((comment) => comment.property === property)
+    )
 
-    const listCommentsForProperty = (property: string) =>
-        getCommentsForProperty(property).map((comment) => {
+    const listCommentsForProperty = (property: string) => getCommentsForProperty(property).map((comment) => {
             const date = new Date(comment.createdDate ?? "")
             const formattedDate = date.toLocaleString(undefined, {
                 year: "numeric",
@@ -53,11 +55,13 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
                 second: "2-digit",
                 hour12: false,
             })
-            return <DialogueBox comment={comment} formattedDate={formattedDate} />
+            return (
+                <DialogueBox comment={comment} formattedDate={formattedDate} />
+            )
         })
 
     const handleCommentChange = (
-        event: React.ChangeEvent<HTMLTextAreaElement>
+        event: React.ChangeEvent<HTMLTextAreaElement>,
     ) => {
         const comment = { ...newReviewComment }
         comment.text = event.target.value

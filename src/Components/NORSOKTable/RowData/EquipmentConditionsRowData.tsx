@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../Models/InstrumentTagData"
 import { TableRow } from "../../JIP33Table/RowData/TableRow"
 
-export const equipmentConditionsRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const equipmentConditionsRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Line nominal size",
@@ -134,4 +133,3 @@ export const equipmentConditionsRowData = (datasheet: InstrumentTagData): TableR
             property: "",
         },
     ]
-}

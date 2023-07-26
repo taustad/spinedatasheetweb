@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateMechanicalSealRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateMechanicalSealRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "API Standard 682 mechanical seal code:",
@@ -130,4 +129,3 @@ export const generateMechanicalSealRowData = (datasheet: MechanicalTagData): Tab
             additionalNotes: "",
         },
     ]
-}

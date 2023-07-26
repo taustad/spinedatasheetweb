@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../Models/InstrumentTagData"
 import { TableRow } from "../../JIP33Table/RowData/TableRow"
 
-export const operatingConditionsMaximumFlowRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const operatingConditionsMaximumFlowRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Flow rate",
@@ -94,4 +93,3 @@ export const operatingConditionsMaximumFlowRowData = (datasheet: InstrumentTagDa
             property: "",
         },
     ]
-}

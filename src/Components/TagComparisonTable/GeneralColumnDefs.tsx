@@ -1,12 +1,11 @@
-import { ColDef } from "@ag-grid-community/core";
+import { ColDef } from "@ag-grid-community/core"
 import { InstrumentPurchaserRequirement } from "../../Models/InstrumentPurchaserRequirement"
 
 function getPropertyName<T>(property: keyof T): keyof T {
-    return property;
+    return property
 }
 
-export const comparisonGeneralColumnDefs = (): ColDef[] => {
-    return [
+export const comparisonGeneralColumnDefs = (): ColDef[] => [
         {
             field: getPropertyName<InstrumentPurchaserRequirement>("codeRequirement"),
             headerName: "Code requirement",
@@ -101,4 +100,3 @@ export const comparisonGeneralColumnDefs = (): ColDef[] => {
             headerName: "Temperature class",
         },
     ]
-}

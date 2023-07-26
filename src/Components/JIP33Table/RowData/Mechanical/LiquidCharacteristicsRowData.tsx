@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateLiquidCharacteristicsRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateLiquidCharacteristicsRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Liquid name:",
@@ -193,4 +192,3 @@ export const generateLiquidCharacteristicsRowData = (datasheet: MechanicalTagDat
             additionalNotes: "",
         },
     ]
-}

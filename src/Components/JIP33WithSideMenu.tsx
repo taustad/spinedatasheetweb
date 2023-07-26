@@ -95,9 +95,7 @@ const JIP33WithSideMenu: React.FC<Props> = ({
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba
     const backgroundColor = "rgba(0, 112, 121, 0.1)"
-    const firstCustomTabIndex = sideMenuList.findIndex((menuName) =>
-        customTabList?.includes(menuName)
-    )
+    const firstCustomTabIndex = sideMenuList.findIndex((menuName) => customTabList?.includes(menuName))
 
     const sideMenuInsetShadow = (index: number) => {
         if (index === firstCustomTabIndex) {

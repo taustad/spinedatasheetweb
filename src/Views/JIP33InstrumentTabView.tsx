@@ -1,20 +1,18 @@
+import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
+import styled from "styled-components"
+import {
+ useCallback, useContext, useEffect, useState,
+} from "react"
+import { useParams } from "react-router-dom"
+import { comment_chat } from "@equinor/eds-icons"
 import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Instrument/GeneralRowData"
 import { generateInstallationConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/InstallationConditionsRowData"
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
 import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowData/Instrument/BodyElementSensorRowData"
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
-import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
-import styled from "styled-components"
-import {
-    useCallback,
-    useContext,
-    useEffect,
-    useState
-} from "react"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
 import { BackButton } from "../Components/BackButton"
-import { useParams } from "react-router-dom"
 import { GetTagDataService } from "../api/TagDataService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument/FlowRowData"
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
@@ -22,7 +20,6 @@ import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instru
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
 import { ReviewComment } from "../Models/ReviewComment"
 import { GetCommentService } from "../api/CommentService"
-import { comment_chat } from "@equinor/eds-icons"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
 import { instrumentCharacteristicsRowData } from "../Components/NORSOKTable/RowData/InstrumentCharacteristicsRowData"
@@ -46,23 +43,24 @@ const View = styled.div`
     flex-direction: row;
 `
 
-const TableView = styled.div`
-`
+const TableView = styled.div``
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
-
 
 interface StyledTabPanelProps {
     sheetWidth: number
 }
 
-const StyledTabPanel = styled(Panel) <StyledTabPanelProps>`
+const StyledTabPanel = styled(Panel).attrs<{ sheetWidth: number }>((props) => ({
+    style: {
+        width: `calc(100vw - ${props.sheetWidth}px)`,
+    },
+}))`
     padding: 0px;
     border-top: 1px solid LightGray;
-    width: calc(100vw - ${(props) => `${props.sheetWidth}px`});
     height: calc(100vh - 175px);
-    overflow:hidden;
+    overflow: hidden;
 `
 
 const Content = styled.div`
@@ -70,7 +68,7 @@ const Content = styled.div`
     flex-direction: row;
 `
 
-function JIP33InstrumentTabView({ }) {
+function JIP33InstrumentTabView({}) {
     const { tagId } = useParams<Record<string, string | undefined>>()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -103,11 +101,16 @@ function JIP33InstrumentTabView({ }) {
                 try {
                     setIsLoading(true)
 
-                    const tagData = await (await GetTagDataService()).getTagData(tagId)
+                    const tagData = await (
+                        await GetTagDataService()
+                    ).getTagData(tagId)
                     setActiveTagData(tagData)
 
                     const tagDataReviewId = tagData?.review?.id
-                    if (tagDataReviewId !== null && tagDataReviewId !== undefined) {
+                    if (
+                        tagDataReviewId !== null
+                        && tagDataReviewId !== undefined
+                    ) {
                         await getCommentsForTagReview(tagDataReviewId)
                     }
 
@@ -124,13 +127,18 @@ function JIP33InstrumentTabView({ }) {
         if (tagId !== null && tagId !== undefined) {
             const intervalId = setInterval(async () => {
                 const tagDataReviewId = activeTagData?.review?.id
-                if (tagDataReviewId === undefined || tagDataReviewId === null) { return }
-                const newComments = await (await GetCommentService()).getCommentsForTagReview(tagDataReviewId)
+                if (tagDataReviewId === undefined || tagDataReviewId === null) {
+                    return
+                }
+                const newComments = await (
+                    await GetCommentService()
+                ).getCommentsForTagReview(tagDataReviewId)
                 setReviewComments(newComments)
             }, 5000)
 
             return () => clearInterval(intervalId)
         }
+            return () => {}
     }, [activeTagData])
 
     if (error) {

@@ -1,11 +1,14 @@
-import React, { useState, Dispatch, SetStateAction, useEffect } from "react"
-import { Icon, Tabs, Typography, Button } from "@equinor/eds-core-react"
+import React, {
+ useState, Dispatch, SetStateAction, useEffect,
+} from "react"
+import {
+ Icon, Tabs, Typography, Button,
+} from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { ReviewComment } from "../../Models/ReviewComment"
-import { TagData } from "../../Models/TagData"
-import { tag as tagIcon } from "@equinor/eds-icons"
-import { close, drag_handle } from "@equinor/eds-icons"
+import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
+import { TagData } from "../../Models/TagData"
+import { ReviewComment } from "../../Models/ReviewComment"
 import InfoStrip from "./InfoStrip"
 import CommentsSideSheet from "./Comments/CommentsSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
@@ -96,9 +99,8 @@ const SheetContainer: React.FC<Props> = ({
     setReviewComments,
     tag,
     width,
-    setWidth
+    setWidth,
 }) => {
-
     const [activeTab, setActiveTab] = useState(0)
 
     const handleTabChange = (index: number) => {
@@ -125,7 +127,7 @@ const SheetContainer: React.FC<Props> = ({
                 height: "100%",
             }}
             defaultSize={{
-                width: width,
+                width,
                 height: "100%",
             }}
             minWidth={500}
@@ -159,9 +161,11 @@ const SheetContainer: React.FC<Props> = ({
                     </Banner>
 
                     <TagInfo>
-                        <Icon data={tagIcon} color={"black"} size={18} />
+                        <Icon data={tagIcon} color="black" size={18} />
                         <Typography variant="body_short">
-                            <strong>{tag.tagNo}</strong> {tag.description}
+                            <strong>{tag.tagNo}</strong>
+                            {" "}
+                            {tag.description}
                         </Typography>
                     </TagInfo>
                 </SheetHeader>

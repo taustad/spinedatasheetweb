@@ -22,14 +22,12 @@ const StyledTabPanel = styled(Panel)`
     border-top: 1px solid LightGray;
 `
 
-function TagComparisonView({
-}) {
+function TagComparisonView({}) {
     const [activeTab, setActiveTab] = useState(0)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
     const [tags, setTags] = useState<InstrumentTagData[]>([])
-
 
     useEffect(() => {
         (async () => {
@@ -38,8 +36,9 @@ function TagComparisonView({
             if (tags === undefined || tags.length === 0) {
                 try {
                     setIsLoading(true)
-                    const datasheets: InstrumentTagData[] = await (await GetTagDataService())
-                        .getAllTagData()
+                    const datasheets: InstrumentTagData[] = await (
+                        await GetTagDataService()
+                    ).getAllTagData()
                     setTags(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -49,7 +48,6 @@ function TagComparisonView({
             }
         })()
     }, [])
-
 
     if (error) {
         return <div>Error loading tag</div>
@@ -64,24 +62,24 @@ function TagComparisonView({
     }
 
     return (
-        <>
-            <WrapperTabs>
-                <Typography variant="h3">
-                    <BackButton />
-                    Comparing tags: {tags.map(tag => tag.tagNo).join(", ")}
-                </Typography>
-                <Tabs activeTab={activeTab} onChange={setActiveTab}>
-                    <List>
-                        <Tab>General</Tab>
-                    </List>
-                    <Panels>
-                        <StyledTabPanel>
-                            <TagComparisonTable tags={tags} />
-                        </StyledTabPanel>
-                    </Panels>
-                </Tabs >
-            </WrapperTabs >
-        </>
+        <WrapperTabs>
+            <Typography variant="h3">
+                <BackButton />
+                Comparing tags:
+                {" "}
+                {tags.map((tag) => tag.tagNo).join(", ")}
+            </Typography>
+            <Tabs activeTab={activeTab} onChange={setActiveTab}>
+                <List>
+                    <Tab>General</Tab>
+                </List>
+                <Panels>
+                    <StyledTabPanel>
+                        <TagComparisonTable tags={tags} />
+                    </StyledTabPanel>
+                </Panels>
+            </Tabs>
+        </WrapperTabs>
     )
 }
 

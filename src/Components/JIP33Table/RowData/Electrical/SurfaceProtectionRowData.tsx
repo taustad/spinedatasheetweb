@@ -1,8 +1,7 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateSurfaceProtectionRowData = (datasheet: ElectricalTagData): TableRow[] => {
-    return [
+export const generateSurfaceProtectionRowData = (datasheet: ElectricalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Atmospheric corrosivity category:",
@@ -49,4 +48,3 @@ export const generateSurfaceProtectionRowData = (datasheet: ElectricalTagData): 
             additionalNotes: "",
         },
     ]
-}

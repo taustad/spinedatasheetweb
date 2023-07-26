@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../Models/InstrumentTagData"
 import { TableRow } from "../../JIP33Table/RowData/TableRow"
 
-export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Tag number",
@@ -164,4 +163,3 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => {
             property: "",
         },
     ]
-}

@@ -1,8 +1,7 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateSiteConditionsLocationEnvironmentRowData = (datasheet: ElectricalTagData): TableRow[] => {
-    return [
+export const generateSiteConditionsLocationEnvironmentRowData = (datasheet: ElectricalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Location environment:",
@@ -103,4 +102,3 @@ export const generateSiteConditionsLocationEnvironmentRowData = (datasheet: Elec
             additionalNotes: "",
         },
     ]
-}

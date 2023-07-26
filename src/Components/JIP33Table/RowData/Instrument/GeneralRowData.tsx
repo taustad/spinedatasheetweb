@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "5.12,5.13,6.12",
             description: "Code requirement",
@@ -302,4 +301,3 @@ export const generateGeneralRowData = (datasheet: InstrumentTagData): TableRow[]
             property: "temperatureClass",
         },
     ]
-}

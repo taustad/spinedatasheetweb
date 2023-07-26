@@ -1,8 +1,7 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateThermalPerformanceRowData = (datasheet: ElectricalTagData): TableRow[] => {
-    return [
+export const generateThermalPerformanceRowData = (datasheet: ElectricalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Thermal class:",
@@ -22,4 +21,3 @@ export const generateThermalPerformanceRowData = (datasheet: ElectricalTagData):
             additionalNotes: "",
         },
     ]
-}

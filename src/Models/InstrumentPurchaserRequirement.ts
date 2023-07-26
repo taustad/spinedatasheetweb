@@ -187,6 +187,6 @@ export class InstrumentPurchaserRequirement implements Components.Schemas.Instru
     pAndID?: string | null;
 
     constructor(init?: Partial<InstrumentPurchaserRequirement>) {
-        Object.assign(this, init);
+        Object.assign(this, init)
     }
 }

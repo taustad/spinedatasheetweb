@@ -79,7 +79,10 @@ function EquipmentListReview({
             <Button onClick={approveTag}>Approve</Button>
             <Button color="danger" onClick={rejectTag}>Reject</Button>
 
-            <h1>Package review: {revisionInReview}</h1>
+            <h1>
+                Package review:
+                {revisionInReview}
+            </h1>
             <Button onClick={approvePackage}>Approve</Button>
             <Button color="danger" onClick={rejectPackage}>Reject</Button>
 

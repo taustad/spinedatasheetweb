@@ -1,4 +1,3 @@
-// ProgressBar.tsx
 import React, { useRef, useState } from "react"
 import styled from "styled-components"
 import { Popover, Typography } from "@equinor/eds-core-react"
@@ -10,16 +9,19 @@ interface ProgressBarProps {
     count: number
 }
 
-const FilledBar = styled.div<{ barColor: string; percentage: number }>`
-    width: ${({ percentage }) => percentage}%;
+const FilledBar = styled.div<{ $barColor: string; $percentage: number }>`
     height: 100%;
-    background-color: ${({ barColor }) => barColor};
     position: relative;
     transition: transform 0.2s ease-in-out;
     &:hover {
         transform: scale(1.1);
         cursor: pointer;
     }
+
+    ${({ $barColor, $percentage }) => `
+        width: ${$percentage}%;
+        background-color: ${$barColor};
+    `}
 `
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
@@ -45,13 +47,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
     return (
         <>
             <FilledBar
-                barColor={barColor}
-                percentage={percentage}
+                $barColor={barColor}
+                $percentage={percentage}
                 ref={anchorRef}
                 onMouseOver={handleHover}
                 onMouseLeave={handleClose}
-            >
-            </FilledBar>
+            />
             <Popover
                 anchorEl={anchorRef.current}
                 onClose={handleClose}
@@ -60,19 +61,16 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
                 withinPortal
             >
                 <Popover.Header>
-                    <Popover.Title>
-                        {title}
-                    </Popover.Title>
+                    <Popover.Title>{title}</Popover.Title>
                 </Popover.Header>
                 <Popover.Content>
                     <Typography variant="body_short">
-                           {count + " tags"}
+                        {`${count} tags`}
                     </Typography>
                     <Typography variant="body_short">
-                        {percentage + "% of total tags"}
+                        {`${percentage}% of total tags`}
                     </Typography>
                 </Popover.Content>
-
             </Popover>
         </>
     )

@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateMaterialsAddForVerticalPumpsRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateMaterialsAddForVerticalPumpsRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Suction barrel/can material:",
@@ -166,4 +165,3 @@ export const generateMaterialsAddForVerticalPumpsRowData = (datasheet: Mechanica
             additionalNotes: "",
         },
     ]
-}

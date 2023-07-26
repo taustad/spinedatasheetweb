@@ -22,7 +22,7 @@ const configuration = {
     },
     RevisionReviewService: {
         BASE_URL: "",
-    }
+    },
 }
 
 export const buildConfig = (baseUrl: string) => {

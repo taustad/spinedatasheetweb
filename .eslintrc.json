@@ -25,7 +25,11 @@
       "import/prefer-default-export": "off",
       "semi": ["error", "never"],
       "quotes": ["error", "double"],
-      "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+      "lines-between-class-members": [
+          "error",
+          "always",
+          { "exceptAfterSingleLine": true }
+      ],
       "indent": ["off", 4],
       "import/extensions": 0,
       "react/function-component-definition": 0,
@@ -39,7 +43,11 @@
       "max-len": ["error", 120],
       "linebreak-style": 0,
       "no-console": 0,
-      "no-debugger": 0
+      "no-debugger": 0,
+      "react/destructuring-assignment": "off",
+      "no-empty-pattern": "off",
+      "camelcase": "off",
+      "no-underscore-dangle": "off"
   },
   "overrides": [
       {

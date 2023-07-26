@@ -187,6 +187,6 @@ export class InstrumentSupplierOfferedProduct implements Components.Schemas.Inst
     pAndID?: string | null;
 
     constructor(init?: Partial<InstrumentSupplierOfferedProduct>) {
-        Object.assign(this, init);
+        Object.assign(this, init)
     }
 }

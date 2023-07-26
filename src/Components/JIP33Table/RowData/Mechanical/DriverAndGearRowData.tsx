@@ -1,8 +1,7 @@
 import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateDriverAndGearRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateDriverAndGearRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Driver type:",
@@ -175,4 +174,3 @@ export const generateDriverAndGearRowData = (datasheet: MechanicalTagData): Tabl
             additionalNotes: "",
         },
     ]
-}

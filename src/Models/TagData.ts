@@ -11,7 +11,6 @@ export class TagData implements Components.Schemas.TagDataDto {
     revisionNumber?: number // int32
     review?: TagDataReview
 
-
     constructor(init?: Partial<TagData>) {
         Object.assign(this, init)
     }

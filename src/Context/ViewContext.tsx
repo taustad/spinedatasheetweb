@@ -4,7 +4,8 @@ import React,
     useState,
     ReactNode,
     Dispatch,
-    SetStateAction
+    SetStateAction,
+    useMemo,
 } from "react"
 import { TagData } from "../Models/TagData"
 
@@ -21,18 +22,18 @@ export const ViewContext = createContext<ViewContextProps>({
 interface ViewContextProviderProps {
     children: ReactNode
 }
-
 export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     children,
 }: ViewContextProviderProps) => {
     const [activeTagData, setActiveTagData] = useState<TagData>()
 
-    const value = {
-        activeTagData,
-        setActiveTagData,
-    }
+    const value = useMemo(
+        () => ({
+            activeTagData,
+            setActiveTagData,
+        }),
+        [activeTagData, setActiveTagData],
+    )
 
-    return <ViewContext.Provider value={value}>
-        {children}
-    </ViewContext.Provider>
+    return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>
 }

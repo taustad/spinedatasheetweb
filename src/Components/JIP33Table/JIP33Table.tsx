@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction, useMemo } from "react"
 import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
-import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
-import { ReviewComment } from "../../Models/ReviewComment"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
+import { ReviewComment } from "../../Models/ReviewComment"
+import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 
 interface Props {
     rowData: object[]
@@ -26,11 +26,11 @@ function JIP33Table({
 }: Props) {
     useAgGridStyles()
 
-    const red = "white" //"#e6b8b7"
-    const lightBlue = "white" //"#b7dee8"
+    const red = "white" // "#e6b8b7"
+    const lightBlue = "white" // "#b7dee8"
     const grey = "white" // "#bfbfbf"
     const lightGreen = "white" // "#d8e4bc"
-    const green = "white" //"#92d050"
+    const green = "white" // "#92d050"
     const lightOrange = "white" // "#fcd5b4"
     const white = "white"
 
@@ -41,44 +41,44 @@ function JIP33Table({
             resizable: true,
             editable: false,
         }),
-        []
+        [],
     )
 
-    const reqColor = (reqColor: any, remainingColor: string) => {
-        if (reqColor === ColorLegendEnum.SelectPurComDropDown) {
+    const reqColor = (colorParam: any, remainingColor: string) => {
+        if (colorParam === ColorLegendEnum.SelectPurComDropDown) {
             return { backgroundColor: red }
         }
-        if (reqColor === ColorLegendEnum.InputDataPurCom) {
+        if (colorParam === ColorLegendEnum.InputDataPurCom) {
             return { backgroundColor: red }
         }
-        if (reqColor === ColorLegendEnum.SelectSupComDropDown) {
+        if (colorParam === ColorLegendEnum.SelectSupComDropDown) {
             return { backgroundColor: lightBlue }
         }
-        if (reqColor === ColorLegendEnum.InputDataSupCom) {
+        if (colorParam === ColorLegendEnum.InputDataSupCom) {
             return { backgroundColor: lightBlue }
         }
-        if (reqColor === ColorLegendEnum.SelectEitherPurOrSupComDropDown) {
+        if (colorParam === ColorLegendEnum.SelectEitherPurOrSupComDropDown) {
             return { backgroundColor: lightGreen }
         }
-        if (reqColor === ColorLegendEnum.InputDataEitherPurOrSupCom) {
+        if (colorParam === ColorLegendEnum.InputDataEitherPurOrSupCom) {
             return { backgroundColor: lightGreen }
         }
-        if (reqColor === ColorLegendEnum.SelectUnitsOfDropDown) {
+        if (colorParam === ColorLegendEnum.SelectUnitsOfDropDown) {
             return { backgroundColor: lightOrange }
         }
-        if (reqColor === ColorLegendEnum.SelectNoInputExp) {
+        if (colorParam === ColorLegendEnum.SelectNoInputExp) {
             return { backgroundColor: grey }
         }
-        if (reqColor === ColorLegendEnum.InputDataNoInputExp) {
+        if (colorParam === ColorLegendEnum.InputDataNoInputExp) {
             return { backgroundColor: grey }
         }
-        if (reqColor === ColorLegendEnum.UOMFixedUnitGrey) {
+        if (colorParam === ColorLegendEnum.UOMFixedUnitGrey) {
             return { backgroundColor: grey }
         }
-        if (reqColor === ColorLegendEnum.UOMFixedUnitWhite) {
+        if (colorParam === ColorLegendEnum.UOMFixedUnitWhite) {
             return { backgroundColor: "white" }
         }
-        if (reqColor === ColorLegendEnum.SpineModification) {
+        if (colorParam === ColorLegendEnum.SpineModification) {
             return { backgroundColor: green }
         }
         return { backgroundColor: remainingColor }
@@ -86,12 +86,12 @@ function JIP33Table({
 
     const commentIcon = (params: any) => {
         const commentsExist = reviewComments?.some(
-            (c) => c.property === params.data.property
+            (c) => c.property === params.data.property,
         )
         if (
-            commentsExist &&
-            setReviewSideSheetOpen !== undefined &&
-            setCurrentProperty !== undefined
+            commentsExist
+            && setReviewSideSheetOpen !== undefined
+            && setCurrentProperty !== undefined
         ) {
             return (
                 <Icon
@@ -111,8 +111,8 @@ function JIP33Table({
             )
         }
         if (
-            setReviewSideSheetOpen !== undefined &&
-            setCurrentProperty !== undefined
+            setReviewSideSheetOpen !== undefined
+            && setCurrentProperty !== undefined
         ) {
             return (
                 <Icon
@@ -130,7 +130,7 @@ function JIP33Table({
                 />
             )
         }
-        return <></>
+        return null
     }
 
     const columns = [
@@ -139,44 +139,38 @@ function JIP33Table({
         {
             field: "purchaserReq",
             headerName: "Purchaser requirement",
-            cellStyle: (params: any) =>
-                reqColor(params.data.purchaserReqColor, red),
+            cellStyle: (params: any) => reqColor(params.data.purchaserReqColor, red),
             width: 220,
         }, // backgroundColor needs to be set by data params, not general.
         {
             field: "purchaserReqUOM",
             headerName: "Unit of measure",
-            cellStyle: (params: any) =>
-                reqColor(params.data.purchaserReqUOMColor, white),
+            cellStyle: (params: any) => reqColor(params.data.purchaserReqUOMColor, white),
             width: 140,
         },
         {
             field: "supplierOfferedVal",
             headerName: "Supplier offered value",
-            cellStyle: (params: any) =>
-                reqColor(params.data.supplierOfferedValColor, grey),
+            cellStyle: (params: any) => reqColor(params.data.supplierOfferedValColor, grey),
             width: 220,
         }, // backgroundColor needs to be set by data params, not general.
         {
             field: "supplierOfferedValUOM",
             headerName: "Unit of measure",
-            cellStyle: (params: any) =>
-                reqColor(params.data.supplierOfferedValUOMColor, white),
+            cellStyle: (params: any) => reqColor(params.data.supplierOfferedValUOMColor, white),
             width: 140,
         },
         {
             field: "comment",
             headerName: "Comment",
-            cellStyle: (params: any) =>
-                reqColor(params.data.commentColor, white),
+            cellStyle: (params: any) => reqColor(params.data.commentColor, white),
             cellRenderer: commentIcon,
         },
         {
             field: "additionalNotes",
             headerName: "Additional notes",
             flex: 1,
-            cellStyle: (params: any) =>
-                reqColor(params.data.additionalNotesColor, white),
+            cellStyle: (params: any) => reqColor(params.data.additionalNotesColor, white),
         },
     ]
 

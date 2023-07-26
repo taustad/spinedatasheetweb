@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generatePerformanceRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generatePerformanceRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Proposal curve number:",
@@ -220,4 +219,3 @@ export const generatePerformanceRowData = (datasheet: MechanicalTagData): TableR
             additionalNotes: "",
         },
     ]
-}

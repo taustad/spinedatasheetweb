@@ -1,5 +1,7 @@
 import React, { FC } from "react"
-import { Input, Button, Icon, Checkbox } from "@equinor/eds-core-react"
+import {
+ Input, Button, Icon, Checkbox,
+} from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { send } from "@equinor/eds-icons"
 
@@ -30,25 +32,23 @@ const InputController: FC<InputControllerProps> = ({
     value,
     handleCommentChange,
     handleSubmit,
-}) => {
-    return (
-        <Controls>
-            <Input
-                as="textarea"
-                type="text"
-                placeholder="Write a comment..."
-                onChange={handleCommentChange}
-                value={value}
-                rows={3}
-            />
-            <InputButtonWrapper>
-                <Checkbox label="Send to contractor" />
-                <Button onClick={handleSubmit} variant="ghost">
-                    <Icon data={send} />
-                </Button>
-            </InputButtonWrapper>
-        </Controls>
+}) => (
+    <Controls>
+        <Input
+            as="textarea"
+            type="text"
+            placeholder="Write a comment..."
+            onChange={handleCommentChange}
+            value={value}
+            rows={3}
+        />
+        <InputButtonWrapper>
+            <Checkbox label="Send to contractor" />
+            <Button onClick={handleSubmit} variant="ghost">
+                <Icon data={send} />
+            </Button>
+        </InputButtonWrapper>
+    </Controls>
     )
-}
 
 export default InputController

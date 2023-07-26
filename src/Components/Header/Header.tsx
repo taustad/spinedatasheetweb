@@ -9,11 +9,10 @@ const WrapperColumn = styled.div`
     justify-content: flex-start;
     align-items: center;
 `
-const Header: FC = () => {
-    return (
-        <WrapperColumn>
-            <StackedBar
-                data={[
+const Header: FC = () => (
+    <WrapperColumn>
+        <StackedBar
+            data={[
                     {
                         title: "Reviewed",
                         percentage: 23,
@@ -39,9 +38,8 @@ const Header: FC = () => {
                         barColor: "#DCDCDC",
                     },
                 ]}
-            />
-        </WrapperColumn>
+        />
+    </WrapperColumn>
     )
-}
 
 export default Header

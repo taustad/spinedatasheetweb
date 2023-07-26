@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../Models/InstrumentTagData"
 import { TableRow } from "../../JIP33Table/RowData/TableRow"
 
-export const instrumentCharacteristicsRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const instrumentCharacteristicsRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Calibrated Range",
@@ -74,4 +73,3 @@ export const instrumentCharacteristicsRowData = (datasheet: InstrumentTagData): 
             property: "",
         },
     ]
-}

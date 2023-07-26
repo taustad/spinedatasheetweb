@@ -23,5 +23,7 @@ frontend/cypress/screenshots
 
 #MacOS
 .DS_Store
-
 .dccache
+
+# Yarn
+yarn-error.log

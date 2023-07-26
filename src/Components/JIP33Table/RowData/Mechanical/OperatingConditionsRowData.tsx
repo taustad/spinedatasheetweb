@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateOperatingConditionsRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateOperatingConditionsRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "NPSHA datum:",
@@ -274,4 +273,3 @@ export const generateOperatingConditionsRowData = (datasheet: MechanicalTagData)
             additionalNotes: "",
         },
     ]
-}

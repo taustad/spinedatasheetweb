@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../Models/InstrumentTagData"
 import { TableRow } from "../../JIP33Table/RowData/TableRow"
 
-export const meterBodyRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const meterBodyRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Nominal size",
@@ -144,4 +143,3 @@ export const meterBodyRowData = (datasheet: InstrumentTagData): TableRow[] => {
             property: "",
         },
     ]
-}

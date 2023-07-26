@@ -1,9 +1,9 @@
-import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Mechanical/GeneralRowData"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useEffect, useState } from "react"
-import { BackButton } from "../Components/BackButton"
 import { useParams } from "react-router-dom"
+import { BackButton } from "../Components/BackButton"
+import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Mechanical/GeneralRowData"
 import { TagData } from "../Models/TagData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
 import { generateSiteDataRowData } from "../Components/JIP33Table/RowData/Mechanical/SiteDataRowData"
@@ -41,8 +41,7 @@ const Body = styled.div`
     height: 92%;
 `
 
-function JIP33MechanicalTabView({
-}) {
+function JIP33MechanicalTabView({}) {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
@@ -57,8 +56,9 @@ function JIP33MechanicalTabView({
             if (tagId !== null && tagId !== undefined) {
                 try {
                     setIsLoading(true)
-                    const datasheets: TagData = await (await GetTagDataService())
-                        .getTagData(tagId)
+                    const datasheets: TagData = await (
+                        await GetTagDataService()
+                    ).getTagData(tagId)
                     setTag(datasheets)
                     setIsLoading(false)
                 } catch {
@@ -82,24 +82,55 @@ function JIP33MechanicalTabView({
     }
 
     const sideMenuList = [
-        "General", "Side data", "Utility conditions", "Liquid characteristics",
-        "Operating conditions", "Performance", "Construction", "Vertical pump construction",
-        "Vertical pump sump dimensions", "Bearings and lubrication", "Materials",
-        "Materials (additional for vertical pumps)", "Material inspection", "Baseplate",
-        "Mechanical seal", "Coupling", "Driver and gear", "Instrumentation", "Testing",
-        "Surface preperation and painting", "Other purchaser requirements",
-        "Spare parts", "Shipment",
+        "General",
+        "Side data",
+        "Utility conditions",
+        "Liquid characteristics",
+        "Operating conditions",
+        "Performance",
+        "Construction",
+        "Vertical pump construction",
+        "Vertical pump sump dimensions",
+        "Bearings and lubrication",
+        "Materials",
+        "Materials (additional for vertical pumps)",
+        "Material inspection",
+        "Baseplate",
+        "Mechanical seal",
+        "Coupling",
+        "Driver and gear",
+        "Instrumentation",
+        "Testing",
+        "Surface preperation and painting",
+        "Other purchaser requirements",
+        "Spare parts",
+        "Shipment",
     ]
 
     const rowDataList = [
-        generateGeneralRowData(tag), generateSiteDataRowData(tag), generateUtilityConditionsRowData(tag),
-        generateLiquidCharacteristicsRowData(tag), generateOperatingConditionsRowData(tag), generatePerformanceRowData(tag),
-        generateConstructionRowData(tag), generateVerticalPumpConstructionRowData(tag), generateVerticalPumpSumpDimensionsRowData(tag),
-        generateBearingsAndLubricationRowData(tag), generateMaterialsRowData(tag), generateMaterialsAddForVerticalPumpsRowData(tag),
-        generateMaterialInspectionRowData(tag), generateBaseplateRowData(tag), generateMechanicalSealRowData(tag),
-        generateCouplingRowData(tag), generateDriverAndGearRowData(tag), generateInstrumentationRowData(tag),
-        generateTestingRowData(tag), generateSurfacePreperationAndPaintingRowData(tag), generateOtherPurchaserRequirementsRowData(tag),
-        generateSparePartsRowData(tag), generateShipmentRowData(tag),
+        generateGeneralRowData(tag),
+        generateSiteDataRowData(tag),
+        generateUtilityConditionsRowData(tag),
+        generateLiquidCharacteristicsRowData(tag),
+        generateOperatingConditionsRowData(tag),
+        generatePerformanceRowData(tag),
+        generateConstructionRowData(tag),
+        generateVerticalPumpConstructionRowData(tag),
+        generateVerticalPumpSumpDimensionsRowData(tag),
+        generateBearingsAndLubricationRowData(tag),
+        generateMaterialsRowData(tag),
+        generateMaterialsAddForVerticalPumpsRowData(tag),
+        generateMaterialInspectionRowData(tag),
+        generateBaseplateRowData(tag),
+        generateMechanicalSealRowData(tag),
+        generateCouplingRowData(tag),
+        generateDriverAndGearRowData(tag),
+        generateInstrumentationRowData(tag),
+        generateTestingRowData(tag),
+        generateSurfacePreperationAndPaintingRowData(tag),
+        generateOtherPurchaserRequirementsRowData(tag),
+        generateSparePartsRowData(tag),
+        generateShipmentRowData(tag),
     ]
 
     return (
@@ -110,7 +141,10 @@ function JIP33MechanicalTabView({
                     JIP33 table
                 </Typography>
             </TopBar>
-            <JIP33WithSideMenu sideMenuList={sideMenuList} rowDataList={rowDataList} />
+            <JIP33WithSideMenu
+                sideMenuList={sideMenuList}
+                rowDataList={rowDataList}
+            />
         </Body>
     )
 }

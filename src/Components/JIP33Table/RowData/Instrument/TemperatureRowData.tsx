@@ -1,8 +1,7 @@
 import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { TableRow } from "../TableRow"
 
-export const generateTemperatureRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateTemperatureRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Minimum ambient temperature:",
@@ -67,4 +66,3 @@ export const generateTemperatureRowData = (datasheet: InstrumentTagData): TableR
             additionalNotes: "",
         },
     ]
-}

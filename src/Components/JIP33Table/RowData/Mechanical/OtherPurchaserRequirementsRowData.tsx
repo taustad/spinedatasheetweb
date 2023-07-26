@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateOtherPurchaserRequirementsRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateOtherPurchaserRequirementsRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "VFD steady state forced response analysis:",
@@ -40,4 +39,3 @@ export const generateOtherPurchaserRequirementsRowData = (datasheet: MechanicalT
             additionalNotes: "",
         },
     ]
-}

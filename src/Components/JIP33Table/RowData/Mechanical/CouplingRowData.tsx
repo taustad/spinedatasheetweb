@@ -1,8 +1,7 @@
 import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateCouplingRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateCouplingRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Coupling specification:",
@@ -85,4 +84,3 @@ export const generateCouplingRowData = (datasheet: MechanicalTagData): TableRow[
             additionalNotes: "",
         },
     ]
-}

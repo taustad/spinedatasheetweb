@@ -1,8 +1,7 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateRotorRowData = (datasheet: ElectricalTagData): TableRow[] => {
-    return [
+export const generateRotorRowData = (datasheet: ElectricalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Maximum vibration magnitude:",
@@ -13,4 +12,3 @@ export const generateRotorRowData = (datasheet: ElectricalTagData): TableRow[] =
             additionalNotes: "",
         },
     ]
-}

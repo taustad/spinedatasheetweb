@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateBearingsAndLubricationRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateBearingsAndLubricationRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Radial bearing type:",
@@ -103,4 +102,3 @@ export const generateBearingsAndLubricationRowData = (datasheet: MechanicalTagDa
             additionalNotes: "",
         },
     ]
-}

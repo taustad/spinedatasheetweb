@@ -1,6 +1,6 @@
 import React, { FC } from "react"
-import { ReviewComment } from "../../../Models/ReviewComment"
 import styled from "styled-components"
+import { ReviewComment } from "../../../Models/ReviewComment"
 
 const Container = styled.div`
     margin: 15px;
@@ -17,25 +17,22 @@ const Header = styled.div`
 `
 const Message = styled.div``
 
-
 interface DialogueBoxProps {
     comment: ReviewComment
-    formattedDate: string 
+    formattedDate: string
 }
 
-const DialogueBox: FC<DialogueBoxProps> = ({ comment, formattedDate }) => {
-    return (
-        <Container key={comment.id}>
-            <Header>
-                <p>{comment.commenterName}</p>
-                <p>{formattedDate}</p>
-            </Header>
-            <Message>
-                <p>{comment.text}</p>
-            </Message>
-            
-        </Container>
+const DialogueBox: FC<DialogueBoxProps> = ({ comment, formattedDate }) => (
+    <Container key={comment.id}>
+        <Header>
+            <p>{comment.commenterName}</p>
+            <p>{formattedDate}</p>
+        </Header>
+        <Message>
+            <p>{comment.text}</p>
+        </Message>
+
+    </Container>
     )
-}
 
 export default DialogueBox

@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateOperatingConditionsRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateOperatingConditionsRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Process fluid(s):",
@@ -421,4 +420,3 @@ export const generateOperatingConditionsRowData = (datasheet: InstrumentTagData)
             additionalNotes: "",
         },
     ]
-}

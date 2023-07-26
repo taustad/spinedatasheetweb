@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import ProgressBar from "./ProgressBar"
 import { Typography } from "@equinor/eds-core-react"
+import ProgressBar from "./ProgressBar"
 
 interface StackedBarProps {
     data: {
@@ -38,8 +38,6 @@ const StackedBarContainer = styled.div`
     margin-top: 5px;
 `
 
-
-
 const StackedBar: React.FC<StackedBarProps> = ({ data }) => {
     const [totalPercentage, setTotalPercentage] = useState<number>(0)
 
@@ -48,12 +46,11 @@ const StackedBar: React.FC<StackedBarProps> = ({ data }) => {
         setTotalPercentage(
             data
                 .filter((item) => item.title !== "Not reviewed")
-                .reduce((acc, item) => acc + item.percentage, 0)
+                .reduce((acc, item) => acc + item.percentage, 0),
         )
     }, [data, totalPercentage])
 
-    if (totalPercentage > 100)
-        return <div>Error: input total % is greater than 100</div>
+    if (totalPercentage > 100) return <div>Error: input total % is greater than 100</div>
 
     return (
         <Wrapper>
@@ -70,8 +67,11 @@ const StackedBar: React.FC<StackedBarProps> = ({ data }) => {
                     />
                 ))}
             </StackedBarContainer>
-            <Typography variant="body_short" style={{fontSize: "small" }}>
-                Reviewed: {totalPercentage}%
+            <Typography variant="body_short" style={{ fontSize: "small" }}>
+                Reviewed:
+                {" "}
+                {totalPercentage}
+                %
             </Typography>
 
         </Wrapper>

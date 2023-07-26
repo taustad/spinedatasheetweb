@@ -1,8 +1,7 @@
 import { ElectricalTagData } from "../../../../Models/ElectricalTagData"
 import { TableRow } from "../TableRow"
 
-export const generateDutyRowData = (datasheet: ElectricalTagData): TableRow[] => {
-    return [
+export const generateDutyRowData = (datasheet: ElectricalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Duty type:",
@@ -76,4 +75,3 @@ export const generateDutyRowData = (datasheet: ElectricalTagData): TableRow[] =>
             additionalNotes: "",
         },
     ]
-}

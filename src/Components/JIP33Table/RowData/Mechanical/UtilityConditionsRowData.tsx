@@ -1,8 +1,7 @@
-import { MechanicalTagData } from "../../../../Models/MechanicalTagData";
-import { TableRow } from "../TableRow";
+import { MechanicalTagData } from "../../../../Models/MechanicalTagData"
+import { TableRow } from "../TableRow"
 
-export const generateUtilityConditionsRowData = (datasheet: MechanicalTagData): TableRow[] => {
-    return [
+export const generateUtilityConditionsRowData = (datasheet: MechanicalTagData): TableRow[] => [
         {
             refClause: "",
             description: "Drivers voltage:",
@@ -184,4 +183,3 @@ export const generateUtilityConditionsRowData = (datasheet: MechanicalTagData): 
             additionalNotes: "",
         },
     ]
-}

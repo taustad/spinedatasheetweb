@@ -2,8 +2,7 @@ import { InstrumentTagData } from "../../../../Models/InstrumentTagData"
 import { ColorLegendEnum } from "../../JIP33ColorLegendEnums"
 import { TableRow } from "../TableRow"
 
-export const generateFlowRowData = (datasheet: InstrumentTagData): TableRow[] => {
-    return [
+export const generateFlowRowData = (datasheet: InstrumentTagData): TableRow[] => [
         {
             refClause: "",
             description: "Minimum operating mass flow",
@@ -55,4 +54,3 @@ export const generateFlowRowData = (datasheet: InstrumentTagData): TableRow[] =>
             additionalNotes: "",
         },
     ]
-}

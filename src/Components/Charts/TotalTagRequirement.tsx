@@ -1,18 +1,18 @@
-import { useState } from 'react'
-import { AgChartsReact } from 'ag-charts-react'
-import { AgChartOptions } from 'ag-charts-community'
+import { useState } from "react"
+import { AgChartsReact } from "ag-charts-react"
+import { AgChartOptions } from "ag-charts-community"
 
 function getData() {
     return [
         {
-            name: 'Covered',
+            name: "Covered",
             count: 720,
         },
         {
-            name: 'Not Covered',
+            name: "Not Covered",
             count: 280,
         },
-    ];
+    ]
 }
 
 const data = getData()
@@ -26,19 +26,19 @@ function TotalTagRequirement() {
         height: 300,
         series: [
             {
-                type: 'pie',
-                angleKey: 'count',
-                fills: ['#35ab7c', '#dff3ea'],
+                type: "pie",
+                angleKey: "count",
+                fills: ["#35ab7c", "#dff3ea"],
                 strokeWidth: 0,
                 innerRadiusOffset: -20,
                 innerLabels: [
                     {
                         text: percentage(data[0].count),
-                        color: '#35ab7c',
+                        color: "#35ab7c",
                         fontSize: 72,
                     },
                     {
-                        text: 'Requirements met',
+                        text: "Requirements met",
                         fontSize: 15,
                         margin: 4,
                     },
@@ -56,7 +56,7 @@ function TotalTagRequirement() {
                     },
                 },
                 innerCircle: {
-                    fill: '#dff3ea',
+                    fill: "#dff3ea",
                 },
             },
         ],

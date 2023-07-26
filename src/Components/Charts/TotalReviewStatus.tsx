@@ -1,15 +1,15 @@
-import { useState } from 'react'
-import { AgChartsReact } from 'ag-charts-react'
-import { AgChartOptions } from 'ag-charts-community'
+import { useState } from "react"
+import { AgChartsReact } from "ag-charts-react"
+import { AgChartOptions } from "ag-charts-community"
 
 function getData() {
     return [
         {
-            name: 'Covered',
+            name: "Covered",
             count: 720,
         },
         {
-            name: 'Not Covered',
+            name: "Not Covered",
             count: 280,
         },
     ]
@@ -26,19 +26,19 @@ function TotalReviewStatus() {
         height: 300,
         series: [
             {
-                type: 'pie',
-                angleKey: 'count',
-                fills: ['#0066ff', '#dff3ea'],
+                type: "pie",
+                angleKey: "count",
+                fills: ["#0066ff", "#dff3ea"],
                 strokeWidth: 0,
                 innerRadiusOffset: -20,
                 innerLabels: [
                     {
                         text: percentage(data[0].count),
-                        color: '#0066ff',
+                        color: "#0066ff",
                         fontSize: 72,
                     },
                     {
-                        text: 'Reviewed tags',
+                        text: "Reviewed tags",
                         fontSize: 15,
                         margin: 4,
                     },
@@ -56,7 +56,7 @@ function TotalReviewStatus() {
                     },
                 },
                 innerCircle: {
-                    fill: '#dff3ea',
+                    fill: "#dff3ea",
                 },
             },
         ],
