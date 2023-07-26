@@ -7,13 +7,12 @@ export default (
     setTagInReview: Dispatch<SetStateAction<string | undefined>>,
     setRevisionInReview: Dispatch<SetStateAction<string | undefined>>,
 ) => {
-    const { value, valueFormatted, data: { id, revisionContainer: { id: revisionId } } } = params
-    const cellValue = valueFormatted || value
+    const cellValue = params.valueFormatted ? params.valueFormatted : params.value
 
     const buttonClicked = () => {
         setReviewModalOpen(true)
-        setTagInReview(id)
-        setRevisionInReview(revisionId)
+        setTagInReview(params.data.id)
+        setRevisionInReview(params.data.revisionContainer.id)
     }
 
     return (
