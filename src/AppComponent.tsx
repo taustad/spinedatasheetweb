@@ -1,5 +1,5 @@
 import { useCurrentUser, useFusionEnvironment } from "@equinor/fusion"
-import { FC } from "react"
+import React, { FC } from "react"
 import { BrowserRouter } from "react-router-dom"
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"

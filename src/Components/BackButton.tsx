@@ -1,3 +1,4 @@
+import React from "react"
 import { useNavigate } from "react-router-dom"
 import { arrow_back } from "@equinor/eds-icons"
 import { Button, Icon } from "@equinor/eds-core-react"

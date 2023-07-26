@@ -1,5 +1,5 @@
 import { Tabs, Typography } from "@equinor/eds-core-react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { BackButton } from "../Components/BackButton"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"

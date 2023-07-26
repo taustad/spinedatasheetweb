@@ -1,6 +1,6 @@
 import { Progress, Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { useNavigate, useParams } from "react-router-dom"
 import { GetTagDataService } from "../api/TagDataService"
@@ -52,6 +52,8 @@ function EquipmentListView() {
     }, [currentProject])
 
     useEffect(() => {
+        let isCancelled = false;
+
         (async () => {
             if (externalId !== undefined) {
                 setError(false)
@@ -62,15 +64,23 @@ function EquipmentListView() {
                     const allTagData = await (
                         await GetTagDataService()
                     ).getAllTagData()
-                    setTagData(allTagData)
 
-                    setIsLoading(false)
+                    if (!isCancelled) {
+                        setTagData(allTagData)
+                        setIsLoading(false)
+                    }
                 } catch {
-                    console.error("Error loading tags")
-                    setError(true)
+                    if (!isCancelled) {
+                        console.error("Error loading tags")
+                        setError(true)
+                    }
                 }
             }
         })()
+
+        return () => {
+            isCancelled = true
+        }
     }, [externalId])
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { BackButton } from "../Components/BackButton"
 import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Electrical/GeneralRowData"

@@ -1,6 +1,6 @@
 import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import {
+import React, {
  useCallback, useContext, useEffect, useState,
 } from "react"
 import { useParams } from "react-router-dom"

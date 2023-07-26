@@ -1,4 +1,4 @@
-import { FC } from "react"
+import React, { FC } from "react"
 import { Route, Routes } from "react-router-dom"
 import EquipmentListView from "./Views/EquipmentListView"
 import TagComparisonView from "./Views/TagComparisonView"

@@ -10,7 +10,7 @@
     "target": "ES6",
     "composite": false,
     "skipLibCheck": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "noEmit": true,

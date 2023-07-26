@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useMemo } from "react"
+import React, { Dispatch, SetStateAction, useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"

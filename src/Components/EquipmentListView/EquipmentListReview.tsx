@@ -1,5 +1,5 @@
 import { Button } from "@equinor/eds-core-react"
-import { Dispatch, SetStateAction, useContext } from "react"
+import React, { Dispatch, SetStateAction, useContext } from "react"
 import { TagData } from "../../Models/TagData"
 import { TagDataReview } from "../../Models/TagDataReview"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"

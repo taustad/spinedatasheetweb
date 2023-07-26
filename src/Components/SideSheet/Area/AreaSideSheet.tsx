@@ -1,7 +1,14 @@
 import React, { FC } from "react"
-import { Typography, Table } from "@equinor/eds-core-react"
+import {
+    Typography,
+    Table,
+    Button,
+    Icon,
+} from "@equinor/eds-core-react"
+import { external_link } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ViewContext } from "../../../Context/ViewContext"
+import Card from "../Card"
 
 const Container = styled.div`
     display: flex;
@@ -10,13 +17,6 @@ const Container = styled.div`
     padding: 15px;
 `
 
-const Card = styled.div`
-    padding: 15px;
-    background-color: white;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
-    border-radius: 5px;
-    margin-bottom: 15px;
-`
 const ModelImage = styled.img`
     width: 100%;
     height: 350px;
@@ -25,6 +25,15 @@ const ModelImage = styled.img`
 
 const InfoTable = styled(Table)`
     width: 100%;
+`
+
+const ModelContainer = styled.div`
+    position: relative;
+
+    & > button {
+        position: absolute;
+        bottom: 15px;
+        right: 15px;
 `
 
 const AreaCard: FC = () => {
@@ -49,10 +58,16 @@ const AreaCard: FC = () => {
     return (
         <Container>
             <Card>
-                <ModelImage
-                    src="https://via.placeholder.com/650"
-                    alt="placeholder"
-                />
+                <ModelContainer>
+                    <ModelImage
+                        src="https://via.placeholder.com/650"
+                        alt="placeholder"
+                    />
+                    <Button>
+                        Open in facility 3D model
+                        <Icon data={external_link} size={18} />
+                    </Button>
+                </ModelContainer>
             </Card>
             <Card>
                 <Typography variant="h6">AREA CONDITIONS</Typography>

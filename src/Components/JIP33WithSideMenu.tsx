@@ -1,6 +1,6 @@
 import { Typography } from "@equinor/eds-core-react"
 import { tokens } from "@equinor/eds-tokens"
-import { Dispatch, SetStateAction, useState } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import styled from "styled-components"
 import JIP33Table from "./JIP33Table/JIP33Table"
 import { ReviewComment } from "../Models/ReviewComment"

@@ -12,6 +12,7 @@ import { ReviewComment } from "../../Models/ReviewComment"
 import InfoStrip from "./InfoStrip"
 import CommentsSideSheet from "./Comments/CommentsSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
+import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -199,7 +200,9 @@ const SheetContainer: React.FC<Props> = ({
                                 />
                             )}
                         </TabsPanel>
-                        <TabsPanel>{activeTab === 5 && placeholder}</TabsPanel>
+                        <TabsPanel>{activeTab === 5 && (
+                            <ChangeLogSideSheet />
+                        )}</TabsPanel>
                     </SheetBody>
                 </TabsContainer>
             </SheetContent>

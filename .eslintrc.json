@@ -40,7 +40,7 @@
       "react/jsx-indent-props": [2, 4],
       "react/require-default-props": 0,
       "react/prop-types": 0,
-      "max-len": ["error", 120],
+      "max-len": ["warn", 150],
       "linebreak-style": 0,
       "no-console": 0,
       "no-debugger": 0,
