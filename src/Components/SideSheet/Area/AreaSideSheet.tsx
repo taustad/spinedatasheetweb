@@ -1,7 +1,6 @@
 import React, { FC } from "react"
 import {
     Typography,
-    Table,
     Button,
     Icon,
 } from "@equinor/eds-core-react"
@@ -9,6 +8,7 @@ import { external_link } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ViewContext } from "../../../Context/ViewContext"
 import Card from "../Card"
+import Table from "../Table"
 
 const Container = styled.div`
     display: flex;
@@ -21,10 +21,6 @@ const ModelImage = styled.img`
     width: 100%;
     height: 350px;
     object-fit: cover;
-`
-
-const InfoTable = styled(Table)`
-    width: 100%;
 `
 
 const ModelContainer = styled.div`
@@ -71,14 +67,7 @@ const AreaCard: FC = () => {
             </Card>
             <Card>
                 <Typography variant="h6">AREA CONDITIONS</Typography>
-                <InfoTable>
-                    {Object.keys(dummyData).map((key) => (
-                        <Table.Row key={key}>
-                            <Table.Cell>{key}</Table.Cell>
-                            <Table.Cell>{dummyData[key]}</Table.Cell>
-                        </Table.Row>
-                    ))}
-                </InfoTable>
+                <Table data={dummyData} />
             </Card>
         </Container>
     )
