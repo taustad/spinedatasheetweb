@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from "react"
-import { ICellRendererParams } from "ag-grid-community"
+import { ICellRendererParams } from "@ag-grid-community/core"
 
 export default (
     params: ICellRendererParams,

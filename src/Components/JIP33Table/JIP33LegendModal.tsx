@@ -1,11 +1,11 @@
 import React, { useMemo } from "react"
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
+import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 
-function JIP33LegendModal({}) {
-    useAgGridStyles()
+function JIP33LegendModal({ }) {
+    const styles = useStyles()
 
     const red = "white" // "#e6b8b7"
     const lightBlue = "white" // "#b7dee8"
@@ -147,23 +147,25 @@ function JIP33LegendModal({}) {
     ]
 
     return (
-        <div
-            className="ag-theme-alpine ag-theme-datasheetTable"
-            style={{ flex: "1 1 auto", width: "100%" }}
-        >
-            <AgGridReact
-                rowData={rowData}
-                columnDefs={columns}
-                defaultColDef={defaultColDef}
-                animateRows
-                domLayout="autoHeight"
-                enableCellChangeFlash
-                rowSelection="multiple"
-                suppressMovableColumns
-                suppressHorizontalScroll
-                headerHeight={48}
-                rowHeight={35}
-            />
+        <div className={styles.root}>
+            <div
+                className="ag-theme-alpine ag-theme-datasheetTable"
+                style={{ flex: "1 1 auto", width: "100%" }}
+            >
+                <AgGridReact
+                    rowData={rowData}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    animateRows
+                    domLayout="autoHeight"
+                    enableCellChangeFlash
+                    rowSelection="multiple"
+                    suppressMovableColumns
+                    suppressHorizontalScroll
+                    headerHeight={48}
+                    rowHeight={35}
+                />
+            </div>
         </div>
     )
 }

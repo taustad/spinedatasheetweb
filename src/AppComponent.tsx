@@ -5,7 +5,6 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { ColumnsToolPanelModule } from "@ag-grid-enterprise/column-tool-panel"
 import { FiltersToolPanelModule } from "@ag-grid-enterprise/filter-tool-panel"
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { RangeSelectionModule } from "@ag-grid-enterprise/range-selection"
 import { ClipboardModule } from "@ag-grid-enterprise/clipboard"
 import { MultiFilterModule } from "@ag-grid-enterprise/multi-filter"
@@ -28,8 +27,6 @@ ModuleRegistry.registerModules([
 ])
 
 const AppComponent: FC = () => {
-    useAgGridStyles()
-
     const fusionEnvironment = useFusionEnvironment()
     const basename = fusionEnvironment.env === "dev" ? "/" : "/apps/spinedatasheet"
 
