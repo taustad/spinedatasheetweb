@@ -1,5 +1,5 @@
 import React, {
- useState, Dispatch, SetStateAction, useEffect,
+ useState, Dispatch, SetStateAction,
 } from "react"
 import {
  Icon, Tabs, Typography, Button,
@@ -200,9 +200,7 @@ const SheetContainer: React.FC<Props> = ({
                                 />
                             )}
                         </TabsPanel>
-                        <TabsPanel>{activeTab === 5 && (
-                            <ChangeLogSideSheet />
-                        )}</TabsPanel>
+                        <TabsPanel>{activeTab === 5 && <ChangeLogSideSheet />}</TabsPanel>
                     </SheetBody>
                 </TabsContainer>
             </SheetContent>
