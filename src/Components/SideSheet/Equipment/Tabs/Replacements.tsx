@@ -1,0 +1,113 @@
+import React, { FC } from "react"
+import {
+ Typography, Button, Icon,
+} from "@equinor/eds-core-react"
+import styled from "styled-components"
+import { external_link } from "@equinor/eds-icons"
+import TabsTitle from "../TabsTitle"
+import Card from "../../Card"
+import Table from "../../Table"
+import MatchIndicator from "../MatchIndicator"
+
+const Header = styled.div`
+    margin-bottom: 15px;
+`
+
+const CardHeader = styled.div`
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const Divider = styled.div`
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+`
+
+const ModelImage = styled.img`
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+`
+
+const Replacements: FC = () => {
+    const dummyData = {
+        "Implementation status 1": "Not implemented",
+        "Implementation status 2": "Not implemented",
+        "Implementation status 3": "Not implemented",
+    }
+
+    return (
+        <div>
+            <Header>
+                <TabsTitle>Replacements</TabsTitle>
+                <Typography variant="body_short">
+                    This page shows equipment from EqHub that could replace current installed equipment.
+                    Match score is based on tag requirements (valid properties).
+                </Typography>
+            </Header>
+            <Card>
+                <CardHeader>
+                    <Typography variant="h5">
+                        PRODUCT INFORMATION
+                    </Typography>
+                    <Button variant="ghost">
+                        View in EqHub
+                        <Icon data={external_link} />
+                    </Button>
+                </CardHeader>
+                <Divider>
+                    <ModelImage
+                        src="https://via.placeholder.com/650"
+                        alt="placeholder"
+                    />
+                    <MatchIndicator percentage={58} />
+                </Divider>
+                <Table data={dummyData} />
+            </Card>
+            <Card>
+                <CardHeader>
+                    <Typography variant="h5">
+                        PRODUCT INFORMATION
+                    </Typography>
+                    <Button variant="ghost">
+                        View in EqHub
+                        <Icon data={external_link} />
+                    </Button>
+                </CardHeader>
+                <Divider>
+                    <ModelImage
+                        src="https://via.placeholder.com/650"
+                        alt="placeholder"
+                    />
+                    <MatchIndicator percentage={74} />
+                </Divider>
+                <Table data={dummyData} />
+            </Card>
+            <Card>
+                <CardHeader>
+                    <Typography variant="h5">
+                        PRODUCT INFORMATION
+                    </Typography>
+                    <Button variant="ghost">
+                        View in EqHub
+                        <Icon data={external_link} />
+                    </Button>
+                </CardHeader>
+                <Divider>
+                    <ModelImage
+                        src="https://via.placeholder.com/650"
+                        alt="placeholder"
+                    />
+                    <MatchIndicator percentage={89} />
+                </Divider>
+                <Table data={dummyData} />
+            </Card>
+        </div>
+    )
+}
+
+export default Replacements
