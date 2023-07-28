@@ -1,7 +1,7 @@
 import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import React, {
- useCallback, useContext, useEffect, useState,
+    useCallback, useContext, useEffect, useState,
 } from "react"
 import { useParams } from "react-router-dom"
 import { comment_chat } from "@equinor/eds-icons"
@@ -68,7 +68,7 @@ const Content = styled.div`
     flex-direction: row;
 `
 
-function JIP33InstrumentTabView({}) {
+function JIP33InstrumentTabView({ }) {
     const { tagId } = useParams<Record<string, string | undefined>>()
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -138,7 +138,7 @@ function JIP33InstrumentTabView({}) {
 
             return () => clearInterval(intervalId)
         }
-            return () => {}
+        return () => { }
     }, [activeTagData])
 
     if (error) {

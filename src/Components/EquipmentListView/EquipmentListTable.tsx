@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useMemo } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
+import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"
 import { block, done, tag } from "@equinor/eds-icons"
@@ -29,6 +30,7 @@ function EquipmentListTable({
     setRevisionInReview,
 }: Props) {
     const location = useLocation()
+    const styles = useStyles()
 
     const defaultColDef = useMemo<ColDef>(
         () => ({
@@ -55,17 +57,13 @@ function EquipmentListTable({
         if (lastChar === "/") {
             const result = {
                 ...location,
-                pathname: `${location.pathname}${typeOfJIP33(params)}/${
-                    params.data.id
-                }`,
+                pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.id}`,
             }
             return result
         }
         const result = {
             ...location,
-            pathname: `${location.pathname}/${typeOfJIP33(params)}/${
-                params.data.id
-            }`,
+            pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.id}`,
         }
         return result
     }
@@ -177,11 +175,11 @@ function EquipmentListTable({
                     field: "",
                     headerName: "Review",
                     cellRenderer: (params: any) => EquipmentListReviewRenderer(
-                            params,
-                            setReviewModalOpen,
-                            setTagInReview,
-                            setRevisionInReview,
-                        ),
+                        params,
+                        setReviewModalOpen,
+                        setTagInReview,
+                        setRevisionInReview,
+                    ),
                 },
                 {
                     field: "revisionContainer.revisionContainerReview.status",
@@ -211,24 +209,26 @@ function EquipmentListTable({
     ]
 
     return (
-        <div
-            className="ag-theme-alpine ag-theme-datasheetTable"
-            style={{ flex: "1 1 auto", width: "100%" }}
-        >
-            <AgGridReact
-                rowData={tags}
-                columnDefs={columns}
-                defaultColDef={defaultColDef}
-                animateRows
-                domLayout="autoHeight"
-                enableCellChangeFlash
-                rowSelection="multiple"
-                suppressMovableColumns
-                headerHeight={48}
-                rowHeight={35}
-                enableRangeSelection
-                suppressCopySingleCellRanges
-            />
+        <div className={styles.root}>
+            <div
+                className="ag-theme-alpine ag-theme-datasheetTable"
+                style={{ flex: "1 1 auto", width: "100%" }}
+            >
+                <AgGridReact
+                    rowData={tags}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    animateRows
+                    domLayout="autoHeight"
+                    enableCellChangeFlash
+                    rowSelection="multiple"
+                    suppressMovableColumns
+                    headerHeight={48}
+                    rowHeight={35}
+                    enableRangeSelection
+                    suppressCopySingleCellRanges
+                />
+            </div>
         </div>
     )
 }

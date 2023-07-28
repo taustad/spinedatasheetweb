@@ -5,7 +5,6 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model"
 import { ColumnsToolPanelModule } from "@ag-grid-enterprise/column-tool-panel"
 import { FiltersToolPanelModule } from "@ag-grid-enterprise/filter-tool-panel"
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { RangeSelectionModule } from "@ag-grid-enterprise/range-selection"
 import { ClipboardModule } from "@ag-grid-enterprise/clipboard"
 import { MultiFilterModule } from "@ag-grid-enterprise/multi-filter"
@@ -28,8 +27,6 @@ ModuleRegistry.registerModules([
 ])
 
 const AppComponent: FC = () => {
-    useAgGridStyles()
-
     const fusionEnvironment = useFusionEnvironment()
     const basename = fusionEnvironment.env === "dev" ? "/" : "/apps/spinedatasheet"
 
@@ -43,6 +40,19 @@ const AppComponent: FC = () => {
 
     buildConfig(config.REACT_APP_API_BASE_URL)
     StoreAppScope(config.BACKEND_APP_SCOPE[0])
+
+    const suppressConsoleError = (shouldBeHidden: (message: string) => boolean) => {
+        const err = console.error
+        console.error = (message?: any, ...optionalParams: any[]) => {
+            if (typeof message === "string" && shouldBeHidden(message)) {
+                return
+            }
+            err(message, ...optionalParams)
+        }
+    }
+
+    suppressConsoleError((m) => m.startsWith("Warning: Invalid aria prop"))
+    suppressConsoleError((m) => m.startsWith("*"))
 
     return (
         <ViewContextProvider>

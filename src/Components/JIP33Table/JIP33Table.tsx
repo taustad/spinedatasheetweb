@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useMemo } from "react"
-import { useAgGridStyles } from "@equinor/fusion-react-ag-grid-addons"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
+import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 import { ReviewComment } from "../../Models/ReviewComment"
@@ -24,7 +24,7 @@ function JIP33Table({
     setWidth,
     width,
 }: Props) {
-    useAgGridStyles()
+    const styles = useStyles()
 
     const red = "white" // "#e6b8b7"
     const lightBlue = "white" // "#b7dee8"
@@ -175,24 +175,26 @@ function JIP33Table({
     ]
 
     return (
-        <div
-            className="ag-theme-alpine ag-theme-datasheetTable"
-            style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
-        >
-            <AgGridReact
-                rowData={rowData}
-                columnDefs={columns}
-                defaultColDef={defaultColDef}
-                animateRows
-                domLayout="normal"
-                enableCellChangeFlash
-                rowSelection="multiple"
-                suppressMovableColumns
-                headerHeight={48}
-                rowHeight={35}
-                enableRangeSelection
-                suppressCopySingleCellRanges
-            />
+        <div className={styles.root} style={{ height: "100%" }}>
+            <div
+                className="ag-theme-alpine ag-theme-datasheetTable"
+                style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
+            >
+                <AgGridReact
+                    rowData={rowData}
+                    columnDefs={columns}
+                    defaultColDef={defaultColDef}
+                    animateRows
+                    domLayout="normal"
+                    enableCellChangeFlash
+                    rowSelection="multiple"
+                    suppressMovableColumns
+                    headerHeight={48}
+                    rowHeight={35}
+                    enableRangeSelection
+                    suppressCopySingleCellRanges
+                />
+            </div>
         </div>
     )
 }

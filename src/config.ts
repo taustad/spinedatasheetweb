@@ -3,7 +3,7 @@ import { enableAgGrid } from "@equinor/fusion-framework-module-ag-grid"
 import { enableContext } from "@equinor/fusion-framework-module-context"
 import { enableNavigation } from "@equinor/fusion-framework-module-navigation"
 
-export const configurator: AppModuleInitiator = (config: any) => {
+export const configurator: AppModuleInitiator = (config) => {
     enableAgGrid(config)
     config.useFrameworkServiceClient("portal")
     enableNavigation(
@@ -15,10 +15,10 @@ export const configurator: AppModuleInitiator = (config: any) => {
     enableContext(config, (builder) => {
         builder.setContextType(["ProjectMaster"])
         builder.setContextFilter((items) => items.filter(
-                (item) => item.title !== undefined
-                    && item.title
-                        .toUpperCase()
-                        .indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1,
-            ))
+            (item) => item.title !== undefined
+                && item.title
+                    .toUpperCase()
+                    .indexOf("SNØHVIT FUTURE PROJECT (SFP)") > -1,
+        ))
     })
 }
