@@ -7,6 +7,7 @@ import { external_link } from "@equinor/eds-icons"
 import { ViewContext } from "../../../Context/ViewContext"
 import Card from "../Card"
 import Table from "../Table"
+import TabsTitle from "../Equipment/TabsTitle"
 
 const Container = styled.div`
     display: flex;
@@ -20,7 +21,7 @@ const Title = styled(Typography)`
 `
 
 const Header = styled.div`
-    margin: 35px 0 20px 0;
+    margin: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -57,9 +58,7 @@ const ChangeLogSideSheet: FC = () => {
     return (
         <Container>
             <Card>
-                <Typography variant="h5">
-                    CHANGELOG
-                </Typography>
+                <TabsTitle>CHANGELOG</TabsTitle>
                 <History chevronPosition="right">
                     <Accordion.Item>
                         <Accordion.Header>
@@ -79,52 +78,50 @@ const ChangeLogSideSheet: FC = () => {
                         ))}
                     </Accordion.Item>
                 </History>
-                <div>
-                    <Header>
-                        <Typography variant="h6">
-                            PRODUCT INFORMATION
-                        </Typography>
-                        <Button variant="ghost">
-                            View in EqHub
-                            <Icon data={external_link} />
-                        </Button>
-                    </Header>
+            </Card>
+            <Card>
+                <Header>
+                    <Typography variant="h5">
+                        PRODUCT INFORMATION
+                    </Typography>
+                    <Button variant="ghost">
+                        View in EqHub
+                        <Icon data={external_link} />
+                    </Button>
+                </Header>
 
-                    <Table data={{
+                <Table data={{
                         Manufacturer: "Emerson",
                         Model: "Rosemount 3051S",
                         Type: "Pressure transmitter",
                         "Serial number": "123456789",
                         "Tag number": "123456789",
                     }}
-                    />
-                </div>
-                <div>
-                    <Title variant="h6">
-                        PERFORMANCE
-                    </Title>
-                    <Table data={{
+                />
+            </Card>
+            <Card>
+                <Table
+                    title="PERFORMANCE"
+                    data={{
                         Manufacturer: "Emerson",
                         Model: "Rosemount 3051S",
                         Type: "Pressure transmitter",
                         "Serial number": "123456789",
                         "Tag number": "123456789",
                     }}
-                    />
-                </div>
-                <div>
-                    <Title variant="h6">
-                        BODY/ELEMENT/SENSOR
-                    </Title>
-                    <Table data={{
+                />
+            </Card>
+            <Card>
+                <Table
+                    title="BODY/ELEMENT/SENSOR"
+                    data={{
                         Manufacturer: "Emerson",
                         Model: "Rosemount 3051S",
                         Type: "Pressure transmitter",
                         "Serial number": "123456789",
                         "Tag number": "123456789",
                     }}
-                    />
-                </div>
+                />
             </Card>
         </Container>
     )

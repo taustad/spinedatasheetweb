@@ -13,6 +13,7 @@ import InfoStrip from "./InfoStrip"
 import CommentsSideSheet from "./Comments/CommentsSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
+import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -28,6 +29,7 @@ const SheetBody = styled(Tabs.Panels)`
 `
 
 const TabsContainer = styled(Tabs)`
+    z-index: 1;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -186,7 +188,7 @@ const SheetContainer: React.FC<Props> = ({
                     </TabsHeader>
                     <SheetBody>
                         <TabsPanel>{activeTab === 0 && placeholder}</TabsPanel>
-                        <TabsPanel>{activeTab === 1 && placeholder}</TabsPanel>
+                        <TabsPanel>{activeTab === 1 && <EquipmentSideSheet />}</TabsPanel>
                         <TabsPanel>
                             {activeTab === 2 && <AreaSideSheet />}
                         </TabsPanel>
