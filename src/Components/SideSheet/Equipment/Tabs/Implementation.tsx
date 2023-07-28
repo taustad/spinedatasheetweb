@@ -1,7 +1,7 @@
 import React, { FC } from "react"
 import TabsTitle from "../TabsTitle"
-import Card from "../../Card"
-import Table from "../../Table"
+import Card from "../../Components/Card"
+import Table from "../../Components/Table"
 
 const Implementation: FC = () => {
     const dummyData = {

@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect } from "react"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
-import { ViewContext } from "../../Context/ViewContext"
+import { ViewContext } from "../../../Context/ViewContext"
 
 const Container = styled.div`
     display: flex;

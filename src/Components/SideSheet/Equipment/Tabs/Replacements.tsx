@@ -5,9 +5,9 @@ import {
 import styled from "styled-components"
 import { external_link } from "@equinor/eds-icons"
 import TabsTitle from "../TabsTitle"
-import Card from "../../Card"
-import Table from "../../Table"
-import MatchIndicator from "../MatchIndicator"
+import Card from "../../Components/Card"
+import Table from "../../Components/Table"
+import MatchIndicator from "../Components/MatchIndicator"
 
 const Header = styled.div`
     margin-bottom: 15px;

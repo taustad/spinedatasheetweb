@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react"
 import styled from "styled-components"
-import ButtonBar from "./ButtonBar"
+import ButtonBar from "./Components/ButtonBar"
 import TabView from "./TabView"
 
 const Container = styled.div`

@@ -3,8 +3,8 @@ import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt, view_week } from "@equinor/eds-icons"
 import styled from "styled-components"
 import TabsTitle from "../TabsTitle"
-import Card from "../../Card"
-import Table from "../../Table"
+import Card from "../../Components/Card"
+import Table from "../../Components/Table"
 
 const Header = styled.div`
     display: flex;

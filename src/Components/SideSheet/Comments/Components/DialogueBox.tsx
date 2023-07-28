@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import styled from "styled-components"
-import { ReviewComment } from "../../../Models/ReviewComment"
+import { ReviewComment } from "../../../../Models/ReviewComment"
 
 const Container = styled.div`
     margin: 15px;

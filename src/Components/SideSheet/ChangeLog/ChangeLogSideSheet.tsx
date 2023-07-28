@@ -5,8 +5,8 @@ import {
 } from "@equinor/eds-core-react"
 import { external_link } from "@equinor/eds-icons"
 import { ViewContext } from "../../../Context/ViewContext"
-import Card from "../Card"
-import Table from "../Table"
+import Card from "../Components/Card"
+import Table from "../Components/Table"
 import TabsTitle from "../Equipment/TabsTitle"
 
 const Container = styled.div`

@@ -6,8 +6,8 @@ import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
 import { GetCommentService } from "../../../api/CommentService"
 import { ReviewComment } from "../../../Models/ReviewComment"
-import DialogueBox from "./DialogueBox"
-import InputController from "./InputController"
+import DialogueBox from "./Components/DialogueBox"
+import InputController from "./Components/InputController"
 import { ViewContext } from "../../../Context/ViewContext"
 
 const Container = styled.div`

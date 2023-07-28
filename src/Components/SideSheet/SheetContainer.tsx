@@ -9,7 +9,7 @@ import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
 import { TagData } from "../../Models/TagData"
 import { ReviewComment } from "../../Models/ReviewComment"
-import InfoStrip from "./InfoStrip"
+import InfoStrip from "./Components/InfoStrip"
 import CommentsSideSheet from "./Comments/CommentsSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
@@ -29,7 +29,6 @@ const SheetBody = styled(Tabs.Panels)`
 `
 
 const TabsContainer = styled(Tabs)`
-    z-index: 1;
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -49,6 +48,7 @@ const TabsHeader = styled(Tabs.List)`
     top: 0;
     background-color: white;
     border-bottom: 1px solid LightGray;
+    z-index: 10;
 `
 
 const SheetHeader = styled.div`
@@ -177,6 +177,7 @@ const SheetContainer: React.FC<Props> = ({
                     className="TabsContainer"
                     activeTab={activeTab}
                     onChange={handleTabChange}
+                    variant="fullWidth"
                 >
                     <TabsHeader>
                         <Tabs.Tab>Activity</Tabs.Tab>

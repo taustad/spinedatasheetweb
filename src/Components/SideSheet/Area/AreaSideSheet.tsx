@@ -7,8 +7,8 @@ import {
 import { external_link } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ViewContext } from "../../../Context/ViewContext"
-import Card from "../Card"
-import Table from "../Table"
+import Card from "../Components/Card"
+import Table from "../Components/Table"
 
 const Container = styled.div`
     display: flex;
