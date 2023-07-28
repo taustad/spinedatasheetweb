@@ -1589,7 +1589,7 @@
     "@azure/msal-browser" "^2.21.0"
     "@equinor/fusion-framework-module" "^4.2.1"
 
-"@equinor/fusion-framework-module-navigation@^2.1.1":
+"@equinor/fusion-framework-module-navigation@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@equinor/fusion-framework-module-navigation/-/fusion-framework-module-navigation-2.1.2.tgz#1821e3aabd3c1aa209f5900dd363d34e98c1b521"
   integrity sha512-C4NEWw2zy3ourw6XnAysOQyDQdwOfYTQR89xeYTzbPUVS2ndZ+kE8boQg9X2F0KyQx7F1XzN1rlkh/dmTIzBQQ==
@@ -1638,7 +1638,7 @@
     "@equinor/fusion-framework-react" "^5.2.2"
     "@equinor/fusion-framework-react-module-http" "^3.0.3"
 
-"@equinor/fusion-framework-react-module-context@^6.0.6":
+"@equinor/fusion-framework-react-module-context@^6.0.8":
   version "6.0.8"
   resolved "https://registry.yarnpkg.com/@equinor/fusion-framework-react-module-context/-/fusion-framework-react-module-context-6.0.8.tgz#fbae0841fa8d7b4c05da906e0ab939fb26670ac8"
   integrity sha512-pLTXBHnxy3kzxeY7tfYlO4c93XyrGSFT6ugd9xHWhdennLQ5U6mMvuR+8MO7MZiZ/5kBuqQDcQYfmh/XPhN4Tg==
@@ -1668,7 +1668,7 @@
   dependencies:
     "@equinor/fusion-framework-module" "^4.2.0"
 
-"@equinor/fusion-framework-react@^5.1.2", "@equinor/fusion-framework-react@^5.2.2":
+"@equinor/fusion-framework-react@^5.1.3", "@equinor/fusion-framework-react@^5.2.2":
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/@equinor/fusion-framework-react/-/fusion-framework-react-5.2.2.tgz#e3bd6dae494b87afffb72574db3cd184d598c8fe"
   integrity sha512-uXy0LNPagT79YywlOEwprWOWk+m33aWxNqP1xe4ELWWSivgoddk5SIXES/C/1bo3FcmbW1Egf4700J1oyozERQ==
@@ -4103,7 +4103,7 @@ babel-loader@^8.2.2:
     make-dir "^3.1.0"
     schema-utils "^2.6.5"
 
-babel-loader@^9.1.2:
+babel-loader@^9.1.3:
   version "9.1.3"
   resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-9.1.3.tgz#3d0e01b4e69760cc694ee306fe16d358aa1c6f9a"
   integrity sha512-xG3ST4DglodGf8qSwv0MdeWLhrDsw/32QMdTO5T1ZIp9gQur0HkCyFs7Awskr10JKXFXwpAhiCuYX5oGXnRGbw==
