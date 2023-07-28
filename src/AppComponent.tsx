@@ -41,6 +41,19 @@ const AppComponent: FC = () => {
     buildConfig(config.REACT_APP_API_BASE_URL)
     StoreAppScope(config.BACKEND_APP_SCOPE[0])
 
+    const suppressConsoleError = (shouldBeHidden: (message: string) => boolean) => {
+        const err = console.error
+        console.error = (message?: any, ...optionalParams: any[]) => {
+            if (typeof message === "string" && shouldBeHidden(message)) {
+                return
+            }
+            err(message, ...optionalParams)
+        }
+    }
+
+    suppressConsoleError((m) => m.startsWith("Warning: Invalid aria prop"))
+    suppressConsoleError((m) => m.startsWith("*"))
+
     return (
         <ViewContextProvider>
             <BrowserRouter basename={basename}>
