@@ -175,7 +175,7 @@ function JIP33Table({
     ]
 
     return (
-        <div className={styles.root}>
+        <div className={styles.root} style={{ height: "100%" }}>
             <div
                 className="ag-theme-alpine ag-theme-datasheetTable"
                 style={{ flex: "1 1 auto", width: "100%", height: "100%" }}

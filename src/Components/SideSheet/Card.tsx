@@ -9,6 +9,10 @@ const CardContainer = styled.div`
     margin-bottom: 15px;
 `
 
-const Card: FC = ({ children }) => <CardContainer>{children}</CardContainer>
+type Props = {
+    children?: React.ReactNode
+}
+
+const Card: FC<Props> = ({ children }) => <CardContainer>{children}</CardContainer>
 
 export default Card
