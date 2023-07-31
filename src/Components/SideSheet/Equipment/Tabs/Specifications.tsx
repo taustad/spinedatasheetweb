@@ -2,7 +2,7 @@ import React, { FC } from "react"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt, view_week } from "@equinor/eds-icons"
 import styled from "styled-components"
-import TabsTitle from "../TabsTitle"
+import TabsTitle from "../../Components/TabsTitle"
 import Card from "../../Components/Card"
 import Table from "../../Components/Table"
 
@@ -56,6 +56,12 @@ const Specifications: FC = () => {
             </Card>
             <Card>
                 <Table title="BODY/ELEMENT/SENSOR" data={dummyData} />
+            </Card>
+            <Card>
+                <Table title="TRANSMITTER" data={dummyData} />
+            </Card>
+            <Card>
+                <Table title="ACCESSORIES" data={dummyData} />
             </Card>
         </div>
     )

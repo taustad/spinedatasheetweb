@@ -101,7 +101,7 @@ function JIP33Table({
                         if (width && setWidth) {
                             setWidth(width)
                         } else if (setWidth) {
-                            setWidth(600)
+                            setWidth(620)
                         }
 
                         setCurrentProperty(params.data)
@@ -122,7 +122,7 @@ function JIP33Table({
                         if (width && setWidth) {
                             setWidth(width)
                         } else if (setWidth) {
-                            setWidth(600)
+                            setWidth(620)
                         }
                         setCurrentProperty(params.data)
                     }}

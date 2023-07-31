@@ -14,6 +14,7 @@ import CommentsSideSheet from "./Comments/CommentsSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
+import ActivitySideSheet from "./Activity/ActivitySideSheet"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -65,7 +66,6 @@ const TagInfo = styled.div`
 
     strong {
         padding-left: 5px;
-
     }
 `
 
@@ -133,8 +133,8 @@ const SheetContainer: React.FC<Props> = ({
                 width,
                 height: "100%",
             }}
-            minWidth={500}
-            maxWidth={1200}
+            minWidth={620}
+            maxWidth={1500}
             enable={{
                 top: false,
                 right: false,
@@ -177,7 +177,7 @@ const SheetContainer: React.FC<Props> = ({
                     className="TabsContainer"
                     activeTab={activeTab}
                     onChange={handleTabChange}
-                    variant="fullWidth"
+                    scrollable
                 >
                     <TabsHeader>
                         <Tabs.Tab>Activity</Tabs.Tab>
@@ -188,13 +188,11 @@ const SheetContainer: React.FC<Props> = ({
                         <Tabs.Tab>Changelog</Tabs.Tab>
                     </TabsHeader>
                     <SheetBody>
-                        <TabsPanel>{activeTab === 0 && placeholder}</TabsPanel>
+                        <TabsPanel>{activeTab === 0 && <ActivitySideSheet />}</TabsPanel>
                         <TabsPanel>{activeTab === 1 && <EquipmentSideSheet />}</TabsPanel>
-                        <TabsPanel>
-                            {activeTab === 2 && <AreaSideSheet />}
-                        </TabsPanel>
+                        <TabsPanel>{activeTab === 2 && <AreaSideSheet />}</TabsPanel>
                         <TabsPanel>{activeTab === 3 && placeholder}</TabsPanel>
-                        <TabsPanel className="commentSection">
+                        <TabsPanel>
                             {activeTab === 4 && (
                                 <CommentsSideSheet
                                     reviewComments={reviewComments}

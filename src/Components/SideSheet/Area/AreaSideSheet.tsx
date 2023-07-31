@@ -1,6 +1,5 @@
 import React, { FC } from "react"
 import {
-    Typography,
     Button,
     Icon,
 } from "@equinor/eds-core-react"
@@ -66,8 +65,7 @@ const AreaCard: FC = () => {
                 </ModelContainer>
             </Card>
             <Card>
-                <Typography variant="h6">AREA CONDITIONS</Typography>
-                <Table data={dummyData} />
+                <Table title="AREA CONDITIONS" data={dummyData} />
             </Card>
         </Container>
     )

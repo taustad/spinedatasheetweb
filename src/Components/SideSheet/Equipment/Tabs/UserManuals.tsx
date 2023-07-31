@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import styled from "styled-components"
-import TabsTitle from "../TabsTitle"
+import TabsTitle from "../../Components/TabsTitle"
 import MediaFile from "../../Components/MediaFile"
 
 const MediaContainer = styled.div`

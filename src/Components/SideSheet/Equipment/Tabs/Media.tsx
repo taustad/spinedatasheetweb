@@ -1,42 +1,8 @@
-import React, { FC, useState } from "react"
-import { Typography } from "@equinor/eds-core-react"
+import React, { FC, useState, ReactElement } from "react"
 import styled from "styled-components"
-import TabsTitle from "../TabsTitle"
+import TabsTitle from "../../Components/TabsTitle"
 import MediaFile from "../../Components/MediaFile"
-
-const Navigation = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    margin-bottom: 10px;
-    border-bottom: 1px solid lightgray;
-`
-
-const StyledButton = styled.button<{ active: boolean }>`
-    position: relative;
-    bottom: -2px;
-    padding: 10px 20px;
-    background-color: transparent;
-    color: black;
-    border: none;
-    border-bottom: ${(props) => (props.active ? "2px solid #007079" : "2px solid lightgray")};
-    color: ${(props) => (props.active ? "#007079" : "black")};
-    border-radius: 0;
-
-    &:hover {
-        background-color: transparent;
-        color: ${(props) => (props.active ? "#007079" : "black")};        
-        border-bottom: 2px solid #007079;
-        border-radius: 0;
-    }
-
-    &:focus {
-        background-color: transparent;
-        color: ${(props) => (props.active ? "#007079" : "black")};
-        border-bottom: 2px solid #007079;
-        border-radius: 0;
-    }
-`
+import LocalNavigation from "../../Components/LocalNavigation"
 
 const MediaContainer = styled.div`
     display: flex;
@@ -47,6 +13,7 @@ const MediaContainer = styled.div`
 
 const Media: FC = () => {
     const [activeTab, setActiveTab] = useState(0)
+    const Navigationbuttons = ["Drawings", "Pictures", "Videos"]
 
 const oilIndustryImages = [
     {
@@ -129,52 +96,37 @@ const oilIndustryVideos = [
     },
 ]
 
+    const mediaContent: { [index: number]: ReactElement } = {
+        0: (
+            <MediaContainer>
+                {oilIndustryDrawings.map((image, index) => (
+                    <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
+                ))}
+            </MediaContainer>
+        ),
+        1: (
+            <MediaContainer>
+                {oilIndustryImages.map((image, index) => (
+                    <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
+                ))}
+            </MediaContainer>
+        ),
+        2: (
+            <MediaContainer>
+                {oilIndustryVideos.map((image, index) => (
+                    <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
+                ))}
+            </MediaContainer>
+        ),
+    }
+
     return (
         <div>
             <TabsTitle>Media</TabsTitle>
-            <Navigation>
-                <StyledButton active={activeTab === 0} onClick={() => setActiveTab(0)}>Drawings</StyledButton>
-                <StyledButton active={activeTab === 1} onClick={() => setActiveTab(1)}>Pictures</StyledButton>
-                <StyledButton active={activeTab === 2} onClick={() => setActiveTab(2)}>Videos</StyledButton>
-            </Navigation>
-            {
-                activeTab === 0 && (
-                    <div>
-                        <Typography variant="h4">Drawings</Typography>
-                        <MediaContainer>
-                            {oilIndustryDrawings.map((image, index) => (
-                                <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
-                                ))}
-                        </MediaContainer>
-                    </div>
-                )
-            }
-            {
-                activeTab === 1 && (
-                    <div>
-                        <Typography variant="h4">Drawings</Typography>
-                        <MediaContainer>
-                            {oilIndustryImages.map((image, index) => (
-                                <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
-                                ))}
-                        </MediaContainer>
-                    </div>
-                )
-            }
-            {
-                activeTab === 2 && (
-                    <div>
-                        <Typography variant="h4">Drawings</Typography>
-                        <MediaContainer>
-                            {oilIndustryVideos.map((image, index) => (
-                                <MediaFile key={`${image.name}-${index}`} src={image.src} name={image.name} />
-                                ))}
-                        </MediaContainer>
-                    </div>
-                )
-            }
+            <LocalNavigation activeTab={activeTab} setActiveTab={setActiveTab} buttons={Navigationbuttons} />
+            {mediaContent[activeTab] || mediaContent[0]}
         </div>
     )
-    }
+}
 
 export default Media

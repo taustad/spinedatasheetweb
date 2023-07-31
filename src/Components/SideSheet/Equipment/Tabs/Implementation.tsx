@@ -1,5 +1,5 @@
 import React, { FC } from "react"
-import TabsTitle from "../TabsTitle"
+import TabsTitle from "../../Components/TabsTitle"
 import Card from "../../Components/Card"
 import Table from "../../Components/Table"
 

@@ -4,7 +4,7 @@ import {
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { external_link } from "@equinor/eds-icons"
-import TabsTitle from "../TabsTitle"
+import TabsTitle from "../../Components/TabsTitle"
 import Card from "../../Components/Card"
 import Table from "../../Components/Table"
 import MatchIndicator from "../Components/MatchIndicator"

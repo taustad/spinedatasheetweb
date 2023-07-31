@@ -1,5 +1,10 @@
 import React, { FC } from "react"
+import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
+
+const Title = styled(Typography)`
+    margin-top: 15px !important;
+`
 
 const CardContainer = styled.div`
     padding: 15px;
@@ -11,8 +16,14 @@ const CardContainer = styled.div`
 
 type Props = {
     children?: React.ReactNode
+    title?: string
 }
 
-const Card: FC<Props> = ({ children }) => <CardContainer>{children}</CardContainer>
+const Card: FC<Props> = ({ children, title }) => (
+    <CardContainer>
+        {title && (<Title variant="h5">{title}</Title>)}
+        {children}
+    </CardContainer>
+)
 
 export default Card
