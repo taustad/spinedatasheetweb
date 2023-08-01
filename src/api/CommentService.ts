@@ -25,6 +25,11 @@ class CommentService extends BaseService {
         })
         return result
     }
+
+    async deleteComment(id: string) {
+        const result: any = await this.delete(id)
+        return result
+    }
 }
 
 export const CaseService = new CommentService({

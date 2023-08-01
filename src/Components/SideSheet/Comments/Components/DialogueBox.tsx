@@ -1,5 +1,8 @@
 import React, { FC } from "react"
 import styled from "styled-components"
+import { Button, Icon } from "@equinor/eds-core-react"
+import { delete_to_trash } from "@equinor/eds-icons"
+import { GetCommentService } from "../../../../api/CommentService"
 import { ReviewComment } from "../../../../Models/ReviewComment"
 
 const Container = styled.div`
@@ -22,6 +25,17 @@ interface DialogueBoxProps {
     formattedDate: string
 }
 
+const handleDelete = async (id: string | undefined) => {
+    if (id !== undefined) {
+        try {
+            const service = await GetCommentService()
+            await service.deleteComment(id)
+        } catch (error) {
+            console.log(`Error deleting comment: ${error}`)
+        }
+    }
+}
+
 const DialogueBox: FC<DialogueBoxProps> = ({ comment, formattedDate }) => (
     <Container key={comment.id}>
         <Header>
@@ -30,9 +44,16 @@ const DialogueBox: FC<DialogueBoxProps> = ({ comment, formattedDate }) => (
         </Header>
         <Message>
             <p>{comment.text}</p>
+            <Button variant="ghost_icon" onClick={(e: any) => handleDelete(comment.id)} title="Delete">
+                <Icon
+                    data={delete_to_trash}
+                    size={16}
+                    color="#007079"
+                />
+            </Button>
         </Message>
 
     </Container>
-    )
+)
 
 export default DialogueBox
