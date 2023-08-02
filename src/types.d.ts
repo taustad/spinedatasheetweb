@@ -369,6 +369,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -384,6 +389,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             tagDataReview?: TagDataReview;
             revisionContainer?: RevisionContainer;
@@ -395,6 +405,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -782,6 +797,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1501,6 +1521,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1581,6 +1606,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             revisionContainer?: RevisionContainer;
             tagDataReviewId?: string; // uuid
@@ -1593,6 +1623,11 @@ declare namespace Components {
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
+            contract?: string | null;
+            contractName?: string | null;
+            tagStatus?: string | null;
+            engineeringCode?: string | null;
+            purchaseOrder?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1643,6 +1678,18 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.RevisionContainerReviewDto;
         namespace Responses {
             export type $200 = Components.Schemas.RevisionContainerReviewDto;
+        }
+    }
+    namespace DeleteComment {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export interface $200 {
+            }
         }
     }
     namespace GetAllTagData {
