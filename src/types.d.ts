@@ -382,22 +382,6 @@ declare namespace Components {
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
         }
-        export interface ITagData {
-            id?: string; // uuid
-            tagNo?: string | null;
-            description?: string | null;
-            category?: string | null;
-            area?: string | null;
-            discipline?: string | null;
-            contract?: string | null;
-            contractName?: string | null;
-            tagStatus?: string | null;
-            engineeringCode?: string | null;
-            purchaseOrder?: string | null;
-            version?: number; // int32
-            tagDataReview?: TagDataReview;
-            revisionContainer?: RevisionContainer;
-        }
         export interface ITagDataDto {
             id?: string; // uuid
             tagNo?: string | null;

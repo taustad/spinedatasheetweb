@@ -1,5 +1,5 @@
 import React, {
- Dispatch, SetStateAction, useContext, useState,
+    Dispatch, SetStateAction, useContext, useState,
 } from "react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
@@ -45,20 +45,20 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
     )
 
     const listCommentsForProperty = (property: string) => getCommentsForProperty(property).map((comment) => {
-            const date = new Date(comment.createdDate ?? "")
-            const formattedDate = date.toLocaleString(undefined, {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-            })
-            return (
-                <DialogueBox comment={comment} formattedDate={formattedDate} />
-            )
+        const date = new Date(comment.createdDate ?? "")
+        const formattedDate = date.toLocaleString(undefined, {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
         })
+        return (
+            <DialogueBox comment={comment} formattedDate={formattedDate} />
+        )
+    })
 
     const handleCommentChange = (
         event: React.ChangeEvent<HTMLTextAreaElement>,
