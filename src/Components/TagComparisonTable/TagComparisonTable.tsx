@@ -4,6 +4,7 @@ import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import React, { useMemo } from "react"
 import { InstrumentTagData } from "../../Models/InstrumentTagData"
 import { comparisonGeneralColumnDefs } from "./GeneralColumnDefs"
+import { comparisonTR3111ColumnDefs } from "./TR3111ColumnDefs"
 
 interface Props {
     tags: InstrumentTagData[]
@@ -22,9 +23,9 @@ function TagComparisonTable({ tags }: Props) {
         [],
     )
 
-    const newColumns = comparisonGeneralColumnDefs()
+    const newColumns = comparisonTR3111ColumnDefs().concat(...comparisonGeneralColumnDefs())
 
-    const tagRows = tags.map((tag) => ({ ...tag.instrumentPurchaserRequirement, tagNumber: tag.tagNo }))
+    const tagRows = tags.map((tag) => ({ ...tag.instrumentPurchaserRequirement, ...tag, tagNumber: tag.tagNo }))
 
     return (
         <div className={styles.root}>
