@@ -1546,7 +1546,7 @@ declare namespace Components {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            tagId?: string; // uuid
+            tagDataId?: string; // uuid
             status?: ReviewStatusEnum /* int32 */;
             approverId?: string; // uuid
             commentResponsible?: string; // uuid
