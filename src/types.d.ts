@@ -377,17 +377,6 @@ declare namespace Components {
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
         }
-        export interface ITagData {
-            id?: string; // uuid
-            tagNo?: string | null;
-            description?: string | null;
-            category?: string | null;
-            area?: string | null;
-            discipline?: string | null;
-            version?: number; // int32
-            tagDataReview?: TagDataReview;
-            revisionContainer?: RevisionContainer;
-        }
         export interface ITagDataDto {
             id?: string; // uuid
             tagNo?: string | null;
@@ -1529,7 +1518,7 @@ declare namespace Components {
             revisionContainerName?: string | null;
             revisionNumber?: number; // int32
             revisionContainerDate?: string; // date-time
-            tagData?: ITagData[] | null;
+            tagDataIds?: string /* uuid */[] | null;
             revisionContainerReview?: RevisionContainerReview;
             contractId?: string; // uuid
             contract?: Contract;
@@ -1574,17 +1563,12 @@ declare namespace Components {
         }
         export interface TagData {
             id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
             tagNo?: string | null;
             description?: string | null;
             category?: string | null;
             area?: string | null;
             discipline?: string | null;
             version?: number; // int32
-            revisionContainer?: RevisionContainer;
-            tagDataReviewId?: string; // uuid
-            tagDataReview?: TagDataReview;
         }
         export interface TagDataDto {
             id?: string; // uuid
@@ -1643,6 +1627,18 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.RevisionContainerReviewDto;
         namespace Responses {
             export type $200 = Components.Schemas.RevisionContainerReviewDto;
+        }
+    }
+    namespace DeleteComment {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        namespace Responses {
+            export interface $200 {
+            }
         }
     }
     namespace GetAllTagData {
