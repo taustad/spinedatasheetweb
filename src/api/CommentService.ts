@@ -32,11 +32,6 @@ class CommentService extends BaseService {
     }
 }
 
-export const CaseService = new CommentService({
-    ...config.CommentService,
-    accessToken: window.sessionStorage.getItem("loginAccessToken")!,
-})
-
 export async function GetCommentService() {
     return new CommentService({
         ...config.CommentService,

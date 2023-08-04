@@ -9,11 +9,6 @@ class ProjectService extends BaseService {
     }
 }
 
-export const CaseService = new ProjectService({
-    ...config.CommentService,
-    accessToken: window.sessionStorage.getItem("loginAccessToken")!,
-})
-
 export async function GetProjectService() {
     return new ProjectService({
         ...config.ProjectService,
