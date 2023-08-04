@@ -9,12 +9,12 @@ import { GetTagDataService } from "../../api/TagDataService"
 import { ViewContext } from "../../Context/ViewContext"
 
 interface Props {
-    tags: TagData[],
-    setReviewModalOpen: Dispatch<SetStateAction<boolean>>,
-    setTagInReview: Dispatch<SetStateAction<string | undefined>>
+    tags?: TagData[],
+    setReviewModalOpen?: Dispatch<SetStateAction<boolean>>,
+    setTagInReview?: Dispatch<SetStateAction<string | undefined>>
     tagInReview: string | undefined,
-    setRevisionInReview: Dispatch<SetStateAction<string | undefined>>
-    revisionInReview: string | undefined,
+    setRevisionInReview?: Dispatch<SetStateAction<string | undefined>>
+    revisionInReview?: string | undefined,
 }
 
 function EquipmentListReview({
@@ -28,7 +28,8 @@ function EquipmentListReview({
     const { setActiveTagData } = useContext(ViewContext)
 
     const updateTagData = async () => {
-        const tagData = await (await GetTagDataService()).getAllTagData()
+        if (!tagInReview) return
+        const tagData = await (await GetTagDataService()).getTagData(tagInReview)
         setActiveTagData(tagData)
     }
 
@@ -74,17 +75,25 @@ function EquipmentListReview({
 
     return (
         <div>
-            <h1>EquipmentListReview</h1>
+            <h1>
+                Add review for tag
+                {" "}
+                {tagInReview}
+            </h1>
 
             <Button onClick={approveTag}>Approve</Button>
             <Button color="danger" onClick={rejectTag}>Reject</Button>
 
-            <h1>
-                Package review:
-                {revisionInReview}
-            </h1>
-            <Button onClick={approvePackage}>Approve</Button>
-            <Button color="danger" onClick={rejectPackage}>Reject</Button>
+            {revisionInReview && (
+                <>
+                    <h1>
+                        Package review:
+                        {revisionInReview}
+                    </h1>
+                    <Button onClick={approvePackage}>Approve</Button>
+                    <Button color="danger" onClick={rejectPackage}>Reject</Button>
+                </>
+            )}
 
         </div>
     )

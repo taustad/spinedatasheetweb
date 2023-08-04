@@ -1,4 +1,6 @@
-import React, { Dispatch, SetStateAction, useMemo } from "react"
+import React, {
+    Dispatch, SetStateAction, useContext, useMemo, useState,
+} from "react"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
@@ -6,6 +8,8 @@ import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
+import { ViewContext } from "../../Context/ViewContext"
+import EquipmentListReview from "../EquipmentListView/EquipmentListReview"
 
 interface Props {
     rowData: object[]
@@ -25,6 +29,9 @@ function JIP33Table({
     width,
 }: Props) {
     const styles = useStyles()
+
+    const { activeTagData } = useContext(ViewContext)
+    const [reviewOpen, setReviewOpen] = useState<boolean>(false)
 
     const red = "white" // "#e6b8b7"
     const lightBlue = "white" // "#b7dee8"
@@ -85,6 +92,13 @@ function JIP33Table({
     }
 
     const commentIcon = (params: any) => {
+        if (activeTagData?.review === undefined || activeTagData?.review?.id === undefined) {
+            setReviewOpen(true)
+            return null
+        }
+
+        setReviewOpen(false)
+
         const commentsExist = reviewComments?.some(
             (c) => c.property === params.data.property,
         )
@@ -175,27 +189,34 @@ function JIP33Table({
     ]
 
     return (
-        <div className={styles.root} style={{ height: "100%" }}>
-            <div
-                className="ag-theme-alpine ag-theme-datasheetTable"
-                style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
-            >
-                <AgGridReact
-                    rowData={rowData}
-                    columnDefs={columns}
-                    defaultColDef={defaultColDef}
-                    animateRows
-                    domLayout="normal"
-                    enableCellChangeFlash
-                    rowSelection="multiple"
-                    suppressMovableColumns
-                    headerHeight={48}
-                    rowHeight={35}
-                    enableRangeSelection
-                    suppressCopySingleCellRanges
+        <>
+            {reviewOpen && (
+                <EquipmentListReview
+                    tagInReview={activeTagData?.id}
                 />
+            )}
+            <div className={styles.root} style={{ height: "100%" }}>
+                <div
+                    className="ag-theme-alpine ag-theme-datasheetTable"
+                    style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
+                >
+                    <AgGridReact
+                        rowData={rowData}
+                        columnDefs={columns}
+                        defaultColDef={defaultColDef}
+                        animateRows
+                        domLayout="normal"
+                        enableCellChangeFlash
+                        rowSelection="multiple"
+                        suppressMovableColumns
+                        headerHeight={48}
+                        rowHeight={35}
+                        enableRangeSelection
+                        suppressCopySingleCellRanges
+                    />
+                </div>
             </div>
-        </div>
+        </>
     )
 }
 
