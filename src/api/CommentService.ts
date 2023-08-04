@@ -30,6 +30,13 @@ class CommentService extends BaseService {
         const result: any = await this.delete(id)
         return result
     }
+
+    async updateComment(id: string, comment: ReviewComment) {
+        const result: any = await this.put(`${id}`, {
+            body: comment,
+        })
+        return result
+    }
 }
 
 export async function GetCommentService() {
