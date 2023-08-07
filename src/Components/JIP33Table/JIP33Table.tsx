@@ -1,5 +1,5 @@
 import React, {
-  Dispatch, SetStateAction, useMemo, useContext,
+  Dispatch, SetStateAction, useMemo, useContext, useState,
 } from "react"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
@@ -9,6 +9,7 @@ import { comment, comment_chat } from "@equinor/eds-icons"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ViewContext } from "../../Context/ViewContext"
+import EquipmentListReview from "../../Components/EquipmentListView/EquipmentListReview"
 
 interface Props {
     rowData: object[]

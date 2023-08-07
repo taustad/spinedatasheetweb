@@ -110,7 +110,6 @@ const SheetContainer: React.FC<Props> = ({
     const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
 
     const handleTabChange = (index: number) => {
-        console.log(index)
         setActiveSheetTab(index)
     }
 

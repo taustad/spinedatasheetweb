@@ -1,6 +1,5 @@
 import { ReviewComment } from "../Models/ReviewComment"
 import { BaseService } from "./BaseService"
-
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class CommentService extends BaseService {
