@@ -26,7 +26,7 @@ const ButtonRow = styled.div`
 const ActivitySideSheet: FC = () => {
     const [activeTab, setActiveTab] = useState(0)
     const Navigationbuttons = ["Live", "Historical", "Simulation", "Operating conditions"]
-        const tabContent: { [index: number]: ReactElement } = {
+    const tabContent: { [index: number]: ReactElement } = {
         0: <Live />,
         1: <Historical />,
         2: <Simulation />,

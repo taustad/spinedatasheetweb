@@ -1,10 +1,12 @@
-import { Icon, Tabs, Typography } from "@equinor/eds-core-react"
+import {
+ Icon, Tabs, Typography, Button,
+} from "@equinor/eds-core-react"
 import styled from "styled-components"
 import React, {
     useCallback, useContext, useEffect, useState,
 } from "react"
 import { useParams } from "react-router-dom"
-import { comment_chat } from "@equinor/eds-icons"
+import { comment_chat, open_side_sheet } from "@equinor/eds-icons"
 import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Instrument/GeneralRowData"
 import { generateInstallationConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/InstallationConditionsRowData"
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
@@ -32,10 +34,14 @@ import SheetContainer from "../Components/SideSheet/SheetContainer"
 import { ViewContext } from "../Context/ViewContext"
 
 const TopBar = styled.div`
-    padding-top: 0
-    border-bottom: 1px solid LightGray
-    z-index: 100
-    padding-top: 20px
+    border-bottom: 1px solid LightGray;
+    z-index: 100;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
 `
 
 const View = styled.div`
@@ -59,13 +65,17 @@ const StyledTabPanel = styled(Panel).attrs<{ sheetWidth: number }>((props) => ({
 }))`
     padding: 0px;
     border-top: 1px solid LightGray;
-    height: calc(100vh - 175px);
+    height: calc(100vh - 211px);
     overflow: hidden;
 `
 
 const Content = styled.div`
     display: flex;
     flex-direction: row;
+`
+
+const SheetIcon = styled(Icon)`
+    transform: rotate(180deg);
 `
 
 function JIP33InstrumentTabView({ }) {
@@ -79,11 +89,19 @@ function JIP33InstrumentTabView({ }) {
     const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
-    const { activeTagData, setActiveTagData } = useContext(ViewContext)
+    const { activeTagData, setActiveTagData, setActiveSheetTab } = useContext(ViewContext)
 
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
         setSheetWidth(0)
+        setActiveSheetTab(0)
+    }, [setOpen])
+
+    const onOpenReviewSideSheet = useCallback((activatedTab: React.SetStateAction<number>) => {
+        setActiveSheetTab(activatedTab)
+        setOpen(true)
+        setSheetWidth(620)
+        setCurrentProperty("")
     }, [setOpen])
 
     const getCommentsForTagReview = async (id: string) => {
@@ -210,13 +228,15 @@ function JIP33InstrumentTabView({ }) {
                         {activeTagData.tagNo}
                         <Icon
                             data={comment_chat}
-                            onClick={() => {
-                                setOpen(true)
-                                setCurrentProperty("")
-                            }}
+                            onClick={() => onOpenReviewSideSheet(4)}
                             color="#007079"
                         />
                     </Typography>
+                    {!open && (
+                        <Button variant="ghost_icon" onClick={() => onOpenReviewSideSheet(0)}>
+                            <SheetIcon size={24} data={open_side_sheet} />
+                        </Button>
+                    )}
                 </TopBar>
                 <Tabs activeTab={activeTab} onChange={setActiveTab}>
                     <List>
@@ -256,6 +276,7 @@ function JIP33InstrumentTabView({ }) {
                 onClose={onCloseReviewSideSheet}
                 isOpen={open}
                 currentProperty={currentProperty}
+                setCurrentProperty={setCurrentProperty}
                 reviewComments={reviewComments}
                 setReviewComments={setReviewComments}
                 tag={activeTagData}

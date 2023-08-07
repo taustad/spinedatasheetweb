@@ -7,7 +7,8 @@ import Media from "../Tabs/Media"
 import Replacements from "../Tabs/Replacements"
 
 const TabsContainer = styled.div`
-    width: 100%;
+    width: calc(100% - 60px);
+    margin-left: 70px;
 `
 
 interface TabViewProps {

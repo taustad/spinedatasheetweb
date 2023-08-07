@@ -4,11 +4,11 @@ import React, {
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
-import { GetCommentService } from "../../../api/CommentService"
-import { ReviewComment } from "../../../Models/ReviewComment"
-import DialogueBox from "./Components/DialogueBox"
-import InputController from "./Components/InputController"
-import { ViewContext } from "../../../Context/ViewContext"
+import { GetCommentService } from "../../../../api/CommentService"
+import { ReviewComment } from "../../../../Models/ReviewComment"
+import DialogueBox from "./DialogueBox"
+import InputController from "./InputController"
+import { ViewContext } from "../../../../Context/ViewContext"
 
 const Container = styled.div`
     display: flex;
@@ -18,25 +18,23 @@ const Container = styled.div`
     justify-content: space-between;
 `
 
-const CommentView = styled.div`
+const Conversation = styled.div`
     overflow-y: auto;
 `
 
-type CommentsSideSheetProps = {
+type CommentViewProps = {
     currentProperty: string
     reviewComments: ReviewComment[]
     setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
 }
 
-const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
+const CommentView: React.FC<CommentViewProps> = ({
     currentProperty,
     reviewComments,
     setReviewComments,
 }) => {
     const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
-
     const { activeTagData } = useContext(ViewContext)
-
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
 
@@ -56,7 +54,12 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
                 hour12: false,
             })
             return (
-                <DialogueBox comment={comment} formattedDate={formattedDate} reviewComments={reviewComments} setReviewComments={setReviewComments} />
+                <DialogueBox
+                    comment={comment}
+                    formattedDate={formattedDate}
+                    reviewComments={reviewComments}
+                    setReviewComments={setReviewComments}
+                />
             )
         })
 
@@ -64,7 +67,7 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
         event: React.ChangeEvent<HTMLTextAreaElement>,
     ) => {
         const comment = { ...newReviewComment }
-        comment.text = event.target.value
+        comment.text = event.target.value // todo: escape html and check for malicious code injection
         setNewReviewComment(comment)
     }
 
@@ -88,9 +91,9 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
 
     return (
         <Container>
-            <CommentView className="commentView">
+            <Conversation className="commentView">
                 {listCommentsForProperty(currentProperty)}
-            </CommentView>
+            </Conversation>
             <InputController
                 value={newReviewComment?.text ?? ""}
                 handleCommentChange={handleCommentChange}
@@ -100,4 +103,4 @@ const CommentsSideSheet: React.FC<CommentsSideSheetProps> = ({
     )
 }
 
-export default CommentsSideSheet
+export default CommentView

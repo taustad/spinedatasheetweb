@@ -1,5 +1,5 @@
 import React, {
- useState, Dispatch, SetStateAction,
+ useState, Dispatch, SetStateAction, useContext,
 } from "react"
 import {
  Icon, Tabs, Typography, Button,
@@ -10,11 +10,12 @@ import { Resizable } from "re-resizable"
 import { TagData } from "../../Models/TagData"
 import { ReviewComment } from "../../Models/ReviewComment"
 import InfoStrip from "./Components/InfoStrip"
-import CommentsSideSheet from "./Comments/CommentsSideSheet"
+import CommentsSideSheet from "./Comments/CommentSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 import ActivitySideSheet from "./Activity/ActivitySideSheet"
+import { ViewContext } from "../../Context/ViewContext"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -87,6 +88,7 @@ type Props = {
     isOpen: boolean
     onClose: () => void
     currentProperty: any
+    setCurrentProperty: Dispatch<SetStateAction<any>>
     reviewComments: ReviewComment[]
     setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
     tag: TagData
@@ -99,21 +101,20 @@ const SheetContainer: React.FC<Props> = ({
     isOpen,
     reviewComments,
     currentProperty,
+    setCurrentProperty,
     setReviewComments,
     tag,
     width,
     setWidth,
 }) => {
-    const [activeTab, setActiveTab] = useState(0)
+    const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
 
     const handleTabChange = (index: number) => {
         console.log(index)
-        setActiveTab(index)
+        setActiveSheetTab(index)
     }
 
-    if (!currentProperty || !isOpen) {
-        return null
-    }
+    if (!isOpen) return null
 
     const placeholder = (
         <div style={{ height: "100%", width: "100%" }}>
@@ -134,7 +135,7 @@ const SheetContainer: React.FC<Props> = ({
                 height: "100%",
             }}
             minWidth={620}
-            maxWidth={1500}
+            maxWidth={window.innerWidth}
             enable={{
                 top: false,
                 right: false,
@@ -175,7 +176,7 @@ const SheetContainer: React.FC<Props> = ({
                 <InfoStrip />
                 <TabsContainer
                     className="TabsContainer"
-                    activeTab={activeTab}
+                    activeTab={activeSheetTab}
                     onChange={handleTabChange}
                     scrollable
                 >
@@ -188,20 +189,21 @@ const SheetContainer: React.FC<Props> = ({
                         <Tabs.Tab>Changelog</Tabs.Tab>
                     </TabsHeader>
                     <SheetBody>
-                        <TabsPanel>{activeTab === 0 && <ActivitySideSheet />}</TabsPanel>
-                        <TabsPanel>{activeTab === 1 && <EquipmentSideSheet />}</TabsPanel>
-                        <TabsPanel>{activeTab === 2 && <AreaSideSheet />}</TabsPanel>
-                        <TabsPanel>{activeTab === 3 && placeholder}</TabsPanel>
+                        <TabsPanel>{activeSheetTab === 0 && <ActivitySideSheet />}</TabsPanel>
+                        <TabsPanel>{activeSheetTab === 1 && <EquipmentSideSheet />}</TabsPanel>
+                        <TabsPanel>{activeSheetTab === 2 && <AreaSideSheet />}</TabsPanel>
+                        <TabsPanel>{activeSheetTab === 3 && placeholder}</TabsPanel>
                         <TabsPanel>
-                            {activeTab === 4 && (
+                            {activeSheetTab === 4 && (
                                 <CommentsSideSheet
                                     reviewComments={reviewComments}
                                     currentProperty={currentProperty.property}
+                                    setCurrentProperty={setCurrentProperty}
                                     setReviewComments={setReviewComments}
                                 />
                             )}
                         </TabsPanel>
-                        <TabsPanel>{activeTab === 5 && <ChangeLogSideSheet />}</TabsPanel>
+                        <TabsPanel>{activeSheetTab === 5 && <ChangeLogSideSheet />}</TabsPanel>
                     </SheetBody>
                 </TabsContainer>
             </SheetContent>

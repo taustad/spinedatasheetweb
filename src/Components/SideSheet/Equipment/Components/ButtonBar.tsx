@@ -9,7 +9,8 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-right: 15px;
+    padding-top: 10px;
+    position: fixed;
 `
 
 const TabButton = styled(Button)`
