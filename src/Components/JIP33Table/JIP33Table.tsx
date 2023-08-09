@@ -188,11 +188,12 @@ function JIP33Table({
 
     return (
         <>
-            {reviewOpen && (
-                <EquipmentListReview
-                    tagInReview={activeTagData?.id}
-                />
-            )}
+            <EquipmentListReview
+                isOpen={reviewOpen}
+                setIsOpen={setReviewOpen}
+                tagInReview={activeTagData?.id}
+            />
+
             <div className={styles.root} style={{ height: "100%" }}>
                 <div
                     className="ag-theme-alpine ag-theme-datasheetTable"

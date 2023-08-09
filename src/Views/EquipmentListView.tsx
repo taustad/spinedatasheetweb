@@ -143,16 +143,18 @@ function EquipmentListView() {
                     </StyledTabPanel>
                 </Panels>
             </Tabs>
-            {reviewModalOpen && (
-                <EquipmentListReview
-                    tags={tagData}
-                    setReviewModalOpen={setReviewModalOpen}
-                    setTagInReview={setTagInReview}
-                    tagInReview={tagInReview}
-                    setRevisionInReview={setRevisionInReview}
-                    revisionInReview={revisionInReview}
-                />
-            )}
+
+            <EquipmentListReview
+                isOpen={reviewModalOpen}
+                setIsOpen={setReviewModalOpen}
+                tags={tagData}
+                setReviewModalOpen={setReviewModalOpen}
+                setTagInReview={setTagInReview}
+                tagInReview={tagInReview}
+                setRevisionInReview={setRevisionInReview}
+                revisionInReview={revisionInReview}
+            />
+
         </Wrapper>
     )
 }
