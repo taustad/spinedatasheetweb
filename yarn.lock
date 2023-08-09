@@ -1786,6 +1786,14 @@
     "@material-ui/styles" "^4.11.4"
     clsx "^1.1.1"
 
+"@equinor/fusion-react-textinput@^0.6.15":
+  version "0.6.15"
+  resolved "https://registry.yarnpkg.com/@equinor/fusion-react-textinput/-/fusion-react-textinput-0.6.15.tgz#941fd8d7685d5436d3f60b3eb08cd09e29f72ac0"
+  integrity sha512-lXMbs9Y01gZcArqscmxeLhkGLfJuem3lY+t079mqJbfsAU2lTKUhLFCyTO4qjul50gGb3CGmUcdXGC5g6eeNkA==
+  dependencies:
+    "@equinor/fusion-react-utils" "^2.0.4"
+    "@equinor/fusion-wc-textinput" "^0.5.12"
+
 "@equinor/fusion-react-tooltip@^1.1.5":
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/@equinor/fusion-react-tooltip/-/fusion-react-tooltip-1.1.7.tgz#3f8df4d7e1b5e65c7d9177a39fe2eac8c9cbc165"
@@ -1957,7 +1965,7 @@
     "@equinor/fusion-wc-core" "^1.0.5"
     lit "2.7.0"
 
-"@equinor/fusion-wc-textinput@^0.5.19":
+"@equinor/fusion-wc-textinput@^0.5.12", "@equinor/fusion-wc-textinput@^0.5.19":
   version "0.5.19"
   resolved "https://registry.yarnpkg.com/@equinor/fusion-wc-textinput/-/fusion-wc-textinput-0.5.19.tgz#b08f62de7dbe9ed77e1e57c0ab6267e15817c79d"
   integrity sha512-hgoozle0A4IdLkvRvLLE++q4V3KA/oxiaS8NUjeEiLUNDQl8ZgESpMX984QEe5i6vDvbJsoVi/HjXIeMwy1z1w==
