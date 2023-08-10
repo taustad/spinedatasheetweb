@@ -188,11 +188,11 @@ function JIP33Table({
 
     return (
         <>
-            <EquipmentListReview
+            {/* <EquipmentListReview
                 isOpen={reviewOpen}
                 setIsOpen={setReviewOpen}
                 tagInReview={activeTagData?.id}
-            />
+            /> */}
 
             <div className={styles.root} style={{ height: "100%" }}>
                 <div

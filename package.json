@@ -62,7 +62,7 @@
     "@equinor/eds-utils": "^0.7.0",
     "@equinor/fusion": "^3.4.10",
     "@equinor/fusion-framework-app": "^7.0.16",
-    "@equinor/fusion-framework-module-ag-grid": "^29.3.3",
+    "@equinor/fusion-framework-module-ag-grid": "30.0.0",
     "@equinor/fusion-framework-module-context": "^4.0.10",
     "@equinor/fusion-framework-module-msal": "^3.0.4",
     "@equinor/fusion-framework-module-navigation": "^3.0.2",
