@@ -14,21 +14,17 @@ import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
 
-const Wrapper = styled.div`
-    height: "calc(100vh - 310px)" 
-`
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
     width: 100%; 
-    height: 100%;
+    height: calc(100vh - 310px);
 `
 
 const FilterBar = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: right;
-
     margin-right: 1rem;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -118,7 +114,7 @@ function TagComparisonTable({ tags }: Props) {
                     Columns
                 </Button>
             </FilterBar>
-            <Wrapper className={styles.root}>
+            <div className={styles.root}>
                 <TableContainer
                     className="ag-theme-alpine-fusion"
                 >
@@ -139,7 +135,7 @@ function TagComparisonTable({ tags }: Props) {
                         sideBar={toggleSideBar()}
                     />
                 </TableContainer>
-            </Wrapper>
+            </div>
         </>
     )
 }
