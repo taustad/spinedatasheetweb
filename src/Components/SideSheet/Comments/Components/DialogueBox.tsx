@@ -2,10 +2,14 @@ import React, {
     Dispatch, FC, SetStateAction, useState,
 } from "react"
 import styled from "styled-components"
-import { Button, Icon } from "@equinor/eds-core-react"
+import {
+    Button, Icon, Typography,
+} from "@equinor/eds-core-react"
 import { delete_to_trash, edit } from "@equinor/eds-icons"
+import { useCurrentUser } from "@equinor/fusion"
 import { GetCommentService } from "../../../../api/CommentService"
 import { ReviewComment } from "../../../../Models/ReviewComment"
+import RenderComment from "./RenderComment"
 
 const Container = styled.div`
     margin: 15px;
@@ -20,6 +24,7 @@ const Header = styled.div`
     font-size: 12px;
     color: #6a6a6a;
 `
+
 const Message = styled.div``
 
 interface DialogueBoxProps {
@@ -46,89 +51,46 @@ const deleteComment = async (
     }
 }
 
-const updateComment = async (
-    newCommentText: string,
-    comment: ReviewComment,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
-) => {
-    if (newCommentText && comment.id) {
-        try {
-            const commentService = await GetCommentService()
-            const newComment = { ...comment }
-            newComment.text = newCommentText
-            const updatedComment = await commentService.updateComment(comment.id, newComment)
-            const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : updatedComment))
-            setReviewComments(newReviewComments)
-        } catch (error) {
-            console.error(`Error updating comment: ${error}`)
-        }
-    }
-}
-
-const renderComment = (
-    comment: ReviewComment,
-    isUpdateMode: boolean,
-    setUpdateMode: any,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
-) => {
-    const [editedComment, setEditedComment] = useState(comment.text || "")
-
-    const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditedComment(e.target.value)
-    }
-
-    const cancelEdit = () => {
-        setUpdateMode(false)
-    }
-
-    const saveComment = () => {
-        updateComment(editedComment, comment, reviewComments, setReviewComments)
-        cancelEdit()
-    }
-
-    if (isUpdateMode) {
-        return (
-            <div>
-                <textarea
-                    value={editedComment}
-                    onChange={editComment}
-                />
-                <br />
-                <Button variant="contained" onClick={saveComment}>Save</Button>
-                <Button variant="contained" onClick={cancelEdit}>Cancel</Button>
-            </div>
-        )
-    }
-    return <p>{comment.text}</p>
-}
-
 const DialogueBox: FC<DialogueBoxProps> = ({
     comment, formattedDate, reviewComments, setReviewComments,
 }) => {
     const [isUpdateMode, setUpdateMode] = useState(false)
+    const currentUser: any = useCurrentUser()
 
     return (
         <Container key={comment.id}>
             <Header>
-                <p>{comment.commenterName}</p>
-                <p>{formattedDate}</p>
+                <Typography>{comment.commenterName}</Typography>
+                <Typography>{formattedDate}</Typography>
             </Header>
             <Message>
-                {renderComment(comment, isUpdateMode, setUpdateMode, reviewComments, setReviewComments)}
-                <Button
-                    variant="ghost_icon"
-                    onClick={() => setUpdateMode((prevMode) => !prevMode)}
-                    title="Edit comment"
-                >
-                    <Icon data={edit} size={16} color="#007079" />
-                </Button>
-                <Button variant="ghost_icon" onClick={(e: any) => deleteComment(comment, reviewComments, setReviewComments)} title="Delete">
-                    <Icon data={delete_to_trash} size={16} color="#007079" />
-                </Button>
+                <RenderComment
+                    comment={comment}
+                    isUpdateMode={isUpdateMode}
+                    setUpdateMode={setUpdateMode}
+                    reviewComments={reviewComments}
+                    setReviewComments={setReviewComments}
+                />
+                {currentUser?._info.localAccountId === comment.userId
+                    && !isUpdateMode && (
+                        <>
+                            <Button
+                                variant="ghost_icon"
+                                onClick={() => setUpdateMode((prevMode) => !prevMode)}
+                                title="Edit comment"
+                            >
+                                <Icon data={edit} size={16} color="#007079" />
+                            </Button>
+                            <Button
+                                variant="ghost_icon"
+                                onClick={(e: any) => deleteComment(comment, reviewComments, setReviewComments)}
+                                title="Delete"
+                            >
+                                <Icon data={delete_to_trash} size={16} color="#007079" />
+                            </Button>
+                        </>
+                    )}
             </Message>
-
         </Container>
     )
 }

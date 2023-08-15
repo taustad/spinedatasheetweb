@@ -161,7 +161,7 @@ function EquipmentListReview({
                             <Radio
                                 id="approvedTag"
                                 label="Approve"
-                                value="approvedTag"
+                                value="approved"
                                 name="ApproveTag"
                                 onChange={onTagChange}
                                 checked={tagReview === "approved"}
@@ -171,7 +171,7 @@ function EquipmentListReview({
                             <Radio
                                 id="rejectedTag"
                                 label="Reject"
-                                value="rejectedTag"
+                                value="rejected"
                                 name="RejectTag"
                                 onChange={onTagChange}
                                 checked={tagReview === "rejected"}
