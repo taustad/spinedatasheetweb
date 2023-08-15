@@ -84,6 +84,11 @@ const Handle = styled(Icon)`
     top: 50%;
 `
 
+const Placeholder = styled.div`
+    height: 100%;
+    width: 100%;
+    `
+
 type Props = {
     isOpen: boolean
     onClose: () => void
@@ -116,9 +121,9 @@ const SheetContainer: React.FC<Props> = ({
     if (!isOpen) return null
 
     const placeholder = (
-        <div style={{ height: "100%", width: "100%" }}>
+        <Placeholder>
             <Typography variant="body_short">Work in progress...</Typography>
-        </div>
+        </Placeholder>
     )
 
     return (

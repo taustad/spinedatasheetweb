@@ -6,11 +6,21 @@ import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
+import styled from "styled-components"
 import { ReviewComment } from "../../Models/ReviewComment"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ViewContext } from "../../Context/ViewContext"
 import EquipmentListReview from "../../Components/EquipmentListView/EquipmentListReview"
 
+const Wrapper = styled.div`
+    height: 100%;
+`
+
+const TableContainer = styled.div`
+    flex: 1 1 auto;
+     width: 100%; 
+     height: 100%;
+`
 interface Props {
     rowData: object[]
     reviewComments?: ReviewComment[] | undefined
@@ -194,10 +204,9 @@ function JIP33Table({
                 tagInReview={activeTagData?.id}
             /> */}
 
-            <div className={styles.root} style={{ height: "100%" }}>
-                <div
+            <Wrapper className={styles.root}>
+                <TableContainer
                     className="ag-theme-alpine ag-theme-datasheetTable"
-                    style={{ flex: "1 1 auto", width: "100%", height: "100%" }}
                 >
                     <AgGridReact
                         rowData={rowData}
@@ -213,8 +222,8 @@ function JIP33Table({
                         enableRangeSelection
                         suppressCopySingleCellRanges
                     />
-                </div>
-            </div>
+                </TableContainer>
+            </Wrapper>
         </>
     )
 }

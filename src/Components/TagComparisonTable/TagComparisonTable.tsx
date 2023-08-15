@@ -14,6 +14,16 @@ import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
 
+const Wrapper = styled.div`
+    height: "calc(100vh - 310px)" 
+`
+
+const TableContainer = styled.div`
+    flex: 1 1 auto;
+    width: 100%; 
+    height: 100%;
+`
+
 const FilterBar = styled.div`
     display: flex;
     flex-direction: row;
@@ -108,10 +118,9 @@ function TagComparisonTable({ tags }: Props) {
                     Columns
                 </Button>
             </FilterBar>
-            <div className={styles.root}>
-                <div
+            <Wrapper className={styles.root}>
+                <TableContainer
                     className="ag-theme-alpine-fusion"
-                    style={{ flex: "1 1 auto", width: "100%" }}
                 >
                     <AgGridReact
                         ref={gridRef}
@@ -119,7 +128,7 @@ function TagComparisonTable({ tags }: Props) {
                         columnDefs={newColumns}
                         defaultColDef={defaultColDef}
                         animateRows
-                        domLayout="autoHeight"
+                        domLayout="normal"
                         enableCellChangeFlash
                         rowSelection="multiple"
                         suppressMovableColumns
@@ -129,8 +138,8 @@ function TagComparisonTable({ tags }: Props) {
                         suppressCopySingleCellRanges
                         sideBar={toggleSideBar()}
                     />
-                </div>
-            </div>
+                </TableContainer>
+            </Wrapper>
         </>
     )
 }

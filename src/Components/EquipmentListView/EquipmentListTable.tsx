@@ -17,6 +17,16 @@ interface Props {
     setRevisionInReview: Dispatch<SetStateAction<string | undefined>>
 }
 
+const Wrapper = styled.div`
+    height: calc(100vh - 243px);
+`
+
+const TableContainer = styled.div`
+    flex: 1 1 auto;
+     width: 100%; 
+     height: 100%;
+`
+
 const TagIcon = styled(Icon)`
     position: relative;
     top: 4px;
@@ -209,17 +219,16 @@ function EquipmentListTable({
     ]
 
     return (
-        <div className={styles.root}>
-            <div
+        <Wrapper className={styles.root}>
+            <TableContainer
                 className="ag-theme-alpine ag-theme-datasheetTable"
-                style={{ flex: "1 1 auto", width: "100%" }}
             >
                 <AgGridReact
                     rowData={tags}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     animateRows
-                    domLayout="autoHeight"
+                    domLayout="normal"
                     enableCellChangeFlash
                     rowSelection="multiple"
                     suppressMovableColumns
@@ -228,8 +237,8 @@ function EquipmentListTable({
                     enableRangeSelection
                     suppressCopySingleCellRanges
                 />
-            </div>
-        </div>
+            </TableContainer>
+        </Wrapper>
     )
 }
 export default EquipmentListTable

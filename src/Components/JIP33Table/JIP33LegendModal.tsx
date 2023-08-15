@@ -2,7 +2,18 @@ import React, { useMemo } from "react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
+import styled from "styled-components"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
+
+const Wrapper = styled.div`
+    height: 100%;
+`
+
+const TableContainer = styled.div`
+    flex: 1 1 auto;
+     width: 100%; 
+     height: 100%;
+`
 
 function JIP33LegendModal({ }) {
     const styles = useStyles()
@@ -147,17 +158,16 @@ function JIP33LegendModal({ }) {
     ]
 
     return (
-        <div className={styles.root}>
-            <div
+        <Wrapper className={styles.root}>
+            <TableContainer
                 className="ag-theme-alpine ag-theme-datasheetTable"
-                style={{ flex: "1 1 auto", width: "100%" }}
             >
                 <AgGridReact
                     rowData={rowData}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     animateRows
-                    domLayout="autoHeight"
+                    domLayout="normal"
                     enableCellChangeFlash
                     rowSelection="multiple"
                     suppressMovableColumns
@@ -165,8 +175,8 @@ function JIP33LegendModal({ }) {
                     headerHeight={48}
                     rowHeight={35}
                 />
-            </div>
-        </div>
+            </TableContainer>
+        </Wrapper>
     )
 }
 
