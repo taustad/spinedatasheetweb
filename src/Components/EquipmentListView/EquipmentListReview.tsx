@@ -1,9 +1,9 @@
 import {
- Button, Dialog, Typography, Radio,
+    Button, Dialog, Typography, Radio,
 } from "@equinor/eds-core-react"
 import React, {
     ChangeEvent,
- Dispatch, SetStateAction, useContext, useEffect, useState,
+    Dispatch, SetStateAction, useContext, useEffect, useState,
 } from "react"
 import styled from "styled-components"
 import { TagData } from "../../Models/TagData"
@@ -75,7 +75,7 @@ function EquipmentListReview({
 
     const buildTagReview = () => {
         const newReview = new TagDataReview()
-        newReview.tagDataId = tagInReview
+        newReview.tagNo = tagInReview
         return newReview
     }
 
@@ -181,43 +181,43 @@ function EquipmentListReview({
                 </ReviewPrompt>
 
                 {revisionInReview
-                && (
-                <ReviewPrompt>
-                    <div>
-                        <Typography variant="h6">
-                            Package review
-                        </Typography>
-                        <Typography variant="meta">
-                            Package id
-                            {" "}
-                            {revisionInReview}
-                        </Typography>
-                    </div>
+                    && (
+                        <ReviewPrompt>
+                            <div>
+                                <Typography variant="h6">
+                                    Package review
+                                </Typography>
+                                <Typography variant="meta">
+                                    Package id
+                                    {" "}
+                                    {revisionInReview}
+                                </Typography>
+                            </div>
 
-                    <RadioUl>
-                        <li>
-                            <Radio
-                                id="approvedPackage"
-                                label="Approve"
-                                value="approved"
-                                name="ApprovePackage"
-                                onChange={onPackageChange}
-                                checked={packageReview === "approved"}
-                            />
-                        </li>
-                        <li>
-                            <Radio
-                                id="rejectedPackage"
-                                label="Reject"
-                                value="rejected"
-                                name="RejectPackage"
-                                onChange={onPackageChange}
-                                checked={packageReview === "rejected"}
-                            />
-                        </li>
-                    </RadioUl>
-                </ReviewPrompt>
-                )}
+                            <RadioUl>
+                                <li>
+                                    <Radio
+                                        id="approvedPackage"
+                                        label="Approve"
+                                        value="approved"
+                                        name="ApprovePackage"
+                                        onChange={onPackageChange}
+                                        checked={packageReview === "approved"}
+                                    />
+                                </li>
+                                <li>
+                                    <Radio
+                                        id="rejectedPackage"
+                                        label="Reject"
+                                        value="rejected"
+                                        name="RejectPackage"
+                                        onChange={onPackageChange}
+                                        checked={packageReview === "rejected"}
+                                    />
+                                </li>
+                            </RadioUl>
+                        </ReviewPrompt>
+                    )}
             </Dialog.Content>
             <ReviewSubmition>
                 <Button variant="ghost" onClick={handleClose}>Cancel</Button>

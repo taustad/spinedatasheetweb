@@ -6,12 +6,12 @@ declare namespace Components {
             modifiedDate?: string; // date-time
             userId?: string; // uuid
             commenterName?: string | null;
-            isEdited?: boolean;
             text?: string | null;
             property?: string | null;
             commentLevel?: CommentLevel /* int32 */;
             tagDataReviewId?: string | null; // uuid
             revisionContainerReviewId?: string | null; // uuid
+            isEdited?: boolean;
         }
         export type CommentLevel = 0 | 1 | 2; // int32
         export interface ContractDto {
@@ -1547,7 +1547,7 @@ declare namespace Components {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            tagDataId?: string; // uuid
+            tagNo?: string | null;
             status?: ReviewStatusEnum /* int32 */;
             approverId?: string; // uuid
             commentResponsible?: string; // uuid
@@ -1722,10 +1722,14 @@ declare namespace Paths {
     }
     namespace GetReviewsForTag {
         namespace Parameters {
-            export type Id = string; // uuid
+            export type Id = string;
+            export type TagNo = string;
         }
         export interface PathParameters {
-            id: Parameters.Id /* uuid */;
+            id: Parameters.Id;
+        }
+        export interface QueryParameters {
+            tagNo?: Parameters.TagNo;
         }
         namespace Responses {
             export type $200 = Components.Schemas.TagDataReviewDto[];
@@ -1777,10 +1781,10 @@ declare namespace Paths {
     }
     namespace GetTagDataById {
         namespace Parameters {
-            export type Id = string; // uuid
+            export type Id = string;
         }
         export interface PathParameters {
-            id: Parameters.Id /* uuid */;
+            id: Parameters.Id;
         }
         namespace Responses {
             export type $200 = Components.Schemas.ITagDataDto;
@@ -1798,6 +1802,18 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.ITagDataDto[];
+        }
+    }
+    namespace UpdateComment {
+        namespace Parameters {
+            export type Id = string; // uuid
+        }
+        export interface PathParameters {
+            id: Parameters.Id /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.CommentDto;
+        namespace Responses {
+            export type $200 = Components.Schemas.CommentDto;
         }
     }
 }
