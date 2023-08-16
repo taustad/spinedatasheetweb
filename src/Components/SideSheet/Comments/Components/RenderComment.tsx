@@ -9,12 +9,8 @@ import { GetCommentService } from "../../../../api/CommentService"
 const SubmitEditButton = styled(Button)`
     margin-right: 15px;
 `
-
-const EditedText = styled(Typography)`
-    font-size: smaller;
-    font-weight: bold;
-    font-style: italic;
-    color: #6a6a6a;
+const CommentText = styled(Typography)`
+    margin: 10px 0;
 `
 
 interface RenderCommentProps {
@@ -61,14 +57,8 @@ const RenderComment: FC<RenderCommentProps> = ({
 }) => {
     const [editedComment, setEditedComment] = useState(comment.text || "")
 
-    const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setEditedComment(e.target.value)
-    }
-
-    const cancelEdit = () => {
-        setUpdateMode(false)
-    }
-
+    const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedComment(e.target.value)
+    const cancelEdit = () => setUpdateMode(false)
     const saveComment = () => {
         updateComment(editedComment, comment, reviewComments, setReviewComments)
         cancelEdit()
@@ -83,22 +73,15 @@ const RenderComment: FC<RenderCommentProps> = ({
                     value={editedComment}
                     onChange={editComment}
                 />
-                <br />
                 <SubmitEditButton variant="ghost" onClick={cancelEdit}>Cancel</SubmitEditButton>
                 <SubmitEditButton variant="contained" onClick={saveComment}>Save</SubmitEditButton>
             </div>
         )
     }
     return (
-        <div>
-            <Typography>
-                {comment.text}
-            </Typography>
-            <br />
-            <EditedText>
-                {comment.isEdited ? `Edited ${formatDate(comment.modifiedDate)}` : ""}
-            </EditedText>
-        </div>
+        <CommentText>
+            {comment.text}
+        </CommentText>
     )
 }
 

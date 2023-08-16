@@ -29,7 +29,7 @@ import { meterBodyRowData } from "../Components/NORSOKTable/RowData/MeterBodyRow
 import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMaximumFlowRowData"
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
-
+import Dialogue from "../Components/Dialogue"
 import SheetContainer from "../Components/SideSheet/SheetContainer"
 import { ViewContext } from "../Context/ViewContext"
 
@@ -160,15 +160,15 @@ function JIP33InstrumentTabView({ }) {
     }, [activeTagData])
 
     if (error) {
-        return <div>Error loading tag</div>
+        return <Dialogue type="error" message="Error loading tag" />
     }
 
     if (isLoading) {
-        return <div>Loading tag...</div>
+        return <Dialogue type="loading" message="Loading tag..." />
     }
 
     if (activeTagData === undefined) {
-        return <div>No tag selected</div>
+        return <Dialogue type="error" message="No tag selected" />
     }
 
     const sideMenuListJIP33 = [

@@ -5,6 +5,7 @@ import { BackButton } from "../Components/BackButton"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import { InstrumentTagData } from "../Models/InstrumentTagData"
 import { GetTagDataService } from "../api/TagDataService"
+import Dialogue from "../Components/Dialogue"
 
 const WrapperTabs = styled.div`
     width: 100%;
@@ -50,15 +51,15 @@ function TagComparisonView({}) {
     }, [])
 
     if (error) {
-        return <div>Error loading tag</div>
+        return <Dialogue type="error" message="Error loading tag" />
     }
 
     if (isLoading) {
-        return <div>Loading tag...</div>
+        return <Dialogue type="loading" message="Loading tag..." />
     }
 
     if (tags === undefined || tags.length === 0) {
-        return <div>No tags found</div>
+        return <Dialogue type="error" message="No tag selected" />
     }
 
     return (

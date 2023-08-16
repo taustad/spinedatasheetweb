@@ -35,6 +35,7 @@ import { generateVibrationRowData } from "../Components/JIP33Table/RowData/Elect
 import { generateTemperatureMonitoringRowData } from "../Components/JIP33Table/RowData/Electrical/TemperatureMonitoringRowData"
 import { generateConverterFedMotorDataRowData } from "../Components/JIP33Table/RowData/Electrical/ConverterFedMotorDataRowData"
 import { generateMiscellaneousRowData } from "../Components/JIP33Table/RowData/Electrical/MiscellaneousRowData"
+import Dialogue from "../Components/Dialogue"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -76,15 +77,15 @@ function JIP33ElectricalTabView({}) {
     }, [])
 
     if (error) {
-        return <div>Error loading tag</div>
+        return <Dialogue type="error" message="Error loading tag" />
     }
 
     if (isLoading) {
-        return <div>Loading tag...</div>
+        return <Dialogue type="loading" message="Loading tag..." />
     }
 
     if (tag === undefined) {
-        return <div>No tag selected</div>
+        return <Dialogue type="error" message="No tag selected" />
     }
 
     const sideMenuList = [
