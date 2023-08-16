@@ -123,9 +123,17 @@ const SheetContainer: React.FC<Props> = ({
         }
     }
 
+    const scrollToTop = () => {
+        if (scrollableRef.current) {
+            scrollableRef.current.scrollTop = 0
+        }
+    }
+
     useEffect(() => {
-        scrollToBottom()
-    }, [reviewComments])
+        if (activeSheetTab !== 4) {
+            scrollToTop()
+        }
+    }, [activeSheetTab])
 
     if (!isOpen) return null
 

@@ -61,7 +61,7 @@ const CommentSideSheet: FC<Props> = ({
 
   useEffect(() => {
     scrollToBottom()
-  }, [currentProperty])
+  }, [currentProperty, reviewComments])
 
   const dummyConversations = [
     // Dummy data for the "All" tab
