@@ -57,13 +57,13 @@ function EquipmentListTable({
         if (lastChar === "/") {
             const result = {
                 ...location,
-                pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.id}`,
+                pathname: `${location.pathname}${typeOfJIP33(params)}/${params.data.tagNo}`,
             }
             return result
         }
         const result = {
             ...location,
-            pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.id}`,
+            pathname: `${location.pathname}/${typeOfJIP33(params)}/${params.data.tagNo}`,
         }
         return result
     }
