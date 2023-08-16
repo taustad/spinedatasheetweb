@@ -9,6 +9,7 @@ import { ReviewComment } from "../../../../Models/ReviewComment"
 import DialogueBox from "./DialogueBox"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
+import { formatDate } from "../../../../utils/helpers"
 
 const Container = styled.div`
     display: flex;
@@ -16,10 +17,15 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     justify-content: space-between;
+    align-items: center;
 `
 
 const Conversation = styled.div`
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
 `
 
 type CommentViewProps = {
@@ -43,23 +49,16 @@ const CommentView: React.FC<CommentViewProps> = ({
     )
 
     const listCommentsForProperty = (property: string) => getCommentsForProperty(property).map((comment) => {
-            const date = new Date(comment.createdDate ?? "")
-            const formattedDate = date.toLocaleString(undefined, {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: false,
-            })
-            return (
-                <DialogueBox
-                    comment={comment}
-                    formattedDate={formattedDate}
-                    reviewComments={reviewComments}
-                    setReviewComments={setReviewComments}
-                />
+        const commentIsByCurrentUser = comment.userId === currentUser?._info.localAccountId
+        const formattedDate = formatDate(comment.createdDate ?? "")
+        return (
+            <DialogueBox
+                commentIsByCurrentUser={commentIsByCurrentUser}
+                comment={comment}
+                formattedDate={formattedDate}
+                reviewComments={reviewComments}
+                setReviewComments={setReviewComments}
+            />
             )
         })
 

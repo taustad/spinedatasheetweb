@@ -29,6 +29,7 @@ import { generateOtherPurchaserRequirementsRowData } from "../Components/JIP33Ta
 import { generateSparePartsRowData } from "../Components/JIP33Table/RowData/Mechanical/SparePartsRowData"
 import { generateShipmentRowData } from "../Components/JIP33Table/RowData/Mechanical/ShipmentRowData"
 import { GetTagDataService } from "../api/TagDataService"
+import Dialogue from "../Components/Dialogue"
 
 const TopBar = styled.div`
     padding-top: 0;
@@ -70,15 +71,15 @@ function JIP33MechanicalTabView({}) {
     }, [])
 
     if (error) {
-        return <div>Error loading tag</div>
+        return <Dialogue type="error" message="Error loading tag" />
     }
 
     if (isLoading) {
-        return <div>Loading tag...</div>
+        return <Dialogue type="loading" message="Loading tag..." />
     }
 
     if (tag === undefined) {
-        return <div>No tag selected</div>
+        return <Dialogue type="error" message="No tag selected" />
     }
 
     const sideMenuList = [

@@ -9,20 +9,23 @@ import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
 import Header from "../Components/Header/Header"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
+import Dialogue from "../Components/Dialogue"
 
 const Wrapper = styled.div`
     width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px 0;
+`
+
+const StyledTabs = styled(Tabs)`
+    width: 100%;
 `
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
 const StyledTabPanel = styled(Panel)`
-    padding-top: 0;
+    padding: 0;
     border-top: 1px solid LightGray;
 `
 
@@ -93,35 +96,26 @@ function EquipmentListView() {
         }
     }, [currentProject, projectId, navigate])
 
-    if (
-        currentProject.currentContext === null
-        || currentProject.currentContext === undefined
-    ) {
-        return <div>No project selected</div>
+    if (!currentProject.currentContext) {
+        return <Dialogue type="error" message="No project selected" />
     }
 
     if (error) {
-        return <div>Error loading tags</div>
+        return <Dialogue type="error" message="Error loading tags" />
     }
 
     if (isLoading) {
-        return (
-            <>
-                <Progress.Circular size={16} color="primary" />
-                <div>Loading tags...</div>
-            </>
-        )
+        return <Dialogue type="loading" message="Loading tags..." />
     }
 
-    if (tagData === undefined || tagData.length === 0) {
-        return <div>No tags found for this project</div>
+    if (!tagData || tagData.length === 0) {
+        return <Dialogue type="error" message="No tags found in this project" />
     }
 
     return (
         <Wrapper>
             <Header />
-            <Tabs
-                style={{ width: "100%" }}
+            <StyledTabs
                 activeTab={activeTab}
                 onChange={setActiveTab}
             >
@@ -142,17 +136,19 @@ function EquipmentListView() {
                         <TagComparisonTable tags={tagData} />
                     </StyledTabPanel>
                 </Panels>
-            </Tabs>
-            {reviewModalOpen && (
-                <EquipmentListReview
-                    tags={tagData}
-                    setReviewModalOpen={setReviewModalOpen}
-                    setTagInReview={setTagInReview}
-                    tagInReview={tagInReview}
-                    setRevisionInReview={setRevisionInReview}
-                    revisionInReview={revisionInReview}
-                />
-            )}
+            </StyledTabs>
+
+            <EquipmentListReview
+                isOpen={reviewModalOpen}
+                setIsOpen={setReviewModalOpen}
+                tags={tagData}
+                setReviewModalOpen={setReviewModalOpen}
+                setTagInReview={setTagInReview}
+                tagInReview={tagInReview}
+                setRevisionInReview={setRevisionInReview}
+                revisionInReview={revisionInReview}
+            />
+
         </Wrapper>
     )
 }

@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { send } from "@equinor/eds-icons"
 
 const Controls = styled.div`
+    width: 100%;
     padding: 30px 15px 10px 15px;
     position: sticky;
     bottom: 0;
