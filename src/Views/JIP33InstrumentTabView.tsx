@@ -142,22 +142,31 @@ function JIP33InstrumentTabView({ }) {
     }, [])
 
     useEffect(() => {
-        if (tagId !== null && tagId !== undefined) {
-            const intervalId = setInterval(async () => {
-                const tagDataReviewId = activeTagData?.review?.id
-                if (tagDataReviewId === undefined || tagDataReviewId === null) {
-                    return
-                }
-                const newComments = await (
-                    await GetCommentService()
-                ).getCommentsForTagReview(tagDataReviewId)
-                setReviewComments(newComments)
-            }, 5000)
+    if (tagId !== null && tagId !== undefined) {
+        const intervalId = setInterval(async () => {
+            const tagDataReviewId = activeTagData?.review?.id
+            if (tagDataReviewId === undefined || tagDataReviewId === null) {
+                return
+            }
+            const newComments = await (
+                await GetCommentService()
+            ).getCommentsForTagReview(tagDataReviewId)
 
-            return () => clearInterval(intervalId)
-        }
-        return () => { }
-    }, [activeTagData])
+            const areCommentsDifferent = !(
+                newComments.length === reviewComments.length
+                    && newComments.every((comment: ReviewComment, index: number) => comment.id === reviewComments[index].id)
+            )
+
+            if (areCommentsDifferent) {
+                setReviewComments(newComments)
+            }
+        }, 5000)
+
+        return () => clearInterval(intervalId)
+    }
+    return () => { }
+}, [activeTagData, reviewComments])
+
 
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />

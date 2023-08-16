@@ -1,5 +1,5 @@
 import React, {
- useState, Dispatch, SetStateAction, useContext,
+Dispatch, SetStateAction, useContext, useRef, useEffect,
 } from "react"
 import {
  Icon, Tabs, Typography, Button,
@@ -113,10 +113,19 @@ const SheetContainer: React.FC<Props> = ({
     setWidth,
 }) => {
     const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
+    const scrollableRef = useRef<HTMLDivElement>(null)
 
-    const handleTabChange = (index: number) => {
-        setActiveSheetTab(index)
+    const handleTabChange = (index: number) => setActiveSheetTab(index)
+
+    const scrollToBottom = () => {
+        if (scrollableRef.current) {
+            scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight
+        }
     }
+
+    useEffect(() => {
+        scrollToBottom()
+    }, [reviewComments])
 
     if (!isOpen) return null
 
@@ -179,6 +188,7 @@ const SheetContainer: React.FC<Props> = ({
                 </SheetHeader>
                 <InfoStrip />
                 <TabsContainer
+                    ref={scrollableRef}
                     className="TabsContainer"
                     activeTab={activeSheetTab}
                     onChange={handleTabChange}
@@ -200,6 +210,7 @@ const SheetContainer: React.FC<Props> = ({
                         <TabsPanel>
                             {activeSheetTab === 4 && (
                                 <CommentsSideSheet
+                                    scrollToBottom={scrollToBottom}
                                     reviewComments={reviewComments}
                                     currentProperty={currentProperty.property}
                                     setCurrentProperty={setCurrentProperty}

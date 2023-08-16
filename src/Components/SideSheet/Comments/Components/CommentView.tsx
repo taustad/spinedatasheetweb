@@ -1,5 +1,8 @@
 import React, {
-    Dispatch, SetStateAction, useContext, useState,
+    Dispatch,
+    SetStateAction,
+    useContext,
+    useState,
 } from "react"
 import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
@@ -90,7 +93,7 @@ const CommentView: React.FC<CommentViewProps> = ({
 
     return (
         <Container>
-            <Conversation className="commentView">
+            <Conversation>
                 {listCommentsForProperty(currentProperty)}
             </Conversation>
             <InputController
