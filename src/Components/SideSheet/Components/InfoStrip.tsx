@@ -23,10 +23,6 @@ const InfoBox = styled.div`
 const InfoStrip: FC = () => {
     const { activeTagData } = useContext(ViewContext)
 
-    useEffect(() => {
-        console.log(activeTagData)
-    }, [activeTagData])
-
     if (!activeTagData) {
         return null
     }

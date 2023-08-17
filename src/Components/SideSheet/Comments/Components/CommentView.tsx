@@ -2,6 +2,7 @@ import React, {
     Dispatch,
     SetStateAction,
     useContext,
+    useEffect,
     useState,
 } from "react"
 import { useParams } from "react-router-dom"
@@ -9,10 +10,11 @@ import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
 import { GetCommentService } from "../../../../api/CommentService"
 import { ReviewComment } from "../../../../Models/ReviewComment"
-import DialogueBox from "./DialogueBox"
+import MessageBox from "./MessageBox"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import { formatDate } from "../../../../utils/helpers"
+import ClusteredMessages from "./ClusteredMessages"
 
 const Container = styled.div`
     display: flex;
@@ -51,25 +53,11 @@ const CommentView: React.FC<CommentViewProps> = ({
         reviewComments.filter((comment) => comment.property === property)
     )
 
-    const listCommentsForProperty = (property: string) => getCommentsForProperty(property).map((comment) => {
-        const commentIsByCurrentUser = comment.userId === currentUser?._info.localAccountId
-        const formattedDate = formatDate(comment.createdDate ?? "")
-        return (
-            <DialogueBox
-                commentIsByCurrentUser={commentIsByCurrentUser}
-                comment={comment}
-                formattedDate={formattedDate}
-                reviewComments={reviewComments}
-                setReviewComments={setReviewComments}
-            />
-            )
-        })
-
     const handleCommentChange = (
         event: React.ChangeEvent<HTMLTextAreaElement>,
     ) => {
         const comment = { ...newReviewComment }
-        comment.text = event.target.value // todo: escape html and check for malicious code injection
+        comment.text = event.target.value
         setNewReviewComment(comment)
     }
 
@@ -94,7 +82,11 @@ const CommentView: React.FC<CommentViewProps> = ({
     return (
         <Container>
             <Conversation>
-                {listCommentsForProperty(currentProperty)}
+                <ClusteredMessages
+                    comments={getCommentsForProperty(currentProperty)}
+                    reviewComments={reviewComments}
+                    setReviewComments={setReviewComments}
+                />
             </Conversation>
             <InputController
                 value={newReviewComment?.text ?? ""}

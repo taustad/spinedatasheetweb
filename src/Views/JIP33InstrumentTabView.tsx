@@ -167,7 +167,6 @@ function JIP33InstrumentTabView({ }) {
     return () => { }
 }, [activeTagData, reviewComments])
 
-
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />
     }
