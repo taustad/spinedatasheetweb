@@ -1,6 +1,6 @@
 import { ColGroupDef } from "@ag-grid-community/core"
 import { InstrumentPurchaserRequirement } from "../../../Models/InstrumentPurchaserRequirement"
-import { getPropertyName } from "../../../utils/common"
+import { getPropertyName } from "../../../utils/helpers"
 
 export const comparisonGeneralColumnDefs = (): ColGroupDef[] => [
     {

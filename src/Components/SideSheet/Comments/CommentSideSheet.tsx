@@ -1,5 +1,5 @@
 import React, {
- FC, Dispatch, SetStateAction, useState,
+ FC, Dispatch, SetStateAction, useState, useEffect,
 } from "react"
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
@@ -15,6 +15,7 @@ type Props = {
   setCurrentProperty: Dispatch<SetStateAction<string>>;
   reviewComments: ReviewComment[];
   setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>;
+  scrollToBottom: () => void;
 };
 
 const Overview = styled.div`
@@ -47,6 +48,7 @@ const CommentSideSheet: FC<Props> = ({
   setCurrentProperty,
   reviewComments,
   setReviewComments,
+  scrollToBottom,
 }) => {
   const [activeTab, setActiveTab] = useState(0)
   const Navigationbuttons = [
@@ -56,6 +58,10 @@ const CommentSideSheet: FC<Props> = ({
     "Closed",
     "Implemented",
   ]
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [currentProperty, reviewComments])
 
   const dummyConversations = [
     // Dummy data for the "All" tab
