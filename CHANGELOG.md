@@ -1,5 +1,62 @@
 # Changelog
 
+## [1.7.0](https://github.com/equinor/spinedatasheetweb/compare/v1.6.0...v1.7.0) (2023-08-18)
+
+
+### Features
+
+* Activity sidesheet ([#100](https://github.com/equinor/spinedatasheetweb/issues/100)) ([1ffd0ab](https://github.com/equinor/spinedatasheetweb/commit/1ffd0abb87d2940ab72c1cca48608b7fb89e76cd))
+* Add comment model and service ([#56](https://github.com/equinor/spinedatasheetweb/issues/56)) ([2a7d42f](https://github.com/equinor/spinedatasheetweb/commit/2a7d42f7ab5d284eb98f151e8d0dd813177d7a7a))
+* add comment sidesheet for tag ([#67](https://github.com/equinor/spinedatasheetweb/issues/67)) ([3bdda5b](https://github.com/equinor/spinedatasheetweb/commit/3bdda5b8cca2a78786f52d357d181baa0b66d788))
+* Add name to comment ([#73](https://github.com/equinor/spinedatasheetweb/issues/73)) ([b3daa80](https://github.com/equinor/spinedatasheetweb/commit/b3daa80278c55f49dba26b2f3a177e9c0e9c4641))
+* Add review feature ([#75](https://github.com/equinor/spinedatasheetweb/issues/75)) ([2acc326](https://github.com/equinor/spinedatasheetweb/commit/2acc3261719b2d1a48000413e23dd15f1412a58b))
+* Added column menu button and property search bar to tag comparison view ([#113](https://github.com/equinor/spinedatasheetweb/issues/113)) ([0842dd6](https://github.com/equinor/spinedatasheetweb/commit/0842dd60f88ff5543d52205ed637584a1d26e7b6))
+* Added NORSOK instrument view, added tab system for NORSOK and JIP33 view ([#82](https://github.com/equinor/spinedatasheetweb/issues/82)) ([07b7647](https://github.com/equinor/spinedatasheetweb/commit/07b764764bffdc4decaa1216aff2fa9ad0b2dc68))
+* Added TR3111 properties to Tag Comparison ([a461b1c](https://github.com/equinor/spinedatasheetweb/commit/a461b1cd6fad225d69f6f117f9be7805cb253fe5))
+* Area sidesheet + structural improvements ([df051ff](https://github.com/equinor/spinedatasheetweb/commit/df051ffc5c76062bc93f4a780d418c2c2b3cdd83))
+* auto scroll to newest comments ([57c7bb8](https://github.com/equinor/spinedatasheetweb/commit/57c7bb8a784036b7f3ad73231455dc6df2adf08a))
+* auto scroll to top of sidesheet ([2f5e037](https://github.com/equinor/spinedatasheetweb/commit/2f5e037ba28c8edeb7f02d4e5668358d99a69c74))
+* changelog sheet added ([#95](https://github.com/equinor/spinedatasheetweb/issues/95)) ([3ac0bfd](https://github.com/equinor/spinedatasheetweb/commit/3ac0bfd8340d6f906473715b765aa3ed058db399))
+* color coded and separated chat ([1ca2a91](https://github.com/equinor/spinedatasheetweb/commit/1ca2a9140ae285f4f7e2ca8ea0cb6cc93c4d382a))
+* Comment overview & sheet button & contextual sheet tab selection ([d147e83](https://github.com/equinor/spinedatasheetweb/commit/d147e83a08b9a266365694e20bfa55d918b7f149))
+* Delete comments ([5af95fb](https://github.com/equinor/spinedatasheetweb/commit/5af95fbe6caa68f9ad70d3ff1cc2924d31758cf7))
+* full height  tables & dialogue component ([#115](https://github.com/equinor/spinedatasheetweb/issues/115)) ([b0fd1f7](https://github.com/equinor/spinedatasheetweb/commit/b0fd1f77791f58c19e886f603ef7ea24dfae29bb))
+* Implementation & Specification & Replacement sidesheets ([#96](https://github.com/equinor/spinedatasheetweb/issues/96)) ([7459afe](https://github.com/equinor/spinedatasheetweb/commit/7459afe70769c545bd2938b06ba1275ce63007c9))
+* implemented edit for comments ([#106](https://github.com/equinor/spinedatasheetweb/issues/106)) ([a841424](https://github.com/equinor/spinedatasheetweb/commit/a841424daa143416486642c80f92316f448539ec))
+* improved comment View ([aff2e1c](https://github.com/equinor/spinedatasheetweb/commit/aff2e1c57c3cec45f71f4c449ff5963e183686f7))
+* jsdoc & helpers refactor ([1167baf](https://github.com/equinor/spinedatasheetweb/commit/1167baf40104a024221aab7de7eee35b6605884c))
+* Media & user manuals tabs in Equipment sheet ([#97](https://github.com/equinor/spinedatasheetweb/issues/97)) ([94b5759](https://github.com/equinor/spinedatasheetweb/commit/94b575936417bbdbf7df5ab6027d0aa0e4e560eb))
+* message clusters ([#120](https://github.com/equinor/spinedatasheetweb/issues/120)) ([4d3898e](https://github.com/equinor/spinedatasheetweb/commit/4d3898e6f607292b09911e882281a7c76e5c3b5a))
+* modal review confirmation ([#112](https://github.com/equinor/spinedatasheetweb/issues/112)) ([fc823d4](https://github.com/equinor/spinedatasheetweb/commit/fc823d409dd8e343def3d47adaff2eac030ea080))
+* Renamed purchaserReq and supplierOff to Instrument ([5dfa8e4](https://github.com/equinor/spinedatasheetweb/commit/5dfa8e46f60b56017dd3c774151040137440fa79))
+* set "last edited" on edited comments and set edit/delete button to hidden on others comments ([#110](https://github.com/equinor/spinedatasheetweb/issues/110)) ([a215ef2](https://github.com/equinor/spinedatasheetweb/commit/a215ef28a9240ceebd791afe5bb498ec7869df1e))
+* sidesheet overhaul ([82592b6](https://github.com/equinor/spinedatasheetweb/commit/82592b6a86de431e49c4e47d03960a81805d34e8))
+* Upgrade fusion ag-grid module to version 30 ([87ad50b](https://github.com/equinor/spinedatasheetweb/commit/87ad50baa7912935aa9173e3c1595f9a439e814a))
+
+
+### Bug Fixes
+
+* Add review function to tag view ([#108](https://github.com/equinor/spinedatasheetweb/issues/108)) ([f82ea12](https://github.com/equinor/spinedatasheetweb/commit/f82ea128a19560921ab91d9fcdfbbaf588c4a97d))
+* Added missing ag-grid modules and added clipboard ([56948dc](https://github.com/equinor/spinedatasheetweb/commit/56948dce34f0b9beb02de1843c5cd730dc283426))
+* Added setContextFilter to only show SFP project in context selector ([e513d29](https://github.com/equinor/spinedatasheetweb/commit/e513d2955d8ee6430b8b600719104f76e0aa4361))
+* collapsed tag comparison table ([48a1d33](https://github.com/equinor/spinedatasheetweb/commit/48a1d33de85ab8f0f5396b5bfd3a571c4c550686))
+* eslint compliance ([8cbcaae](https://github.com/equinor/spinedatasheetweb/commit/8cbcaae681bc527557abcaf70fe5344e56b82cd2))
+* Fix dev endpoint ([#121](https://github.com/equinor/spinedatasheetweb/issues/121)) ([2ddf501](https://github.com/equinor/spinedatasheetweb/commit/2ddf50185f91884e4a53b60efad2fa1a881b3751))
+* Fix issue with id being undefined ([#93](https://github.com/equinor/spinedatasheetweb/issues/93)) ([69a6165](https://github.com/equinor/spinedatasheetweb/commit/69a6165a80d79d847639d82323c2121b709075cf))
+* fusion ts incompatibility ([#92](https://github.com/equinor/spinedatasheetweb/issues/92)) ([aa72d79](https://github.com/equinor/spinedatasheetweb/commit/aa72d7957fe214cf02456ae62d2eebceba9777b1))
+* missing import ([6ab8eb1](https://github.com/equinor/spinedatasheetweb/commit/6ab8eb18bf9e8f561962f0223db273297067ac17))
+* Set extra stack frame fix ([#89](https://github.com/equinor/spinedatasheetweb/issues/89)) ([e14ed0e](https://github.com/equinor/spinedatasheetweb/commit/e14ed0ef4ba7e82e067046fc5e2d3a487a1e913a))
+* Update fusion packages ([#98](https://github.com/equinor/spinedatasheetweb/issues/98)) ([4df8084](https://github.com/equinor/spinedatasheetweb/commit/4df8084deaf154b2251d42240ea31a3ea768fb86))
+* Update models ([#105](https://github.com/equinor/spinedatasheetweb/issues/105)) ([41a314b](https://github.com/equinor/spinedatasheetweb/commit/41a314bb0ddc2885b0c77285606adf949d8dc98a))
+* Upgrade react and ag grid version ([#94](https://github.com/equinor/spinedatasheetweb/issues/94)) ([7c6f0f9](https://github.com/equinor/spinedatasheetweb/commit/7c6f0f915e969f0f07c3925cbb84250e71d1ffa4))
+* use location in tag link ([#68](https://github.com/equinor/spinedatasheetweb/issues/68)) ([ffb5525](https://github.com/equinor/spinedatasheetweb/commit/ffb5525d58de4599d73895ff92ec264ce41e6b7e))
+* use yarn in build ([#66](https://github.com/equinor/spinedatasheetweb/issues/66)) ([9ed8437](https://github.com/equinor/spinedatasheetweb/commit/9ed8437ca24d32d8773fe082a5dc10a272e891db))
+
+
+### For developers
+
+* Update frontend models ([#74](https://github.com/equinor/spinedatasheetweb/issues/74)) ([833cfa5](https://github.com/equinor/spinedatasheetweb/commit/833cfa5f74305f51961e83abfd54dda608cdf073))
+
 ## [1.6.0](https://github.com/equinor/spinedatasheetweb/compare/v1.5.0...v1.6.0) (2023-06-01)
 
 
