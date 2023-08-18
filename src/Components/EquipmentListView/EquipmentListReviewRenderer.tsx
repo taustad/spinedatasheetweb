@@ -11,7 +11,7 @@ export default (
 
     const buttonClicked = () => {
         setReviewModalOpen(true)
-        setTagInReview(params.data.id)
+        setTagInReview(params.data.tagNo)
         setRevisionInReview(params.data.revisionContainer.id)
     }
 
