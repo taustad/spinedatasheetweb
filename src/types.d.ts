@@ -560,6 +560,17 @@ declare namespace Components {
             transmitterOutputSignal?: string | null;
             lineEquipmentNumber?: string | null;
             pAndID?: string | null;
+            minimumOperatingMassFlow?: string | null;
+            minimumOperatingLiquidSpecificGravity?: string | null;
+            minimumOperatingLiquidViscosity?: string | null;
+            minimumOperatingVapourActualDensity?: string | null;
+            minimumOperatingVapourViscosity?: string | null;
+            normalOperatingMassFlow?: string | null;
+            normalOperatingVapourCompressibilityFactor?: string | null;
+            normalOperatingVapourActualDensity?: string | null;
+            normalOperatingVapourViscosity?: string | null;
+            maximumOperatingMassFlow?: string | null;
+            normalOperatingVapourMolecularWeight?: string | null;
         }
         export interface InstrumentSupplierOfferedProduct {
             manufacturer?: string | null;
@@ -748,6 +759,17 @@ declare namespace Components {
             transmitterOutputSignal?: string | null;
             lineEquipmentNumber?: string | null;
             pAndID?: string | null;
+            minimumOperatingMassFlow?: string | null;
+            minimumOperatingLiquidSpecificGravity?: string | null;
+            minimumOperatingLiquidViscosity?: string | null;
+            minimumOperatingVapourActualDensity?: string | null;
+            minimumOperatingVapourViscosity?: string | null;
+            normalOperatingMassFlow?: string | null;
+            normalOperatingVapourCompressibilityFactor?: string | null;
+            normalOperatingVapourActualDensity?: string | null;
+            normalOperatingVapourViscosity?: string | null;
+            maximumOperatingMassFlow?: string | null;
+            normalOperatingVapourMolecularWeight?: string | null;
         }
         export interface InstrumentTagDataDto {
             id?: string; // uuid
@@ -1776,7 +1798,7 @@ declare namespace Paths {
             id: Parameters.Id /* uuid */;
         }
         namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReviewDto[];
+            export type $200 = Components.Schemas.RevisionContainerReviewDto;
         }
     }
     namespace GetTagDataById {

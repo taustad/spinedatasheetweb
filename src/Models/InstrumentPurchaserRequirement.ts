@@ -185,6 +185,17 @@ export class InstrumentPurchaserRequirement implements Components.Schemas.Instru
     transmitterOutputSignal?: string | null;
     lineEquipmentNumber?: string | null;
     pAndID?: string | null;
+    minimumOperatingMassFlow?: string | null;
+    minimumOperatingLiquidSpecificGravity?: string | null;
+    minimumOperatingLiquidViscosity?: string | null;
+    minimumOperatingVapourActualDensity?: string | null;
+    minimumOperatingVapourViscosity?: string | null;
+    normalOperatingMassFlow?: string | null;
+    normalOperatingVapourCompressibilityFactor?: string | null;
+    normalOperatingVapourActualDensity?: string | null;
+    normalOperatingVapourViscosity?: string | null;
+    maximumOperatingMassFlow?: string | null;
+    normalOperatingVapourMolecularWeight?: string | null;
 
     constructor(init?: Partial<InstrumentPurchaserRequirement>) {
         Object.assign(this, init)

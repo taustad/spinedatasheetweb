@@ -13,7 +13,7 @@ import { comparisonGeneralColumnDefs } from "./ColumnDefs/GeneralColumnDefs"
 import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
-
+import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -54,6 +54,7 @@ function TagComparisonTable({ tags }: Props) {
         ...comparisonTR3111ColumnDefs(),
         ...comparisonGeneralColumnDefs(),
         ...comparisonEquipmentConditionsColumnDefs(),
+        ...comparisonOperatingConditionsColumnDefs(),
     ]
 
     const tagRows = tags.map((tag) => ({ ...tag.instrumentPurchaserRequirement, ...tag, tagNumber: tag.tagNo }))
