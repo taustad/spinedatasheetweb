@@ -8,6 +8,7 @@ export class ReviewComment implements Components.Schemas.CommentDto {
     userId?: string // uuid
     commenterName?: string | null
     isEdited?: boolean
+    softDeleted?: boolean | undefined
     text?: string | null
     property?: string | null
     commentLevel?: Components.Schemas.CommentLevel /* int32 */

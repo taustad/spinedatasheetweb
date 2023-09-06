@@ -12,6 +12,7 @@ declare namespace Components {
             tagDataReviewId?: string | null; // uuid
             revisionContainerReviewId?: string | null; // uuid
             isEdited?: boolean;
+            softDeleted?: boolean | undefined
         }
         export type CommentLevel = 0 | 1 | 2; // int32
         export interface ContractDto {

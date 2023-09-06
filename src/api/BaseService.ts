@@ -42,6 +42,17 @@ export class BaseService {
         return data
     }
 
+    private async requestDelete(path: string, options?: RequestOptions): Promise<any> {
+        const response = await this.client.request({
+            method: options?.method,
+            headers: options?.headers,
+            withCredentials: options?.credentials === "include",
+            url: path,
+            data: options?.body,
+        })
+        return response
+    }
+
     protected async postWithParams(
         path: string,
         options?: RequestOptions,
@@ -80,7 +91,7 @@ export class BaseService {
     }
 
     protected delete<T = any>(path: string, options?: RequestOptions): Promise<T> {
-        return this.request(path, { ...options, method: "DELETE" })
+        return this.requestDelete(path, { ...options, method: "DELETE" })
     }
 
     protected put<T = any>(path: string, options?: RequestOptions): Promise<T> {

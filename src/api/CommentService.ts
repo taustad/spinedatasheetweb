@@ -27,7 +27,7 @@ class CommentService extends BaseService {
 
     async deleteComment(id: string) {
         const result: any = await this.delete(id)
-        return result
+        return result.status
     }
 
     async updateComment(id: string, comment: ReviewComment) {

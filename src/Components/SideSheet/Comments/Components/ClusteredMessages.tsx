@@ -51,6 +51,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
             text: string | undefined;
             isEdited: boolean | undefined;
             id: string;
+            softDeleted: boolean | undefined
             modifiedDate?: string;
         }[];
     };
@@ -80,6 +81,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
                         isEdited: comment.isEdited,
                         id: comment.id || "",
                         modifiedDate: comment.modifiedDate,
+                        softDeleted: comment.softDeleted,
                     }],
                 })
             } else {
@@ -88,6 +90,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
                     isEdited: comment.isEdited,
                     id: comment.id || "",
                     modifiedDate: comment.modifiedDate,
+                    softDeleted: comment.softDeleted,
                 })
             }
         })

@@ -71,8 +71,8 @@ const CommentView: React.FC<CommentViewProps> = ({
         comment.commenterName = currentUser?._info.name
         try {
             const service = await GetCommentService()
-            await service.createComment(comment)
-            setReviewComments([...reviewComments, comment])
+            const savedComment = await service.createComment(comment)
+            setReviewComments([...reviewComments, savedComment])
         } catch (error) {
             console.log(`Error creating comment: ${error}`)
         }
