@@ -220,7 +220,6 @@ function JIP33Table({
                         headerHeight={48}
                         rowHeight={35}
                         enableRangeSelection
-                        suppressCopySingleCellRanges
                     />
                 </TableContainer>
             </Wrapper>

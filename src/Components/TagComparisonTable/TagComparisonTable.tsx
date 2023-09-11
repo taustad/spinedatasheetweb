@@ -132,7 +132,6 @@ function TagComparisonTable({ tags }: Props) {
                         headerHeight={48}
                         rowHeight={35}
                         enableRangeSelection
-                        suppressCopySingleCellRanges
                         sideBar={toggleSideBar()}
                     />
                 </TableContainer>
