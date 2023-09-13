@@ -1,21 +1,23 @@
 import React, {
- FC, Dispatch, SetStateAction, useState, useEffect,
+    FC, Dispatch, SetStateAction, useState, useEffect,
 } from "react"
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt } from "@equinor/eds-icons"
-import { ReviewComment } from "../../../Models/ReviewComment"
+import { Message } from "../../../Models/Message"
 import CommentView from "./Components/CommentView"
 import LocalNavigation from "../Components/LocalNavigation"
 import TabsTitle from "../Components/TabsTitle"
 import ConversationCard from "./Components/ConversationCard"
+import { Conversation } from "../../../Models/Conversation"
 
 type Props = {
-  currentProperty?: string;
-  setCurrentProperty: Dispatch<SetStateAction<string>>;
-  reviewComments: ReviewComment[];
-  setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>;
-  scrollToBottom: () => void;
+    currentProperty?: string;
+    setCurrentProperty: Dispatch<SetStateAction<string>>;
+    reviewComments: Message[];
+    conversations: Conversation[];
+    setReviewComments: Dispatch<SetStateAction<Message[]>>;
+    scrollToBottom: () => void;
 };
 
 const Overview = styled.div`
@@ -44,97 +46,99 @@ const TopButton = styled(Button)`
     margin-left: 5px;
     `
 const CommentSideSheet: FC<Props> = ({
-  currentProperty,
-  setCurrentProperty,
-  reviewComments,
-  setReviewComments,
-  scrollToBottom,
+    currentProperty,
+    setCurrentProperty,
+    reviewComments,
+    conversations,
+    setReviewComments,
+    scrollToBottom,
 }) => {
-  const [activeTab, setActiveTab] = useState(0)
-  const Navigationbuttons = [
-    "All",
-    "Open",
-    "To be implemented",
-    "Closed",
-    "Implemented",
-  ]
+    const [activeTab, setActiveTab] = useState(0)
+    const Navigationbuttons = [
+        "All",
+        "Open",
+        "To be implemented",
+        "Closed",
+        "Implemented",
+    ]
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [currentProperty, reviewComments])
+    useEffect(() => {
+        scrollToBottom()
+    }, [currentProperty, reviewComments])
 
-  const dummyConversations = [
-    // Dummy data for the "All" tab
-    [
-      { title: "Test conversation 1 (All)", tagInfo: "Tag 1" },
-      { title: "Test conversation 2 (All)", tagInfo: "Tag 2" },
-    ],
-    // Dummy data for the "Open" tab
-    [
-      { title: "Test conversation 1 (Open)", tagInfo: "Tag 1" },
-      { title: "Test conversation 2 (Open)", tagInfo: "Tag 2" },
-    ],
-    // Dummy data for the "To be implemented" tab
-    [
-      { title: "Test conversation 1 (To be implemented)", tagInfo: "Tag 1" },
-      { title: "Test conversation 2 (To be implemented)", tagInfo: "Tag 2" },
-    ],
-    // Dummy data for the "Closed" tab
-    [
-      { title: "Test conversation 1 (Closed)", tagInfo: "Tag 1" },
-      { title: "Test conversation 2 (Closed)", tagInfo: "Tag 2" },
-    ],
-    // Dummy data for the "Implemented" tab
-    [
-      { title: "Test conversation 1 (Implemented)", tagInfo: "Tag 1" },
-      { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
-    ],
-  ]
+    const dummyConversations = [
+        // Dummy data for the "All" tab
+        [
+            { title: "Test conversation 1 (All)", tagInfo: "Tag 1" },
+            { title: "Test conversation 2 (All)", tagInfo: "Tag 2" },
+        ],
+        // Dummy data for the "Open" tab
+        [
+            { title: "Test conversation 1 (Open)", tagInfo: "Tag 1" },
+            { title: "Test conversation 2 (Open)", tagInfo: "Tag 2" },
+        ],
+        // Dummy data for the "To be implemented" tab
+        [
+            { title: "Test conversation 1 (To be implemented)", tagInfo: "Tag 1" },
+            { title: "Test conversation 2 (To be implemented)", tagInfo: "Tag 2" },
+        ],
+        // Dummy data for the "Closed" tab
+        [
+            { title: "Test conversation 1 (Closed)", tagInfo: "Tag 1" },
+            { title: "Test conversation 2 (Closed)", tagInfo: "Tag 2" },
+        ],
+        // Dummy data for the "Implemented" tab
+        [
+            { title: "Test conversation 1 (Implemented)", tagInfo: "Tag 1" },
+            { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
+        ],
+    ]
 
-  return (
-      <Container>
-          {currentProperty && currentProperty !== "" ? (
-              <CommentView
-                  currentProperty={currentProperty}
-                  reviewComments={reviewComments}
-                  setReviewComments={setReviewComments}
-              />
-      ) : (
-          <>
-              <Overview>
-                  <Header>
-                      <TabsTitle>Comments</TabsTitle>
-                      <ButtonRow>
-                          <TopButton variant="outlined"> Add Comment on tag </TopButton>
-                          <Tooltip title="Search">
-                              <TopButton variant="ghost_icon">
-                                  <Icon data={search} />
-                              </TopButton>
-                          </Tooltip>
-                          <Tooltip title="Filter">
-                              <TopButton variant="ghost_icon">
-                                  <Icon data={filter_alt} />
-                              </TopButton>
-                          </Tooltip>
-                      </ButtonRow>
-                  </Header>
-                  <LocalNavigation
-                      buttons={Navigationbuttons}
-                      activeTab={activeTab}
-                      setActiveTab={setActiveTab}
-                  />
-              </Overview>
-              {dummyConversations[activeTab].map((conversation) => (
-                  <ConversationCard
-                      key={conversation.title} // Add a key prop for each rendered element
-                      title={conversation.title}
-                      tagInfo={conversation.tagInfo}
-                  />
-          ))}
-          </>
-        )}
-      </Container>
-  )
+    return (
+        <Container>
+            {currentProperty && currentProperty !== "" ? (
+                <CommentView
+                    currentProperty={currentProperty}
+                    reviewComments={reviewComments}
+                    conversations={conversations}
+                    setReviewComments={setReviewComments}
+                />
+            ) : (
+                <>
+                    <Overview>
+                        <Header>
+                            <TabsTitle>Comments</TabsTitle>
+                            <ButtonRow>
+                                <TopButton variant="outlined"> Add Comment on tag </TopButton>
+                                <Tooltip title="Search">
+                                    <TopButton variant="ghost_icon">
+                                        <Icon data={search} />
+                                    </TopButton>
+                                </Tooltip>
+                                <Tooltip title="Filter">
+                                    <TopButton variant="ghost_icon">
+                                        <Icon data={filter_alt} />
+                                    </TopButton>
+                                </Tooltip>
+                            </ButtonRow>
+                        </Header>
+                        <LocalNavigation
+                            buttons={Navigationbuttons}
+                            activeTab={activeTab}
+                            setActiveTab={setActiveTab}
+                        />
+                    </Overview>
+                    {dummyConversations[activeTab].map((conversation) => (
+                        <ConversationCard
+                            key={conversation.title} // Add a key prop for each rendered element
+                            title={conversation.title}
+                            tagInfo={conversation.tagInfo}
+                        />
+                    ))}
+                </>
+            )}
+        </Container>
+    )
 }
 
 export default CommentSideSheet

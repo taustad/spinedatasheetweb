@@ -8,7 +8,7 @@ import {
 import {
     delete_to_trash, edit,
 } from "@equinor/eds-icons"
-import { ReviewComment } from "../../../../Models/ReviewComment"
+import { Message } from "../../../../Models/Message"
 import { GetCommentService } from "../../../../api/CommentService"
 
 const CommentText = styled(Typography)`
@@ -20,19 +20,19 @@ const SubmitEditButton = styled(Button)`
 `
 
 interface RenderCommentProps {
-    comment: ReviewComment,
+    comment: Message,
     isUpdateMode: boolean,
     setUpdateMode: any,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
+    reviewComments: Message[],
+    setReviewComments: Dispatch<SetStateAction<Message[]>>
     isCurrentUser: boolean
 }
 
 const updateComment = async (
     newCommentText: string,
-    comment: ReviewComment,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
+    comment: Message,
+    reviewComments: Message[],
+    setReviewComments: Dispatch<SetStateAction<Message[]>>,
 ) => {
     if (newCommentText && comment.id) {
         try {
@@ -49,9 +49,9 @@ const updateComment = async (
 }
 
 const deleteComment = async (
-    comment: ReviewComment,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
+    comment: Message,
+    reviewComments: Message[],
+    setReviewComments: Dispatch<SetStateAction<Message[]>>,
 ) => {
     if (comment.id) {
         try {

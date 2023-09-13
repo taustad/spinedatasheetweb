@@ -1,4 +1,4 @@
-import { ReviewComment } from "../Models/ReviewComment"
+import { Message } from "../Models/Message"
 import { BaseService } from "./BaseService"
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
@@ -13,12 +13,12 @@ class CommentService extends BaseService {
         return result
     }
 
-    async getCommentsForTagReview(id: string) {
-        const result: any = await this.get(`tagreview/${id}`)
+    async getConversationsForTagReview(reviewId: string) {
+        const result: any = await this.get(`${reviewId}/conversations`)
         return result
     }
 
-    async createComment(comment: ReviewComment) {
+    async createComment(comment: Message) {
         const result: any = await this.post("", {
             body: comment,
         })
@@ -30,7 +30,7 @@ class CommentService extends BaseService {
         return result.status
     }
 
-    async updateComment(id: string, comment: ReviewComment) {
+    async updateComment(id: string, comment: Message) {
         const result: any = await this.put(`${id}`, {
             body: comment,
         })

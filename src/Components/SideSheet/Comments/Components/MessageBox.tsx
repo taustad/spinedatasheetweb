@@ -2,7 +2,7 @@ import React, {
     Dispatch, FC, SetStateAction, useState,
 } from "react"
 import styled from "styled-components"
-import { ReviewComment } from "../../../../Models/ReviewComment"
+import { Message } from "../../../../Models/Message"
 import RenderComment from "./RenderComment"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
@@ -18,9 +18,9 @@ const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
 `
 
 interface MessageBoxProps {
-    messageObject: ReviewComment
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
+    messageObject: Message
+    reviewComments: Message[]
+    setReviewComments: Dispatch<SetStateAction<Message[]>>
     userId?: string
     isCurrentUser: boolean
 }

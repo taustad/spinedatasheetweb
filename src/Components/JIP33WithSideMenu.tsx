@@ -3,7 +3,7 @@ import { tokens } from "@equinor/eds-tokens"
 import React, { Dispatch, SetStateAction, useState } from "react"
 import styled from "styled-components"
 import JIP33Table from "./JIP33Table/JIP33Table"
-import { ReviewComment } from "../Models/ReviewComment"
+import { Message } from "../Models/Message"
 
 const Wrapper = styled.div`
     display: flex;
@@ -75,7 +75,7 @@ interface Props {
     sideMenuList: string[]
     rowDataList: object[][]
     customTabList?: string[]
-    reviewComments?: ReviewComment[]
+    reviewComments?: Message[]
     setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined
     setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined
     setWidth?: (width: number) => void

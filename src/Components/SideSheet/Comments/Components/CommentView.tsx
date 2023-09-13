@@ -9,12 +9,13 @@ import { useParams } from "react-router-dom"
 import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
 import { GetCommentService } from "../../../../api/CommentService"
-import { ReviewComment } from "../../../../Models/ReviewComment"
+import { Message } from "../../../../Models/Message"
 import MessageBox from "./MessageBox"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import { formatDate } from "../../../../utils/helpers"
 import ClusteredMessages from "./ClusteredMessages"
+import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div`
     display: flex;
@@ -25,7 +26,7 @@ const Container = styled.div`
     align-items: center;
 `
 
-const Conversation = styled.div`
+const ConversationDiv = styled.div`
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -35,22 +36,24 @@ const Conversation = styled.div`
 
 type CommentViewProps = {
     currentProperty: string
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
+    reviewComments: Message[]
+    conversations: Conversation[]
+    setReviewComments: Dispatch<SetStateAction<Message[]>>
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
     currentProperty,
     reviewComments,
+    conversations,
     setReviewComments,
 }) => {
-    const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
+    const [newReviewComment, setNewReviewComment] = useState<Message>()
     const { activeTagData } = useContext(ViewContext)
     const { tagId } = useParams<Record<string, string | undefined>>()
     const currentUser: any = useCurrentUser()
 
     const getCommentsForProperty = (property: string) => (
-        reviewComments.filter((comment) => comment.property === property)
+        conversations.filter((conversation) => conversation.property === property)
     )
 
     const handleCommentChange = (
@@ -62,32 +65,33 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
 
     const handleSubmit = async () => {
-        const comment = { ...newReviewComment }
-        comment.tagDataReviewId = activeTagData?.review?.id
-        comment.commentLevel = 0
-        comment.property = currentProperty
-        comment.createdDate = new Date().toISOString()
-        comment.userId = currentUser?._info.localAccountId
-        comment.commenterName = currentUser?._info.name
-        try {
-            const service = await GetCommentService()
-            const savedComment = await service.createComment(comment)
-            setReviewComments([...reviewComments, savedComment])
-        } catch (error) {
-            console.log(`Error creating comment: ${error}`)
-        }
-        setNewReviewComment(undefined)
+        console.log("Submit comment")
+        // const comment = { ...newReviewComment }
+        // comment.tagDataReviewId = activeTagData?.review?.id
+        // comment.commentLevel = 0
+        // comment.property = currentProperty
+        // comment.createdDate = new Date().toISOString()
+        // comment.userId = currentUser?._info.localAccountId
+        // comment.commenterName = currentUser?._info.name
+        // try {
+        //     const service = await GetCommentService()
+        //     const savedComment = await service.createComment(comment)
+        //     setReviewComments([...reviewComments, savedComment])
+        // } catch (error) {
+        //     console.log(`Error creating comment: ${error}`)
+        // }
+        // setNewReviewComment(undefined)
     }
 
     return (
         <Container>
-            <Conversation>
+            <ConversationDiv>
                 <ClusteredMessages
                     comments={getCommentsForProperty(currentProperty)}
                     reviewComments={reviewComments}
                     setReviewComments={setReviewComments}
                 />
-            </Conversation>
+            </ConversationDiv>
             <InputController
                 value={newReviewComment?.text ?? ""}
                 handleCommentChange={handleCommentChange}

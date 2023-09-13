@@ -1,14 +1,14 @@
 import React, {
-Dispatch, SetStateAction, useContext, useRef, useEffect,
+    Dispatch, SetStateAction, useContext, useRef, useEffect,
 } from "react"
 import {
- Icon, Tabs, Typography, Button,
+    Icon, Tabs, Typography, Button,
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
 import { TagData } from "../../Models/TagData"
-import { ReviewComment } from "../../Models/ReviewComment"
+import { Message } from "../../Models/Message"
 import InfoStrip from "./Components/InfoStrip"
 import CommentsSideSheet from "./Comments/CommentSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
@@ -16,6 +16,7 @@ import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 import ActivitySideSheet from "./Activity/ActivitySideSheet"
 import { ViewContext } from "../../Context/ViewContext"
+import { Conversation } from "../../Models/Conversation"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -94,8 +95,9 @@ type Props = {
     onClose: () => void
     currentProperty: any
     setCurrentProperty: Dispatch<SetStateAction<any>>
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
+    reviewComments: Message[]
+    conversations: Conversation[]
+    setReviewComments: Dispatch<SetStateAction<Message[]>>
     tag: TagData
     width: number
     setWidth: (width: number) => void
@@ -105,6 +107,7 @@ const SheetContainer: React.FC<Props> = ({
     onClose,
     isOpen,
     reviewComments,
+    conversations,
     currentProperty,
     setCurrentProperty,
     setReviewComments,
@@ -220,6 +223,7 @@ const SheetContainer: React.FC<Props> = ({
                                 <CommentsSideSheet
                                     scrollToBottom={scrollToBottom}
                                     reviewComments={reviewComments}
+                                    conversations={conversations}
                                     currentProperty={currentProperty.property}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewComments={setReviewComments}

@@ -1,5 +1,5 @@
 import {
- Icon, Tabs, Typography, Button,
+    Icon, Tabs, Typography, Button,
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import React, {
@@ -20,7 +20,7 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { ReviewComment } from "../Models/ReviewComment"
+import { Message } from "../Models/Message"
 import { GetCommentService } from "../api/CommentService"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
@@ -32,6 +32,7 @@ import { transmitterRowData } from "../Components/NORSOKTable/RowData/Transmitte
 import Dialogue from "../Components/Dialogue"
 import SheetContainer from "../Components/SideSheet/SheetContainer"
 import { ViewContext } from "../Context/ViewContext"
+import { Conversation } from "../Models/Conversation"
 
 const TopBar = styled.div`
     border-bottom: 1px solid LightGray;
@@ -86,7 +87,8 @@ function JIP33InstrumentTabView({ }) {
     const [open, setOpen] = useState(false)
     const [currentProperty, setCurrentProperty] = useState<string>("")
     const [activeTab, setActiveTab] = useState(0)
-    const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
+    const [reviewComments, setReviewComments] = useState<Message[]>([])
+    const [conversations, setConversations] = useState<Conversation[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
     const { activeTagData, setActiveTagData, setActiveSheetTab } = useContext(ViewContext)
@@ -104,10 +106,10 @@ function JIP33InstrumentTabView({ }) {
         setCurrentProperty("")
     }, [setOpen])
 
-    const getCommentsForTagReview = async (id: string) => {
-        const comments: ReviewComment[] = await (
+    const getConversationsForTagReview = async (id: string) => {
+        const comments: Message[] = await (
             await GetCommentService()
-        ).getCommentsForTagReview(id)
+        ).getConversationsForTagReview(id)
         setReviewComments(comments)
     }
 
@@ -129,7 +131,7 @@ function JIP33InstrumentTabView({ }) {
                         tagDataReviewId !== null
                         && tagDataReviewId !== undefined
                     ) {
-                        await getCommentsForTagReview(tagDataReviewId)
+                        await getConversationsForTagReview(tagDataReviewId)
                     }
 
                     setIsLoading(false)
@@ -142,30 +144,30 @@ function JIP33InstrumentTabView({ }) {
     }, [])
 
     useEffect(() => {
-    if (tagId !== null && tagId !== undefined) {
-        const intervalId = setInterval(async () => {
-            const tagDataReviewId = activeTagData?.review?.id
-            if (tagDataReviewId === undefined || tagDataReviewId === null) {
-                return
-            }
-            const newComments = await (
-                await GetCommentService()
-            ).getCommentsForTagReview(tagDataReviewId)
+        if (tagId !== null && tagId !== undefined) {
+            const intervalId = setInterval(async () => {
+                const tagDataReviewId = activeTagData?.review?.id
+                if (tagDataReviewId === undefined || tagDataReviewId === null) {
+                    return
+                }
+                const newComments = await (
+                    await GetCommentService()
+                ).getConversationsForTagReview(tagDataReviewId)
 
-            const areCommentsDifferent = !(
-                newComments.length === reviewComments.length
-                    && newComments.every((comment: ReviewComment, index: number) => comment.id === reviewComments[index].id)
-            )
+                const areCommentsDifferent = !(
+                    newComments.length === reviewComments.length
+                    && newComments.every((comment: Message, index: number) => comment.id === reviewComments[index].id)
+                )
 
-            if (areCommentsDifferent) {
-                setReviewComments(newComments)
-            }
-        }, 5000)
+                if (areCommentsDifferent) {
+                    setReviewComments(newComments)
+                }
+            }, 5000)
 
-        return () => clearInterval(intervalId)
-    }
-    return () => { }
-}, [activeTagData, reviewComments])
+            return () => clearInterval(intervalId)
+        }
+        return () => { }
+    }, [activeTagData, reviewComments])
 
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />
@@ -286,6 +288,7 @@ function JIP33InstrumentTabView({ }) {
                 currentProperty={currentProperty}
                 setCurrentProperty={setCurrentProperty}
                 reviewComments={reviewComments}
+                conversations={conversations}
                 setReviewComments={setReviewComments}
                 tag={activeTagData}
                 width={sheetWidth}

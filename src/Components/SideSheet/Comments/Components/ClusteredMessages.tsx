@@ -5,7 +5,7 @@ import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useCurrentUser } from "@equinor/fusion"
 import MessageBox from "./MessageBox"
-import { ReviewComment } from "../../../../Models/ReviewComment"
+import { Message } from "../../../../Models/Message"
 import { formatDate } from "../../../../utils/helpers"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
@@ -31,9 +31,9 @@ const TimeStamp = styled.div`
 `
 
 interface ClusteredMessagesProps {
-    comments: ReviewComment[]
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
+    comments: Message[]
+    reviewComments: Message[]
+    setReviewComments: Dispatch<SetStateAction<Message[]>>
 }
 
 const ClusteredMessages: FC<ClusteredMessagesProps> = ({
@@ -56,7 +56,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
         }[];
     };
 
-    const generateMessageCluster = (postedComments: ReviewComment[]): Cluster[] => {
+    const generateMessageCluster = (postedComments: Message[]): Cluster[] => {
         const clusters: Cluster[] = []
         const strToDate = (dateString: string): Date => new Date(dateString)
         const diffInMinutes = (date1: Date, date2: Date): number => (date2.getTime() - date1.getTime()) / 1000 / 60
