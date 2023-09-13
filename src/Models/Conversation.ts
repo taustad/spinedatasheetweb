@@ -1,7 +1,7 @@
 import { Message } from "./Message"
 import { User } from "./User"
 
-export class Conversation implements Components.Schemas.ConversationDto {
+export class Conversation implements Components.Schemas.GetConversationDto {
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time

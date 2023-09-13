@@ -4,6 +4,7 @@ import React, {
 import styled from "styled-components"
 import { Message } from "../../../../Models/Message"
 import RenderComment from "./RenderComment"
+import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
     align-self: ${(props) => (props.commentIsByCurrentUser ? "flex-end" : "flex-start")};

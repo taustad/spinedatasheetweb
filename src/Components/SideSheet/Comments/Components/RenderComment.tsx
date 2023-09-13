@@ -10,6 +10,7 @@ import {
 } from "@equinor/eds-icons"
 import { Message } from "../../../../Models/Message"
 import { GetCommentService } from "../../../../api/CommentService"
+import { Conversation } from "../../../../Models/Conversation"
 
 const CommentText = styled(Typography)`
     margin: 10px 0;
@@ -23,22 +24,22 @@ interface RenderCommentProps {
     comment: Message,
     isUpdateMode: boolean,
     setUpdateMode: any,
-    reviewComments: Message[],
-    setReviewComments: Dispatch<SetStateAction<Message[]>>
+    conversations: Conversation[],
+    setConversations: Dispatch<SetStateAction<Conversation[]>>
     isCurrentUser: boolean
 }
 
 const updateComment = async (
     newCommentText: string,
     comment: Message,
-    reviewComments: Message[],
-    setReviewComments: Dispatch<SetStateAction<Message[]>>,
+    conversations: Conversation[],
+    setConversations: Dispatch<SetStateAction<Conversation[]>>,
 ) => {
     if (newCommentText && comment.id) {
         try {
-            const commentService = await GetCommentService()
             const newComment = { ...comment }
             newComment.text = newCommentText
+            const commentService = await GetCommentService()
             const updatedComment = await commentService.updateMessage(comment.id, newComment)
             const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : updatedComment))
             setReviewComments(newReviewComments)
@@ -50,8 +51,8 @@ const updateComment = async (
 
 const deleteComment = async (
     comment: Message,
-    reviewComments: Message[],
-    setReviewComments: Dispatch<SetStateAction<Message[]>>,
+    conversations: Conversation[],
+    setConversations: Dispatch<SetStateAction<Conversation[]>>,
 ) => {
     if (comment.id) {
         try {
@@ -72,7 +73,7 @@ const deleteComment = async (
 }
 
 const RenderComment: FC<RenderCommentProps> = ({
-    comment, isUpdateMode, setUpdateMode, reviewComments, setReviewComments, isCurrentUser,
+    comment, isUpdateMode, setUpdateMode, conversations, setConversations, isCurrentUser,
 }) => {
     const [editedComment, setEditedComment] = useState(comment.text || "")
     const [open, setOpen] = useState(false)
@@ -80,7 +81,7 @@ const RenderComment: FC<RenderCommentProps> = ({
     const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedComment(e.target.value)
     const cancelEdit = () => setUpdateMode(false)
     const saveComment = () => {
-        updateComment(editedComment, comment, reviewComments, setReviewComments)
+        updateComment(editedComment, comment, conversations, setConversations)
         cancelEdit()
     }
 
@@ -157,7 +158,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                     </Button>
                     <Button
                         variant="ghost_icon"
-                        onClick={() => deleteComment(comment, reviewComments, setReviewComments)}
+                        onClick={() => deleteComment(comment, conversations, setConversations)}
                         title="Delete"
                     >
                         <Icon data={delete_to_trash} size={16} color="#007079" />

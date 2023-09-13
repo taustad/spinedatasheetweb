@@ -1,6 +1,6 @@
 export class User implements Components.Schemas.UserDto {
     userId?: string; // uuid
-    userName?: string | null;
+    displayName?: string | null;
 
     constructor(init?: Partial<User>) {
         Object.assign(this, init)

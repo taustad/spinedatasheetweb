@@ -69,7 +69,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
 
     const createConversation = async () => {
-        const createCommentDto: Components.Schemas.CreateCommentDto = {
+        const createCommentDto: Components.Schemas.ConversationDto = {
             property: currentProperty,
             text: newMessage?.text ?? "",
             conversationLevel: 1,

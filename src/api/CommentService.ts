@@ -19,13 +19,13 @@ class CommentService extends BaseService {
     }
 
     async addMessage(reviewId: string, conversationId: string, message: Message) {
-        const result: any = await this.post(`${reviewId}/conversations/${conversationId}/comments`, {
+        const result: any = await this.post(`${reviewId}/conversations/${conversationId}/messages`, {
             body: message,
         })
         return result
     }
 
-    async createConversation(reviewId: string, message: Components.Schemas.CreateCommentDto) {
+    async createConversation(reviewId: string, message: Components.Schemas.ConversationDto) {
         const result: any = await this.post(`${reviewId}/conversations`, {
             body: message,
         })
@@ -37,9 +37,9 @@ class CommentService extends BaseService {
         return result.status
     }
 
-    async updateMessage(id: string, comment: Message) {
-        const result: any = await this.put(`${id}`, {
-            body: comment,
+    async updateMessage(reviewId: string, conversationId: string, commentId: string, message: Message) {
+        const result: any = await this.put(`${reviewId}/conversations/${conversationId}/messages/${commentId}`, {
+            body: message,
         })
         return result
     }
