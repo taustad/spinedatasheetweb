@@ -87,7 +87,7 @@ function JIP33InstrumentTabView({ }) {
     const [open, setOpen] = useState(false)
     const [currentProperty, setCurrentProperty] = useState<string>("")
     const [activeTab, setActiveTab] = useState(0)
-    const [reviewComments, setReviewComments] = useState<Message[]>([])
+    // const [reviewComments, setReviewComments] = useState<Message[]>([])
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
@@ -107,10 +107,10 @@ function JIP33InstrumentTabView({ }) {
     }, [setOpen])
 
     const getConversationsForTagReview = async (id: string) => {
-        const comments: Message[] = await (
+        const newConversations: Conversation[] = await (
             await GetCommentService()
         ).getConversationsForTagReview(id)
-        setReviewComments(comments)
+        setConversations(newConversations)
     }
 
     useEffect(() => {
@@ -150,24 +150,24 @@ function JIP33InstrumentTabView({ }) {
                 if (tagDataReviewId === undefined || tagDataReviewId === null) {
                     return
                 }
-                const newComments = await (
+                const newConversations: Conversation[] = await (
                     await GetCommentService()
                 ).getConversationsForTagReview(tagDataReviewId)
 
-                const areCommentsDifferent = !(
-                    newComments.length === reviewComments.length
-                    && newComments.every((comment: Message, index: number) => comment.id === reviewComments[index].id)
-                )
+                // const areCommentsDifferent = !(
+                //     newConversations.length === reviewComments.length
+                //     && newConversations.every((comment: Message, index: number) => comment.id === reviewComments[index].id)
+                // )
 
-                if (areCommentsDifferent) {
-                    setReviewComments(newComments)
-                }
+                // if (areCommentsDifferent) {
+                setConversations(newConversations)
+                // }
             }, 5000)
 
             return () => clearInterval(intervalId)
         }
         return () => { }
-    }, [activeTagData, reviewComments])
+    }, [activeTagData])
 
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />
@@ -259,7 +259,6 @@ function JIP33InstrumentTabView({ }) {
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListNORSOK}
                                     rowDataList={rowDataListNORSOK}
-                                    reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
                                     setWidth={setSheetWidth}
@@ -271,7 +270,6 @@ function JIP33InstrumentTabView({ }) {
                                     sideMenuList={sideMenuListJIP33}
                                     rowDataList={rowDataListJIP33}
                                     customTabList={customTabList}
-                                    reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
                                     setWidth={setSheetWidth}
@@ -287,9 +285,7 @@ function JIP33InstrumentTabView({ }) {
                 isOpen={open}
                 currentProperty={currentProperty}
                 setCurrentProperty={setCurrentProperty}
-                reviewComments={reviewComments}
                 conversations={conversations}
-                setReviewComments={setReviewComments}
                 tag={activeTagData}
                 width={sheetWidth}
                 setWidth={setSheetWidth}

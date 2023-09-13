@@ -95,9 +95,9 @@ type Props = {
     onClose: () => void
     currentProperty: any
     setCurrentProperty: Dispatch<SetStateAction<any>>
-    reviewComments: Message[]
+    reviewComments?: Message[]
     conversations: Conversation[]
-    setReviewComments: Dispatch<SetStateAction<Message[]>>
+    setReviewComments?: Dispatch<SetStateAction<Message[]>>
     tag: TagData
     width: number
     setWidth: (width: number) => void
@@ -222,11 +222,9 @@ const SheetContainer: React.FC<Props> = ({
                             {activeSheetTab === 4 && (
                                 <CommentsSideSheet
                                     scrollToBottom={scrollToBottom}
-                                    reviewComments={reviewComments}
                                     conversations={conversations}
                                     currentProperty={currentProperty.property}
                                     setCurrentProperty={setCurrentProperty}
-                                    setReviewComments={setReviewComments}
                                 />
                             )}
                         </TabsPanel>

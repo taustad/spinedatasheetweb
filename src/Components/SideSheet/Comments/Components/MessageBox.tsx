@@ -19,14 +19,14 @@ const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
 
 interface MessageBoxProps {
     messageObject: Message
-    reviewComments: Message[]
-    setReviewComments: Dispatch<SetStateAction<Message[]>>
+    conversations: Conversation[]
+    setConversations: Dispatch<SetStateAction<Conversation[]>>
     userId?: string
     isCurrentUser: boolean
 }
 
 const MessageBox: FC<MessageBoxProps> = ({
-    messageObject, reviewComments, setReviewComments, userId, isCurrentUser,
+    messageObject, conversations, setConversations, userId, isCurrentUser,
 }) => {
     const [isUpdateMode, setUpdateMode] = useState(false)
 

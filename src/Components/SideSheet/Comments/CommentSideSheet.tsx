@@ -14,9 +14,9 @@ import { Conversation } from "../../../Models/Conversation"
 type Props = {
     currentProperty?: string;
     setCurrentProperty: Dispatch<SetStateAction<string>>;
-    reviewComments: Message[];
+    reviewComments?: Message[];
     conversations: Conversation[];
-    setReviewComments: Dispatch<SetStateAction<Message[]>>;
+    setReviewComments?: Dispatch<SetStateAction<Message[]>>;
     scrollToBottom: () => void;
 };
 
@@ -99,9 +99,7 @@ const CommentSideSheet: FC<Props> = ({
             {currentProperty && currentProperty !== "" ? (
                 <CommentView
                     currentProperty={currentProperty}
-                    reviewComments={reviewComments}
                     conversations={conversations}
-                    setReviewComments={setReviewComments}
                 />
             ) : (
                 <>

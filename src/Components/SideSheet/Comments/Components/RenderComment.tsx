@@ -39,7 +39,7 @@ const updateComment = async (
             const commentService = await GetCommentService()
             const newComment = { ...comment }
             newComment.text = newCommentText
-            const updatedComment = await commentService.updateComment(comment.id, newComment)
+            const updatedComment = await commentService.updateMessage(comment.id, newComment)
             const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : updatedComment))
             setReviewComments(newReviewComments)
         } catch (error) {
@@ -56,7 +56,7 @@ const deleteComment = async (
     if (comment.id) {
         try {
             const service = await GetCommentService()
-            const response = await service.deleteComment(comment.id)
+            const response = await service.deleteMessage(comment.id)
             if (response === 204) {
                 const deletedComment = { ...reviewComments.find((c) => c.id === comment.id) }
                 deletedComment.softDeleted = true

@@ -7,6 +7,7 @@ import { useCurrentUser } from "@equinor/fusion"
 import MessageBox from "./MessageBox"
 import { Message } from "../../../../Models/Message"
 import { formatDate } from "../../../../utils/helpers"
+import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
     align-self: ${(props) => (props.commentIsByCurrentUser ? "flex-end" : "flex-start")};
@@ -32,12 +33,12 @@ const TimeStamp = styled.div`
 
 interface ClusteredMessagesProps {
     comments: Message[]
-    reviewComments: Message[]
-    setReviewComments: Dispatch<SetStateAction<Message[]>>
+    conversations: Conversation[]
+    setConversations: Dispatch<SetStateAction<Conversation[]>>
 }
 
 const ClusteredMessages: FC<ClusteredMessagesProps> = ({
-    comments, reviewComments, setReviewComments,
+    comments, conversations, setConversations,
 }) => {
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
