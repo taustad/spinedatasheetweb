@@ -95,10 +95,6 @@ type Props = {
     onClose: () => void
     currentProperty: any
     setCurrentProperty: Dispatch<SetStateAction<any>>
-    reviewComments?: Message[]
-    conversations: Conversation[]
-    setReviewComments?: Dispatch<SetStateAction<Message[]>>
-    tag: TagData
     width: number
     setWidth: (width: number) => void
 }
@@ -106,16 +102,12 @@ type Props = {
 const SheetContainer: React.FC<Props> = ({
     onClose,
     isOpen,
-    reviewComments,
-    conversations,
     currentProperty,
     setCurrentProperty,
-    setReviewComments,
-    tag,
     width,
     setWidth,
 }) => {
-    const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
+    const { activeSheetTab, setActiveSheetTab, activeTagData } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
     const handleTabChange = (index: number) => setActiveSheetTab(index)
@@ -145,6 +137,8 @@ const SheetContainer: React.FC<Props> = ({
             <Typography variant="body_short">Work in progress...</Typography>
         </Placeholder>
     )
+
+    if (activeTagData === undefined) { return (<div>Error loading tag</div>) }
 
     return (
         <Resizable
@@ -191,9 +185,9 @@ const SheetContainer: React.FC<Props> = ({
                     <TagInfo>
                         <Icon data={tagIcon} color="black" size={18} />
                         <Typography variant="body_short">
-                            <strong>{tag.tagNo}</strong>
+                            <strong>{activeTagData.tagNo}</strong>
                             {" "}
-                            {tag.description}
+                            {activeTagData.description}
                         </Typography>
                     </TagInfo>
                 </SheetHeader>
@@ -222,7 +216,6 @@ const SheetContainer: React.FC<Props> = ({
                             {activeSheetTab === 4 && (
                                 <CommentsSideSheet
                                     scrollToBottom={scrollToBottom}
-                                    conversations={conversations}
                                     currentProperty={currentProperty.property}
                                     setCurrentProperty={setCurrentProperty}
                                 />

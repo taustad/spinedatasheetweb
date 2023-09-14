@@ -8,8 +8,8 @@ class CommentService extends BaseService {
         return result.value
     }
 
-    async getMessages() {
-        const result: any = await this.get("")
+    async getMessagesForConversation(reviewId: string, conversationId: string) {
+        const result: any = await this.get(`${reviewId}/conversations/${conversationId}`)
         return result
     }
 
@@ -32,8 +32,8 @@ class CommentService extends BaseService {
         return result
     }
 
-    async deleteMessage(id: string) {
-        const result: any = await this.delete(id)
+    async deleteMessage(reviewId: string, conversationId: string, commentId: string) {
+        const result: any = await this.delete(`${reviewId}/conversations/${conversationId}/messages/${commentId}`)
         return result.status
     }
 

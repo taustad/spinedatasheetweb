@@ -1,10 +1,9 @@
 import React, {
-    Dispatch, FC, SetStateAction, useState,
+    FC, useState,
 } from "react"
 import styled from "styled-components"
 import { Message } from "../../../../Models/Message"
 import RenderComment from "./RenderComment"
-import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
     align-self: ${(props) => (props.commentIsByCurrentUser ? "flex-end" : "flex-start")};
@@ -20,14 +19,14 @@ const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
 
 interface MessageBoxProps {
     messageObject: Message
-    conversations: Conversation[]
-    setConversations: Dispatch<SetStateAction<Conversation[]>>
     userId?: string
     isCurrentUser: boolean
 }
 
 const MessageBox: FC<MessageBoxProps> = ({
-    messageObject, conversations, setConversations, userId, isCurrentUser,
+    messageObject,
+    userId,
+    isCurrentUser,
 }) => {
     const [isUpdateMode, setUpdateMode] = useState(false)
 
@@ -38,8 +37,6 @@ const MessageBox: FC<MessageBoxProps> = ({
                     comment={messageObject}
                     isUpdateMode={isUpdateMode}
                     setUpdateMode={setUpdateMode}
-                    reviewComments={reviewComments}
-                    setReviewComments={setReviewComments}
                     isCurrentUser={isCurrentUser}
                 />
             </div>

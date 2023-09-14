@@ -1,19 +1,13 @@
 import React, {
-    Dispatch,
-    SetStateAction,
     useContext,
     useEffect,
     useState,
 } from "react"
-import { useParams } from "react-router-dom"
-import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
 import { GetCommentService } from "../../../../api/CommentService"
 import { Message } from "../../../../Models/Message"
-import MessageBox from "./MessageBox"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
-import { formatDate } from "../../../../utils/helpers"
 import ClusteredMessages from "./ClusteredMessages"
 import { Conversation } from "../../../../Models/Conversation"
 
@@ -36,28 +30,40 @@ const ConversationDiv = styled.div`
 
 type CommentViewProps = {
     currentProperty: string
-    conversations: Conversation[]
-    setConversations: Dispatch<SetStateAction<Conversation[]>>
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
     currentProperty,
-    conversations,
-    setConversations,
 }) => {
     const [newMessage, setNewMessage] = useState<Message>()
-    const { activeTagData } = useContext(ViewContext)
+    const {
+        activeTagData, conversations, setConversations,
+    } = useContext(ViewContext)
     const [activeConversation, setActiveConversation] = useState<Conversation>()
-    const { tagId } = useParams<Record<string, string | undefined>>()
-    const currentUser: any = useCurrentUser()
 
     const getConversationForProperty = (property: string) => (
         conversations.find((conversation) => conversation.property === property)
     )
 
     useEffect(() => {
-        const conversation = getConversationForProperty(currentProperty)
-        setActiveConversation(conversation)
+        (async () => {
+            try {
+                console.log("Current property: ", currentProperty)
+                const currentConversationId = getConversationForProperty(currentProperty)?.id
+                console.log("Conversation in comment view: ", currentConversationId)
+
+                if (currentConversationId) {
+                    const currentConversation = await (await GetCommentService()).getMessagesForConversation(
+                        activeTagData?.review?.id ?? "",
+                        currentConversationId,
+                    )
+                    console.log("Setting active conversation: ", currentConversation)
+                    setActiveConversation(currentConversation)
+                }
+            } catch (error) {
+                console.error("Error")
+            }
+        })()
     }, [currentProperty])
 
     const handleMessageChange = (
@@ -117,9 +123,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         <Container>
             <ConversationDiv>
                 <ClusteredMessages
-                    comments={getConversationForProperty(currentProperty)?.messages ?? []}
-                    reviewComments={reviewComments}
-                    setReviewComments={setReviewComments}
+                    comments={activeConversation?.messages ?? []}
                 />
             </ConversationDiv>
             <InputController

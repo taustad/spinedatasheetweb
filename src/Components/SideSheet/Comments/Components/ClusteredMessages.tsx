@@ -1,5 +1,5 @@
 import React, {
-    FC, SetStateAction, Dispatch,
+    FC,
 } from "react"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
@@ -7,7 +7,6 @@ import { useCurrentUser } from "@equinor/fusion"
 import MessageBox from "./MessageBox"
 import { Message } from "../../../../Models/Message"
 import { formatDate } from "../../../../utils/helpers"
-import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
     align-self: ${(props) => (props.commentIsByCurrentUser ? "flex-end" : "flex-start")};
@@ -33,13 +32,12 @@ const TimeStamp = styled.div`
 
 interface ClusteredMessagesProps {
     comments: Message[]
-    conversations: Conversation[]
-    setConversations: Dispatch<SetStateAction<Conversation[]>>
 }
 
 const ClusteredMessages: FC<ClusteredMessagesProps> = ({
-    comments, conversations, setConversations,
+    comments,
 }) => {
+    console.log("Clustered messages: ", comments)
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
     type Cluster = {
@@ -125,11 +123,9 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
                                     )}
                                     <MessageBox
                                         key={`${cluster.userId}-${index}-${messageIndex}`}
-                                        isCurrentUser={isCurrentUser(cluster.userId)}
                                         messageObject={message}
-                                        reviewComments={reviewComments}
-                                        setReviewComments={setReviewComments}
                                         userId={cluster.userId}
+                                        isCurrentUser={isCurrentUser(cluster.userId)}
                                     />
                                 </>
                             )

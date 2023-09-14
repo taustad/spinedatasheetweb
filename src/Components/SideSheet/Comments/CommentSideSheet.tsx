@@ -1,24 +1,14 @@
 import React, {
-    FC, Dispatch, SetStateAction, useState, useEffect,
+    FC, Dispatch, SetStateAction, useState, useEffect, useContext,
 } from "react"
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt } from "@equinor/eds-icons"
-import { Message } from "../../../Models/Message"
 import CommentView from "./Components/CommentView"
 import LocalNavigation from "../Components/LocalNavigation"
 import TabsTitle from "../Components/TabsTitle"
 import ConversationCard from "./Components/ConversationCard"
-import { Conversation } from "../../../Models/Conversation"
-
-type Props = {
-    currentProperty?: string;
-    setCurrentProperty: Dispatch<SetStateAction<string>>;
-    reviewComments?: Message[];
-    conversations: Conversation[];
-    setReviewComments?: Dispatch<SetStateAction<Message[]>>;
-    scrollToBottom: () => void;
-};
+import { ViewContext } from "../../../Context/ViewContext"
 
 const Overview = styled.div`
     padding: 15px;
@@ -45,12 +35,16 @@ const ButtonRow = styled.div`
 const TopButton = styled(Button)`
     margin-left: 5px;
     `
+
+type Props = {
+    currentProperty?: string;
+    setCurrentProperty: Dispatch<SetStateAction<string>>;
+    scrollToBottom: () => void;
+};
+
 const CommentSideSheet: FC<Props> = ({
     currentProperty,
     setCurrentProperty,
-    reviewComments,
-    conversations,
-    setReviewComments,
     scrollToBottom,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
@@ -62,9 +56,11 @@ const CommentSideSheet: FC<Props> = ({
         "Implemented",
     ]
 
+    const { conversations, activeConversation: activeConversationId } = useContext(ViewContext)
+
     useEffect(() => {
         scrollToBottom()
-    }, [currentProperty, reviewComments])
+    }, [currentProperty, conversations])
 
     const dummyConversations = [
         // Dummy data for the "All" tab
@@ -99,7 +95,6 @@ const CommentSideSheet: FC<Props> = ({
             {currentProperty && currentProperty !== "" ? (
                 <CommentView
                     currentProperty={currentProperty}
-                    conversations={conversations}
                 />
             ) : (
                 <>
