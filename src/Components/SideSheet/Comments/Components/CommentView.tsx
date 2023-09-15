@@ -83,7 +83,7 @@ const CommentView: React.FC<CommentViewProps> = ({
             const savedComment = await service.createConversation(activeTagData?.review?.id ?? "", createCommentDto)
             setConversations([...conversations, savedComment])
         } catch (error) {
-            console.log(`Error creating comment: ${error}`)
+            console.error(`Error creating comment: ${error}`)
         }
         setNewMessage(undefined)
     }
@@ -101,7 +101,7 @@ const CommentView: React.FC<CommentViewProps> = ({
 
             setActiveConversation(updatedActiveConversation)
         } catch (error) {
-            console.log(`Error creating comment: ${error}`)
+            console.error(`Error creating comment: ${error}`)
         }
         setNewMessage(undefined)
     }
