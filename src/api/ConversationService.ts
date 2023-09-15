@@ -2,7 +2,7 @@ import { Message } from "../Models/Message"
 import { BaseService } from "./BaseService"
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
-class CommentService extends BaseService {
+class ConversationService extends BaseService {
     async getMessage(id: string) {
         const result: any = await this.get(`project/${id}`)
         return result.value
@@ -45,9 +45,9 @@ class CommentService extends BaseService {
     }
 }
 
-export async function GetCommentService() {
-    return new CommentService({
-        ...config.CommentService,
+export async function GetConversationService() {
+    return new ConversationService({
+        ...config.ConversationService,
         accessToken: await GetToken(LoginAccessTokenKey)!,
     })
 }

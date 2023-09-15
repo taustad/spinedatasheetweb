@@ -4,7 +4,7 @@ import React, {
     useState,
 } from "react"
 import styled from "styled-components"
-import { GetCommentService } from "../../../../api/CommentService"
+import { GetConversationService } from "../../../../api/ConversationService"
 import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
@@ -49,7 +49,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 const currentConversationId = getConversationForProperty(currentProperty)?.id
 
                 if (currentConversationId) {
-                    const currentConversation = await (await GetCommentService()).getMessagesForConversation(
+                    const currentConversation = await (await GetConversationService()).getMessagesForConversation(
                         activeTagData?.review?.id ?? "",
                         currentConversationId,
                     )
@@ -79,9 +79,9 @@ const CommentView: React.FC<CommentViewProps> = ({
             conversationStatus: 0,
         }
         try {
-            const service = await GetCommentService()
-            const savedComment = await service.createConversation(activeTagData?.review?.id ?? "", createCommentDto)
-            setConversations([...conversations, savedComment])
+            const service = await GetConversationService()
+            const savedConversation = await service.createConversation(activeTagData?.review?.id ?? "", createCommentDto)
+            setActiveConversation(savedConversation)
         } catch (error) {
             console.error(`Error creating comment: ${error}`)
         }
@@ -91,7 +91,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     const addMessage = async () => {
         const message = { ...newMessage }
         try {
-            const service = await GetCommentService()
+            const service = await GetConversationService()
             const savedMessage = await service.addMessage(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", message)
 
             const updatedMessages = [...activeConversation?.messages ?? [], savedMessage]

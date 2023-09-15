@@ -9,7 +9,7 @@ import {
     delete_to_trash, edit,
 } from "@equinor/eds-icons"
 import { Message } from "../../../../Models/Message"
-import { GetCommentService } from "../../../../api/CommentService"
+import { GetConversationService } from "../../../../api/ConversationService"
 import { Conversation } from "../../../../Models/Conversation"
 import { ViewContext } from "../../../../Context/ViewContext"
 
@@ -40,7 +40,7 @@ const updateComment = async (
         try {
             const newComment = { ...comment }
             newComment.text = newCommentText
-            const commentService = await GetCommentService()
+            const commentService = await GetConversationService()
             const updatedComment = await commentService.updateMessage(reviewId, activeConversationId, comment.id, newComment)
             const updatedMessages = activeConversation.messages?.map((m) => (m.id !== comment.id ? m : updatedComment))
             const updatedConversation = { ...activeConversation }
@@ -61,7 +61,7 @@ const deleteComment = async (
 ) => {
     if (message.id && activeConversation && activeConversation.messages) {
         try {
-            const service = await GetCommentService()
+            const service = await GetConversationService()
             const response = await service.deleteMessage(reviewId, activeConversationId, message.id)
             if (response === 204) {
                 const deletedMessage = { ...activeConversation.messages?.find((m) => m.id === message.id) }

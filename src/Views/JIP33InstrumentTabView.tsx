@@ -20,7 +20,7 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { GetCommentService } from "../api/CommentService"
+import { GetConversationService } from "../api/ConversationService"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
 import { instrumentCharacteristicsRowData } from "../Components/NORSOKTable/RowData/InstrumentCharacteristicsRowData"
@@ -107,7 +107,7 @@ function JIP33InstrumentTabView({ }) {
 
     const getConversationsForTagReview = async (id: string) => {
         const newConversations: Conversation[] = await (
-            await GetCommentService()
+            await GetConversationService()
         ).getConversationsForTagReview(id)
         setConversations(newConversations)
     }
