@@ -56,11 +56,11 @@ const CommentSideSheet: FC<Props> = ({
         "Implemented",
     ]
 
-    const { conversations, activeConversation: activeConversationId } = useContext(ViewContext)
+    const { activeConversation } = useContext(ViewContext)
 
     useEffect(() => {
         scrollToBottom()
-    }, [currentProperty, conversations])
+    }, [currentProperty, activeConversation])
 
     const dummyConversations = [
         // Dummy data for the "All" tab
