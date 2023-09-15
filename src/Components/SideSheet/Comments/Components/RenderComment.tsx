@@ -33,8 +33,8 @@ const updateComment = async (
     activeConversationId: string,
     comment: Message,
     newCommentText: string,
-    conversations: Conversation[],
-    setConversations: Dispatch<SetStateAction<Conversation[]>>,
+    activeConversation: Conversation,
+    setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
     if (newCommentText && comment.id) {
         try {
@@ -42,8 +42,10 @@ const updateComment = async (
             newComment.text = newCommentText
             const commentService = await GetCommentService()
             const updatedComment = await commentService.updateMessage(reviewId, activeConversationId, comment.id, newComment)
-            // const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : updatedComment))
-            // setReviewComments(newReviewComments)
+            const updatedMessages = activeConversation.messages?.map((m) => (m.id !== comment.id ? m : updatedComment))
+            const updatedConversation = { ...activeConversation }
+            updatedConversation.messages = updatedMessages
+            setActiveConversation(updatedConversation)
         } catch (error) {
             console.error(`Error updating comment: ${error}`)
         }
@@ -53,22 +55,25 @@ const updateComment = async (
 const deleteComment = async (
     reviewId: string,
     activeConversationId: string,
-    comment: Message,
-    conversations: Conversation[],
-    setConversations: Dispatch<SetStateAction<Conversation[]>>,
+    message: Message,
+    activeConversation: Conversation,
+    setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
-    if (comment.id) {
+    if (message.id && activeConversation && activeConversation.messages) {
         try {
             const service = await GetCommentService()
-            const response = await service.deleteMessage(reviewId, activeConversationId, comment.id)
-            // if (response === 204) {
-            //     const deletedComment = { ...reviewComments.find((c) => c.id === comment.id) }
-            //     deletedComment.softDeleted = true
-            //     const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : deletedComment))
-            //     setReviewComments(newReviewComments)
-            // } else {
-            //     throw new Error(`delete failed with status code '${response}'`)
-            // }
+            const response = await service.deleteMessage(reviewId, activeConversationId, message.id)
+            if (response === 204) {
+                const deletedMessage = { ...activeConversation.messages?.find((m) => m.id === message.id) }
+                deletedMessage.softDeleted = true
+                deletedMessage.text = ""
+                const updatedMessages = activeConversation.messages?.map((m) => (m.id !== message.id ? m : deletedMessage))
+                const updatedConversation = { ...activeConversation }
+                updatedConversation.messages = updatedMessages
+                setActiveConversation(updatedConversation)
+            } else {
+                throw new Error(`delete failed with status code '${response}'`)
+            }
         } catch (error) {
             console.error(`Error deleting comment: ${error}`)
         }
@@ -85,13 +90,22 @@ const RenderComment: FC<RenderCommentProps> = ({
     const [open, setOpen] = useState(false)
 
     const {
-        activeTagData, conversations, activeConversation, setConversations,
+        activeTagData, conversations, activeConversation, setActiveConversation,
     } = useContext(ViewContext)
+
+    if (!activeConversation) { return (<>Error loading conversation</>) }
 
     const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedMessageText(e.target.value)
     const cancelEdit = () => setUpdateMode(false)
     const saveComment = () => {
-        updateComment(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", comment, editedMessageText, conversations, setConversations)
+        updateComment(
+            activeTagData?.review?.id ?? "",
+            activeConversation.id ?? "",
+            comment,
+            editedMessageText,
+            activeConversation,
+            setActiveConversation,
+        )
         cancelEdit()
     }
 
@@ -168,7 +182,13 @@ const RenderComment: FC<RenderCommentProps> = ({
                     </Button>
                     <Button
                         variant="ghost_icon"
-                        onClick={() => deleteComment(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", comment, conversations, setConversations)}
+                        onClick={() => deleteComment(
+                            activeTagData?.review?.id ?? "",
+                            activeConversation?.id ?? "",
+                            comment,
+                            activeConversation,
+                            setActiveConversation,
+                        )}
                         title="Delete"
                     >
                         <Icon data={delete_to_trash} size={16} color="#007079" />

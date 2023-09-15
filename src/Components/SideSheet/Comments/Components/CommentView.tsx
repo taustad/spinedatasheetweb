@@ -9,7 +9,6 @@ import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
-import { Conversation } from "../../../../Models/Conversation"
 
 const Container = styled.div`
     display: flex;
@@ -39,27 +38,21 @@ const CommentView: React.FC<CommentViewProps> = ({
     const {
         activeTagData, conversations, setConversations, activeConversation, setActiveConversation,
     } = useContext(ViewContext)
-    // const [activeConversation, setActiveConversation] = useState<Conversation>()
 
-    const getConversationForProperty = (property: string) => {
-        console.log("Conversations in getConversationForProperty", conversations)
-        console.log("Property in getConversationForProperty", property)
-        return conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
-    }
+    const getConversationForProperty = (property: string) => (
+        conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
+    )
 
     useEffect(() => {
         (async () => {
             try {
-                console.log("Current property: ", currentProperty)
                 const currentConversationId = getConversationForProperty(currentProperty)?.id
-                console.log("Conversation in comment view: ", currentConversationId)
 
                 if (currentConversationId) {
                     const currentConversation = await (await GetCommentService()).getMessagesForConversation(
                         activeTagData?.review?.id ?? "",
                         currentConversationId,
                     )
-                    console.log("Setting active conversation: ", currentConversation)
                     setActiveConversation(currentConversation)
                 } else {
                     setActiveConversation(undefined)
@@ -105,8 +98,6 @@ const CommentView: React.FC<CommentViewProps> = ({
 
             const updatedActiveConversation = { ...activeConversation }
             updatedActiveConversation.messages = updatedMessages
-
-            console.log("Setting active conversation: ", updatedActiveConversation)
 
             setActiveConversation(updatedActiveConversation)
         } catch (error) {

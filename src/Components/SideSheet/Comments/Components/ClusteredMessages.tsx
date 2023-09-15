@@ -36,15 +36,6 @@ interface ClusteredMessagesProps {
 
 const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
     const { activeConversation } = useContext(ViewContext)
-    // const [messages, setMessages] = useState<Message[]>([])
-    // console.log("Clustered messages: ", messages)
-
-    // useEffect(() => {
-    //     console.log("Active conversation in clustered messages: ", activeConversation)
-    //     if (activeConversation && activeConversation.messages) {
-    //         setMessages(activeConversation.messages)
-    //     }
-    // }, [activeConversation])
 
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
@@ -64,7 +55,6 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
     };
 
     const generateMessageCluster = (postedComments: Message[]): Cluster[] => {
-        console.log("Posted comments: ", postedComments)
         const clusters: Cluster[] = []
         const strToDate = (dateString: string): Date => new Date(dateString)
         const diffInMinutes = (date1: Date, date2: Date): number => (date2.getTime() - date1.getTime()) / 1000 / 60
