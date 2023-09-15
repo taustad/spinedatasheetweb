@@ -152,7 +152,6 @@ const JIP33WithSideMenu: React.FC<Props> = ({
                     <StyledTabPanel>
                         <JIP33Table
                             rowData={rowDataList[activeTab]}
-                            reviewComments={reviewComments}
                             setCurrentProperty={setCurrentProperty}
                             setReviewSideSheetOpen={setReviewSideSheetOpen}
                             setWidth={setWidth}

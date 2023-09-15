@@ -7,11 +7,8 @@ import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 import styled from "styled-components"
-import { Message } from "../../Models/Message"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ViewContext } from "../../Context/ViewContext"
-import EquipmentListReview from "../../Components/EquipmentListView/EquipmentListReview"
-import { Conversation } from "../../Models/Conversation"
 
 const Wrapper = styled.div`
     height: 100%;
@@ -24,8 +21,6 @@ const TableContainer = styled.div`
 `
 interface Props {
     rowData: object[]
-    reviewComments?: Message[] | undefined
-    conversations?: Conversation[] | undefined
     setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined
     setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined
     setWidth?: (width: number) => void
@@ -34,18 +29,14 @@ interface Props {
 
 function JIP33Table({
     rowData,
-    reviewComments,
-    conversations,
     setReviewSideSheetOpen,
     setCurrentProperty,
     setWidth,
     width,
 }: Props) {
-    const { setActiveSheetTab } = useContext(ViewContext)
-    const styles = useStyles()
-
-    const { activeTagData } = useContext(ViewContext)
+    const { activeTagData, conversations, setActiveSheetTab } = useContext(ViewContext)
     const [reviewOpen, setReviewOpen] = useState<boolean>(false)
+    const styles = useStyles()
 
     const red = "white" // "#e6b8b7"
     const lightBlue = "white" // "#b7dee8"

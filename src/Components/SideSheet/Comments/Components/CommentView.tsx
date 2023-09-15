@@ -82,6 +82,8 @@ const CommentView: React.FC<CommentViewProps> = ({
             const service = await GetConversationService()
             const savedConversation = await service.createConversation(activeTagData?.review?.id ?? "", createCommentDto)
             setActiveConversation(savedConversation)
+            const newConversations = [...conversations, savedConversation]
+            setConversations(newConversations)
         } catch (error) {
             console.error(`Error creating comment: ${error}`)
         }
