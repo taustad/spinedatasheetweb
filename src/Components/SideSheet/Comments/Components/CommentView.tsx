@@ -58,7 +58,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                     setActiveConversation(undefined)
                 }
             } catch (error) {
-                console.error("Error")
+                console.error("Error getting messages for conversation: ", error)
             }
         })()
     }, [currentProperty])
