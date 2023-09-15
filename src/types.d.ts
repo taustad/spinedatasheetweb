@@ -343,6 +343,8 @@ declare namespace Components {
             tagStatus?: string | null;
             engineeringCode?: string | null;
             purchaseOrder?: string | null;
+            sequence?: string | null;
+            system?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -383,6 +385,8 @@ declare namespace Components {
             tagStatus?: string | null;
             engineeringCode?: string | null;
             purchaseOrder?: string | null;
+            sequence?: string | null;
+            system?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -797,6 +801,8 @@ declare namespace Components {
             tagStatus?: string | null;
             engineeringCode?: string | null;
             purchaseOrder?: string | null;
+            sequence?: string | null;
+            system?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1521,6 +1527,8 @@ declare namespace Components {
             tagStatus?: string | null;
             engineeringCode?: string | null;
             purchaseOrder?: string | null;
+            sequence?: string | null;
+            system?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1575,6 +1583,8 @@ declare namespace Components {
             tagStatus?: string | null;
             engineeringCode?: string | null;
             purchaseOrder?: string | null;
+            sequence?: string | null;
+            system?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;

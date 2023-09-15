@@ -64,16 +64,6 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => [
     },
     {
         refClause: "",
-        description: "Area",
-        purchaserReq: datasheet.area,
-        purchaserReqUOM: "",
-        supplierOfferedVal: "",
-        supplierOfferedValUOM: "",
-        additionalNotes: "",
-        property: "area",
-    },
-    {
-        refClause: "",
         description: "P.O. number",
         purchaserReq: datasheet.instrumentPurchaserRequirement?.poNumber,
         purchaserReqUOM: "",
