@@ -32,6 +32,7 @@ import { transmitterRowData } from "../Components/NORSOKTable/RowData/Transmitte
 import Dialogue from "../Components/Dialogue"
 import SheetContainer from "../Components/SideSheet/SheetContainer"
 import { ViewContext } from "../Context/ViewContext"
+import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
 
 const TopBar = styled.div`
     border-bottom: 1px solid LightGray;
@@ -195,7 +196,7 @@ function JIP33InstrumentTabView({ }) {
     const customTabList = ["Flow", "Temperature", "Pressure"]
 
     const rowDataListJIP33 = [
-        generateGeneralRowData(activeTagData),
+        generateGeneralRowData(activeTagData).concat(generateTR3111GeneralRowData(activeTagData)),
         generateInstallationConditionsRowData(activeTagData),
         generateOperatingConditionsRowData(activeTagData),
         generateBodyElementSensorRowData(activeTagData),
@@ -218,7 +219,7 @@ function JIP33InstrumentTabView({ }) {
     ]
 
     const rowDataListNORSOK = [
-        generalRowData(activeTagData),
+        generalRowData(activeTagData).concat(generateTR3111GeneralRowData(activeTagData)),
         instrumentCharacteristicsRowData(activeTagData),
         meterBodyRowData(activeTagData),
         transmitterRowData(activeTagData),
