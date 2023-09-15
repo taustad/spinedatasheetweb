@@ -1,20 +1,5 @@
 declare namespace Components {
     namespace Schemas {
-        export interface CommentDto {
-            id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            userId?: string; // uuid
-            commenterName?: string | null;
-            text?: string | null;
-            property?: string | null;
-            commentLevel?: CommentLevel /* int32 */;
-            tagDataReviewId?: string | null; // uuid
-            revisionContainerReviewId?: string | null; // uuid
-            isEdited?: boolean;
-            softDeleted?: boolean | undefined
-        }
-        export type CommentLevel = 0 | 1 | 2; // int32
         export interface ContractDto {
             id?: string; // uuid
             createdDate?: string; // date-time
@@ -24,6 +9,14 @@ declare namespace Components {
             projectId?: string; // uuid
             revisionContainers?: RevisionContainerDto[] | null;
         }
+        export interface ConversationDto {
+            text?: string | null;
+            property?: string | null;
+            conversationLevel?: ConversationLevel /* int32 */;
+            conversationStatus?: ConversationStatus /* int32 */;
+        }
+        export type ConversationLevel = 0 | 1 | 2; // int32
+        export type ConversationStatus = 0 | 1 | 2 | 3; // int32
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
             tagNumber?: string | null;
@@ -357,6 +350,26 @@ declare namespace Components {
             modifiedDate?: string; // date-time
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
             electricalSupplierOfferedProduct?: ElectricalSupplierOfferedProduct;
+        }
+        export interface GetConversationDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            property?: string | null;
+            conversationStatus?: ConversationStatus /* int32 */;
+            conversationLevel?: ConversationLevel /* int32 */;
+            participants?: UserDto[] | null;
+            messages?: GetMessageDto[] | null;
+        }
+        export interface GetMessageDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            userId?: string; // uuid
+            text?: string | null;
+            commenterName?: string | null;
+            isEdited?: boolean;
+            softDeleted?: boolean;
         }
         export interface ITagDataDto {
             id?: string; // uuid
@@ -1516,6 +1529,9 @@ declare namespace Components {
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
         }
+        export interface MessageDto {
+            text?: string | null;
+        }
         export interface ProjectDto {
             id?: string; // uuid
             createdDate?: string; // date-time
@@ -1546,7 +1562,6 @@ declare namespace Components {
             revisionContainerVersion?: number; // int32
             revisionContainerId?: string; // uuid
             revisionContainer?: RevisionContainerDto;
-            comments?: CommentDto[] | null;
         }
         export interface TagDataDto {
             id?: string; // uuid
@@ -1576,15 +1591,38 @@ declare namespace Components {
             commentResponsible?: string; // uuid
             approved?: boolean;
             tagDataVersion?: number; // int32
-            comments?: CommentDto[] | null;
+        }
+        export interface UserDto {
+            userId?: string; // uuid
+            displayName?: string | null;
         }
     }
 }
 declare namespace Paths {
-    namespace CreateComment {
-        export type RequestBody = Components.Schemas.CommentDto;
+    namespace AddMessage {
+        namespace Parameters {
+            export type ConversationId = string; // uuid
+            export type ReviewId = string; // uuid
+        }
+        export interface PathParameters {
+            reviewId: Parameters.ReviewId /* uuid */;
+            conversationId: Parameters.ConversationId /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.MessageDto;
         namespace Responses {
-            export type $200 = Components.Schemas.CommentDto;
+            export type $200 = Components.Schemas.GetMessageDto;
+        }
+    }
+    namespace CreateConversation {
+        namespace Parameters {
+            export type ReviewId = string; // uuid
+        }
+        export interface PathParameters {
+            reviewId: Parameters.ReviewId /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.ConversationDto;
+        namespace Responses {
+            export type $200 = Components.Schemas.GetConversationDto;
         }
     }
     namespace CreateReview {
@@ -1599,12 +1637,16 @@ declare namespace Paths {
             export type $200 = Components.Schemas.RevisionContainerReviewDto;
         }
     }
-    namespace DeleteComment {
+    namespace DeleteMessage {
         namespace Parameters {
-            export type Id = string; // uuid
+            export type ConversationId = string; // uuid
+            export type MessageId = string; // uuid
+            export type ReviewId = string;
         }
         export interface PathParameters {
-            id: Parameters.Id /* uuid */;
+            conversationId: Parameters.ConversationId /* uuid */;
+            messageId: Parameters.MessageId /* uuid */;
+            reviewId: Parameters.ReviewId;
         }
         namespace Responses {
             export interface $200 {
@@ -1614,36 +1656,6 @@ declare namespace Paths {
     namespace GetAllTagData {
         namespace Responses {
             export type $200 = Components.Schemas.ITagDataDto[];
-        }
-    }
-    namespace GetComment {
-        namespace Parameters {
-            export type Id = string; // uuid
-        }
-        export interface PathParameters {
-            id: Parameters.Id /* uuid */;
-        }
-        export interface QueryParameters {
-            id?: Parameters.Id /* uuid */;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CommentDto;
-        }
-    }
-    namespace GetComments {
-        namespace Responses {
-            export type $200 = Components.Schemas.CommentDto[];
-        }
-    }
-    namespace GetCommentsForTagReview {
-        namespace Parameters {
-            export type Id = string; // uuid
-        }
-        export interface PathParameters {
-            id: Parameters.Id /* uuid */;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.CommentDto[];
         }
     }
     namespace GetContract {
@@ -1679,6 +1691,30 @@ declare namespace Paths {
             export type $200 = Components.Schemas.ContractDto[];
         }
     }
+    namespace GetConversation {
+        namespace Parameters {
+            export type ConversationId = string; // uuid
+            export type ReviewId = string;
+        }
+        export interface PathParameters {
+            conversationId: Parameters.ConversationId /* uuid */;
+            reviewId: Parameters.ReviewId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.GetConversationDto;
+        }
+    }
+    namespace GetConversations {
+        namespace Parameters {
+            export type ReviewId = string; // uuid
+        }
+        export interface PathParameters {
+            reviewId: Parameters.ReviewId /* uuid */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.GetConversationDto[];
+        }
+    }
     namespace GetDefaultTagDataModel {
         namespace Responses {
             export type $200 = Components.Schemas.TagDataDto;
@@ -1697,6 +1733,34 @@ declare namespace Paths {
     namespace GetMechanicalTagDataModel {
         namespace Responses {
             export type $200 = Components.Schemas.MechanicalTagDataDto;
+        }
+    }
+    namespace GetMessage {
+        namespace Parameters {
+            export type ConversationId = string;
+            export type MessageId = string; // uuid
+            export type ReviewId = string;
+        }
+        export interface PathParameters {
+            messageId: Parameters.MessageId /* uuid */;
+            reviewId: Parameters.ReviewId;
+            conversationId: Parameters.ConversationId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.GetMessageDto;
+        }
+    }
+    namespace GetMessages {
+        namespace Parameters {
+            export type ConversationId = string; // uuid
+            export type ReviewId = string;
+        }
+        export interface PathParameters {
+            conversationId: Parameters.ConversationId /* uuid */;
+            reviewId: Parameters.ReviewId;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.GetMessageDto[];
         }
     }
     namespace GetProject {
@@ -1827,16 +1891,20 @@ declare namespace Paths {
             export type $200 = Components.Schemas.ITagDataDto[];
         }
     }
-    namespace UpdateComment {
+    namespace UpdateMessage {
         namespace Parameters {
-            export type Id = string; // uuid
+            export type ConversationId = string; // uuid
+            export type MessageId = string; // uuid
+            export type ReviewId = string;
         }
         export interface PathParameters {
-            id: Parameters.Id /* uuid */;
+            conversationId: Parameters.ConversationId /* uuid */;
+            messageId: Parameters.MessageId /* uuid */;
+            reviewId: Parameters.ReviewId;
         }
-        export type RequestBody = Components.Schemas.CommentDto;
+        export type RequestBody = Components.Schemas.MessageDto;
         namespace Responses {
-            export type $200 = Components.Schemas.CommentDto;
+            export type $200 = Components.Schemas.GetMessageDto;
         }
     }
 }

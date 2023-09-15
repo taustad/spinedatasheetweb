@@ -8,12 +8,17 @@ import React,
     useMemo,
 } from "react"
 import { TagData } from "../Models/TagData"
+import { Conversation } from "../Models/Conversation"
 
 interface ViewContextProps {
     activeTagData: TagData | undefined;
     setActiveTagData: Dispatch<SetStateAction<TagData | undefined>>;
     activeSheetTab: number;
     setActiveSheetTab: Dispatch<SetStateAction<number>>;
+    conversations: Conversation[];
+    setConversations: Dispatch<SetStateAction<Conversation[]>>;
+    activeConversation: Conversation | undefined;
+    setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>;
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -21,6 +26,10 @@ export const ViewContext = createContext<ViewContextProps>({
     setActiveTagData: () => { },
     activeSheetTab: 0,
     setActiveSheetTab: () => { },
+    conversations: [],
+    setConversations: () => { },
+    activeConversation: undefined,
+    setActiveConversation: () => { },
 })
 
 interface ViewContextProviderProps {
@@ -31,6 +40,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
 }: ViewContextProviderProps) => {
     const [activeTagData, setActiveTagData] = useState<TagData>()
     const [activeSheetTab, setActiveSheetTab] = useState<number>(0)
+    const [conversations, setConversations] = useState<Conversation[]>([])
+    const [activeConversation, setActiveConversation] = useState<Conversation>()
 
     const value = useMemo(
         () => ({
@@ -38,8 +49,21 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setActiveTagData,
             activeSheetTab,
             setActiveSheetTab,
+            conversations,
+            setConversations,
+            activeConversation,
+            setActiveConversation,
         }),
-        [activeTagData, setActiveTagData, activeSheetTab, setActiveSheetTab],
+        [
+            activeTagData,
+            setActiveTagData,
+            activeSheetTab,
+            setActiveSheetTab,
+            conversations,
+            setConversations,
+            activeConversation,
+            setActiveConversation,
+        ],
     )
 
     return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>

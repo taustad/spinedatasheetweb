@@ -14,7 +14,7 @@ const configuration = {
     ContractService: {
         BASE_URL: "",
     },
-    CommentService: {
+    ConversationService: {
         BASE_URL: "",
     },
     TagDataReviewService: {
@@ -29,7 +29,7 @@ export const buildConfig = (baseUrl: string) => {
     configuration.ProjectService.BASE_URL = `${baseUrl}/projects`
     configuration.TagDataService.BASE_URL = `${baseUrl}/tagdata`
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
-    configuration.CommentService.BASE_URL = `${baseUrl}/comments`
+    configuration.ConversationService.BASE_URL = `${baseUrl}/tag/reviews`
     configuration.TagDataReviewService.BASE_URL = `${baseUrl}/tagdatareviews`
     configuration.RevisionReviewService.BASE_URL = `${baseUrl}/revisionreviews`
 }

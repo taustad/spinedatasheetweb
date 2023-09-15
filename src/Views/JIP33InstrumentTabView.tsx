@@ -1,5 +1,5 @@
 import {
- Icon, Tabs, Typography, Button,
+    Icon, Tabs, Typography, Button,
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import React, {
@@ -20,8 +20,7 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { ReviewComment } from "../Models/ReviewComment"
-import { GetCommentService } from "../api/CommentService"
+import { GetConversationService } from "../api/ConversationService"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
 import { instrumentCharacteristicsRowData } from "../Components/NORSOKTable/RowData/InstrumentCharacteristicsRowData"
@@ -32,6 +31,7 @@ import { transmitterRowData } from "../Components/NORSOKTable/RowData/Transmitte
 import Dialogue from "../Components/Dialogue"
 import SheetContainer from "../Components/SideSheet/SheetContainer"
 import { ViewContext } from "../Context/ViewContext"
+import { Conversation } from "../Models/Conversation"
 import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
 
 const TopBar = styled.div`
@@ -87,10 +87,11 @@ function JIP33InstrumentTabView({ }) {
     const [open, setOpen] = useState(false)
     const [currentProperty, setCurrentProperty] = useState<string>("")
     const [activeTab, setActiveTab] = useState(0)
-    const [reviewComments, setReviewComments] = useState<ReviewComment[]>([])
     const [sheetWidth, setSheetWidth] = useState(0)
 
-    const { activeTagData, setActiveTagData, setActiveSheetTab } = useContext(ViewContext)
+    const {
+        activeTagData, setActiveTagData, setActiveSheetTab, setConversations,
+    } = useContext(ViewContext)
 
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
@@ -105,11 +106,11 @@ function JIP33InstrumentTabView({ }) {
         setCurrentProperty("")
     }, [setOpen])
 
-    const getCommentsForTagReview = async (id: string) => {
-        const comments: ReviewComment[] = await (
-            await GetCommentService()
-        ).getCommentsForTagReview(id)
-        setReviewComments(comments)
+    const getConversationsForTagReview = async (id: string) => {
+        const newConversations: Conversation[] = await (
+            await GetConversationService()
+        ).getConversationsForTagReview(id)
+        setConversations(newConversations)
     }
 
     useEffect(() => {
@@ -130,7 +131,7 @@ function JIP33InstrumentTabView({ }) {
                         tagDataReviewId !== null
                         && tagDataReviewId !== undefined
                     ) {
-                        await getCommentsForTagReview(tagDataReviewId)
+                        await getConversationsForTagReview(tagDataReviewId)
                     }
 
                     setIsLoading(false)
@@ -141,32 +142,6 @@ function JIP33InstrumentTabView({ }) {
             }
         })()
     }, [])
-
-    useEffect(() => {
-    if (tagId !== null && tagId !== undefined) {
-        const intervalId = setInterval(async () => {
-            const tagDataReviewId = activeTagData?.review?.id
-            if (tagDataReviewId === undefined || tagDataReviewId === null) {
-                return
-            }
-            const newComments = await (
-                await GetCommentService()
-            ).getCommentsForTagReview(tagDataReviewId)
-
-            const areCommentsDifferent = !(
-                newComments.length === reviewComments.length
-                    && newComments.every((comment: ReviewComment, index: number) => comment.id === reviewComments[index].id)
-            )
-
-            if (areCommentsDifferent) {
-                setReviewComments(newComments)
-            }
-        }, 5000)
-
-        return () => clearInterval(intervalId)
-    }
-    return () => { }
-}, [activeTagData, reviewComments])
 
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />
@@ -258,7 +233,6 @@ function JIP33InstrumentTabView({ }) {
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListNORSOK}
                                     rowDataList={rowDataListNORSOK}
-                                    reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
                                     setWidth={setSheetWidth}
@@ -270,7 +244,6 @@ function JIP33InstrumentTabView({ }) {
                                     sideMenuList={sideMenuListJIP33}
                                     rowDataList={rowDataListJIP33}
                                     customTabList={customTabList}
-                                    reviewComments={reviewComments}
                                     setCurrentProperty={setCurrentProperty}
                                     setReviewSideSheetOpen={setOpen}
                                     setWidth={setSheetWidth}
@@ -285,10 +258,6 @@ function JIP33InstrumentTabView({ }) {
                 onClose={onCloseReviewSideSheet}
                 isOpen={open}
                 currentProperty={currentProperty}
-                setCurrentProperty={setCurrentProperty}
-                reviewComments={reviewComments}
-                setReviewComments={setReviewComments}
-                tag={activeTagData}
                 width={sheetWidth}
                 setWidth={setSheetWidth}
             />

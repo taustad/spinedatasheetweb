@@ -1,14 +1,12 @@
 import React, {
-Dispatch, SetStateAction, useContext, useRef, useEffect,
+    Dispatch, SetStateAction, useContext, useRef, useEffect,
 } from "react"
 import {
- Icon, Tabs, Typography, Button,
+    Icon, Tabs, Typography, Button,
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
-import { TagData } from "../../Models/TagData"
-import { ReviewComment } from "../../Models/ReviewComment"
 import InfoStrip from "./Components/InfoStrip"
 import CommentsSideSheet from "./Comments/CommentSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
@@ -16,6 +14,7 @@ import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 import ActivitySideSheet from "./Activity/ActivitySideSheet"
 import { ViewContext } from "../../Context/ViewContext"
+import { Conversation } from "../../Models/Conversation"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -93,10 +92,6 @@ type Props = {
     isOpen: boolean
     onClose: () => void
     currentProperty: any
-    setCurrentProperty: Dispatch<SetStateAction<any>>
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
-    tag: TagData
     width: number
     setWidth: (width: number) => void
 }
@@ -104,15 +99,11 @@ type Props = {
 const SheetContainer: React.FC<Props> = ({
     onClose,
     isOpen,
-    reviewComments,
     currentProperty,
-    setCurrentProperty,
-    setReviewComments,
-    tag,
     width,
     setWidth,
 }) => {
-    const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
+    const { activeSheetTab, setActiveSheetTab, activeTagData } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
     const handleTabChange = (index: number) => setActiveSheetTab(index)
@@ -142,6 +133,8 @@ const SheetContainer: React.FC<Props> = ({
             <Typography variant="body_short">Work in progress...</Typography>
         </Placeholder>
     )
+
+    if (activeTagData === undefined) { return (<div>Error loading tag</div>) }
 
     return (
         <Resizable
@@ -188,9 +181,9 @@ const SheetContainer: React.FC<Props> = ({
                     <TagInfo>
                         <Icon data={tagIcon} color="black" size={18} />
                         <Typography variant="body_short">
-                            <strong>{tag.tagNo}</strong>
+                            <strong>{activeTagData.tagNo}</strong>
                             {" "}
-                            {tag.description}
+                            {activeTagData.description}
                         </Typography>
                     </TagInfo>
                 </SheetHeader>
@@ -219,10 +212,7 @@ const SheetContainer: React.FC<Props> = ({
                             {activeSheetTab === 4 && (
                                 <CommentsSideSheet
                                     scrollToBottom={scrollToBottom}
-                                    reviewComments={reviewComments}
                                     currentProperty={currentProperty.property}
-                                    setCurrentProperty={setCurrentProperty}
-                                    setReviewComments={setReviewComments}
                                 />
                             )}
                         </TabsPanel>

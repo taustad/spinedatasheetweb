@@ -1,5 +1,5 @@
 import React, {
-    Dispatch, FC, SetStateAction, useRef, useState,
+    Dispatch, FC, SetStateAction, useContext, useRef, useState,
 } from "react"
 import { styled } from "styled-components"
 import {
@@ -8,8 +8,10 @@ import {
 import {
     delete_to_trash, edit,
 } from "@equinor/eds-icons"
-import { ReviewComment } from "../../../../Models/ReviewComment"
-import { GetCommentService } from "../../../../api/CommentService"
+import { Message } from "../../../../Models/Message"
+import { GetConversationService } from "../../../../api/ConversationService"
+import { Conversation } from "../../../../Models/Conversation"
+import { ViewContext } from "../../../../Context/ViewContext"
 
 const CommentText = styled(Typography)`
     margin: 10px 0;
@@ -20,28 +22,30 @@ const SubmitEditButton = styled(Button)`
 `
 
 interface RenderCommentProps {
-    comment: ReviewComment,
+    comment: Message,
     isUpdateMode: boolean,
     setUpdateMode: any,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
-    isCurrentUser: boolean
+    isCurrentUser: boolean,
 }
 
 const updateComment = async (
+    reviewId: string,
+    activeConversationId: string,
+    comment: Message,
     newCommentText: string,
-    comment: ReviewComment,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
+    activeConversation: Conversation,
+    setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
     if (newCommentText && comment.id) {
         try {
-            const commentService = await GetCommentService()
             const newComment = { ...comment }
             newComment.text = newCommentText
-            const updatedComment = await commentService.updateComment(comment.id, newComment)
-            const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : updatedComment))
-            setReviewComments(newReviewComments)
+            const commentService = await GetConversationService()
+            const updatedComment = await commentService.updateMessage(reviewId, activeConversationId, comment.id, newComment)
+            const updatedMessages = activeConversation.messages?.map((m) => (m.id !== comment.id ? m : updatedComment))
+            const updatedConversation = { ...activeConversation }
+            updatedConversation.messages = updatedMessages
+            setActiveConversation(updatedConversation)
         } catch (error) {
             console.error(`Error updating comment: ${error}`)
         }
@@ -49,19 +53,24 @@ const updateComment = async (
 }
 
 const deleteComment = async (
-    comment: ReviewComment,
-    reviewComments: ReviewComment[],
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>,
+    reviewId: string,
+    activeConversationId: string,
+    message: Message,
+    activeConversation: Conversation,
+    setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
-    if (comment.id) {
+    if (message.id && activeConversation && activeConversation.messages) {
         try {
-            const service = await GetCommentService()
-            const response = await service.deleteComment(comment.id)
+            const service = await GetConversationService()
+            const response = await service.deleteMessage(reviewId, activeConversationId, message.id)
             if (response === 204) {
-                const deletedComment = { ...reviewComments.find((c) => c.id === comment.id) }
-                deletedComment.softDeleted = true
-                const newReviewComments = reviewComments.map((c) => (c.id !== comment.id ? c : deletedComment))
-                setReviewComments(newReviewComments)
+                const deletedMessage = { ...activeConversation.messages?.find((m) => m.id === message.id) }
+                deletedMessage.softDeleted = true
+                deletedMessage.text = ""
+                const updatedMessages = activeConversation.messages?.map((m) => (m.id !== message.id ? m : deletedMessage))
+                const updatedConversation = { ...activeConversation }
+                updatedConversation.messages = updatedMessages
+                setActiveConversation(updatedConversation)
             } else {
                 throw new Error(`delete failed with status code '${response}'`)
             }
@@ -72,15 +81,31 @@ const deleteComment = async (
 }
 
 const RenderComment: FC<RenderCommentProps> = ({
-    comment, isUpdateMode, setUpdateMode, reviewComments, setReviewComments, isCurrentUser,
+    comment,
+    isUpdateMode,
+    setUpdateMode,
+    isCurrentUser,
 }) => {
-    const [editedComment, setEditedComment] = useState(comment.text || "")
+    const [editedMessageText, setEditedMessageText] = useState(comment.text || "")
     const [open, setOpen] = useState(false)
 
-    const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedComment(e.target.value)
+    const {
+        activeTagData, conversations, activeConversation, setActiveConversation,
+    } = useContext(ViewContext)
+
+    if (!activeConversation) { return (<>Error loading conversation</>) }
+
+    const editComment = (e: React.ChangeEvent<HTMLTextAreaElement>) => setEditedMessageText(e.target.value)
     const cancelEdit = () => setUpdateMode(false)
     const saveComment = () => {
-        updateComment(editedComment, comment, reviewComments, setReviewComments)
+        updateComment(
+            activeTagData?.review?.id ?? "",
+            activeConversation.id ?? "",
+            comment,
+            editedMessageText,
+            activeConversation,
+            setActiveConversation,
+        )
         cancelEdit()
     }
 
@@ -116,7 +141,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                 <Input
                     as="textarea"
                     type="text"
-                    value={editedComment}
+                    value={editedMessageText}
                     onChange={editComment}
                 />
                 <SubmitEditButton variant="ghost" onClick={cancelEdit}>Cancel</SubmitEditButton>
@@ -157,7 +182,13 @@ const RenderComment: FC<RenderCommentProps> = ({
                     </Button>
                     <Button
                         variant="ghost_icon"
-                        onClick={() => deleteComment(comment, reviewComments, setReviewComments)}
+                        onClick={() => deleteComment(
+                            activeTagData?.review?.id ?? "",
+                            activeConversation?.id ?? "",
+                            comment,
+                            activeConversation,
+                            setActiveConversation,
+                        )}
                         title="Delete"
                     >
                         <Icon data={delete_to_trash} size={16} color="#007079" />

@@ -1,4 +1,4 @@
-import { ReviewComment } from "./ReviewComment"
+import { Message } from "./Message"
 import { RevisionContainer } from "./RevisionContainer"
 
 export class RevisionContainerReview implements Components.Schemas.RevisionContainerReviewDto {
@@ -12,7 +12,7 @@ export class RevisionContainerReview implements Components.Schemas.RevisionConta
     revisionContainerVersion?: number; // int32
     revisionContainerId?: string; // uuid
     revisionContainer?: RevisionContainer;
-    comments?: ReviewComment[] | null;
+    comments?: Message[] | null;
 
     constructor(init?: Partial<RevisionContainerReview>) {
         Object.assign(this, init)

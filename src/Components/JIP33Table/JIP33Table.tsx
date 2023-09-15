@@ -1,5 +1,5 @@
 import React, {
-  Dispatch, SetStateAction, useMemo, useContext, useState,
+    Dispatch, SetStateAction, useMemo, useContext, useState,
 } from "react"
 import { ColDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
@@ -7,10 +7,8 @@ import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { Icon } from "@equinor/eds-core-react"
 import { comment, comment_chat } from "@equinor/eds-icons"
 import styled from "styled-components"
-import { ReviewComment } from "../../Models/ReviewComment"
 import { ColorLegendEnum } from "./JIP33ColorLegendEnums"
 import { ViewContext } from "../../Context/ViewContext"
-import EquipmentListReview from "../../Components/EquipmentListView/EquipmentListReview"
 
 const Wrapper = styled.div`
     height: 100%;
@@ -23,7 +21,6 @@ const TableContainer = styled.div`
 `
 interface Props {
     rowData: object[]
-    reviewComments?: ReviewComment[] | undefined
     setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined
     setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined
     setWidth?: (width: number) => void
@@ -32,17 +29,14 @@ interface Props {
 
 function JIP33Table({
     rowData,
-    reviewComments,
     setReviewSideSheetOpen,
     setCurrentProperty,
     setWidth,
     width,
 }: Props) {
-    const { setActiveSheetTab } = useContext(ViewContext)
-    const styles = useStyles()
-
-    const { activeTagData } = useContext(ViewContext)
+    const { activeTagData, conversations, setActiveSheetTab } = useContext(ViewContext)
     const [reviewOpen, setReviewOpen] = useState<boolean>(false)
+    const styles = useStyles()
 
     const red = "white" // "#e6b8b7"
     const lightBlue = "white" // "#b7dee8"
@@ -62,7 +56,7 @@ function JIP33Table({
         [],
     )
 
-         const openConversationOnSheet = (paramsData: React.SetStateAction<string>) => {
+    const openConversationOnSheet = (paramsData: React.SetStateAction<string>) => {
         if (setReviewSideSheetOpen && setCurrentProperty) {
             setReviewSideSheetOpen(true)
 
@@ -124,7 +118,7 @@ function JIP33Table({
 
         setReviewOpen(false)
 
-        const commentsExist = reviewComments?.some(
+        const commentsExist = conversations?.some(
             (c) => c.property === params.data.property,
         )
         if (

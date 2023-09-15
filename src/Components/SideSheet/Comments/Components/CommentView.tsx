@@ -1,19 +1,13 @@
 import React, {
-    Dispatch,
-    SetStateAction,
     useContext,
     useEffect,
     useState,
 } from "react"
-import { useParams } from "react-router-dom"
-import { useCurrentUser } from "@equinor/fusion"
 import styled from "styled-components"
-import { GetCommentService } from "../../../../api/CommentService"
-import { ReviewComment } from "../../../../Models/ReviewComment"
-import MessageBox from "./MessageBox"
+import { GetConversationService } from "../../../../api/ConversationService"
+import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
-import { formatDate } from "../../../../utils/helpers"
 import ClusteredMessages from "./ClusteredMessages"
 
 const Container = styled.div`
@@ -25,7 +19,7 @@ const Container = styled.div`
     align-items: center;
 `
 
-const Conversation = styled.div`
+const ConversationDiv = styled.div`
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -35,62 +29,101 @@ const Conversation = styled.div`
 
 type CommentViewProps = {
     currentProperty: string
-    reviewComments: ReviewComment[]
-    setReviewComments: Dispatch<SetStateAction<ReviewComment[]>>
 }
 
 const CommentView: React.FC<CommentViewProps> = ({
     currentProperty,
-    reviewComments,
-    setReviewComments,
 }) => {
-    const [newReviewComment, setNewReviewComment] = useState<ReviewComment>()
-    const { activeTagData } = useContext(ViewContext)
-    const { tagId } = useParams<Record<string, string | undefined>>()
-    const currentUser: any = useCurrentUser()
+    const [newMessage, setNewMessage] = useState<Message>()
+    const {
+        activeTagData, conversations, setConversations, activeConversation, setActiveConversation,
+    } = useContext(ViewContext)
 
-    const getCommentsForProperty = (property: string) => (
-        reviewComments.filter((comment) => comment.property === property)
+    const getConversationForProperty = (property: string) => (
+        conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
     )
 
-    const handleCommentChange = (
+    useEffect(() => {
+        (async () => {
+            try {
+                const currentConversationId = getConversationForProperty(currentProperty)?.id
+
+                if (currentConversationId) {
+                    const currentConversation = await (await GetConversationService()).getMessagesForConversation(
+                        activeTagData?.review?.id ?? "",
+                        currentConversationId,
+                    )
+                    setActiveConversation(currentConversation)
+                } else {
+                    setActiveConversation(undefined)
+                }
+            } catch (error) {
+                console.error("Error getting messages for conversation: ", error)
+            }
+        })()
+    }, [currentProperty])
+
+    const handleMessageChange = (
         event: React.ChangeEvent<HTMLTextAreaElement>,
     ) => {
-        const comment = { ...newReviewComment }
-        comment.text = event.target.value
-        setNewReviewComment(comment)
+        const message = { ...newMessage }
+        message.text = event.target.value
+        setNewMessage(message)
+    }
+
+    const createConversation = async () => {
+        const createCommentDto: Components.Schemas.ConversationDto = {
+            property: currentProperty,
+            text: newMessage?.text ?? "",
+            conversationLevel: 1,
+            conversationStatus: 0,
+        }
+        try {
+            const service = await GetConversationService()
+            const savedConversation = await service.createConversation(activeTagData?.review?.id ?? "", createCommentDto)
+            setActiveConversation(savedConversation)
+            const newConversations = [...conversations, savedConversation]
+            setConversations(newConversations)
+        } catch (error) {
+            console.error(`Error creating comment: ${error}`)
+        }
+        setNewMessage(undefined)
+    }
+
+    const addMessage = async () => {
+        const message = { ...newMessage }
+        try {
+            const service = await GetConversationService()
+            const savedMessage = await service.addMessage(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", message)
+
+            const updatedMessages = [...activeConversation?.messages ?? [], savedMessage]
+
+            const updatedActiveConversation = { ...activeConversation }
+            updatedActiveConversation.messages = updatedMessages
+
+            setActiveConversation(updatedActiveConversation)
+        } catch (error) {
+            console.error(`Error creating comment: ${error}`)
+        }
+        setNewMessage(undefined)
     }
 
     const handleSubmit = async () => {
-        const comment = { ...newReviewComment }
-        comment.tagDataReviewId = activeTagData?.review?.id
-        comment.commentLevel = 0
-        comment.property = currentProperty
-        comment.createdDate = new Date().toISOString()
-        comment.userId = currentUser?._info.localAccountId
-        comment.commenterName = currentUser?._info.name
-        try {
-            const service = await GetCommentService()
-            const savedComment = await service.createComment(comment)
-            setReviewComments([...reviewComments, savedComment])
-        } catch (error) {
-            console.log(`Error creating comment: ${error}`)
+        if (activeConversation) {
+            addMessage()
+        } else {
+            createConversation()
         }
-        setNewReviewComment(undefined)
     }
 
     return (
         <Container>
-            <Conversation>
-                <ClusteredMessages
-                    comments={getCommentsForProperty(currentProperty)}
-                    reviewComments={reviewComments}
-                    setReviewComments={setReviewComments}
-                />
-            </Conversation>
+            <ConversationDiv>
+                <ClusteredMessages />
+            </ConversationDiv>
             <InputController
-                value={newReviewComment?.text ?? ""}
-                handleCommentChange={handleCommentChange}
+                value={newMessage?.text ?? ""}
+                handleCommentChange={handleMessageChange}
                 handleSubmit={handleSubmit}
             />
         </Container>
