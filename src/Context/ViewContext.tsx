@@ -54,7 +54,16 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             activeConversation,
             setActiveConversation,
         }),
-        [activeTagData, setActiveTagData, activeSheetTab, setActiveSheetTab],
+        [
+            activeTagData,
+            setActiveTagData,
+            activeSheetTab,
+            setActiveSheetTab,
+            conversations,
+            setConversations,
+            activeConversation,
+            setActiveConversation,
+        ],
     )
 
     return <ViewContext.Provider value={value}>{children}</ViewContext.Provider>

@@ -37,13 +37,15 @@ const CommentView: React.FC<CommentViewProps> = ({
 }) => {
     const [newMessage, setNewMessage] = useState<Message>()
     const {
-        activeTagData, conversations, setConversations,
+        activeTagData, conversations, setConversations, activeConversation, setActiveConversation,
     } = useContext(ViewContext)
-    const [activeConversation, setActiveConversation] = useState<Conversation>()
+    // const [activeConversation, setActiveConversation] = useState<Conversation>()
 
-    const getConversationForProperty = (property: string) => (
-        conversations.find((conversation) => conversation.property === property)
-    )
+    const getConversationForProperty = (property: string) => {
+        console.log("Conversations in getConversationForProperty", conversations)
+        console.log("Property in getConversationForProperty", property)
+        return conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
+    }
 
     useEffect(() => {
         (async () => {
@@ -59,6 +61,8 @@ const CommentView: React.FC<CommentViewProps> = ({
                     )
                     console.log("Setting active conversation: ", currentConversation)
                     setActiveConversation(currentConversation)
+                } else {
+                    setActiveConversation(undefined)
                 }
             } catch (error) {
                 console.error("Error")
@@ -95,16 +99,16 @@ const CommentView: React.FC<CommentViewProps> = ({
         const message = { ...newMessage }
         try {
             const service = await GetCommentService()
-            const savedConversation = await service.addMessage(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", message)
+            const savedMessage = await service.addMessage(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", message)
 
-            const updatedConversations = conversations.map((conversation) => {
-                if (conversation.id === activeConversation?.id) {
-                    return savedConversation
-                }
-                return conversation
-            })
+            const updatedMessages = [...activeConversation?.messages ?? [], savedMessage]
 
-            setConversations(updatedConversations)
+            const updatedActiveConversation = { ...activeConversation }
+            updatedActiveConversation.messages = updatedMessages
+
+            console.log("Setting active conversation: ", updatedActiveConversation)
+
+            setActiveConversation(updatedActiveConversation)
         } catch (error) {
             console.log(`Error creating comment: ${error}`)
         }
@@ -122,9 +126,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     return (
         <Container>
             <ConversationDiv>
-                <ClusteredMessages
-                    comments={activeConversation?.messages ?? []}
-                />
+                <ClusteredMessages />
             </ConversationDiv>
             <InputController
                 value={newMessage?.text ?? ""}

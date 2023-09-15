@@ -1,5 +1,5 @@
 import React, {
-    FC,
+    FC, useContext, useEffect, useState,
 } from "react"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
@@ -7,6 +7,7 @@ import { useCurrentUser } from "@equinor/fusion"
 import MessageBox from "./MessageBox"
 import { Message } from "../../../../Models/Message"
 import { formatDate } from "../../../../utils/helpers"
+import { ViewContext } from "../../../../Context/ViewContext"
 
 const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
     align-self: ${(props) => (props.commentIsByCurrentUser ? "flex-end" : "flex-start")};
@@ -31,13 +32,20 @@ const TimeStamp = styled.div`
 `
 
 interface ClusteredMessagesProps {
-    comments: Message[]
 }
 
-const ClusteredMessages: FC<ClusteredMessagesProps> = ({
-    comments,
-}) => {
-    console.log("Clustered messages: ", comments)
+const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
+    const { activeConversation } = useContext(ViewContext)
+    // const [messages, setMessages] = useState<Message[]>([])
+    // console.log("Clustered messages: ", messages)
+
+    // useEffect(() => {
+    //     console.log("Active conversation in clustered messages: ", activeConversation)
+    //     if (activeConversation && activeConversation.messages) {
+    //         setMessages(activeConversation.messages)
+    //     }
+    // }, [activeConversation])
+
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
     type Cluster = {
@@ -56,6 +64,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
     };
 
     const generateMessageCluster = (postedComments: Message[]): Cluster[] => {
+        console.log("Posted comments: ", postedComments)
         const clusters: Cluster[] = []
         const strToDate = (dateString: string): Date => new Date(dateString)
         const diffInMinutes = (date1: Date, date2: Date): number => (date2.getTime() - date1.getTime()) / 1000 / 60
@@ -97,9 +106,11 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({
         return clusters
     }
 
+    if (activeConversation?.messages === undefined || activeConversation?.messages === null) { return (<div />) }
+
     return (
         <>
-            {generateMessageCluster(comments).map((cluster, index) => (
+            {generateMessageCluster(activeConversation.messages).map((cluster, index) => (
                 <Container commentIsByCurrentUser={isCurrentUser(cluster.userId)} key={`${cluster.userId}-${index}`}>
                     <Header isCurrentUser={!isCurrentUser(cluster.userId)}>
                         {!isCurrentUser(cluster.userId) && (
