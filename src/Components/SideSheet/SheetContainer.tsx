@@ -7,8 +7,6 @@ import {
 import styled from "styled-components"
 import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
-import { TagData } from "../../Models/TagData"
-import { Message } from "../../Models/Message"
 import InfoStrip from "./Components/InfoStrip"
 import CommentsSideSheet from "./Comments/CommentSideSheet"
 import AreaSideSheet from "./Area/AreaSideSheet"
@@ -94,7 +92,6 @@ type Props = {
     isOpen: boolean
     onClose: () => void
     currentProperty: any
-    setCurrentProperty: Dispatch<SetStateAction<any>>
     width: number
     setWidth: (width: number) => void
 }
@@ -103,7 +100,6 @@ const SheetContainer: React.FC<Props> = ({
     onClose,
     isOpen,
     currentProperty,
-    setCurrentProperty,
     width,
     setWidth,
 }) => {
@@ -217,7 +213,6 @@ const SheetContainer: React.FC<Props> = ({
                                 <CommentsSideSheet
                                     scrollToBottom={scrollToBottom}
                                     currentProperty={currentProperty.property}
-                                    setCurrentProperty={setCurrentProperty}
                                 />
                             )}
                         </TabsPanel>

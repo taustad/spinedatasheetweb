@@ -20,7 +20,6 @@ import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"
 import { generatePressureRowData } from "../Components/JIP33Table/RowData/Instrument/PressureRowData"
 import JIP33WithSideMenu from "../Components/JIP33WithSideMenu"
-import { Message } from "../Models/Message"
 import { GetCommentService } from "../api/CommentService"
 import { equipmentConditionsRowData } from "../Components/NORSOKTable/RowData/EquipmentConditionsRowData"
 import { generalRowData } from "../Components/NORSOKTable/RowData/GeneralRowData"
@@ -143,32 +142,6 @@ function JIP33InstrumentTabView({ }) {
         })()
     }, [])
 
-    // useEffect(() => {
-    //     if (tagId !== null && tagId !== undefined) {
-    //         const intervalId = setInterval(async () => {
-    //             const tagDataReviewId = activeTagData?.review?.id
-    //             if (tagDataReviewId === undefined || tagDataReviewId === null) {
-    //                 return
-    //             }
-    //             const newConversations: Conversation[] = await (
-    //                 await GetCommentService()
-    //             ).getConversationsForTagReview(tagDataReviewId)
-
-    //             // const areCommentsDifferent = !(
-    //             //     newConversations.length === reviewComments.length
-    //             //     && newConversations.every((comment: Message, index: number) => comment.id === reviewComments[index].id)
-    //             // )
-
-    //             // if (areCommentsDifferent) {
-    //             setConversations(newConversations)
-    //             // }
-    //         }, 5000)
-
-    //         return () => clearInterval(intervalId)
-    //     }
-    //     return () => { }
-    // }, [activeTagData])
-
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />
     }
@@ -284,7 +257,6 @@ function JIP33InstrumentTabView({ }) {
                 onClose={onCloseReviewSideSheet}
                 isOpen={open}
                 currentProperty={currentProperty}
-                setCurrentProperty={setCurrentProperty}
                 width={sheetWidth}
                 setWidth={setSheetWidth}
             />

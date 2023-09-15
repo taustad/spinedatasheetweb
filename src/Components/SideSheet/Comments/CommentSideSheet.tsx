@@ -1,5 +1,5 @@
 import React, {
-    FC, Dispatch, SetStateAction, useState, useEffect, useContext,
+    FC, useState, useEffect, useContext,
 } from "react"
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
@@ -38,13 +38,11 @@ const TopButton = styled(Button)`
 
 type Props = {
     currentProperty?: string;
-    setCurrentProperty: Dispatch<SetStateAction<string>>;
     scrollToBottom: () => void;
 };
 
 const CommentSideSheet: FC<Props> = ({
     currentProperty,
-    setCurrentProperty,
     scrollToBottom,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
