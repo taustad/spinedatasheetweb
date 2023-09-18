@@ -31,6 +31,11 @@ const TimeStamp = styled.div`
     }
 `
 
+const SubContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+`
+
 interface ClusteredMessagesProps {
 }
 
@@ -110,7 +115,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                             <Typography variant="meta">{formatDate(cluster.meta.createdDate)}</Typography>
                         </TimeStamp>
                     </Header>
-                    <div>
+                    <SubContainer>
                         {cluster.messages.map((message, messageIndex) => (
                             <>
                                 {message.isEdited && (
@@ -128,7 +133,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                                 />
                             </>
                             ))}
-                    </div>
+                    </SubContainer>
                 </Container>
             ))}
         </>
