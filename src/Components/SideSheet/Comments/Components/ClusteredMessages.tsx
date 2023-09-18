@@ -111,26 +111,23 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                         </TimeStamp>
                     </Header>
                     <div>
-                        {cluster.messages.map((message, messageIndex) => {
-                            console.log(message)
-                            return (
-                                <>
-                                    {message.isEdited && (
-                                        <Typography variant="meta">
-                                            Edited
-                                            {" "}
-                                            {formatDate(message.modifiedDate || "")}
-                                        </Typography>
+                        {cluster.messages.map((message, messageIndex) => (
+                            <>
+                                {message.isEdited && (
+                                <Typography variant="meta">
+                                    Edited
+                                    {" "}
+                                    {formatDate(message.modifiedDate || "")}
+                                </Typography>
                                     )}
-                                    <MessageBox
-                                        key={`${cluster.userId}-${index}-${messageIndex}`}
-                                        messageObject={message}
-                                        userId={cluster.userId}
-                                        isCurrentUser={isCurrentUser(cluster.userId)}
-                                    />
-                                </>
-                            )
-                        })}
+                                <MessageBox
+                                    key={`${cluster.userId}-${index}-${messageIndex}`}
+                                    messageObject={message}
+                                    userId={cluster.userId}
+                                    isCurrentUser={isCurrentUser(cluster.userId)}
+                                />
+                            </>
+                            ))}
                     </div>
                 </Container>
             ))}

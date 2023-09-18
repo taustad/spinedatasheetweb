@@ -12,6 +12,7 @@ import { Message } from "../../../../Models/Message"
 import { GetConversationService } from "../../../../api/ConversationService"
 import { Conversation } from "../../../../Models/Conversation"
 import { ViewContext } from "../../../../Context/ViewContext"
+import { unescapeHtmlEntities } from "../../../../utils/helpers"
 
 const CommentText = styled(Typography)`
     margin: 10px 0;
@@ -160,7 +161,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                 onMouseOut={handleClose}
             >
                 {
-                    comment.softDeleted ? "Message deleted by user" : comment.text
+                    comment.softDeleted ? "Message deleted by user" : unescapeHtmlEntities(comment.text || "")
                 }
             </CommentText>
             <Popover

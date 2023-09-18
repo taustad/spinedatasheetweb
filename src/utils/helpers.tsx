@@ -55,3 +55,43 @@ export const formatDate = (dateString: string) => {
 export function getPropertyName<T>(property: keyof T): keyof T {
     return property
 }
+
+/**
+ * Processes a string to replace <span> elements with text inside of them wrapped in double curly brackets.
+ * Also extracts all of the "data-mention" values and converts any &nbsp; instances into normal spaces.
+ *
+ * @param {string} input - The input string to process.
+ * @returns {Object} An object containing the processed string and an array of mention IDs.
+ * @returns {string} processedString - The processed string.
+ * @returns {number[]} mentions - An array of mention IDs.
+ */
+export function processMessageInput(input: string): { processedString: string, mentions: number[] } {
+    const regex = /<span data-mention="(\d+)" contenteditable="false">([^<]+)<\/span>/g
+
+    let match
+    const mentions: number[] = []
+
+    let processedString = input.replace(regex, (fullMatch, mentionId, content) => {
+        mentions.push(Number(mentionId))
+        return `{{${content}}} `
+    })
+
+    processedString = processedString.replace(/&nbsp;/g, " ")
+
+    return {
+        processedString,
+        mentions,
+    }
+}
+
+/**
+ * Converts HTML entities in a string to their corresponding characters.
+ *
+ * @param {string} str - The string with HTML entities.
+ * @returns {string} The string with HTML entities replaced by their corresponding characters.
+ */
+export function unescapeHtmlEntities(str: string): string {
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(str, "text/html")
+    return doc.documentElement.textContent || ""
+}

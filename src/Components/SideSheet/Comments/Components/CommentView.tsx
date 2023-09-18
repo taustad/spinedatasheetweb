@@ -9,7 +9,16 @@ import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
+import TagDropDown from "./TagDropDown"
+import { processMessageInput } from "../../../../utils/helpers"
 
+const Controls = styled.div`
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+
+`
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -35,13 +44,47 @@ const CommentView: React.FC<CommentViewProps> = ({
     currentProperty,
 }) => {
     const [newMessage, setNewMessage] = useState<Message>()
+    const [taggedUsers, setTaggedUsers] = useState<string[]>([])
+    const [searchTerm, setSearchTerm] = useState<string>("")
+    const [showTagDropDown, setShowTagDropDown] = useState<boolean>(false)
     const {
-        activeTagData, conversations, setConversations, activeConversation, setActiveConversation,
+        activeTagData,
+        conversations,
+        setConversations,
+        activeConversation,
+        setActiveConversation,
     } = useContext(ViewContext)
 
     const getConversationForProperty = (property: string) => (
         conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
     )
+
+    const dummyData = [
+        {
+            id: "1",
+            displayName: "Henrik Hansen",
+            accountType: "Consultant",
+            status: "Active",
+        },
+        {
+            id: "2",
+            displayName: "Peter Jensen",
+            accountType: "Consultant",
+            status: "Active",
+        },
+        {
+            id: "3",
+            displayName: "Jesper Gudbransen",
+            accountType: "Consultant",
+            status: "inactive",
+        },
+        {
+            id: "4",
+            displayName: "Mikkel Eriksen",
+            accountType: "Consultant",
+            status: "inactive",
+        },
+    ]
 
     useEffect(() => {
         (async () => {
@@ -63,12 +106,18 @@ const CommentView: React.FC<CommentViewProps> = ({
         })()
     }, [currentProperty])
 
-    const handleMessageChange = (
-        event: React.ChangeEvent<HTMLTextAreaElement>,
-    ) => {
+    const handleTagSelected = (displayName: string, userId: string) => {
+        const commentText = newMessage?.text ?? ""
+        const lastAtPos = commentText.lastIndexOf("@")
+        const beforeAt = commentText.substring(0, lastAtPos)
+        const afterAt = commentText.substring(lastAtPos + 1).replace(/^\S+/, "") // Removes the word right after the "@"
+
+        const newCommentText = `${beforeAt}<span data-mention="${userId}" contenteditable="false">${displayName}</span>&nbsp;${afterAt}`
         const message = { ...newMessage }
-        message.text = event.target.value
+        message.text = newCommentText
         setNewMessage(message)
+        setShowTagDropDown(false)
+        setSearchTerm("")
     }
 
     const createConversation = async () => {
@@ -92,6 +141,9 @@ const CommentView: React.FC<CommentViewProps> = ({
 
     const addMessage = async () => {
         const message = { ...newMessage }
+        const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
+        console.log("mentions: ", mentions) // to be used for tagging users in the future
+        message.text = processedString
         try {
             const service = await GetConversationService()
             const savedMessage = await service.addMessage(activeTagData?.review?.id ?? "", activeConversation?.id ?? "", message)
@@ -106,6 +158,8 @@ const CommentView: React.FC<CommentViewProps> = ({
             console.error(`Error creating comment: ${error}`)
         }
         setNewMessage(undefined)
+        setTaggedUsers([])
+        setSearchTerm("")
     }
 
     const handleSubmit = async () => {
@@ -116,16 +170,38 @@ const CommentView: React.FC<CommentViewProps> = ({
         }
     }
 
+    useEffect(() => {
+        console.log("newMessage: ", newMessage)
+    }, [newMessage])
+
+    useEffect(() => {
+        console.log("taggedUsers: ", taggedUsers)
+    }, [taggedUsers])
+
     return (
         <Container>
             <ConversationDiv>
                 <ClusteredMessages />
             </ConversationDiv>
-            <InputController
-                value={newMessage?.text ?? ""}
-                handleCommentChange={handleMessageChange}
-                handleSubmit={handleSubmit}
-            />
+            <Controls>
+                {showTagDropDown && (
+                    <TagDropDown
+                        SearchTerm={searchTerm}
+                        setTaggedUsers={setTaggedUsers}
+                        onTagSelected={handleTagSelected}
+                        dummyData={dummyData}
+                    />
+                )}
+
+                <InputController
+                    handleSubmit={handleSubmit}
+                    taggedUsers={taggedUsers}
+                    newMessage={newMessage}
+                    setNewMessage={setNewMessage}
+                    setSearchTerm={setSearchTerm}
+                    setShowTagDropDown={setShowTagDropDown}
+                />
+            </Controls>
         </Container>
     )
 }

@@ -22,8 +22,7 @@ export const ResolveConfiguration = (env: string) => {
             }
         case "dev":
             return {
-                REACT_APP_API_BASE_URL:
-                    "http://localhost:5000",
+                REACT_APP_API_BASE_URL: "http://localhost:5000",
                 BACKEND_APP_SCOPE: [
                     "api://412803ed-0c05-44a9-b433-b270706a6099/Datasheet.Write",
                 ],

@@ -1,15 +1,13 @@
 import React, { FC } from "react"
 import {
- Input, Button, Icon, Checkbox,
+    Button, Icon, Checkbox,
 } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { send } from "@equinor/eds-icons"
+import InputField from "./InputField"
 
 const Controls = styled.div`
-    width: 100%;
     padding: 30px 15px 10px 15px;
-    position: sticky;
-    bottom: 0;
     background-color: white;
     border-top: 1px solid LightGray;
     display: flex;
@@ -24,24 +22,29 @@ const InputButtonWrapper = styled.div`
 `
 
 interface InputControllerProps {
-    value: string
-    handleCommentChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
     handleSubmit: () => void
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+    setShowTagDropDown: React.Dispatch<React.SetStateAction<boolean>>
+    newMessage: any
+    setNewMessage: React.Dispatch<React.SetStateAction<any>>
+    taggedUsers: string[]
 }
 
 const InputController: FC<InputControllerProps> = ({
-    value,
-    handleCommentChange,
     handleSubmit,
+    setShowTagDropDown,
+    setSearchTerm,
+    newMessage,
+    setNewMessage,
+    taggedUsers,
 }) => (
     <Controls>
-        <Input
-            as="textarea"
-            type="text"
-            placeholder="Write a comment..."
-            onChange={handleCommentChange}
-            value={value}
-            rows={3}
+        <InputField
+            setSearchTerm={setSearchTerm}
+            setShowTagDropDown={setShowTagDropDown}
+            newReviewComment={newMessage}
+            setNewReviewComment={setNewMessage}
+            taggedUsers={taggedUsers}
         />
         <InputButtonWrapper>
             <Checkbox label="Send to contractor" />
