@@ -16,11 +16,29 @@ import { unescapeHtmlEntities } from "../../../../utils/helpers"
 
 const CommentText = styled(Typography)`
     margin: 10px 0;
+
+    span {
+        color: #3aadb6;
+        font-weight: 500;
+    }
 `
 
 const SubmitEditButton = styled(Button)`
     margin-right: 15px;
 `
+function wrapInSpan(inputString: string): (string | JSX.Element)[] {
+    const parts = inputString.split(/{{(.*?)}}/)
+
+    let isNextSpan = false
+    return parts.map((part, index) => {
+        if (isNextSpan) {
+            isNextSpan = false
+            return <span key={`${part}-${index}`}>{part}</span>
+        }
+        isNextSpan = true
+        return part
+    })
+}
 
 interface RenderCommentProps {
     comment: Message,
@@ -161,7 +179,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                 onMouseOut={handleClose}
             >
                 {
-                    comment.softDeleted ? "Message deleted by user" : unescapeHtmlEntities(comment.text || "")
+                    comment.softDeleted ? "Message deleted by user" : wrapInSpan(unescapeHtmlEntities(comment.text || ""))
                 }
             </CommentText>
             <Popover

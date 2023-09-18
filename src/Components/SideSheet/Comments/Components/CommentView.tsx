@@ -170,14 +170,6 @@ const CommentView: React.FC<CommentViewProps> = ({
         }
     }
 
-    useEffect(() => {
-        console.log("newMessage: ", newMessage)
-    }, [newMessage])
-
-    useEffect(() => {
-        console.log("taggedUsers: ", taggedUsers)
-    }, [taggedUsers])
-
     return (
         <Container>
             <ConversationDiv>
