@@ -52,6 +52,7 @@ function JIP33Table({
             filter: "agMultiColumnFilter",
             resizable: true,
             editable: false,
+            cellDataType: false,
         }),
         [],
     )
@@ -155,7 +156,6 @@ function JIP33Table({
         {
             field: "purchaserReq",
             headerName: "Purchaser requirement",
-            valueParser: (params: any) => String(params.newValue),
             cellStyle: (params: any) => reqColor(params.data.purchaserReqColor, red),
             width: 220,
         }, // backgroundColor needs to be set by data params, not general.

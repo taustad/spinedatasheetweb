@@ -33,7 +33,6 @@ export const comparisonOperatingConditionsColumnDefs = (): ColGroupDef[] => [
             {
                 field: getPropertyName<InstrumentPurchaserRequirement>("processVacuumPossibility"),
                 headerName: "Process vacuum possibility",
-                valueParser: (params) => String(params.newValue),
             },
             {
                 field: getPropertyName<InstrumentPurchaserRequirement>("processFluidVapourPressure"),
