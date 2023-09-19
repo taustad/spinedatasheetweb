@@ -45,14 +45,16 @@ const ListItem = styled.button`
 interface Props {
     SearchTerm?: string
     onTagSelected: (displayName: string, userId: string) => void
-    dummyData: { azureUniqueId: string; displayName: string; accountType: string; status: string }[]
+    dummyData: { azureUniqueId: string; displayName: string; accountType: string; status: string; mail: string }[]
     setReRenderCounter: React.Dispatch<React.SetStateAction<number>>
 }
 
 const TagDropDown: FC<Props> = ({
- SearchTerm, onTagSelected, dummyData, setReRenderCounter,
+    SearchTerm, onTagSelected, dummyData, setReRenderCounter,
 }) => {
-    const filteredNames = dummyData.filter(({ displayName }) => !SearchTerm || displayName.toLowerCase().includes(SearchTerm.toLowerCase()))
+    const filteredNames = dummyData.filter(({ displayName, mail }) => !SearchTerm
+        || displayName.toLowerCase().includes(SearchTerm.toLowerCase())
+        || mail.toLowerCase().includes(SearchTerm.toLowerCase()))
 
     const handleTagClick = (userId: string, displayName: string) => {
         setReRenderCounter((prev) => prev + 1)
