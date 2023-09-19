@@ -35,7 +35,7 @@ export const buildConfig = (baseUrl: string) => {
     configuration.ConversationService.BASE_URL = `${baseUrl}/tag/reviews`
     configuration.TagDataReviewService.BASE_URL = `${baseUrl}/tagdatareviews`
     configuration.RevisionReviewService.BASE_URL = `${baseUrl}/revisionreviews`
-    configuration.UserTagService.BASE_URL = `${baseUrl}/usertag`
+    configuration.UserTagService.BASE_URL = `${baseUrl}/usertags`
 }
 
 export const config = Object.freeze(configuration)
