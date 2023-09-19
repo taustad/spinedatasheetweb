@@ -1606,6 +1606,12 @@ declare namespace Components {
             userId?: string; // uuid
             displayName?: string | null;
         }
+        export interface UserTagDto {
+            azureUniqueId?: string | null;
+            displayName?: string | null;
+            mail?: string | null;
+            accountType?: string | null;
+        }
     }
 }
 declare namespace Paths {
@@ -1899,6 +1905,25 @@ declare namespace Paths {
         }
         namespace Responses {
             export type $200 = Components.Schemas.ITagDataDto[];
+        }
+    }
+    namespace GetUsersForProject {
+        namespace Parameters {
+            export type FusionContextId = string;
+            export type Search = string;
+            export type Skip = number; // int32
+            export type Top = number; // int32
+        }
+        export interface PathParameters {
+            fusionContextId: Parameters.FusionContextId;
+        }
+        export interface QueryParameters {
+            search?: Parameters.Search;
+            top?: Parameters.Top /* int32 */;
+            skip?: Parameters.Skip /* int32 */;
+        }
+        namespace Responses {
+            export type $200 = Components.Schemas.UserTagDto[];
         }
     }
     namespace UpdateMessage {
