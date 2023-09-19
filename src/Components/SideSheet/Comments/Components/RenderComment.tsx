@@ -14,6 +14,11 @@ import { Conversation } from "../../../../Models/Conversation"
 import { ViewContext } from "../../../../Context/ViewContext"
 import { unescapeHtmlEntities } from "../../../../utils/helpers"
 
+const Container = styled.div`
+    max-width: 500px;
+    word-wrap: break-word;
+`
+
 const CommentText = styled(Typography)`
     margin: 10px 0;
 
@@ -169,7 +174,7 @@ const RenderComment: FC<RenderCommentProps> = ({
         )
     }
     return (
-        <div>
+        <Container>
             <CommentText
                 aria-expanded={open}
                 ref={anchorRef}
@@ -214,7 +219,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                     </Button>
                 </Popover.Header>
             </Popover>
-        </div>
+        </Container>
     )
 }
 

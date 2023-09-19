@@ -43,20 +43,19 @@ const ListItem = styled.button`
 `
 
 interface Props {
-    setTaggedUsers: React.Dispatch<React.SetStateAction<string[]>>
     SearchTerm?: string
     onTagSelected: (displayName: string, userId: string) => void
     dummyData: { id: string; displayName: string; accountType: string; status: string }[]
+    setReRenderCounter: React.Dispatch<React.SetStateAction<number>>
 }
 
 const TagDropDown: FC<Props> = ({
- SearchTerm, setTaggedUsers, onTagSelected, dummyData,
+ SearchTerm, onTagSelected, dummyData, setReRenderCounter,
 }) => {
     const filteredNames = dummyData.filter(({ displayName }) => !SearchTerm || displayName.toLowerCase().includes(SearchTerm.toLowerCase()))
 
     const handleTagClick = (userId: string, displayName: string) => {
-        setTaggedUsers((prevTaggedUsers) => [...prevTaggedUsers, userId])
-
+        setReRenderCounter((prev) => prev + 1)
         onTagSelected(displayName, userId)
     }
 

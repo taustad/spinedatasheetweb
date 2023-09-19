@@ -30,7 +30,7 @@ interface Props {
   setShowTagDropDown: React.Dispatch<React.SetStateAction<boolean>>
   newReviewComment: any
   setNewReviewComment: React.Dispatch<React.SetStateAction<any>>
-  taggedUsers: string[]
+  reRenderCounter: number
 }
 
 const InputField: React.FC<Props> = ({
@@ -39,50 +39,50 @@ const InputField: React.FC<Props> = ({
   setShowTagDropDown,
   newReviewComment,
   setNewReviewComment,
-  taggedUsers,
+  reRenderCounter,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null)
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(true)
 
-useEffect(() => {
-    if (pRef.current) {
-      console.log("re-rendering with the text: ", newReviewComment?.text)
-      pRef.current.innerHTML = newReviewComment?.text || ""
-    }
-}, [taggedUsers])
+  useEffect(() => {
+      if (pRef.current) {
+        if (!newReviewComment?.text) {
+          setIsPlaceholderShown(true)
+        }
+        pRef.current.innerHTML = newReviewComment?.text || placeholder
+      }
+  }, [reRenderCounter])
 
-useEffect(() => {
-    if (pRef.current && isPlaceholderShown) {
-      pRef.current.innerHTML = placeholder
-    }
-}, [isPlaceholderShown, placeholder])
+  useEffect(() => {
+      if (pRef.current && isPlaceholderShown) {
+        pRef.current.innerHTML = placeholder
+      }
+  }, [isPlaceholderShown, placeholder])
 
   const handleCommentChange = (commentText: string) => {
-    const lastAtPos = commentText.lastIndexOf("@")
-    const shouldShowDropdown = lastAtPos !== -1
+      const words = commentText.split(/\s+/) // Split the text by spaces
 
-    setShowTagDropDown(shouldShowDropdown)
+      const mentionWord = words.find((word) => word.startsWith("@"))
+      const shouldShowDropdown = !!mentionWord
+      const searchTerm = mentionWord ? mentionWord.slice(1) : ""
 
-    if (shouldShowDropdown) {
-      const termAfterAt = commentText.slice(lastAtPos + 1)
-      setSearchTerm(termAfterAt)
-    } else {
-      setSearchTerm("")
-    }
+      setShowTagDropDown(shouldShowDropdown)
+      setSearchTerm(searchTerm)
 
-    const comment = { ...newReviewComment, text: commentText }
-    setNewReviewComment(comment)
+      const comment = { ...newReviewComment, text: commentText }
+      setNewReviewComment(comment)
   }
 
   const handleFocus = () => {
     if (pRef.current) {
       pRef.current.contentEditable = "true"
       pRef.current.focus()
-      if (isPlaceholderShown) {
+      if (isPlaceholderShown && pRef.current.innerText === placeholder) {
         pRef.current.innerText = ""
+        setIsPlaceholderShown(false)
       }
     }
-  }
+}
 
   const handleBlur = () => {
       if (pRef.current) {
