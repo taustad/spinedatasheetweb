@@ -71,7 +71,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                     const userTagsResult = await (await GetUserTagService()).getUsers(fusionContextId.id, "", 1000, 0)
                     setUserTags(userTagsResult.data)
                 } catch (error) {
-                    console.error("Error users for project: ", error)
+                    console.error("Error getting users for project: ", error)
                 }
             }
         })()
