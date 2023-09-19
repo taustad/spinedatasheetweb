@@ -13,6 +13,7 @@ import { comparisonGeneralColumnDefs } from "./ColumnDefs/GeneralColumnDefs"
 import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
+import CustomFilterToolPanel from "./CustomFilterToolPanel"
 import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
 
 const TableContainer = styled.div`
@@ -78,6 +79,21 @@ function TagComparisonTable({ tags }: Props) {
                     suppressColumnSelectAll: true,
                     suppressColumnExpandAll: true,
                 },
+            },
+            {
+                id: "filters",
+                labelDefault: "Column Filters",
+                labelKey: "filters",
+                iconKey: "filter",
+                toolPanel: "agFiltersToolPanel",
+            },
+            {
+                id: "customFilters",
+                labelDefault: "Custom Filters",
+                labelKey: "customFilters",
+                iconKey: "filter",
+                toolPanel: CustomFilterToolPanel,
+                width: 500,
             },
         ],
         defaultToolPanel: "columns",
