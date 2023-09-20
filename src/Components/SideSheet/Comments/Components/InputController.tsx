@@ -31,6 +31,8 @@ interface InputControllerProps {
     newMessage: any
     setNewMessage: React.Dispatch<React.SetStateAction<any>>
     reRenderCounter: number
+    charCount: number
+    setCharCount: React.Dispatch<React.SetStateAction<number>>
 }
 
 const InputController: FC<InputControllerProps> = ({
@@ -40,6 +42,8 @@ const InputController: FC<InputControllerProps> = ({
     newMessage,
     setNewMessage,
     reRenderCounter,
+    charCount,
+    setCharCount,
 }) => (
     <Controls>
         <InputField
@@ -48,10 +52,17 @@ const InputController: FC<InputControllerProps> = ({
             newReviewComment={newMessage}
             setNewReviewComment={setNewMessage}
             reRenderCounter={reRenderCounter}
+            charCount={charCount}
+            setCharCount={setCharCount}
         />
         <InputButtonWrapper>
             <StyledCheckbox label="Send to contractor" />
-            <Button onClick={handleSubmit} variant="ghost">
+            <Button
+                title={charCount > 500 ? "character limit exeeded" : "send message"}
+                disabled={charCount > 500}
+                onClick={handleSubmit}
+                variant="ghost"
+            >
                 <Icon data={send} />
             </Button>
         </InputButtonWrapper>

@@ -58,7 +58,7 @@ const TagDropDown: FC<Props> = ({
 
     const handleTagClick = (userId: string, displayName: string) => {
         setReRenderCounter((prev) => prev + 1)
-        onTagSelected(displayName, userId)
+        onTagSelected(displayName.trim(), userId)
     }
 
     return (

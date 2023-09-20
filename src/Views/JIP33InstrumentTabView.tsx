@@ -35,7 +35,6 @@ import { Conversation } from "../Models/Conversation"
 import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
 
 const TopBar = styled.div`
-    border-bottom: 1px solid LightGray;
     z-index: 100;
     padding-top: 20px;
     display: flex;
@@ -66,7 +65,7 @@ const StyledTabPanel = styled(Panel).attrs<{ sheetWidth: number }>((props) => ({
 }))`
     padding: 0px;
     border-top: 1px solid LightGray;
-    height: calc(100vh - 211px);
+    height: calc(100vh - 225px);
     overflow: hidden;
 `
 
@@ -189,7 +188,6 @@ function JIP33InstrumentTabView({ }) {
         "Meter body",
         "Transmitter",
         "Equipment conditions",
-        "Operating conditions - Minimum flow",
         "Operating conditions - Maximum flow",
     ]
 
@@ -223,7 +221,7 @@ function JIP33InstrumentTabView({ }) {
                     )}
                 </TopBar>
                 <Tabs activeTab={activeTab} onChange={setActiveTab}>
-                    <List>
+                    <List style={{ border: "1px solid white", position: "relative", bottom: "-0.5px" }}>
                         <Tab>NORSOK</Tab>
                         <Tab>JIP33</Tab>
                     </List>

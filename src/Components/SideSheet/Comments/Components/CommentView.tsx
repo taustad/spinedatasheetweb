@@ -50,6 +50,8 @@ const CommentView: React.FC<CommentViewProps> = ({
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [showTagDropDown, setShowTagDropDown] = useState<boolean>(false)
     const [userTags, setUserTags] = useState<any[]>([])
+    const [charCount, setCharCount] = useState(0)
+
     const {
         activeTagData,
         conversations,
@@ -103,18 +105,22 @@ const CommentView: React.FC<CommentViewProps> = ({
         const beforeAt = commentText.substring(0, lastAtPos)
         const afterAt = commentText.substring(lastAtPos + 1).replace(/^\S+/, "") // Removes the word right after the "@"
 
-        const newCommentText = `${beforeAt}<span data-mention="${userId}" contenteditable="false">${displayName}</span>&nbsp;${afterAt}`
+        const newCommentText = `${beforeAt}<span data-mention="${userId}" contenteditable="false">${displayName}</span>${afterAt}`
         const message = { ...newMessage }
         message.text = newCommentText
         setNewMessage(message)
         setShowTagDropDown(false)
         setSearchTerm("")
+        console.log("displayName: ", displayName)
+        setCharCount((prevCharCount) => prevCharCount + displayName.length)
     }
 
     const createConversation = async () => {
+        const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
+        console.log("new conversation message: ", processedString)
         const createCommentDto: Components.Schemas.ConversationDto = {
             property: currentProperty,
-            text: newMessage?.text ?? "",
+            text: processedString ?? "",
             conversationLevel: 1,
             conversationStatus: 0,
         }
@@ -133,6 +139,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     const addMessage = async () => {
         const message = { ...newMessage }
         const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
+        console.log("added message: ", processedString)
         console.log("mentions: ", mentions) // to be used for tagging users in the future
         message.text = processedString
         try {
@@ -190,6 +197,8 @@ const CommentView: React.FC<CommentViewProps> = ({
                     setNewMessage={setNewMessage}
                     setSearchTerm={setSearchTerm}
                     setShowTagDropDown={setShowTagDropDown}
+                    charCount={charCount}
+                    setCharCount={setCharCount}
                 />
             </Controls>
         </Container>

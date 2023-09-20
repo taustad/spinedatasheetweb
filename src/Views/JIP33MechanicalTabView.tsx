@@ -33,7 +33,6 @@ import Dialogue from "../Components/Dialogue"
 
 const TopBar = styled.div`
     padding-top: 0;
-    border-bottom: 1px solid LightGray;
     z-index: 100;
     padding-top: 20px;
 `
