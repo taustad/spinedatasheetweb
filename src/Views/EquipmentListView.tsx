@@ -12,10 +12,11 @@ import EquipmentListReview from "../Components/EquipmentListView/EquipmentListRe
 import Dialogue from "../Components/Dialogue"
 
 const Wrapper = styled.div`
-    width: 100%;
+    box-sizing: border-box;
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin: 0 15px;
 `
 
 const StyledTabs = styled(Tabs)`

@@ -31,7 +31,6 @@ const ExpandableDiv = styled.div`
 const SidebarDiv = styled.div`
     width: 15rem;
     display: flex;
-    border-right: 1px solid lightgrey;
     flex-direction: column;
     overflow-y: overflow;
     overflow-x: hidden;
@@ -39,8 +38,6 @@ const SidebarDiv = styled.div`
 
 const MainView = styled.div`
     width: calc(100% - 15rem);
-    overflow: scroll;
-    overflow-x: hidden;
 `
 
 const MenuItems = styled.ul`
@@ -66,7 +63,6 @@ const Item = styled.li`
 
 const StyledTabPanel = styled.div`
     padding-top: 0;
-    border-bottom: 1px solid LightGray;
     flexwrap: "wrap";
     height: 100%;
 `

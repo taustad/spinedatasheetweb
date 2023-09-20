@@ -13,22 +13,24 @@ import { comparisonGeneralColumnDefs } from "./ColumnDefs/GeneralColumnDefs"
 import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
-import CustomFilterToolPanel from "./CustomFilterToolPanel"
 import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
+import InvalidPropertyFilterToolPanel from "./FilterTabs/InvalidPropertyFilterToolPanel"
+import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
+import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
     width: 100%; 
-    height: calc(100vh - 310px);
+    height: calc(100vh - 325px);
 `
 
 const FilterBar = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: right;
-    margin-right: 1rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    align-items: center;
+    margin: 15px 0;
+    gap: 15px;
 `
 
 interface Props {
@@ -38,8 +40,8 @@ interface Props {
 function TagComparisonTable({ tags }: Props) {
     const styles = useStyles()
     const gridRef = useRef<AgGridReact>(null)
-    const [columnSideBarIsOpen, setColumnSideBarIsOpen] = useState<boolean>(false)
-    const toggleColumnSideBar = () => setColumnSideBarIsOpen(!columnSideBarIsOpen)
+    const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
+    const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
 
     const defaultColDef = useMemo<ColDef>(
         () => ({
@@ -82,18 +84,35 @@ function TagComparisonTable({ tags }: Props) {
             },
             {
                 id: "filters",
-                labelDefault: "Column Filters",
+                labelDefault: "Row Data",
                 labelKey: "filters",
                 iconKey: "filter",
                 toolPanel: "agFiltersToolPanel",
             },
             {
-                id: "customFilters",
-                labelDefault: "Custom Filters",
-                labelKey: "customFilters",
+                id: "InvalidPropertyFilters",
+                labelDefault: "Invalid Properties",
+                labelKey: "InvalidPropertyFilters",
                 iconKey: "filter",
-                toolPanel: CustomFilterToolPanel,
-                width: 500,
+                toolPanel: InvalidPropertyFilterToolPanel,
+                width: 250,
+            },
+            {
+                id: "commentFilters",
+                labelDefault: "Comments",
+                labelKey: "commentFilters",
+                iconKey: "filter",
+                toolPanel: CommentFilterToolPanel,
+                width: 250,
+
+            },
+            {
+                id: "iconFilters",
+                labelDefault: "Icons",
+                labelKey: "iconFilters",
+                iconKey: "filter",
+                toolPanel: IconFilterToolPanel,
+                width: 250,
             },
         ],
         defaultToolPanel: "columns",
@@ -106,7 +125,7 @@ function TagComparisonTable({ tags }: Props) {
     }, [])
 
     const toggleSideBar = () => {
-        if (columnSideBarIsOpen) {
+        if (FilterSidebarIsOpen) {
             return columnSideBar
         }
         return undefined
@@ -114,7 +133,7 @@ function TagComparisonTable({ tags }: Props) {
 
     return (
         <>
-            <FilterBar style={{ gap: 10 }}>
+            <FilterBar>
                 <TextInput
                     icon="search"
                     size={30}
@@ -125,11 +144,11 @@ function TagComparisonTable({ tags }: Props) {
                     onInput={onFilterTextBoxChanged}
                 />
                 <Button
-                    variant={columnSideBarIsOpen ? "contained" : "outlined"}
-                    onClick={toggleColumnSideBar}
+                    variant={FilterSidebarIsOpen ? "contained" : "outlined"}
+                    onClick={toggleFilterSidebar}
                 >
-                    <Icon data={view_column} color={columnSideBarIsOpen ? "white" : "#007079"} />
-                    Columns
+                    <Icon data={view_column} color={FilterSidebarIsOpen ? "white" : "#007079"} />
+                    Filters
                 </Button>
             </FilterBar>
             <div className={styles.root}>

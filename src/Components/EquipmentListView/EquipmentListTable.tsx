@@ -18,13 +18,14 @@ interface Props {
 }
 
 const Wrapper = styled.div`
-    height: calc(100vh - 243px);
+    height: calc(100vh - 260px);
 `
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
-     width: 100%; 
-     height: 100%;
+    width: 100%; 
+    height: 100%;
+     
 `
 
 const TagIcon = styled(Icon)`
