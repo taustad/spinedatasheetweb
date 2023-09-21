@@ -114,7 +114,7 @@ const RenderComment: FC<RenderCommentProps> = ({
     const [open, setOpen] = useState(false)
 
     const {
-        activeTagData, conversations, activeConversation, setActiveConversation,
+        activeTagData, activeConversation, setActiveConversation,
     } = useContext(ViewContext)
 
     if (!activeConversation) { return (<>Error loading conversation</>) }
