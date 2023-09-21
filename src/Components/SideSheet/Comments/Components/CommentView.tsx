@@ -4,6 +4,7 @@ import React, {
     useState,
 } from "react"
 import styled from "styled-components"
+import { useCurrentContext } from "@equinor/fusion"
 import { GetConversationService } from "../../../../api/ConversationService"
 import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
@@ -11,6 +12,7 @@ import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
 import { processMessageInput } from "../../../../utils/helpers"
+import { GetProjectService } from "../../../../api/ProjectService"
 
 const Controls = styled.div`
     position: sticky;
@@ -47,6 +49,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     const [reRenderCounter, setReRenderCounter] = useState<number>(0)
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [showTagDropDown, setShowTagDropDown] = useState<boolean>(false)
+    const [userTags, setUserTags] = useState<any[]>([])
     const [charCount, setCharCount] = useState(0)
 
     const {
@@ -57,36 +60,24 @@ const CommentView: React.FC<CommentViewProps> = ({
         setActiveConversation,
     } = useContext(ViewContext)
 
+    const fusionContextId = useCurrentContext()
+
     const getConversationForProperty = (property: string) => (
         conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
     )
 
-    const dummyData = [
-        {
-            id: "1",
-            displayName: "Henrik Hansen",
-            accountType: "Consultant",
-            status: "Active",
-        },
-        {
-            id: "2",
-            displayName: "Peter Jensen",
-            accountType: "Consultant",
-            status: "Active",
-        },
-        {
-            id: "3",
-            displayName: "Jesper Gudbransen",
-            accountType: "Consultant",
-            status: "inactive",
-        },
-        {
-            id: "4",
-            displayName: "Mikkel Eriksen",
-            accountType: "Consultant",
-            status: "inactive",
-        },
-    ]
+    useEffect(() => {
+        (async () => {
+            if (fusionContextId) {
+                try {
+                    const userTagsResult = await (await GetProjectService()).getUsers(fusionContextId.id, "", 1000, 0)
+                    setUserTags(userTagsResult.data)
+                } catch (error) {
+                    console.error("Error getting users for project: ", error)
+                }
+            }
+        })()
+    }, [])
 
     useEffect(() => {
         (async () => {
@@ -195,7 +186,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                         SearchTerm={searchTerm}
                         setReRenderCounter={setReRenderCounter}
                         onTagSelected={handleTagSelected}
-                        dummyData={dummyData}
+                        dummyData={userTags}
                     />
                 )}
 

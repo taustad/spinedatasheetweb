@@ -77,9 +77,9 @@ export class BaseService {
         path: string,
         requestQuery?: AxiosRequestConfig,
     ): Promise<any> {
-        const { data } = await this.client.get(path, requestQuery)
+        const result = await this.client.get(path, requestQuery)
 
-        return data
+        return result
     }
 
     protected get<T = any>(path: string, options?: RequestOptions): Promise<T> {
