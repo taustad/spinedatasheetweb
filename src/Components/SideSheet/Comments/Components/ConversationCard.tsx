@@ -22,16 +22,16 @@ const Buttons = styled.div`
 
 interface ConversationCardProps {
     title: string
-    tagInfo: string
+    // tagInfo: string
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({ title, tagInfo }) => (
+const ConversationCard: FC<ConversationCardProps> = ({ title }) => (
     <ConversationCardContainer>
         <Card>
             <Typography variant="h5">{title}</Typography>
             <TagInfo>
                 <Icon data={tag} />
-                <Typography variant="body_short">{tagInfo}</Typography>
+                {/* <Typography variant="body_short">{tagInfo}</Typography> */}
             </TagInfo>
             <Buttons>
                 <Button>Open</Button>

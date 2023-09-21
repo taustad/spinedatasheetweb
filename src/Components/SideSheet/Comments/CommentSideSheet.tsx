@@ -9,6 +9,7 @@ import LocalNavigation from "../Components/LocalNavigation"
 import TabsTitle from "../Components/TabsTitle"
 import ConversationCard from "./Components/ConversationCard"
 import { ViewContext } from "../../../Context/ViewContext"
+import { GetConversationService } from "../../../api/ConversationService"
 
 const Overview = styled.div`
     padding: 15px;
@@ -54,11 +55,31 @@ const CommentSideSheet: FC<Props> = ({
         "Implemented",
     ]
 
-    const { activeConversation } = useContext(ViewContext)
+    const {
+        activeConversation, setConversations, activeTagData, conversations,
+    } = useContext(ViewContext)
 
     useEffect(() => {
         scrollToBottom()
     }, [currentProperty, activeConversation])
+
+    const buildConversations = () => {
+        console.log("Building conversations")
+        const newConversations = [[]]
+        if (conversations) {
+            conversations.forEach((conversation) => {
+                const newConversation = {
+                    title: conversation.property,
+                }
+                // newConversations[conversation.conversationStatus ?? 0].push(newConversation)
+            })
+        }
+    }
+
+    useEffect(() => {
+        console.log("Conversations changed: ", conversations)
+        buildConversations()
+    }, [conversations])
 
     const dummyConversations = [
         // Dummy data for the "All" tab
@@ -87,6 +108,20 @@ const CommentSideSheet: FC<Props> = ({
             { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
         ],
     ]
+
+    useEffect(() => {
+        (async () => {
+            try {
+                if (!activeTagData?.review) return
+                console.log("Getting conversations for tag review: ", activeTagData?.review.id)
+                const newConversations = await (await GetConversationService()).getConversationsForTagReview(activeTagData?.review.id ?? "")
+                console.log("Got conversations: ", newConversations)
+                setConversations(newConversations)
+            } catch (error) {
+                console.error("Error getting messages for conversation: ", error)
+            }
+        })()
+    }, [])
 
     return (
         <Container>
@@ -123,7 +158,7 @@ const CommentSideSheet: FC<Props> = ({
                         <ConversationCard
                             key={conversation.title} // Add a key prop for each rendered element
                             title={conversation.title}
-                            tagInfo={conversation.tagInfo}
+                            // tagInfo={conversation.tagInfo}
                         />
                     ))}
                 </>
