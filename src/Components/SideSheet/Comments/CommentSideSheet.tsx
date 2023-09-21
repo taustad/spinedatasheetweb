@@ -47,6 +47,7 @@ const CommentSideSheet: FC<Props> = ({
     scrollToBottom,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
+    const [conversationsData, setConversationsData] = useState([[{}]])
     const Navigationbuttons = [
         "All",
         "Open",
@@ -65,15 +66,17 @@ const CommentSideSheet: FC<Props> = ({
 
     const buildConversations = () => {
         console.log("Building conversations")
-        const newConversations = [[]]
+        const newConversations: any = [[]]
         if (conversations) {
             conversations.forEach((conversation) => {
                 const newConversation = {
                     title: conversation.property,
                 }
-                // newConversations[conversation.conversationStatus ?? 0].push(newConversation)
+                newConversations[conversation.conversationStatus ?? 0].push(newConversation)
             })
         }
+        console.log("New conversations: ", newConversations)
+        setConversationsData(newConversations)
     }
 
     useEffect(() => {
@@ -154,11 +157,10 @@ const CommentSideSheet: FC<Props> = ({
                             setActiveTab={setActiveTab}
                         />
                     </Overview>
-                    {dummyConversations[activeTab].map((conversation) => (
+                    {conversationsData[activeTab].map((conversation: any) => (
                         <ConversationCard
                             key={conversation.title} // Add a key prop for each rendered element
                             title={conversation.title}
-                            // tagInfo={conversation.tagInfo}
                         />
                     ))}
                 </>
