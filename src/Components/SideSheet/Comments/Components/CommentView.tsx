@@ -12,7 +12,7 @@ import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
 import { processMessageInput } from "../../../../utils/helpers"
-import { GetUserTagService } from "../../../../api/UserTagService"
+import { GetProjectService } from "../../../../api/ProjectService"
 
 const Controls = styled.div`
     position: sticky;
@@ -70,7 +70,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         (async () => {
             if (fusionContextId) {
                 try {
-                    const userTagsResult = await (await GetUserTagService()).getUsers(fusionContextId.id, "", 1000, 0)
+                    const userTagsResult = await (await GetProjectService()).getUsers(fusionContextId.id, "", 1000, 0)
                     setUserTags(userTagsResult.data)
                 } catch (error) {
                     console.error("Error getting users for project: ", error)
