@@ -66,7 +66,7 @@ export function getPropertyName<T>(property: keyof T): keyof T {
  * @returns {number[]} mentions - An array of mention IDs.
  */
 export function processMessageInput(input: string): { processedString: string, mentions: number[] } {
-    const regex = /<span data-mention="(\d+)" contenteditable="false">([^<]+)<\/span>/g
+    const regex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
 
     let match
     const mentions: number[] = []

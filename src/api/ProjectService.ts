@@ -7,6 +7,16 @@ class ProjectService extends BaseService {
         const result: any = await this.get(`${id}`)
         return result.value
     }
+
+    async getUsers(fusionContextId: string, search: string, top: number, skip: number) {
+        const result: any = await this.getWithParams(
+            `${fusionContextId}/users`,
+            {
+                params: { search, top, skip },
+            },
+        )
+        return result
+    }
 }
 
 export async function GetProjectService() {
