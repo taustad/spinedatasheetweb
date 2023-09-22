@@ -49,8 +49,8 @@ const CommentView: React.FC<CommentViewProps> = ({
     const [reRenderCounter, setReRenderCounter] = useState<number>(0)
     const [searchTerm, setSearchTerm] = useState<string>("")
     const [showTagDropDown, setShowTagDropDown] = useState<boolean>(false)
-    const [userTags, setUserTags] = useState<any[]>([])
     const [charCount, setCharCount] = useState(0)
+    const [userTags, setUserTags] = useState<any[]>([])
 
     const {
         activeTagData,
@@ -72,6 +72,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                 try {
                     const userTagsResult = await (await GetProjectService()).getUsers(fusionContextId.id, "", 1000, 0)
                     setUserTags(userTagsResult.data)
+                    console.log("hello")
                 } catch (error) {
                     console.error("Error getting users for project: ", error)
                 }

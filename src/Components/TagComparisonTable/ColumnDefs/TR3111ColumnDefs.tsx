@@ -4,7 +4,7 @@ import { getPropertyName } from "../../../utils/helpers"
 
 export const comparisonTR3111ColumnDefs = (): ColGroupDef[] => [
     {
-        headerName: "TR3111",
+        headerName: "Tag Information",
         children: [
             {
                 field: getPropertyName<TagData>("tagStatus"),
