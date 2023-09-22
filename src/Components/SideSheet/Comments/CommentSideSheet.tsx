@@ -64,13 +64,36 @@ const CommentSideSheet: FC<Props> = ({
         scrollToBottom()
     }, [currentProperty, activeConversation])
 
+    const getPropertyValue = (property: string, obj: any) => {
+        if (obj == null) return null
+        // eslint-disable-next-line no-prototype-builtins
+        if (obj.hasOwnProperty(property)) return obj[property]
+
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < Object.keys(obj).length; i++) {
+            const key = Object.keys(obj)[i]
+            if (typeof obj[key] === "object") {
+                const value: any = getPropertyValue(obj[key], property)
+                if (value) return value
+            }
+        }
+
+        return null
+    }
+
     const buildConversations = () => {
         console.log("Building conversations")
         const newConversations: any = [[]]
         if (conversations) {
             conversations.forEach((conversation) => {
+                if (!conversation.property) return
+                const value = getPropertyValue(conversation.property, activeTagData)
+                console.log("Property: ", conversation.property, " value: ", value, " conversation: ", conversation)
                 const newConversation = {
                     title: conversation.property,
+                    value: value ?? "",
+                    status: conversation.conversationStatus,
+                    conversationId: conversation.id,
                 }
                 newConversations[conversation.conversationStatus ?? 0].push(newConversation)
             })
@@ -84,33 +107,33 @@ const CommentSideSheet: FC<Props> = ({
         buildConversations()
     }, [conversations])
 
-    const dummyConversations = [
-        // Dummy data for the "All" tab
-        [
-            { title: "Test conversation 1 (All)", tagInfo: "Tag 1" },
-            { title: "Test conversation 2 (All)", tagInfo: "Tag 2" },
-        ],
-        // Dummy data for the "Open" tab
-        [
-            { title: "Test conversation 1 (Open)", tagInfo: "Tag 1" },
-            { title: "Test conversation 2 (Open)", tagInfo: "Tag 2" },
-        ],
-        // Dummy data for the "To be implemented" tab
-        [
-            { title: "Test conversation 1 (To be implemented)", tagInfo: "Tag 1" },
-            { title: "Test conversation 2 (To be implemented)", tagInfo: "Tag 2" },
-        ],
-        // Dummy data for the "Closed" tab
-        [
-            { title: "Test conversation 1 (Closed)", tagInfo: "Tag 1" },
-            { title: "Test conversation 2 (Closed)", tagInfo: "Tag 2" },
-        ],
-        // Dummy data for the "Implemented" tab
-        [
-            { title: "Test conversation 1 (Implemented)", tagInfo: "Tag 1" },
-            { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
-        ],
-    ]
+    // const dummyConversations = [
+    //     // Dummy data for the "All" tab
+    //     [
+    //         { title: "Test conversation 1 (All)", tagInfo: "Tag 1" },
+    //         { title: "Test conversation 2 (All)", tagInfo: "Tag 2" },
+    //     ],
+    //     // Dummy data for the "Open" tab
+    //     [
+    //         { title: "Test conversation 1 (Open)", tagInfo: "Tag 1" },
+    //         { title: "Test conversation 2 (Open)", tagInfo: "Tag 2" },
+    //     ],
+    //     // Dummy data for the "To be implemented" tab
+    //     [
+    //         { title: "Test conversation 1 (To be implemented)", tagInfo: "Tag 1" },
+    //         { title: "Test conversation 2 (To be implemented)", tagInfo: "Tag 2" },
+    //     ],
+    //     // Dummy data for the "Closed" tab
+    //     [
+    //         { title: "Test conversation 1 (Closed)", tagInfo: "Tag 1" },
+    //         { title: "Test conversation 2 (Closed)", tagInfo: "Tag 2" },
+    //     ],
+    //     // Dummy data for the "Implemented" tab
+    //     [
+    //         { title: "Test conversation 1 (Implemented)", tagInfo: "Tag 1" },
+    //         { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
+    //     ],
+    // ]
 
     useEffect(() => {
         (async () => {
