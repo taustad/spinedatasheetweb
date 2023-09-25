@@ -14,7 +14,6 @@ import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
 import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
-import InvalidPropertyFilterToolPanel from "./FilterTabs/InvalidPropertyFilterToolPanel"
 import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
 import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 
@@ -88,14 +87,6 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "filters",
                 iconKey: "filter",
                 toolPanel: "agFiltersToolPanel",
-            },
-            {
-                id: "InvalidPropertyFilters",
-                labelDefault: "Invalid Properties",
-                labelKey: "InvalidPropertyFilters",
-                iconKey: "filter",
-                toolPanel: InvalidPropertyFilterToolPanel,
-                width: 250,
             },
             {
                 id: "commentFilters",
