@@ -6,8 +6,8 @@ export class Conversation implements Components.Schemas.GetConversationDto {
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time
     property?: string | null;
-    conversationStatus?: Components.Schemas.ConversationStatus /* int32 */;
-    conversationLevel?: Components.Schemas.ConversationLevel /* int32 */;
+    conversationStatus?: Components.Schemas.ConversationStatusDto /* int32 */;
+    conversationLevel?: Components.Schemas.ConversationLevelDto /* int32 */;
     participants?: User[] | null;
     messages?: Message[] | null;
 

@@ -10,13 +10,13 @@ declare namespace Components {
             revisionContainers?: RevisionContainerDto[] | null;
         }
         export interface ConversationDto {
-            text?: string | null;
+            text: string;
             property?: string | null;
-            conversationLevel?: ConversationLevel /* int32 */;
-            conversationStatus?: ConversationStatus /* int32 */;
+            conversationLevel?: ConversationLevelDto;
+            conversationStatus?: ConversationStatusDto;
         }
-        export type ConversationLevel = 0 | 1 | 2; // int32
-        export type ConversationStatus = 0 | 1 | 2 | 3; // int32
+        export type ConversationLevelDto = "Tag" | "PurchaserRequirement" | "SupplierOfferedValue";
+        export type ConversationStatusDto = "Open" | "To_be_implemented" | "Closed" | "Implemented";
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
             tagNumber?: string | null;
@@ -358,8 +358,8 @@ declare namespace Components {
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             property?: string | null;
-            conversationStatus?: ConversationStatus /* int32 */;
-            conversationLevel?: ConversationLevel /* int32 */;
+            conversationStatus?: ConversationStatusDto;
+            conversationLevel?: ConversationLevelDto;
             participants?: UserDto[] | null;
             messages?: GetMessageDto[] | null;
         }
@@ -1538,7 +1538,7 @@ declare namespace Components {
             mechanicalSupplierOfferedProduct?: MechanicalSupplierOfferedProduct;
         }
         export interface MessageDto {
-            text?: string | null;
+            text: string;
         }
         export interface ProjectDto {
             id?: string; // uuid
@@ -1546,7 +1546,7 @@ declare namespace Components {
             modifiedDate?: string; // date-time
             contracts?: ContractDto[] | null;
         }
-        export type ReviewStatusEnum = 0 | 3 | 4 | 5 | 6 | 7 | 8 | 9; // int32
+        export type ReviewStatusEnum = "New" | "Reviewed" | "Resubmit" | "Diff" | "Duplicate" | "ReviewedWithComment" | "NotReviewed" | "Deleted";
         export interface RevisionContainerDto {
             id?: string; // uuid
             createdDate?: string; // date-time
@@ -1563,7 +1563,7 @@ declare namespace Components {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
-            status?: ReviewStatusEnum /* int32 */;
+            status?: ReviewStatusEnum;
             approverId?: string; // uuid
             commentResponsible?: string; // uuid
             approved?: boolean;
@@ -1596,7 +1596,7 @@ declare namespace Components {
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             tagNo?: string | null;
-            status?: ReviewStatusEnum /* int32 */;
+            status?: ReviewStatusEnum;
             approverId?: string; // uuid
             commentResponsible?: string; // uuid
             approved?: boolean;
@@ -1618,11 +1618,11 @@ declare namespace Paths {
     namespace AddMessage {
         namespace Parameters {
             export type ConversationId = string; // uuid
-            export type ReviewId = string; // uuid
+            export type ReviewId = string;
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
+            reviewId: Parameters.ReviewId;
         }
         export type RequestBody = Components.Schemas.MessageDto;
         namespace Responses {

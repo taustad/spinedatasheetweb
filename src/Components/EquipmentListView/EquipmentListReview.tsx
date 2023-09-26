@@ -87,28 +87,28 @@ function EquipmentListReview({
 
     const approveTag = async () => {
         const review = buildTagReview()
-        review.status = 3
+        review.status = "Reviewed"
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         await updateTagData()
     }
 
     const rejectTag = async () => {
         const review = buildTagReview()
-        review.status = 4
+        review.status = "Resubmit"
         const result = await (await GetTagDataReviewService()).createTagDataReview(review)
         await updateTagData()
     }
 
     const approvePackage = async () => {
         const review = buildPackageReview()
-        review.status = 3
+        review.status = "Reviewed"
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         await updateTagData()
     }
 
     const rejectPackage = async () => {
         const review = buildPackageReview()
-        review.status = 4
+        review.status = "Resubmit"
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         await updateTagData()
     }
