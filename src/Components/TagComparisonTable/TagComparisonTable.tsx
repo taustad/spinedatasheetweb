@@ -80,6 +80,8 @@ function TagComparisonTable({ tags }: Props) {
                     suppressColumnSelectAll: true,
                     suppressColumnExpandAll: true,
                 },
+                minWidth: 250,
+                maxWidth: 250,
             },
             {
                 id: "filters",
@@ -87,6 +89,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "filters",
                 iconKey: "filter",
                 toolPanel: "agFiltersToolPanel",
+                minWidth: 250,
+                maxWidth: 250,
             },
             {
                 id: "commentFilters",
@@ -94,7 +98,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "commentFilters",
                 iconKey: "filter",
                 toolPanel: CommentFilterToolPanel,
-                width: 250,
+                minWidth: 250,
+                maxWidth: 250,
 
             },
             {
@@ -103,7 +108,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "iconFilters",
                 iconKey: "filter",
                 toolPanel: IconFilterToolPanel,
-                width: 250,
+                minWidth: 250,
+                maxWidth: 250,
             },
         ],
         defaultToolPanel: "columns",
