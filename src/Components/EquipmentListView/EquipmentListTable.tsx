@@ -92,9 +92,9 @@ function EquipmentListTable({
     const tagDataReviewStatusRenderer = (params: any) => {
         const status = params.data.review?.status
         switch (status) {
-            case 3:
+            case "Reviewed":
                 return <Icon data={done} color="green" />
-            case 4:
+            case "Resubmit":
                 return <Icon data={block} color="red" />
             default:
                 return null
@@ -106,9 +106,9 @@ function EquipmentListTable({
     ) => {
         const status = params.data.revisionContainer?.revisionContainerReview?.status
         switch (status) {
-            case 3:
+            case "Reviewed":
                 return <Icon data={done} color="green" />
-            case 4:
+            case "Resubmit":
                 return <Icon data={block} color="red" />
             default:
                 return null

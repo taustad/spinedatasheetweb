@@ -122,8 +122,8 @@ const CommentView: React.FC<CommentViewProps> = ({
         const createCommentDto: Components.Schemas.ConversationDto = {
             property: currentProperty,
             text: processedString ?? "",
-            conversationLevel: 1,
-            conversationStatus: 0,
+            conversationLevel: "Tag",
+            conversationStatus: "Open",
         }
         try {
             const service = await GetConversationService()
