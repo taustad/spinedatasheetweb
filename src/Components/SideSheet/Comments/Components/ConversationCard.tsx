@@ -21,24 +21,33 @@ const Buttons = styled.div`
 `
 
 interface ConversationCardProps {
-    title: string
-    tagInfo: string
+    property: string
+    value: string
+    conversationId: string
+    conversationStatus: Components.Schemas.ConversationStatusDto
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({ title, tagInfo }) => (
-    <ConversationCardContainer>
-        <Card>
-            <Typography variant="h5">{title}</Typography>
-            <TagInfo>
-                <Icon data={tag} />
-                <Typography variant="body_short">{tagInfo}</Typography>
-            </TagInfo>
-            <Buttons>
-                <Button>Open</Button>
-                <Button variant="ghost">Open comments</Button>
-            </Buttons>
-        </Card>
-    </ConversationCardContainer>
+const ConversationCard: FC<ConversationCardProps> = ({
+ property, value, conversationId, conversationStatus,
+}) => {
+    const formattedProperty = property.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())
+    const conversationTitle = `${formattedProperty}: ${value}`
+    return (
+        <ConversationCardContainer>
+            <Card>
+                <Typography variant="h5">
+                    {conversationTitle}
+                </Typography>
+                <TagInfo>
+                    <Icon data={tag} />
+                </TagInfo>
+                <Buttons>
+                    <Button>{conversationStatus}</Button>
+                    <Button variant="ghost">Open comments</Button>
+                </Buttons>
+            </Card>
+        </ConversationCardContainer>
     )
+}
 
 export default ConversationCard
