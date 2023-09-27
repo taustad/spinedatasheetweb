@@ -29,26 +29,25 @@ interface ConversationCardProps {
 
 const ConversationCard: FC<ConversationCardProps> = ({
  property, value, conversationId, conversationStatus,
-}) => (
-    <ConversationCardContainer>
-        <Card>
-            <Typography variant="h5">
-                {property}
-                {" "}
-                :
-                {" "}
-                {value}
-            </Typography>
-            <TagInfo>
-                <Icon data={tag} />
-                {/* <Typography variant="body_short">{tagInfo}</Typography> */}
-            </TagInfo>
-            <Buttons>
-                <Button>{conversationStatus}</Button>
-                <Button variant="ghost">Open comments</Button>
-            </Buttons>
-        </Card>
-    </ConversationCardContainer>
+}) => {
+    const formattedProperty = property.replace(/([A-Z])/g, " $1").replace(/^./, (str) => str.toUpperCase())
+    const conversationTitle = `${formattedProperty}: ${value}`
+    return (
+        <ConversationCardContainer>
+            <Card>
+                <Typography variant="h5">
+                    {conversationTitle}
+                </Typography>
+                <TagInfo>
+                    <Icon data={tag} />
+                </TagInfo>
+                <Buttons>
+                    <Button>{conversationStatus}</Button>
+                    <Button variant="ghost">Open comments</Button>
+                </Buttons>
+            </Card>
+        </ConversationCardContainer>
     )
+}
 
 export default ConversationCard
