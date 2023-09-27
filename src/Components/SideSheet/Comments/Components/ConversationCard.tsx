@@ -21,20 +21,30 @@ const Buttons = styled.div`
 `
 
 interface ConversationCardProps {
-    title: string
-    // tagInfo: string
+    property: string
+    value: string
+    conversationId: string
+    conversationStatus: Components.Schemas.ConversationStatusDto
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({ title }) => (
+const ConversationCard: FC<ConversationCardProps> = ({
+ property, value, conversationId, conversationStatus,
+}) => (
     <ConversationCardContainer>
         <Card>
-            <Typography variant="h5">{title}</Typography>
+            <Typography variant="h5">
+                {property}
+                {" "}
+                :
+                {" "}
+                {value}
+            </Typography>
             <TagInfo>
                 <Icon data={tag} />
                 {/* <Typography variant="body_short">{tagInfo}</Typography> */}
             </TagInfo>
             <Buttons>
-                <Button>Open</Button>
+                <Button>{conversationStatus}</Button>
                 <Button variant="ghost">Open comments</Button>
             </Buttons>
         </Card>

@@ -71,25 +71,23 @@ const CommentSideSheet: FC<Props> = ({
         scrollToBottom()
     }, [currentProperty, activeConversation])
 
-    const getPropertyValue = (property: string, obj: any) => {
-        if (obj == null) return null
-        // eslint-disable-next-line no-prototype-builtins
-        if (obj.hasOwnProperty(property)) return obj[property]
-
-        // eslint-disable-next-line no-plusplus
-        for (let i = 0; i < Object.keys(obj).length; i++) {
-            const key = Object.keys(obj)[i]
-            if (typeof obj[key] === "object") {
-                const value: any = getPropertyValue(obj[key], property)
-                if (value) return value
-            }
+    const getPropertyValue = (property: string, obj: any): any => {
+        if (obj == null) { return null }
+        if (Object.prototype.hasOwnProperty.call(obj, property)) {
+            return obj[property]
         }
 
+        for (let i = 0; i < Object.keys(obj).length; i += 1) {
+            const key = Object.keys(obj)[i]
+            if (typeof obj[key] === "object") {
+                const value: any = getPropertyValue(property, obj[key])
+                if (value) { return value }
+            }
+        }
         return null
     }
 
     const buildConversations = () => {
-        console.log("Building conversations")
         const newConversations: {[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]} = {
             Open: [],
             To_be_implemented: [],
@@ -100,7 +98,6 @@ const CommentSideSheet: FC<Props> = ({
             conversations.forEach((conversation) => {
                 if (!conversation.property) return
                 const value = getPropertyValue(conversation.property, activeTagData)
-                console.log("Property: ", conversation.property, " value: ", value, " conversation: ", conversation)
                 const newConversation: DisplayConversation = {
                     title: conversation.property,
                     value: value ?? "",
@@ -110,7 +107,6 @@ const CommentSideSheet: FC<Props> = ({
                 newConversations[conversation.conversationStatus ?? "Open"].push(newConversation)
             })
         }
-        console.log("New conversations: ", newConversations)
         setConversationsData(newConversations)
     }
 
@@ -121,8 +117,6 @@ const CommentSideSheet: FC<Props> = ({
         conversationId: string
     }[] | undefined => {
         switch (tab) {
-            case 0:
-                return Object.values(conversationsData ?? {}).flat()
             case 1:
                 return conversationsData?.Open
             case 2:
@@ -137,7 +131,6 @@ const CommentSideSheet: FC<Props> = ({
     }
 
     useEffect(() => {
-        console.log("Conversations changed: ", conversations)
         buildConversations()
     }, [conversations])
 
@@ -145,9 +138,7 @@ const CommentSideSheet: FC<Props> = ({
         (async () => {
             try {
                 if (!activeTagData?.review) return
-                console.log("Getting conversations for tag review: ", activeTagData?.review.id)
                 const newConversations = await (await GetConversationService()).getConversationsForTagReview(activeTagData?.review.id ?? "")
-                console.log("Got conversations: ", newConversations)
                 setConversations(newConversations)
             } catch (error) {
                 console.error("Error getting messages for conversation: ", error)
@@ -189,7 +180,10 @@ const CommentSideSheet: FC<Props> = ({
                     {mapTabToConversations(activeTab)?.map((conversation: any) => (
                         <ConversationCard
                             key={conversation.title} // Add a key prop for each rendered element
-                            title={conversation.title}
+                            property={conversation.title}
+                            value={conversation.value}
+                            conversationId={conversation.conversationId}
+                            conversationStatus={conversation.status}
                         />
                     ))}
                 </>

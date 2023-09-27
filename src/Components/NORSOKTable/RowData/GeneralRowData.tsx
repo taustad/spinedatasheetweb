@@ -20,7 +20,7 @@ export const generalRowData = (datasheet: InstrumentTagData): TableRow[] => [
         supplierOfferedVal: "",
         supplierOfferedValUOM: "",
         additionalNotes: "",
-        property: "ServiceDescription",
+        property: "serviceDescription",
     },
     {
         refClause: "",
