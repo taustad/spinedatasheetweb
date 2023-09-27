@@ -88,34 +88,31 @@ const CommentSideSheet: FC<Props> = ({
     }
 
     const buildConversations = () => {
+        if (!conversations) { return }
+
         const newConversations: {[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]} = {
             Open: [],
             To_be_implemented: [],
             Closed: [],
             Implemented: [],
         }
-        if (conversations) {
-            conversations.forEach((conversation) => {
-                if (!conversation.property) { return }
-                const value = getPropertyValue(conversation.property, activeTagData)
-                const newConversation: DisplayConversation = {
-                    title: conversation.property,
-                    value: value ?? "",
-                    status: conversation.conversationStatus ?? "Open",
-                    conversationId: conversation.id ?? "",
-                }
-                newConversations[conversation.conversationStatus ?? "Open"].push(newConversation)
-            })
-        }
+
+        conversations.forEach((conversation) => {
+            if (!conversation.property) { return }
+            const value = getPropertyValue(conversation.property, activeTagData)
+            const newConversation: DisplayConversation = {
+                title: conversation.property,
+                value: value ?? "",
+                status: conversation.conversationStatus ?? "Open",
+                conversationId: conversation.id ?? "",
+            }
+            newConversations[conversation.conversationStatus ?? "Open"].push(newConversation)
+        })
+
         setConversationsData(newConversations)
     }
 
-    const mapTabToConversations = (tab: number):{
-        title: string,
-        value: string,
-        status:Components.Schemas.ConversationStatusDto,
-        conversationId: string
-    }[] | undefined => {
+    const mapTabToConversations = (tab: number): DisplayConversation[] | undefined => {
         switch (tab) {
             case 1:
                 return conversationsData?.Open
@@ -137,8 +134,8 @@ const CommentSideSheet: FC<Props> = ({
     useEffect(() => {
         (async () => {
             try {
-                if (!activeTagData?.review) return
-                const newConversations = await (await GetConversationService()).getConversationsForTagReview(activeTagData?.review.id ?? "")
+                if (!activeTagData?.review || !activeTagData?.review.id) { return }
+                const newConversations = await (await GetConversationService()).getConversationsForTagReview(activeTagData.review.id)
                 setConversations(newConversations)
             } catch (error) {
                 console.error("Error getting messages for conversation: ", error)
@@ -177,7 +174,7 @@ const CommentSideSheet: FC<Props> = ({
                             setActiveTab={setActiveTab}
                         />
                     </Overview>
-                    {mapTabToConversations(activeTab)?.map((conversation: any) => (
+                    {mapTabToConversations(activeTab)?.map((conversation: DisplayConversation) => (
                         <ConversationCard
                             key={conversation.title} // Add a key prop for each rendered element
                             property={conversation.title}
