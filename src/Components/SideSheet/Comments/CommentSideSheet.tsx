@@ -96,7 +96,7 @@ const CommentSideSheet: FC<Props> = ({
         }
         if (conversations) {
             conversations.forEach((conversation) => {
-                if (!conversation.property) return
+                if (!conversation.property) { return }
                 const value = getPropertyValue(conversation.property, activeTagData)
                 const newConversation: DisplayConversation = {
                     title: conversation.property,
