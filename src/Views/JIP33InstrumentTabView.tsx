@@ -14,7 +14,7 @@ import { generateBodyElementSensorRowData } from "../Components/JIP33Table/RowDa
 import { generateTransmitterRowData } from "../Components/JIP33Table/RowData/Instrument/TransmitterRowData"
 import { generateAccessoriesRowData } from "../Components/JIP33Table/RowData/Instrument/AccessoriesRowData"
 import { generatePerformanceRowData } from "../Components/JIP33Table/RowData/Instrument/PerformanceRowData"
-import { BackButton } from "../Components/BackButton"
+import { BackButton } from "../Components/Buttons/BackButton"
 import { GetTagDataService } from "../api/TagDataService"
 import { generateFlowRowData } from "../Components/JIP33Table/RowData/Instrument/FlowRowData"
 import { generateTemperatureRowData } from "../Components/JIP33Table/RowData/Instrument/TemperatureRowData"

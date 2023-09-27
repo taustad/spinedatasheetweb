@@ -1,12 +1,13 @@
 import React, { FC } from "react"
 import styled from "styled-components"
 import StackedBar from "./StackedBar"
+import ReviewButton from "../Buttons/ReviewButton"
 
 const WrapperColumn = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
 `
 const Header: FC = () => (
@@ -39,6 +40,7 @@ const Header: FC = () => (
                     },
                 ]}
         />
+        <ReviewButton />
     </WrapperColumn>
     )
 
