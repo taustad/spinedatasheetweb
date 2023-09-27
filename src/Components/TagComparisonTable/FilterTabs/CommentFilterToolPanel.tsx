@@ -13,15 +13,15 @@ const InlineDivider = styled(Divider)`
 `
 
 const NewCommentsCheck = styled.div`
-    padding: 10px 8px;
-    font-size: 16px;
-    color: #3D3D3D;
-    font-weight: 500;
     background-color: white;
-
+    padding: 10px 8px;
     & svg {
         margin-left: 5px;
     }
+`
+const CustomCommentCheckbox = styled(CheckboxWithCount)`
+    color: #3D3D3D;
+    background-color: white;
 `
 
 const CustomAccordion = styled(Accordion)`
@@ -113,7 +113,7 @@ function CommentFilterToolPanel({}: IToolPanel) {
     return (
         <Container>
             <NewCommentsCheck>
-                <CheckboxWithCount
+                <CustomCommentCheckbox
                     label="New Comments"
                     checked={newComments}
                     onChange={() => setNewComments(!newComments)}

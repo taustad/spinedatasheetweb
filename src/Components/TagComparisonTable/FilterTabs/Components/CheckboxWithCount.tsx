@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react"
+import React from "react"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -8,6 +8,7 @@ const Container = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: 10px;
+    font-size: 13px;
 `
 
 const CheckContainer = styled.label`
@@ -16,7 +17,12 @@ const CheckContainer = styled.label`
     flex-direction: row;
     align-items: center;
     gap: 5px;
+`
 
+const IconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 interface Props {
     count?: number;
@@ -36,7 +42,10 @@ const CheckboxWithCount: React.FC<Props> = ({
     <Container>
         <CheckContainer>
             <input type="checkbox" checked={checked} onChange={onChange} />
-            {icon}
+            <IconContainer>
+                {icon}
+            </IconContainer>
+
             {label}
         </CheckContainer>
 

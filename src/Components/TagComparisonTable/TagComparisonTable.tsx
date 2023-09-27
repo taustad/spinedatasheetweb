@@ -14,7 +14,6 @@ import { comparisonTR3111ColumnDefs } from "./ColumnDefs/TR3111ColumnDefs"
 import { comparisonTagsColumnDefs } from "./ColumnDefs/TagsColumnDefs."
 import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentConditionColumnDefs"
 import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
-import InvalidPropertyFilterToolPanel from "./FilterTabs/InvalidPropertyFilterToolPanel"
 import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
 import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 
@@ -81,6 +80,8 @@ function TagComparisonTable({ tags }: Props) {
                     suppressColumnSelectAll: true,
                     suppressColumnExpandAll: true,
                 },
+                minWidth: 250,
+                maxWidth: 250,
             },
             {
                 id: "filters",
@@ -88,14 +89,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "filters",
                 iconKey: "filter",
                 toolPanel: "agFiltersToolPanel",
-            },
-            {
-                id: "InvalidPropertyFilters",
-                labelDefault: "Invalid Properties",
-                labelKey: "InvalidPropertyFilters",
-                iconKey: "filter",
-                toolPanel: InvalidPropertyFilterToolPanel,
-                width: 250,
+                minWidth: 250,
+                maxWidth: 250,
             },
             {
                 id: "commentFilters",
@@ -103,7 +98,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "commentFilters",
                 iconKey: "filter",
                 toolPanel: CommentFilterToolPanel,
-                width: 250,
+                minWidth: 250,
+                maxWidth: 250,
 
             },
             {
@@ -112,7 +108,8 @@ function TagComparisonTable({ tags }: Props) {
                 labelKey: "iconFilters",
                 iconKey: "filter",
                 toolPanel: IconFilterToolPanel,
-                width: 250,
+                minWidth: 250,
+                maxWidth: 250,
             },
         ],
         defaultToolPanel: "columns",
