@@ -42,12 +42,19 @@ type Props = {
     scrollToBottom: () => void;
 };
 
+interface DisplayConversation {
+    title: string,
+    value: string,
+    status: Components.Schemas.ConversationStatusDto,
+    conversationId: string
+}
+
 const CommentSideSheet: FC<Props> = ({
     currentProperty,
     scrollToBottom,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
-    const [conversationsData, setConversationsData] = useState([[{}]])
+    const [conversationsData, setConversationsData] = useState<{[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]}>()
     const Navigationbuttons = [
         "All",
         "Open",
@@ -83,57 +90,56 @@ const CommentSideSheet: FC<Props> = ({
 
     const buildConversations = () => {
         console.log("Building conversations")
-        const newConversations: any = [[]]
+        const newConversations: {[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]} = {
+            Open: [],
+            To_be_implemented: [],
+            Closed: [],
+            Implemented: [],
+        }
         if (conversations) {
             conversations.forEach((conversation) => {
                 if (!conversation.property) return
                 const value = getPropertyValue(conversation.property, activeTagData)
                 console.log("Property: ", conversation.property, " value: ", value, " conversation: ", conversation)
-                const newConversation = {
+                const newConversation: DisplayConversation = {
                     title: conversation.property,
                     value: value ?? "",
-                    status: conversation.conversationStatus,
-                    conversationId: conversation.id,
+                    status: conversation.conversationStatus ?? "Open",
+                    conversationId: conversation.id ?? "",
                 }
-                newConversations[conversation.conversationStatus ?? 0].push(newConversation)
+                newConversations[conversation.conversationStatus ?? "Open"].push(newConversation)
             })
         }
         console.log("New conversations: ", newConversations)
         setConversationsData(newConversations)
     }
 
+    const mapTabToConversations = (tab: number):{
+        title: string,
+        value: string,
+        status:Components.Schemas.ConversationStatusDto,
+        conversationId: string
+    }[] | undefined => {
+        switch (tab) {
+            case 0:
+                return Object.values(conversationsData ?? {}).flat()
+            case 1:
+                return conversationsData?.Open
+            case 2:
+                return conversationsData?.To_be_implemented
+            case 3:
+                return conversationsData?.Closed
+            case 4:
+                return conversationsData?.Implemented
+            default:
+                return Object.values(conversationsData ?? {}).flat()
+        }
+    }
+
     useEffect(() => {
         console.log("Conversations changed: ", conversations)
         buildConversations()
     }, [conversations])
-
-    // const dummyConversations = [
-    //     // Dummy data for the "All" tab
-    //     [
-    //         { title: "Test conversation 1 (All)", tagInfo: "Tag 1" },
-    //         { title: "Test conversation 2 (All)", tagInfo: "Tag 2" },
-    //     ],
-    //     // Dummy data for the "Open" tab
-    //     [
-    //         { title: "Test conversation 1 (Open)", tagInfo: "Tag 1" },
-    //         { title: "Test conversation 2 (Open)", tagInfo: "Tag 2" },
-    //     ],
-    //     // Dummy data for the "To be implemented" tab
-    //     [
-    //         { title: "Test conversation 1 (To be implemented)", tagInfo: "Tag 1" },
-    //         { title: "Test conversation 2 (To be implemented)", tagInfo: "Tag 2" },
-    //     ],
-    //     // Dummy data for the "Closed" tab
-    //     [
-    //         { title: "Test conversation 1 (Closed)", tagInfo: "Tag 1" },
-    //         { title: "Test conversation 2 (Closed)", tagInfo: "Tag 2" },
-    //     ],
-    //     // Dummy data for the "Implemented" tab
-    //     [
-    //         { title: "Test conversation 1 (Implemented)", tagInfo: "Tag 1" },
-    //         { title: "Test conversation 2 (Implemented)", tagInfo: "Tag 2" },
-    //     ],
-    // ]
 
     useEffect(() => {
         (async () => {
@@ -180,7 +186,7 @@ const CommentSideSheet: FC<Props> = ({
                             setActiveTab={setActiveTab}
                         />
                     </Overview>
-                    {conversationsData[activeTab].map((conversation: any) => (
+                    {mapTabToConversations(activeTab)?.map((conversation: any) => (
                         <ConversationCard
                             key={conversation.title} // Add a key prop for each rendered element
                             title={conversation.title}
