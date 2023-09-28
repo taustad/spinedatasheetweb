@@ -5,7 +5,7 @@ export class RevisionContainerReview implements Components.Schemas.RevisionConta
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time
-    status?: Components.Schemas.ReviewStatusEnum /* int32 */;
+    status?: Components.Schemas.ReviewStatusDto /* int32 */;
     approverId?: string; // uuid
     commentResponsible?: string; // uuid
     approved?: boolean;

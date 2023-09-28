@@ -145,7 +145,7 @@ function EquipmentListView() {
                 tags={tagData}
                 setReviewModalOpen={setReviewModalOpen}
                 setTagInReview={setTagInReview}
-                tagInReview={tagInReview}
+                tagNoInReview={tagInReview}
                 setRevisionInReview={setRevisionInReview}
                 revisionInReview={revisionInReview}
             />
