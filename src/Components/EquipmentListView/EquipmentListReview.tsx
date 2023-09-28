@@ -43,7 +43,7 @@ interface Props {
     tags?: TagData[],
     setReviewModalOpen?: Dispatch<SetStateAction<boolean>>,
     setTagInReview?: Dispatch<SetStateAction<string | undefined>>
-    tagInReview: string | undefined,
+    tagNoInReview: string | undefined,
     setRevisionInReview?: Dispatch<SetStateAction<string | undefined>>
     revisionInReview?: string | undefined,
     isOpen: boolean,
@@ -54,7 +54,7 @@ function EquipmentListReview({
     tags,
     setReviewModalOpen,
     setTagInReview,
-    tagInReview,
+    tagNoInReview,
     setRevisionInReview,
     revisionInReview,
     isOpen,
@@ -68,20 +68,24 @@ function EquipmentListReview({
     const onPackageChange = (event: ChangeEvent<HTMLInputElement>) => setPackageReview(event.target.value)
 
     const updateTagData = async () => {
-        if (!tagInReview) return
-        const tagData = await (await GetTagDataService()).getTagData(tagInReview)
+        if (!tagNoInReview) return
+        const tagData = await (await GetTagDataService()).getTagData(tagNoInReview)
         setActiveTagData(tagData)
     }
 
-    const buildTagReview = () => {
-        const newReview = new TagDataReview()
-        newReview.tagNo = tagInReview
+    const buildTagReview = (): Components.Schemas.CreateTagDataReviewDto => {
+        const newReview: Components.Schemas.CreateTagDataReviewDto = {
+            tagNo: tagNoInReview ?? "",
+            status: "New",
+        }
         return newReview
     }
 
-    const buildPackageReview = () => {
-        const newReview: RevisionContainerReview = {}
-        newReview.revisionContainerId = revisionInReview
+    const buildPackageReview = (): Components.Schemas.CreateContainerReviewDto => {
+        const newReview: Components.Schemas.CreateContainerReviewDto = {
+            revisionContainerId: revisionInReview ?? "",
+            status: "New",
+        }
         return newReview
     }
 
@@ -153,7 +157,7 @@ function EquipmentListReview({
                         <Typography variant="meta">
                             Tag id:
                             {" "}
-                            {tagInReview}
+                            {tagNoInReview}
                         </Typography>
                     </div>
                     <RadioUl>
