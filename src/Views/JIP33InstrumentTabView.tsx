@@ -29,7 +29,7 @@ import { operatingConditionsMaximumFlowRowData } from "../Components/NORSOKTable
 import { operatingConditionsMinimumFlowRowData } from "../Components/NORSOKTable/RowData/OperatingConditionsMinimumFlowRowData"
 import { transmitterRowData } from "../Components/NORSOKTable/RowData/TransmitterRowData"
 import Dialogue from "../Components/Dialogue"
-import SheetContainer from "../Components/SideSheet/SheetContainer"
+import TagSideSheet from "../Components/SideSheet/TagSideSheet"
 import { ViewContext } from "../Context/ViewContext"
 import { Conversation } from "../Models/Conversation"
 import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
@@ -252,7 +252,7 @@ function JIP33InstrumentTabView({ }) {
                     </Content>
                 </Tabs>
             </TableView>
-            <SheetContainer
+            <TagSideSheet
                 onClose={onCloseReviewSideSheet}
                 isOpen={open}
                 currentProperty={currentProperty}

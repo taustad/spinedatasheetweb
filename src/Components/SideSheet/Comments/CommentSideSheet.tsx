@@ -39,7 +39,6 @@ const TopButton = styled(Button)`
 
 type Props = {
     currentProperty?: string;
-    scrollToBottom: () => void;
 };
 
 interface DisplayConversation {
@@ -51,7 +50,6 @@ interface DisplayConversation {
 
 const CommentSideSheet: FC<Props> = ({
     currentProperty,
-    scrollToBottom,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
     const [conversationsData, setConversationsData] = useState<{[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]}>()
@@ -64,12 +62,8 @@ const CommentSideSheet: FC<Props> = ({
     ]
 
     const {
-        activeConversation, setConversations, activeTagData, conversations,
+        setConversations, activeTagData, conversations,
     } = useContext(ViewContext)
-
-    useEffect(() => {
-        scrollToBottom()
-    }, [currentProperty, activeConversation])
 
     const getPropertyValue = (property: string, obj: any): any => {
         if (obj == null) { return null }

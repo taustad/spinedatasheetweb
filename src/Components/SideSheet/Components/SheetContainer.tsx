@@ -7,13 +7,8 @@ import {
 import styled from "styled-components"
 import { tag as tagIcon, close, drag_handle } from "@equinor/eds-icons"
 import { Resizable } from "re-resizable"
-import InfoStrip from "./Components/InfoStrip"
-import CommentsSideSheet from "./Comments/CommentSideSheet"
-import AreaSideSheet from "./Area/AreaSideSheet"
-import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
-import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
-import ActivitySideSheet from "./Activity/ActivitySideSheet"
-import { ViewContext } from "../../Context/ViewContext"
+import InfoStrip from "./InfoStrip"
+import { ViewContext } from "../../../Context/ViewContext"
 
 const SheetContent = styled.div`
     box-sizing: border-box;
@@ -87,6 +82,11 @@ const Placeholder = styled.div`
     width: 100%;
     `
 
+type TabType = {
+    title: string,
+    content: JSX.Element,
+};
+
 type Props = {
     isOpen: boolean
     onClose: () => void
@@ -94,6 +94,7 @@ type Props = {
     width: number
     setWidth: (width: number) => void
     activeTagData: any
+    tabs: TabType[],
 }
 
 const SheetContainer: React.FC<Props> = ({
@@ -103,8 +104,9 @@ const SheetContainer: React.FC<Props> = ({
     currentProperty,
     width,
     setWidth,
+    tabs,
 }) => {
-    const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
+    const { activeConversation, activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
     const handleTabChange = (index: number) => setActiveSheetTab(index)
@@ -144,6 +146,9 @@ const SheetContainer: React.FC<Props> = ({
         }
     }, [activeSheetTab])
 
+     useEffect(() => {
+        scrollToBottom()
+    }, [currentProperty, activeConversation])
     if (!isOpen) return null
 
     const placeholder = (
@@ -217,27 +222,16 @@ const SheetContainer: React.FC<Props> = ({
                     scrollable
                 >
                     <TabsHeader>
-                        <Tabs.Tab>Activity</Tabs.Tab>
-                        <Tabs.Tab>Equipment</Tabs.Tab>
-                        <Tabs.Tab>Area</Tabs.Tab>
-                        <Tabs.Tab>Connections</Tabs.Tab>
-                        <Tabs.Tab>Comments</Tabs.Tab>
-                        <Tabs.Tab>Changelog</Tabs.Tab>
+                        {tabs.map((tab, index) => (
+                            <Tabs.Tab key={index}>{tab.title}</Tabs.Tab>
+                    ))}
                     </TabsHeader>
                     <SheetBody>
-                        <TabsPanel>{activeSheetTab === 0 && <ActivitySideSheet />}</TabsPanel>
-                        <TabsPanel>{activeSheetTab === 1 && <EquipmentSideSheet />}</TabsPanel>
-                        <TabsPanel>{activeSheetTab === 2 && <AreaSideSheet />}</TabsPanel>
-                        <TabsPanel>{activeSheetTab === 3 && placeholder}</TabsPanel>
-                        <TabsPanel>
-                            {activeSheetTab === 4 && (
-                                <CommentsSideSheet
-                                    scrollToBottom={scrollToBottom}
-                                    currentProperty={currentProperty.property}
-                                />
-                            )}
-                        </TabsPanel>
-                        <TabsPanel>{activeSheetTab === 5 && <ChangeLogSideSheet />}</TabsPanel>
+                        {tabs.map((tab, index) => (
+                            <TabsPanel key={index}>
+                                {activeSheetTab === index && tab.content}
+                            </TabsPanel>
+                    ))}
                     </SheetBody>
                 </TabsContainer>
             </SheetContent>

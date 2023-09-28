@@ -16,7 +16,8 @@ import { comparisonEquipmentConditionsColumnDefs } from "./ColumnDefs/EquipmentC
 import { comparisonOperatingConditionsColumnDefs } from "./ColumnDefs/OperatingConditionsColumnDefs"
 import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
 import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
-import SheetContainer from "../SideSheet/SheetContainer"
+import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
+import TagSideSheet from "../SideSheet/TagSideSheet"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -51,6 +52,7 @@ function TagComparisonTable({ tags }: Props) {
     const [sheetWidth, setSheetWidth] = useState(0)
     const [activeTagData, setActiveTagData] = useState<ActiveTagData | undefined>(undefined)
     const [currentProperty, setCurrentProperty] = useState<any>(undefined)
+    const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
 
@@ -148,30 +150,41 @@ function TagComparisonTable({ tags }: Props) {
     }
 
     const handleCellClicked = (event: any) => {
-        if (event.colDef.field === "tagNo") {
-            setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
-            setCurrentProperty({ description: event.data.description })
-        }
+        setShowTagSideSheet(event.colDef.field === "tagNo")
+        setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
+        setCurrentProperty(event.colDef)
     }
 
     useEffect(() => {
         if (activeTagData !== undefined) {
             setSideSheetIsOpen(true)
-            setSheetWidth(620)
+            if (sheetWidth === 0) setSheetWidth(620)
         }
     }, [activeTagData])
 
     return (
         <>
-            <SheetContainer
-                key={activeTagData?.tagNo}
-                isOpen={sideSheetIsOpen}
-                onClose={closeSideSheet}
-                width={sheetWidth}
-                setWidth={setSheetWidth}
-                activeTagData={activeTagData}
-                currentProperty={currentProperty}
-            />
+            {showTagSideSheet ? (
+                <TagSideSheet
+                    key={activeTagData?.tagNo}
+                    isOpen={sideSheetIsOpen}
+                    onClose={closeSideSheet}
+                    width={sheetWidth}
+                    setWidth={setSheetWidth}
+                    activeTagData={activeTagData}
+                    currentProperty={currentProperty}
+                />
+            ) : (
+                <TagPropertySideSheet
+                    key={activeTagData?.tagNo}
+                    isOpen={sideSheetIsOpen}
+                    onClose={closeSideSheet}
+                    width={sheetWidth}
+                    setWidth={setSheetWidth}
+                    activeTagData={activeTagData}
+                    currentProperty={currentProperty}
+                />
+            )}
             <ResizableTableContainer sheetWidth={sheetWidth}>
                 <FilterBar>
                     <TextInput
