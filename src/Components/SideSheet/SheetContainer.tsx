@@ -93,16 +93,18 @@ type Props = {
     currentProperty: any
     width: number
     setWidth: (width: number) => void
+    activeTagData: any
 }
 
 const SheetContainer: React.FC<Props> = ({
+    activeTagData,
     onClose,
     isOpen,
     currentProperty,
     width,
     setWidth,
 }) => {
-    const { activeSheetTab, setActiveSheetTab, activeTagData } = useContext(ViewContext)
+    const { activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
     const handleTabChange = (index: number) => setActiveSheetTab(index)
@@ -150,7 +152,9 @@ const SheetContainer: React.FC<Props> = ({
         </Placeholder>
     )
 
-    if (activeTagData === undefined) { return (<div>Error loading tag</div>) }
+    if (activeTagData === undefined
+        || activeTagData.tagNo === undefined
+        || activeTagData.description === undefined) { return (<div>Error loading tag</div>) }
 
     return (
         <Resizable
@@ -159,6 +163,7 @@ const SheetContainer: React.FC<Props> = ({
                 right: 0,
                 top: 0,
                 height: "100%",
+                zIndex: 100,
             }}
             defaultSize={{
                 width,

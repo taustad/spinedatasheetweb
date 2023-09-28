@@ -1,4 +1,4 @@
-import { Progress, Tabs } from "@equinor/eds-core-react"
+import { Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"

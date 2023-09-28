@@ -258,6 +258,7 @@ function JIP33InstrumentTabView({ }) {
                 currentProperty={currentProperty}
                 width={sheetWidth}
                 setWidth={setSheetWidth}
+                activeTagData={activeTagData}
             />
         </View>
     )
