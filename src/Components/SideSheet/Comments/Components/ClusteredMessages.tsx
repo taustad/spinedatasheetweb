@@ -1,9 +1,10 @@
 import React, {
-    FC, useContext, useEffect, useState,
+    FC, useContext,
 } from "react"
 import { Typography } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { useCurrentUser } from "@equinor/fusion"
+import { PersonPhoto } from "@equinor/fusion-components"
 import MessageBox from "./MessageBox"
 import { Message } from "../../../../Models/Message"
 import { formatDate } from "../../../../utils/helpers"
@@ -33,7 +34,20 @@ const TimeStamp = styled.div`
 
 const SubContainer = styled.div`
     display: flex;
+    flex-direction: row;
+`
+
+const MessageContainer = styled.div`
+    display: flex;
     flex-direction: column;
+`
+
+const PhotoContainer = styled.div<{ isCurrentUser: boolean }>`
+    display: flex;
+    flex-direction: "column";
+    align-self: ${(props) => (props.isCurrentUser ? "flex-end" : "flex-start")};
+    justify-content: "start";
+    gap: 10px;
 `
 
 interface ClusteredMessagesProps {
@@ -41,7 +55,6 @@ interface ClusteredMessagesProps {
 
 const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
     const { activeConversation } = useContext(ViewContext)
-
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
     type Cluster = {
@@ -103,6 +116,11 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
 
     if (activeConversation?.messages === undefined || activeConversation?.messages === null) { return (<div />) }
 
+    const getClusterWithoutFirstMessage = (cluster: Cluster) => {
+        const [, ...restMessages] = cluster.messages
+        return restMessages
+    }
+
     return (
         <>
             {generateMessageCluster(activeConversation.messages).map((cluster, index) => (
@@ -115,24 +133,44 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                             <Typography variant="meta">{formatDate(cluster.meta.createdDate)}</Typography>
                         </TimeStamp>
                     </Header>
+
                     <SubContainer>
-                        {cluster.messages.map((message, messageIndex) => (
-                            <>
-                                {message.isEdited && (
-                                <Typography variant="meta">
-                                    Edited
-                                    {" "}
-                                    {formatDate(message.modifiedDate || "")}
-                                </Typography>
-                                    )}
+                        <MessageContainer>
+                            {/* TODO: change to PersonAvatar when docs are better */}
+                            <PhotoContainer isCurrentUser={isCurrentUser(cluster.userId)}>
+                                {!isCurrentUser && (
+                                    <PersonPhoto
+                                        personId={cluster.userId}
+                                        key={`${cluster.userId}-${index}`}
+                                        size="large"
+                                    />
+                                )}
                                 <MessageBox
-                                    key={`${cluster.userId}-${index}-${messageIndex}`}
-                                    messageObject={message}
+                                    key={`${cluster.userId}-${index}-${0}`}
+                                    messageObject={cluster.messages[0]}
                                     userId={cluster.userId}
                                     isCurrentUser={isCurrentUser(cluster.userId)}
                                 />
-                            </>
+                            </PhotoContainer>
+
+                            {getClusterWithoutFirstMessage(cluster).map((message, messageIndex) => (
+                                <>
+                                    {message.isEdited && (
+                                        <Typography variant="meta">
+                                            Edited
+                                            {" "}
+                                            {formatDate(message.modifiedDate || "")}
+                                        </Typography>
+                                    )}
+                                    <MessageBox
+                                        key={`${cluster.userId}-${index}-${messageIndex}`}
+                                        messageObject={message}
+                                        userId={cluster.userId}
+                                        isCurrentUser={isCurrentUser(cluster.userId)}
+                                    />
+                                </>
                             ))}
+                        </MessageContainer>
                     </SubContainer>
                 </Container>
             ))}
