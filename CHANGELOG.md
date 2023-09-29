@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.8.0](https://github.com/equinor/spinedatasheetweb/compare/v1.7.0...v1.8.0) (2023-09-29)
+
+
+### Features
+
+* abandon & complete review button ([#147](https://github.com/equinor/spinedatasheetweb/issues/147)) ([46fa8c4](https://github.com/equinor/spinedatasheetweb/commit/46fa8c438227b35ac170c194b462aca5d1d7269d))
+* Add column filter and WiP custom filter ([#130](https://github.com/equinor/spinedatasheetweb/issues/130)) ([3c6f74c](https://github.com/equinor/spinedatasheetweb/commit/3c6f74c9d8c27e32ce6d1f084f01e32ad6111f92))
+* Add more TR3111 properties to tag comparison view ([6a69a55](https://github.com/equinor/spinedatasheetweb/commit/6a69a551b3ff42f48b28bf1819c7e8cced7eeaa3))
+* Add Operating conditions to tag comparison view ([ff5ae35](https://github.com/equinor/spinedatasheetweb/commit/ff5ae352c61e94a84e3f9fcfe997ae63c2964e40))
+* Add photo in chat ([#148](https://github.com/equinor/spinedatasheetweb/issues/148)) ([33f2202](https://github.com/equinor/spinedatasheetweb/commit/33f22028333ba2395ab5a842b18a15f8cf60a288))
+* Add TR3111 properties to general tabs in NORSOK and JIP33 ([c974639](https://github.com/equinor/spinedatasheetweb/commit/c97463956582c84249525e0b1d4fb1be50b0f582))
+* basic tagging functionality ([fed4a5a](https://github.com/equinor/spinedatasheetweb/commit/fed4a5aeb945cebdd8fc0a295712ff9524f4ee6e))
+* Conversation model ([#129](https://github.com/equinor/spinedatasheetweb/issues/129)) ([1d11f7f](https://github.com/equinor/spinedatasheetweb/commit/1d11f7fcb7966844145d9e2f633dee6567e97ef1))
+* dedicated sidesheet for properties ([#150](https://github.com/equinor/spinedatasheetweb/issues/150)) ([d3d14d0](https://github.com/equinor/spinedatasheetweb/commit/d3d14d0cc914ddcc8b71c4f2c63406e32e226943))
+* filter based on icons ([#144](https://github.com/equinor/spinedatasheetweb/issues/144)) ([623c15a](https://github.com/equinor/spinedatasheetweb/commit/623c15a8cdf5c033ada496d762e6894a908f8546))
+* filter tags based on comments ([#143](https://github.com/equinor/spinedatasheetweb/issues/143)) ([64d54b7](https://github.com/equinor/spinedatasheetweb/commit/64d54b7e1ff8e1fbb65c0c48bc02aefdf6992b21))
+* Make sidebar filter non-expandable ([ac9946b](https://github.com/equinor/spinedatasheetweb/commit/ac9946b6e2b9b3d3e3b5d689c91ff42c3ba32c79))
+* Set comment options on hover and display message deleted ([#127](https://github.com/equinor/spinedatasheetweb/issues/127)) ([b763c77](https://github.com/equinor/spinedatasheetweb/commit/b763c7785b0b7fe7b7c1842294086e7b081f788b))
+* Show "edited" with timestamp for edited messages ([#124](https://github.com/equinor/spinedatasheetweb/issues/124)) ([b9a4bf1](https://github.com/equinor/spinedatasheetweb/commit/b9a4bf1917479f270d167f410563c20952a2c1c6))
+* sideSheet in tag comparison view ([#149](https://github.com/equinor/spinedatasheetweb/issues/149)) ([87a5f25](https://github.com/equinor/spinedatasheetweb/commit/87a5f25e666a1437260c3f0dc2cc7a5442f770fd))
+* styling added to tagged people in conversation ([#135](https://github.com/equinor/spinedatasheetweb/issues/135)) ([57acf71](https://github.com/equinor/spinedatasheetweb/commit/57acf71ee088da7667665070391692a3762cae51))
+* use backend api in tag user ([#139](https://github.com/equinor/spinedatasheetweb/issues/139)) ([3fa3c77](https://github.com/equinor/spinedatasheetweb/commit/3fa3c77e76570825270f661ea937af0dc70213a5))
+* Use escape key to close sidesheet ([3b554ac](https://github.com/equinor/spinedatasheetweb/commit/3b554acf15754f9bfdcdfa95f1c34712c70f14f5))
+* Use escape key to close sidesheet ([#142](https://github.com/equinor/spinedatasheetweb/issues/142)) ([3b554ac](https://github.com/equinor/spinedatasheetweb/commit/3b554acf15754f9bfdcdfa95f1c34712c70f14f5))
+* wordcount limit & filter tab & bugfixes ([#140](https://github.com/equinor/spinedatasheetweb/issues/140)) ([0292f82](https://github.com/equinor/spinedatasheetweb/commit/0292f826d62decb3d7558f1a13c77a409c0041d2))
+
+
+### Bug Fixes
+
+* edgecase bugfixes ([#138](https://github.com/equinor/spinedatasheetweb/issues/138)) ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* Enable single cell copy in ag grid tables ([5e3dbd7](https://github.com/equinor/spinedatasheetweb/commit/5e3dbd7e2b8ee174edd89974a74487cfdfe0f60f))
+* Fix enums from API ([#151](https://github.com/equinor/spinedatasheetweb/issues/151)) ([5470bf0](https://github.com/equinor/spinedatasheetweb/commit/5470bf0c37bcef1e7435cb59886cb9538ab230bc))
+* Fixed comment bubble cluster width ([9c8afbd](https://github.com/equinor/spinedatasheetweb/commit/9c8afbd61763b197108c200bfe018ee6e013079c))
+* incorrectly presisting input text & improved re-render control ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* it is possible to send empty text / only spaces ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* moving cursor back in typed text resets input ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* placeholder not showing after sending message & sometimes normal text gets placeholder color ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* Remove cell type from ag grid tables ([dde35c9](https://github.com/equinor/spinedatasheetweb/commit/dde35c934d4d8499a57e14ffbc6ef0403499666a))
+* Temporary fix for ag-grid view displaying 'invalid number' ([9536131](https://github.com/equinor/spinedatasheetweb/commit/953613117959826d390ea4ca223a03722275cca8))
+* typing @ only works at the end of the typed text ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+* Update enums after API change ([#145](https://github.com/equinor/spinedatasheetweb/issues/145)) ([4f9e202](https://github.com/equinor/spinedatasheetweb/commit/4f9e202025716fda1280bd6026294c6bfa9c8510))
+* Use Conversation from API in sidesheet ([#141](https://github.com/equinor/spinedatasheetweb/issues/141)) ([d5e1105](https://github.com/equinor/spinedatasheetweb/commit/d5e110587fea8e55c8cc7e533b6b472acf4ab59e))
+* very long words overflow the chatbox ([25e2d2f](https://github.com/equinor/spinedatasheetweb/commit/25e2d2f9919febca3ba11005326df88284a03e2e))
+
 ## [1.7.0](https://github.com/equinor/spinedatasheetweb/compare/v1.6.0...v1.7.0) (2023-08-18)
 
 
