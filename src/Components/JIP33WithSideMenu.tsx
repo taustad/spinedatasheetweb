@@ -82,7 +82,6 @@ const JIP33WithSideMenu: React.FC<Props> = ({
     sideMenuList,
     rowDataList,
     customTabList,
-    reviewComments,
     setCurrentProperty,
     setReviewSideSheetOpen,
     setWidth,

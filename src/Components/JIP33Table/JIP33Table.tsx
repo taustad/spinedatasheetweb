@@ -48,7 +48,7 @@ function JIP33Table({
         [],
     )
 
-    const openConversationOnSheet = (paramsData: React.SetStateAction<string>) => {
+    const openConversationOnSheet = (paramsData: { property: string }) => {
         if (setReviewSideSheetOpen && setCurrentProperty) {
             setReviewSideSheetOpen(true)
 
@@ -57,7 +57,7 @@ function JIP33Table({
             } else if (setWidth) {
                 setWidth(620)
             }
-            setCurrentProperty(paramsData)
+            setCurrentProperty(paramsData.property)
             setActiveSheetTab(4)
         }
     }

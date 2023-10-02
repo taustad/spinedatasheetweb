@@ -44,7 +44,7 @@ const TagSideSheet: React.FC<props> = ({
                 currentProperty={currentProperty}
                 tabs={[
                 { title: "Requirements", content: placeholder },
-                { title: "Comments", content: <CommentsSideSheet currentProperty={currentProperty.property} /> },
+                { title: "Comments", content: <CommentsSideSheet currentProperty={currentProperty} /> },
                 { title: "Changelog", content: <ChangeLogSideSheet /> },
             ]}
             />

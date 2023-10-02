@@ -55,7 +55,6 @@ function TagComparisonTable({ tags }: Props) {
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
-
     const defaultColDef = useMemo<ColDef>(
         () => ({
             sortable: true,
@@ -151,8 +150,8 @@ function TagComparisonTable({ tags }: Props) {
 
     const handleCellClicked = (event: any) => {
         setShowTagSideSheet(event.colDef.field === "tagNo")
+        setCurrentProperty(event.colDef.field === "tagNo" ? undefined : { description: event.data.description })
         setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
-        setCurrentProperty(event.colDef)
     }
 
     useEffect(() => {
