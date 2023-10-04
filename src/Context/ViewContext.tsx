@@ -10,6 +10,16 @@ import React,
 import { TagData } from "../Models/TagData"
 import { Conversation } from "../Models/Conversation"
 
+interface ErrorType {
+    [key: string]: {
+        title: string;
+        body: string;
+        variant: string;
+        timeOut?: number;
+        action?: () => void;
+    };
+}
+
 interface ViewContextProps {
     activeTagData: TagData | undefined;
     setActiveTagData: Dispatch<SetStateAction<TagData | undefined>>;
@@ -19,6 +29,8 @@ interface ViewContextProps {
     setConversations: Dispatch<SetStateAction<Conversation[]>>;
     activeConversation: Conversation | undefined;
     setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>;
+    errors: ErrorType;
+    setErrors: React.Dispatch<React.SetStateAction<ErrorType>>;
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -30,6 +42,8 @@ export const ViewContext = createContext<ViewContextProps>({
     setConversations: () => { },
     activeConversation: undefined,
     setActiveConversation: () => { },
+    errors: {},
+    setErrors: () => { },
 })
 
 interface ViewContextProviderProps {
@@ -42,6 +56,7 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [activeSheetTab, setActiveSheetTab] = useState<number>(0)
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
+    const [errors, setErrors] = useState<{}>({})
 
     const value = useMemo(
         () => ({
@@ -53,6 +68,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setConversations,
             activeConversation,
             setActiveConversation,
+            errors,
+            setErrors,
         }),
         [
             activeTagData,
@@ -63,6 +80,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setConversations,
             activeConversation,
             setActiveConversation,
+            errors,
+            setErrors,
         ],
     )
 

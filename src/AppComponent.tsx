@@ -14,6 +14,7 @@ import AppRouter from "./AppRouter"
 import { ResolveConfiguration } from "./api/environmentConfig"
 import { buildConfig, StoreAppScope } from "./api/config"
 import { ViewContextProvider } from "./Context/ViewContext"
+import ToastBar from "./Components/Toast/ToastBar"
 
 ModuleRegistry.registerModules([
     ClientSideRowModelModule,
@@ -56,6 +57,7 @@ const AppComponent: FC = () => {
 
     return (
         <ViewContextProvider>
+            <ToastBar />
             <BrowserRouter basename={basename}>
                 <AppRouter />
             </BrowserRouter>

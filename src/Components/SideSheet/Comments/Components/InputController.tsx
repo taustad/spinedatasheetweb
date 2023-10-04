@@ -1,4 +1,4 @@
-import React, { FC } from "react"
+import React, { FC, useContext } from "react"
 import {
     Button, Icon, Checkbox,
 } from "@equinor/eds-core-react"
@@ -7,6 +7,7 @@ import { PersonPhoto } from "@equinor/fusion-components"
 import styled from "styled-components"
 import { send } from "@equinor/eds-icons"
 import InputField from "./InputField"
+import { ViewContext } from "../../../../Context/ViewContext"
 
 const Controls = styled.div`
     padding: 30px 15px 10px 15px;
@@ -60,6 +61,18 @@ const InputController: FC<InputControllerProps> = ({
     setCharCount,
 }) => {
     const currentUser: any = useCurrentUser()
+    const { errors, setErrors } = useContext(ViewContext)
+
+    const throwCharacterLimitError = () => {
+        const error = {
+            id: "characterLimitError",
+            title: "Character limit exceeded",
+            body: "The character limit for each message is 500 characters",
+            variant: "danger",
+        }
+        setErrors({ ...errors, [error.id]: error })
+    }
+
     return (
         <Controls>
             <PhotoAndInputWrapper>
@@ -85,8 +98,7 @@ const InputController: FC<InputControllerProps> = ({
                 <StyledCheckbox label="Send to contractor" />
                 <Button
                     title={charCount > 500 ? "character limit exeeded" : "send message"}
-                    disabled={charCount > 500}
-                    onClick={handleSubmit}
+                    onClick={charCount > 500 ? throwCharacterLimitError : handleSubmit}
                     variant="ghost"
                 >
                     <Icon data={send} />
