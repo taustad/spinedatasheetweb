@@ -51,7 +51,13 @@ interface DisplayConversation {
 const CommentSideSheet: FC<Props> = ({
     currentProperty,
 }) => {
-    const [activeTab, setActiveTab] = useState(0)
+    const {
+        setConversations,
+        activeTagData,
+        conversations,
+        setSideSheetScrollPos,
+        } = useContext(ViewContext)
+    const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveCommentTab") || "0", 10))
     const [conversationsData, setConversationsData] = useState<{[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]}>()
     const Navigationbuttons = [
         "All",
@@ -60,10 +66,13 @@ const CommentSideSheet: FC<Props> = ({
         "Closed",
         "Implemented",
     ]
-
-    const {
-        setConversations, activeTagData, conversations,
-    } = useContext(ViewContext)
+    useEffect(() => {
+        const storedTab = parseInt(localStorage.getItem("ActiveCommentTab") || "0", 10)
+        if (activeTab !== storedTab) {
+            setSideSheetScrollPos(0)
+            localStorage.setItem("ActiveCommentTab", activeTab.toString())
+        }
+    }, [activeTab])
 
     const getPropertyValue = (property: string, obj: any): any => {
         if (obj == null) { return null }

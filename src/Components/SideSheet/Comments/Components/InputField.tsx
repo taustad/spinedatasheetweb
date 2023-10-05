@@ -117,7 +117,6 @@ const handleInput = () => {
         const content = pRef.current.innerText
         if (content !== placeholder) {
             handleCommentChange(content)
-            console.log("content:", content)
             setCharCount(content.length)
         }
     }

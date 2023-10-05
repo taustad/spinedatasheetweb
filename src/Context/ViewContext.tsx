@@ -1,5 +1,6 @@
 import React,
 {
+    useEffect,
     createContext,
     useState,
     ReactNode,
@@ -31,6 +32,8 @@ interface ViewContextProps {
     setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>;
     errors: ErrorType;
     setErrors: React.Dispatch<React.SetStateAction<ErrorType>>;
+    SideSheetScrollPos : number;
+    setSideSheetScrollPos : React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -44,6 +47,8 @@ export const ViewContext = createContext<ViewContextProps>({
     setActiveConversation: () => { },
     errors: {},
     setErrors: () => { },
+    SideSheetScrollPos: 0,
+    setSideSheetScrollPos: () => { },
 })
 
 interface ViewContextProviderProps {
@@ -53,10 +58,19 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     children,
 }: ViewContextProviderProps) => {
     const [activeTagData, setActiveTagData] = useState<TagData>()
-    const [activeSheetTab, setActiveSheetTab] = useState<number>(0)
+    const [activeSheetTab, setActiveSheetTab] = useState<number>(() => parseInt(localStorage.getItem("activeSheetTab") || "0", 10))
+    const [SideSheetScrollPos, setSideSheetScrollPos] = useState<number>(() => parseInt(localStorage.getItem("SideSheetScrollPos") || "0", 10))
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
     const [errors, setErrors] = useState<{}>({})
+
+    useEffect(() => {
+        localStorage.setItem("activeSheetTab", activeSheetTab.toString())
+    }, [activeSheetTab])
+
+    useEffect(() => {
+        localStorage.setItem("SideSheetScrollPos", activeSheetTab.toString())
+    }, [activeSheetTab])
 
     const value = useMemo(
         () => ({
@@ -70,6 +84,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setActiveConversation,
             errors,
             setErrors,
+            SideSheetScrollPos,
+            setSideSheetScrollPos,
         }),
         [
             activeTagData,
@@ -82,6 +98,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setActiveConversation,
             errors,
             setErrors,
+            SideSheetScrollPos,
+            setSideSheetScrollPos,
         ],
     )
 

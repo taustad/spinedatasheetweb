@@ -72,7 +72,6 @@ const CommentView: React.FC<CommentViewProps> = ({
                 try {
                     const userTagsResult = await (await GetProjectService()).getUsers(fusionContextId.id, "", 1000, 0)
                     setUserTags(userTagsResult.data)
-                    console.log("hello")
                 } catch (error) {
                     console.error("Error getting users for project: ", error)
                 }
@@ -112,13 +111,11 @@ const CommentView: React.FC<CommentViewProps> = ({
         setNewMessage(message)
         setShowTagDropDown(false)
         setSearchTerm("")
-        console.log("displayName: ", displayName)
         setCharCount((prevCharCount) => prevCharCount + displayName.length)
     }
 
     const createConversation = async () => {
         const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
-        console.log("new conversation message: ", processedString)
         const createCommentDto: Components.Schemas.ConversationDto = {
             property: currentProperty,
             text: processedString ?? "",
@@ -140,7 +137,6 @@ const CommentView: React.FC<CommentViewProps> = ({
     const addMessage = async () => {
         const message = { ...newMessage }
         const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
-        console.log("added message: ", processedString)
         console.log("mentions: ", mentions) // to be used for tagging users in the future
         message.text = processedString
         try {
@@ -171,10 +167,6 @@ const CommentView: React.FC<CommentViewProps> = ({
         setReRenderCounter(reRenderCounter + 1)
         setSearchTerm("")
     }
-
-    useEffect(() => {
-        console.log("re-rendering")
-    }, [reRenderCounter])
 
     return (
         <Container>

@@ -21,6 +21,14 @@ const OperatingConditions: FC = () => {
                 title="OPERATING CONDITIONS"
                 data={dummyData}
             />
+            <Table
+                title="OPERATING CONDITIONS"
+                data={dummyData}
+            />
+            <Table
+                title="OPERATING CONDITIONS"
+                data={dummyData}
+            />
 
         </Card>
     )

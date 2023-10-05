@@ -89,13 +89,12 @@ function JIP33InstrumentTabView({ }) {
     const [sheetWidth, setSheetWidth] = useState(0)
 
     const {
-        activeTagData, setActiveTagData, setActiveSheetTab, setConversations,
+        activeTagData, setActiveTagData, activeSheetTab, setActiveSheetTab, setConversations,
     } = useContext(ViewContext)
 
     const onCloseReviewSideSheet = useCallback(() => {
         setOpen(false)
         setSheetWidth(0)
-        setActiveSheetTab(0)
     }, [setOpen])
 
     const onOpenReviewSideSheet = useCallback((activatedTab: React.SetStateAction<number>) => {
@@ -215,7 +214,7 @@ function JIP33InstrumentTabView({ }) {
                         />
                     </Typography>
                     {!open && (
-                        <Button variant="ghost_icon" onClick={() => onOpenReviewSideSheet(0)}>
+                        <Button variant="ghost_icon" onClick={() => onOpenReviewSideSheet(activeSheetTab)}>
                             <SheetIcon size={24} data={open_side_sheet} />
                         </Button>
                     )}

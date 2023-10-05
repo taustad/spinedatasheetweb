@@ -1,8 +1,11 @@
-import React, { FC, useState, ReactElement } from "react"
+import React, {
+ FC, useState, ReactElement, useEffect, useContext,
+} from "react"
 import styled from "styled-components"
 import TabsTitle from "../../Components/TabsTitle"
 import MediaFile from "../../Components/MediaFile"
 import LocalNavigation from "../../Components/LocalNavigation"
+import { ViewContext } from "../../../../Context/ViewContext"
 
 const MediaContainer = styled.div`
     display: flex;
@@ -12,89 +15,98 @@ const MediaContainer = styled.div`
 `
 
 const Media: FC = () => {
-    const [activeTab, setActiveTab] = useState(0)
+    const { setSideSheetScrollPos } = useContext(ViewContext)
+    const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveMediaTab") || "0", 10))
     const Navigationbuttons = ["Drawings", "Pictures", "Videos"]
 
-const oilIndustryImages = [
-    {
-        src: "https://via.placeholder.com/150",
-        name: "SunsetOverRigblablablablaaaaaaaaaaSunsetOverRig.png",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "RefineryAtWork.png",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "BirdsEyePlatform.png",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "UndergroundPipelines.png",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "BusyOilTanker.png",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "FirstOilWell.png",
-    },
-]
+    useEffect(() => {
+        const storedTab = parseInt(localStorage.getItem("ActiveMediaTab") || "0", 10)
+        if (activeTab !== storedTab) {
+            setSideSheetScrollPos(0)
+            localStorage.setItem("ActiveMediaTab", activeTab.toString())
+        }
+    }, [activeTab])
 
-const oilIndustryDrawings = [
-    {
-        src: "https://via.placeholder.com/150",
-        name: "RigBlueprint.pdf",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "RefineryDesign.pdf",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "PlatformConstructionPlan.pdf",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "PipelineNetwork.pdf",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "TankerDiagram.pdf",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "WellBoreDesign.pdf",
-    },
-]
+    const oilIndustryImages = [
+        {
+            src: "https://via.placeholder.com/150",
+            name: "SunsetOverRigblablablablaaaaaaaaaaSunsetOverRig.png",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "RefineryAtWork.png",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "BirdsEyePlatform.png",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "UndergroundPipelines.png",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "BusyOilTanker.png",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "FirstOilWell.png",
+        },
+    ]
 
-const oilIndustryVideos = [
-    {
-        src: "https://via.placeholder.com/150",
-        name: "DrillingRigTimeLapse.mp4",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "RefineryProcessExplained.mp4",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "PlatformConstruction.mp4",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "PipelineInstallation.mp4",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "TankerLoadingUnloading.mp4",
-    },
-    {
-        src: "https://via.placeholder.com/150",
-        name: "WellDrillingProcedure.mp4",
-    },
-]
+    const oilIndustryDrawings = [
+        {
+            src: "https://via.placeholder.com/150",
+            name: "RigBlueprint.pdf",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "RefineryDesign.pdf",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "PlatformConstructionPlan.pdf",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "PipelineNetwork.pdf",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "TankerDiagram.pdf",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "WellBoreDesign.pdf",
+        },
+    ]
+
+    const oilIndustryVideos = [
+        {
+            src: "https://via.placeholder.com/150",
+            name: "DrillingRigTimeLapse.mp4",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "RefineryProcessExplained.mp4",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "PlatformConstruction.mp4",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "PipelineInstallation.mp4",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "TankerLoadingUnloading.mp4",
+        },
+        {
+            src: "https://via.placeholder.com/150",
+            name: "WellDrillingProcedure.mp4",
+        },
+    ]
 
     const mediaContent: { [index: number]: ReactElement } = {
         0: (

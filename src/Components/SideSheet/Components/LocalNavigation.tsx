@@ -13,6 +13,7 @@ const StyledButton = styled.button<{ active: boolean }>`
     position: relative;
     bottom: -2px;
     padding: 10px 20px;
+    font-weight: 500;
     background-color: transparent;
     color: black;
     border: none;

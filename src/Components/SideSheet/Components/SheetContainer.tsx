@@ -106,14 +106,20 @@ const SheetContainer: React.FC<Props> = ({
     setWidth,
     tabs,
 }) => {
-    const { activeConversation, activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
+    const {
+        activeSheetTab,
+        activeConversation,
+        setActiveSheetTab,
+        SideSheetScrollPos,
+        setSideSheetScrollPos,
+    } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
-
-    const handleTabChange = (index: number) => setActiveSheetTab(index)
 
     const scrollToBottom = () => {
         if (scrollableRef.current) {
-            scrollableRef.current.scrollTop = scrollableRef.current.scrollHeight
+            requestAnimationFrame(() => {
+                scrollableRef.current!.scrollTop = scrollableRef.current!.scrollHeight
+            })
         }
     }
 
@@ -123,12 +129,45 @@ const SheetContainer: React.FC<Props> = ({
         }
     }
 
+    const handleTabChange = (index: number) => {
+        if (index !== activeSheetTab) setActiveSheetTab(index)
+
+        if (index !== 4) scrollToTop(); else scrollToBottom()
+    }
+
     function handleEscapeKey(event: globalThis.KeyboardEvent) {
-        if (event.code === "Escape") {
-            onClose()
+        if (event.code === "Escape") onClose()
+    }
+
+    const handleScroll = () => {
+        if (scrollableRef.current) {
+            setSideSheetScrollPos(scrollableRef.current.scrollTop)
         }
     }
 
+    // Scrolls to bottom when conversation changes
+    useEffect(() => {
+        if (activeSheetTab === 4) scrollToBottom()
+    }, [activeConversation])
+
+    // Scrolls to the position the user was at before closing the side sheet
+    useEffect(() => {
+        if (scrollableRef.current) scrollableRef.current.scrollTop = SideSheetScrollPos
+    }, [])
+
+    useEffect(() => {
+        if (SideSheetScrollPos === 0) scrollToTop()
+    }, [SideSheetScrollPos])
+
+    // Adds scroll listener to the scrollable div
+    useEffect(() => {
+        scrollableRef.current?.addEventListener("scroll", handleScroll)
+        return () => {
+            scrollableRef.current?.removeEventListener("scroll", handleScroll)
+        }
+    }, [scrollableRef, isOpen])
+
+    // adds escape key listener when side sheet is open
     useEffect(() => {
         if (isOpen) {
             document.addEventListener("keydown", handleEscapeKey)
@@ -136,19 +175,8 @@ const SheetContainer: React.FC<Props> = ({
                 document.removeEventListener("keydown", handleEscapeKey)
             }
         }
-
         return () => {}
     }, [isOpen])
-
-    useEffect(() => {
-        if (activeSheetTab !== 4) {
-            scrollToTop()
-        }
-    }, [activeSheetTab])
-
-     useEffect(() => {
-        scrollToBottom()
-    }, [currentProperty, activeConversation])
 
     if (!isOpen) return null
 

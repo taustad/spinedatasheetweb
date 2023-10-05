@@ -1,4 +1,6 @@
-import React, { FC, useState, ReactElement } from "react"
+import React, {
+ FC, useState, ReactElement, useEffect, useContext,
+} from "react"
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt } from "@equinor/eds-icons"
@@ -8,6 +10,7 @@ import Live from "./Tabs/Live"
 import Historical from "./Tabs/Historical"
 import Simulation from "./Tabs/Simulation"
 import OperatingConditions from "./Tabs/OperatingConditions"
+import { ViewContext } from "../../../Context/ViewContext"
 
 const Container = styled.div`
     padding: 15px;
@@ -24,7 +27,8 @@ const ButtonRow = styled.div`
 `
 
 const ActivitySideSheet: FC = () => {
-    const [activeTab, setActiveTab] = useState(0)
+    const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveActivityTab") || "0", 10))
+    const { setSideSheetScrollPos } = useContext(ViewContext)
     const Navigationbuttons = ["Live", "Historical", "Simulation", "Operating conditions"]
     const tabContent: { [index: number]: ReactElement } = {
         0: <Live />,
@@ -32,6 +36,15 @@ const ActivitySideSheet: FC = () => {
         2: <Simulation />,
         3: <OperatingConditions />,
     }
+
+    useEffect(() => {
+        const storedTab = parseInt(localStorage.getItem("ActiveActivityTab") || "0", 10)
+        if (activeTab !== storedTab) {
+            setSideSheetScrollPos(0)
+            localStorage.setItem("ActiveActivityTab", activeTab.toString())
+        }
+    }, [activeTab])
+
     return (
         <Container>
             <Header>
