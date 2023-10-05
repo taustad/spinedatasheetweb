@@ -21,9 +21,13 @@ declare namespace Components {
             revisionContainerId?: string; // uuid
             status: ReviewStatusDto;
         }
+        export interface CreateReviewerDto {
+            reviewerId: string; // uuid
+        }
         export interface CreateTagDataReviewDto {
             tagNo: string;
             status: ReviewStatusDto;
+            reviewers?: CreateReviewerDto[] | null;
         }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
@@ -1555,6 +1559,13 @@ declare namespace Components {
             contracts?: ContractDto[] | null;
         }
         export type ReviewStatusDto = "New" | "Reviewed" | "Resubmit" | "Diff" | "Duplicate" | "ReviewedWithComment" | "NotReviewed" | "Deleted";
+        export interface ReviewerDto {
+            status: ReviewStatusDto;
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            reviewerId?: string; // uuid
+            tagDataReviewId?: string; // uuid
+        }
         export interface RevisionContainerDto {
             id?: string; // uuid
             createdDate?: string; // date-time
@@ -1655,6 +1666,18 @@ declare namespace Paths {
             export type $200 = Components.Schemas.TagDataReviewDto;
         }
     }
+    namespace CreateReviewers {
+        namespace Parameters {
+            export type ReviewId = string; // uuid
+        }
+        export interface PathParameters {
+            reviewId: Parameters.ReviewId /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.CreateReviewerDto[];
+        namespace Responses {
+            export type $200 = Components.Schemas.ReviewerDto[];
+        }
+    }
     namespace CreateRevisionReview {
         export type RequestBody = Components.Schemas.CreateContainerReviewDto;
         namespace Responses {
@@ -1713,10 +1736,14 @@ declare namespace Paths {
     }
     namespace GetConversations {
         namespace Parameters {
+            export type IncludeLatestMessage = boolean;
             export type ReviewId = string; // uuid
         }
         export interface PathParameters {
             reviewId: Parameters.ReviewId /* uuid */;
+        }
+        export interface QueryParameters {
+            includeLatestMessage?: Parameters.IncludeLatestMessage;
         }
         namespace Responses {
             export type $200 = Components.Schemas.GetConversationDto[];
@@ -1793,6 +1820,12 @@ declare namespace Paths {
         }
     }
     namespace GetReviews {
+        namespace Parameters {
+            export type ReviewerId = string; // uuid
+        }
+        export interface QueryParameters {
+            reviewerId?: Parameters.ReviewerId /* uuid */;
+        }
         namespace Responses {
             export type $200 = Components.Schemas.TagDataReviewDto[];
         }
@@ -1857,6 +1890,20 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.MessageDto;
         namespace Responses {
             export type $200 = Components.Schemas.GetMessageDto;
+        }
+    }
+    namespace UpdateReview {
+        namespace Parameters {
+            export type ReviewId = string; // uuid
+            export type ReviewerId = string; // uuid
+        }
+        export interface PathParameters {
+            reviewId: Parameters.ReviewId /* uuid */;
+            reviewerId: Parameters.ReviewerId /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.ReviewStatusDto;
+        namespace Responses {
+            export type $200 = Components.Schemas.ReviewerDto;
         }
     }
 }
