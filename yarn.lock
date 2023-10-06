@@ -14,11 +14,6 @@
   dependencies:
     "@ag-grid-community/core" "~30.1.0"
 
-"@ag-grid-community/core@~30.0.5":
-  version "30.0.5"
-  resolved "https://registry.npmjs.org/@ag-grid-community/core/-/core-30.0.5.tgz"
-  integrity sha512-IAgE4ZW1oZwCzWnBlm056/8axVLXVSPQkBAaRNotM1b7XFD6jTG2VVAtCVIhprUyfbdwrg6BV+UpDlGrMbesjA==
-
 "@ag-grid-community/core@~30.1.0":
   version "30.1.0"
   resolved "https://registry.yarnpkg.com/@ag-grid-community/core/-/core-30.1.0.tgz#e91b1d64b8cab23abb0da7ce9d9308280360de24"
@@ -56,13 +51,6 @@
     "@ag-grid-enterprise/core" "~30.1.0"
     "@ag-grid-enterprise/row-grouping" "~30.1.0"
     "@ag-grid-enterprise/side-bar" "~30.1.0"
-
-"@ag-grid-enterprise/core@~30.0.5":
-  version "30.0.5"
-  resolved "https://registry.npmjs.org/@ag-grid-enterprise/core/-/core-30.0.5.tgz"
-  integrity sha512-1jmIxGyApuFldqcHYqZ0hs6TT/vgu75JqEz9wTxc7pGM3yR+N2kedic5LhnKUOaHtSBEVcVNFAVIY96JUfCruw==
-  dependencies:
-    "@ag-grid-community/core" "~30.0.5"
 
 "@ag-grid-enterprise/core@~30.1.0":
   version "30.1.0"
@@ -1584,12 +1572,12 @@
   resolved "https://registry.npmjs.org/@equinor/fusion-framework-legacy-interopt/-/fusion-framework-legacy-interopt-4.0.14.tgz"
   integrity sha512-21ab2Lul8kSkQfxrSXItD5F5h7KEtRoC2Z5Vy3Rc/qQAowaGvmbkIzjMZiIX91SkgcAAU0HBZRx2MU+JCeu3sA==
 
-"@equinor/fusion-framework-module-ag-grid@30.0.0":
-  version "30.0.0"
-  resolved "https://registry.npmjs.org/@equinor/fusion-framework-module-ag-grid/-/fusion-framework-module-ag-grid-30.0.0.tgz"
-  integrity sha512-ykV/zvUe/B9jM3f4UFYTPsOxMrDWWO/IgWRgT11ZzP9kyvUkagR6OhfSdQvsayzYEvKvTFhrJtL3kegL9y9uHw==
+"@equinor/fusion-framework-module-ag-grid@30.1.0":
+  version "30.1.0"
+  resolved "https://registry.yarnpkg.com/@equinor/fusion-framework-module-ag-grid/-/fusion-framework-module-ag-grid-30.1.0.tgz#b7e746f5656608324e85e8870e4ad1c86da3d31b"
+  integrity sha512-ZzZyLe7gzXhHtQXqG9mUUBUVac5g7zJuZM2O++NghdRlHHlr1W9SDk7WNLyyjzCWKiwIYvuHqCayEiRWMAi9hA==
   dependencies:
-    "@ag-grid-enterprise/core" "~30.0.5"
+    "@ag-grid-enterprise/core" "~30.1.0"
 
 "@equinor/fusion-framework-module-app@^5.2.1":
   version "5.2.1"
