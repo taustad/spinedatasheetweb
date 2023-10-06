@@ -28,8 +28,6 @@ function MyReviews({
     myTags,
     setMyTags,
 }: Props) {
-    console.log("Review view")
-
     const mapToEnum = (input: string): Components.Schemas.ReviewStatusDto => {
         switch (input) {
             case "Reviewed":
@@ -63,7 +61,6 @@ function MyReviews({
         if (reviewerToUpdate) {
             reviewerToUpdate.status = dto.reviewStatus
         }
-        console.log("UpdatedReviews: ", updatedReviews)
         setMyTags(updatedReviews)
     }
 
@@ -73,33 +70,30 @@ function MyReviews({
         return myReview.status
     }
 
-    const buildTagDataList = () => {
-        console.log("building")
-        return (
-            <>
-                {myTags.map((review, index) => (
-                    <Wrapper>
-                        <Typography>{review.tagNo}</Typography>
-                        <NativeSelect
-                            id="default-select"
-                            label="Review status"
-                            onChange={(event: ChangeEvent<HTMLSelectElement>) => handleReviewStateChange(event, review, index)}
-                            value={getCurrentValue(review)}
-                        >
-                            <option key="New" value="New">New</option>
-                            <option key="Reviewed" value="Reviewed">Reviewed</option>
-                            <option key="Resubmit">Resubmit</option>
-                            <option key="Diff" value="Diff">Diff</option>
-                            <option key="Duplicate" value="Duplicate">Duplicate</option>
-                            <option key="ReviewedWithComment" value="ReviewedWithComment">ReviewedWithComment</option>
-                            <option key="NotReviewed" value="NotReviewed">NotReviewed</option>
-                            <option key="Deleted" value="Deleted">Deleted</option>
-                        </NativeSelect>
-                    </Wrapper>
+    const buildTagDataList = () => (
+        <>
+            {myTags.map((review, index) => (
+                <Wrapper>
+                    <Typography>{review.tagNo}</Typography>
+                    <NativeSelect
+                        id="default-select"
+                        label="Review status"
+                        onChange={(event: ChangeEvent<HTMLSelectElement>) => handleReviewStateChange(event, review, index)}
+                        value={getCurrentValue(review)}
+                    >
+                        <option key="New" value="New">New</option>
+                        <option key="Reviewed" value="Reviewed">Reviewed</option>
+                        <option key="Resubmit">Resubmit</option>
+                        <option key="Diff" value="Diff">Diff</option>
+                        <option key="Duplicate" value="Duplicate">Duplicate</option>
+                        <option key="ReviewedWithComment" value="ReviewedWithComment">ReviewedWithComment</option>
+                        <option key="NotReviewed" value="NotReviewed">NotReviewed</option>
+                        <option key="Deleted" value="Deleted">Deleted</option>
+                    </NativeSelect>
+                </Wrapper>
                 ))}
-            </>
+        </>
         )
-    }
 
     return (
         <>

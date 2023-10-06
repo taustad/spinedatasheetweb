@@ -30,7 +30,6 @@ function ReviewView() {
         if (currentUser) {
             const userId = currentUser._info.localAccountId
             setCurrentUserId(userId)
-            console.log("userId: ", userId)
         }
     }, [currentUser])
 
@@ -39,7 +38,6 @@ function ReviewView() {
             if (currentUser) {
                 const userId = currentUser._info.localAccountId
                 setCurrentUserId(userId)
-                console.log("userId: ", userId)
 
                 const result = await (await GetTagDataReviewService()).getTagDataReviews(userId)
                 const reviewsAssignedToMe: Components.Schemas.TagDataReviewDto[] = result.data

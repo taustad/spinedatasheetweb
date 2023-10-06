@@ -26,10 +26,7 @@ function SendForReview({
     myTags,
     setMyTags,
 }: Props) {
-    console.log("Review view")
-
     const handleButtonClick = async (tagno: string) => {
-        console.log("tagno", tagno)
         const newReviewer: Components.Schemas.CreateReviewerDto = {
             reviewerId: userId,
         }
@@ -43,8 +40,6 @@ function SendForReview({
         const newAssignedTags = myTags.concat(result)
 
         setMyTags(newAssignedTags)
-
-        console.log("Result: ", result)
     }
 
     const disableAssignButton = (tagno: string) => myTags.find((r) => r.tagNo === tagno) !== undefined
