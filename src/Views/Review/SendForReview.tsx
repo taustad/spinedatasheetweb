@@ -16,8 +16,8 @@ const Wrapper = styled.div`
 interface Props {
     tagData: TagData[]
     userId: string
-    myTags: string[]
-    setMyTags: Dispatch<SetStateAction<string[]>>,
+    myTags: Components.Schemas.TagDataReviewDto[]
+    setMyTags: Dispatch<SetStateAction<Components.Schemas.TagDataReviewDto[]>>,
 }
 
 function SendForReview({
@@ -40,14 +40,14 @@ function SendForReview({
         }
 
         const result = await (await GetTagDataReviewService()).createTagDataReview(newReview)
-        const newAssignedTags = myTags.concat(tagno)
+        const newAssignedTags = myTags.concat(result)
 
         setMyTags(newAssignedTags)
 
         console.log("Result: ", result)
     }
 
-    const disableAssignButton = (tagno: string) => myTags.includes(tagno)
+    const disableAssignButton = (tagno: string) => myTags.find((r) => r.tagNo === tagno) !== undefined
 
     const buildTagDataList = () => {
         const tagNumbers = tagData.map((t) => t.tagNo)

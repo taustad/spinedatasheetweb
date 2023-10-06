@@ -18,7 +18,7 @@ function ReviewView() {
     const [externalId, setExternalId] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-    const [myTags, setMyTags] = useState<string[]>([])
+    const [myReviews, setMyReviews] = useState<Components.Schemas.TagDataReviewDto[]>([])
 
     const { projectId } = useParams<Record<string, string>>()
     const currentProject = useCurrentContext()
@@ -43,11 +43,8 @@ function ReviewView() {
 
                 const result = await (await GetTagDataReviewService()).getTagDataReviews(userId)
                 const reviewsAssignedToMe: Components.Schemas.TagDataReviewDto[] = result.data
-                console.log("ReviewsAssingeToMe: ", reviewsAssignedToMe)
-                const tagNosAssignedToMe = reviewsAssignedToMe.map((t) => t.tagNo ?? "")
-                console.log("tagnosassignedtome:", tagNosAssignedToMe)
 
-                setMyTags(tagNosAssignedToMe)
+                setMyReviews(reviewsAssignedToMe)
             }
         })()
     }, [currentUser])
@@ -106,16 +103,16 @@ function ReviewView() {
                     <SendForReview
                         tagData={tagData}
                         userId={currentUserId}
-                        myTags={myTags}
-                        setMyTags={setMyTags}
+                        myTags={myReviews}
+                        setMyTags={setMyReviews}
                     />
                 </Panel>
                 <Panel>
                     <MyReviews
                         tagData={tagData}
                         userId={currentUserId}
-                        myTags={myTags}
-                        setMyTags={setMyTags}
+                        myTags={myReviews}
+                        setMyTags={setMyReviews}
                     />
                 </Panel>
             </Panels>

@@ -1620,6 +1620,10 @@ declare namespace Components {
             commentResponsible?: string; // uuid
             approved?: boolean;
             tagDataVersion?: number; // int32
+            reviewer?: ReviewerDto[] | null;
+        }
+        export interface UpdateReviewerDto {
+            reviewStatus: ReviewStatusDto;
         }
         export interface UserDto {
             userId?: string; // uuid
@@ -1901,7 +1905,7 @@ declare namespace Paths {
             reviewId: Parameters.ReviewId /* uuid */;
             reviewerId: Parameters.ReviewerId /* uuid */;
         }
-        export type RequestBody = Components.Schemas.ReviewStatusDto;
+        export type RequestBody = Components.Schemas.UpdateReviewerDto;
         namespace Responses {
             export type $200 = Components.Schemas.ReviewerDto;
         }

@@ -31,9 +31,13 @@ class TagDataReviewService extends BaseService {
         return result
     }
 
-    async updateReviewer(review: Components.Schemas.CreateTagDataReviewDto) {
-        const result: any = await this.post("", {
-            body: review,
+    async updateReviewer(
+        reviewId: string,
+        reviewerId: string,
+        updateReviewerDto: Components.Schemas.UpdateReviewerDto,
+    ) {
+        const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
+            body: updateReviewerDto,
         })
         return result
     }
