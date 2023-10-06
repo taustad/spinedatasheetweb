@@ -4,6 +4,7 @@ import React, {
 import styled from "styled-components"
 import { Button, Icon, Tooltip } from "@equinor/eds-core-react"
 import { search, filter_alt } from "@equinor/eds-icons"
+import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import CommentView from "./Components/CommentView"
 import LocalNavigation from "../Components/LocalNavigation"
 import TabsTitle from "../Components/TabsTitle"
@@ -74,6 +75,8 @@ const CommentSideSheet: FC<Props> = ({
         }
     }, [activeTab])
 
+    const currentContext = useCurrentContext()
+
     const getPropertyValue = (property: string, obj: any): any => {
         if (obj == null) { return null }
         if (Object.prototype.hasOwnProperty.call(obj, property)) {
@@ -137,8 +140,12 @@ const CommentSideSheet: FC<Props> = ({
     useEffect(() => {
         (async () => {
             try {
-                if (!activeTagData?.review || !activeTagData?.review.id) { return }
-                const newConversations = await (await GetConversationService()).getConversationsForTagReview(activeTagData.review.id)
+                if (!activeTagData?.tagNo || !currentContext.currentContext?.externalId) { return }
+                const newConversations = await (await GetConversationService()).getConversationsForTag(
+                    currentContext.currentContext?.externalId,
+                    activeTagData.tagNo,
+                    true,
+                    )
                 setConversations(newConversations)
             } catch (error) {
                 console.error("Error getting messages for conversation: ", error)

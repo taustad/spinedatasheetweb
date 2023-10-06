@@ -9,10 +9,10 @@ import {
     delete_to_trash, edit,
 } from "@equinor/eds-icons"
 import { Message } from "../../../../Models/Message"
-import { GetConversationService } from "../../../../api/ConversationService"
 import { Conversation } from "../../../../Models/Conversation"
 import { ViewContext } from "../../../../Context/ViewContext"
 import { unescapeHtmlEntities } from "../../../../utils/helpers"
+import { GetMessageService } from "../../../../api/MessageService"
 
 const Container = styled.div`
     max-width: 500px;
@@ -55,18 +55,19 @@ interface RenderCommentProps {
 const updateComment = async (
     reviewId: string,
     activeConversationId: string,
-    comment: Message,
+    message: Message,
     newCommentText: string,
     activeConversation: Conversation,
     setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
-    if (newCommentText && comment.id) {
+    if (newCommentText && message.id) {
         try {
-            const newComment = { ...comment }
-            newComment.text = newCommentText
-            const commentService = await GetConversationService()
-            const updatedComment = await commentService.updateMessage(reviewId, activeConversationId, comment.id, newComment)
-            const updatedMessages = activeConversation.messages?.map((m) => (m.id !== comment.id ? m : updatedComment))
+            const newMessage: Components.Schemas.MessageDto = {
+                text: newCommentText,
+            }
+            const commentService = await GetMessageService()
+            const updatedComment = await commentService.updateMessage(activeConversationId, message.id, newMessage)
+            const updatedMessages = activeConversation.messages?.map((m) => (m.id !== message.id ? m : updatedComment))
             const updatedConversation = { ...activeConversation }
             updatedConversation.messages = updatedMessages
             setActiveConversation(updatedConversation)
@@ -85,8 +86,8 @@ const deleteComment = async (
 ) => {
     if (message.id && activeConversation && activeConversation.messages) {
         try {
-            const service = await GetConversationService()
-            const response = await service.deleteMessage(reviewId, activeConversationId, message.id)
+            const service = await GetMessageService()
+            const response = await service.deleteMessage(activeConversationId, message.id)
             if (response === 204) {
                 const deletedMessage = { ...activeConversation.messages?.find((m) => m.id === message.id) }
                 deletedMessage.softDeleted = true
