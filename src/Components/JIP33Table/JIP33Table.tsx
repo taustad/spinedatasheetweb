@@ -132,7 +132,7 @@ function JIP33Table({
     return (
         <Wrapper className={styles.root}>
             <TableContainer
-                className="ag-theme-alpine ag-theme-datasheetTable"
+                className="ag-theme-alpine-fusion"
             >
                 <AgGridReact
                     rowData={rowData}

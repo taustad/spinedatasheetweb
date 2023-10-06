@@ -25,7 +25,6 @@ const TableContainer = styled.div`
     flex: 1 1 auto;
     width: 100%; 
     height: 100%;
-     
 `
 
 const TagIcon = styled(Icon)`
@@ -222,7 +221,7 @@ function EquipmentListTable({
     return (
         <Wrapper className={styles.root}>
             <TableContainer
-                className="ag-theme-alpine ag-theme-datasheetTable"
+                className="ag-theme-alpine-fusion"
             >
                 <AgGridReact
                     rowData={tags}
