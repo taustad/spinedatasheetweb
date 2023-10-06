@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react"
 import { Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { useParams } from "react-router-dom"
+import { useCurrentUser } from "@equinor/fusion"
 import SendForReview from "./SendForReview"
 import { TagData } from "../../Models/TagData"
 import { GetTagDataService } from "../../api/TagDataService"
 import MyReviews from "./MyReviews"
+import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
@@ -16,9 +18,39 @@ function ReviewView() {
     const [externalId, setExternalId] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
+    const [myTags, setMyTags] = useState<string[]>([])
 
-    const { projectId } = useParams<Record<string, string | undefined>>()
+    const { projectId } = useParams<Record<string, string>>()
     const currentProject = useCurrentContext()
+
+    const currentUser: any = useCurrentUser()
+    const [currentUserId, setCurrentUserId] = useState<string>("")
+
+    useEffect(() => {
+        if (currentUser) {
+            const userId = currentUser._info.localAccountId
+            setCurrentUserId(userId)
+            console.log("userId: ", userId)
+        }
+    }, [currentUser])
+
+    useEffect(() => {
+        (async () => {
+            if (currentUser) {
+                const userId = currentUser._info.localAccountId
+                setCurrentUserId(userId)
+                console.log("userId: ", userId)
+
+                const result = await (await GetTagDataReviewService()).getTagDataReviews(userId)
+                const reviewsAssignedToMe: Components.Schemas.TagDataReviewDto[] = result.data
+                console.log("ReviewsAssingeToMe: ", reviewsAssignedToMe)
+                const tagNosAssignedToMe = reviewsAssignedToMe.map((t) => t.tagNo ?? "")
+                console.log("tagnosassignedtome:", tagNosAssignedToMe)
+
+                setMyTags(tagNosAssignedToMe)
+            }
+        })()
+    }, [currentUser])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -70,8 +102,22 @@ function ReviewView() {
                 <Tab>My reviews</Tab>
             </List>
             <Panels>
-                <Panel><SendForReview tagData={tagData} /></Panel>
-                <Panel><MyReviews tagData={tagData} /></Panel>
+                <Panel>
+                    <SendForReview
+                        tagData={tagData}
+                        userId={currentUserId}
+                        myTags={myTags}
+                        setMyTags={setMyTags}
+                    />
+                </Panel>
+                <Panel>
+                    <MyReviews
+                        tagData={tagData}
+                        userId={currentUserId}
+                        myTags={myTags}
+                        setMyTags={setMyTags}
+                    />
+                </Panel>
             </Panels>
         </Tabs>
     )

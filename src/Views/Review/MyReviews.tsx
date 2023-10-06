@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from "react"
+import React, {
+ Dispatch, SetStateAction, useEffect, useState,
+} from "react"
 import {
  Checkbox, NativeSelect, Tabs, Typography,
 } from "@equinor/eds-core-react"
 import { styled } from "styled-components"
+import { useCurrentUser } from "@equinor/fusion"
 import { TagData } from "../../Models/TagData"
+import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 
 const Wrapper = styled.div`
     display: flex;
@@ -11,19 +15,29 @@ const Wrapper = styled.div`
 `
 
 interface Props {
-    tagData: TagData[]
+    tagData: TagData[],
+    userId: string,
+    myTags: string[]
+    setMyTags: Dispatch<SetStateAction<string[]>>,
 }
 
 function MyReviews({
     tagData,
+    userId,
+    myTags,
+    setMyTags,
 }: Props) {
     console.log("Review view")
 
+    const handleReviewStateChange = async () => {
+        const result = await (await GetTagDataReviewService()).updateReviewer
+    }
+
     const buildTagDataList = () => {
-        const tagNumbers = tagData.map((t) => t.tagNo)
+        console.log("building")
         return (
             <>
-                {tagNumbers.map((number) => (
+                {myTags.map((number) => (
                     <Wrapper>
                         <Typography>{number}</Typography>
                         <NativeSelect
@@ -33,6 +47,12 @@ function MyReviews({
                         >
                             <option>New</option>
                             <option>Reviewed</option>
+                            <option>Resubmit</option>
+                            <option>Diff</option>
+                            <option>Duplicate</option>
+                            <option>ReviewedWithComment</option>
+                            <option>NotReviewed</option>
+                            <option>Deleted</option>
                         </NativeSelect>
                     </Wrapper>
                 ))}
