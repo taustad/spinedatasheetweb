@@ -9,8 +9,13 @@ class TagDataReviewService extends BaseService {
         return result.value
     }
 
-    async getTagDataReviews() {
-        const result: any = await this.get("")
+    async getTagDataReviews(reviewerId?: string) {
+        const result = await this.getWithParams(
+            "",
+            {
+                params: { reviewerId },
+            },
+        )
         return result
     }
 
@@ -19,9 +24,20 @@ class TagDataReviewService extends BaseService {
         return result
     }
 
-    async createTagDataReview(review: TagDataReview) {
+    async createTagDataReview(review: Components.Schemas.CreateTagDataReviewDto) {
         const result: any = await this.post("", {
             body: review,
+        })
+        return result
+    }
+
+    async updateReviewer(
+        reviewId: string,
+        reviewerId: string,
+        updateReviewerDto: Components.Schemas.UpdateReviewerDto,
+    ) {
+        const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
+            body: updateReviewerDto,
         })
         return result
     }
