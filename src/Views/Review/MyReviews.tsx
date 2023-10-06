@@ -82,8 +82,7 @@ function MyReviews({
                         <Typography>{review.tagNo}</Typography>
                         <NativeSelect
                             id="default-select"
-                            label="Label text"
-                            meta="m2"
+                            label="Review status"
                             onChange={(event: ChangeEvent<HTMLSelectElement>) => handleReviewStateChange(event, review, index)}
                             value={getCurrentValue(review)}
                         >
