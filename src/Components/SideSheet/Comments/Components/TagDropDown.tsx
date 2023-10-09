@@ -4,8 +4,10 @@ import styled from "styled-components"
 const List = styled.ul`
     list-style: none;
     position: absolute;
-    left: 14px;
-    bottom: 95px;
+    left: 80px;
+    bottom: 125px;
+    max-height: 400px;
+    overflow-y: auto;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.05);
     margin: 0;
     padding: 0;

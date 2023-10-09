@@ -11,7 +11,7 @@ import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
-import { processMessageInput } from "../../../../utils/helpers"
+import { processMessageInput, wrapInSpan } from "../../../../utils/helpers"
 import { GetProjectService } from "../../../../api/ProjectService"
 import { GetMessageService } from "../../../../api/MessageService"
 
@@ -52,6 +52,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     const [showTagDropDown, setShowTagDropDown] = useState<boolean>(false)
     const [charCount, setCharCount] = useState(0)
     const [userTags, setUserTags] = useState<any[]>([])
+    const [editMode, setEditMode] = useState<boolean>(false)
 
     const {
         activeTagData,
@@ -172,10 +173,21 @@ const CommentView: React.FC<CommentViewProps> = ({
         setSearchTerm("")
     }
 
+    const initEditMode = (commentObjectToEdit: Message) => {
+        const messageText = wrapInSpan(commentObjectToEdit.text ?? "")
+        const wrappedCommentObject = { ...commentObjectToEdit, text: messageText }
+        setEditMode(true)
+        setNewMessage(wrappedCommentObject)
+        setReRenderCounter(reRenderCounter + 1)
+    }
+
     return (
         <Container>
             <ConversationDiv>
-                <ClusteredMessages />
+                <ClusteredMessages
+                    initEditMode={initEditMode}
+                    editMode={editMode}
+                />
             </ConversationDiv>
             <Controls>
                 {showTagDropDown && (
@@ -190,12 +202,15 @@ const CommentView: React.FC<CommentViewProps> = ({
                 <InputController
                     handleSubmit={handleSubmit}
                     reRenderCounter={reRenderCounter}
+                    setReRenderCounter={setReRenderCounter}
                     newMessage={newMessage}
                     setNewMessage={setNewMessage}
                     setSearchTerm={setSearchTerm}
                     setShowTagDropDown={setShowTagDropDown}
                     charCount={charCount}
                     setCharCount={setCharCount}
+                    editMode={editMode}
+                    setEditMode={setEditMode}
                 />
             </Controls>
         </Container>

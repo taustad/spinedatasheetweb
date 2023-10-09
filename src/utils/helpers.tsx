@@ -1,3 +1,4 @@
+
 /**
  * Formats a date string into a user-friendly format.
  * - If the date is within the current day, it returns "Today" with the time.
@@ -94,4 +95,19 @@ export function unescapeHtmlEntities(str: string): string {
     const parser = new DOMParser()
     const doc = parser.parseFromString(str, "text/html")
     return doc.documentElement.textContent || ""
+}
+
+export function wrapInSpan(inputString: string): string {
+    const parts = inputString.split(/{{(.*?)}}/)
+
+    let isNextSpan = false
+    const partsWithSpan = parts.map((part, index) => {
+        if (isNextSpan) {
+            isNextSpan = false
+            return `<span contenteditable="false">${part}</span>`
+        }
+        isNextSpan = true
+        return part
+    })
+    return partsWithSpan.join("")
 }

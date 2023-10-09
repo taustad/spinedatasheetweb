@@ -2,6 +2,7 @@ import React, {
  useRef, useState, useEffect, MutableRefObject,
 } from "react"
 import styled from "styled-components"
+import { wrapInSpan } from "../../../../utils/helpers"
 
 const StyledDiv = styled.div`
   background-color: #F7F7F7;
@@ -35,32 +36,34 @@ interface Props {
   placeholder?: string
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>
   setShowTagDropDown: React.Dispatch<React.SetStateAction<boolean>>
-  newReviewComment: any
-  setNewReviewComment: React.Dispatch<React.SetStateAction<any>>
+  newMessage: any
+  setNewMessage: React.Dispatch<React.SetStateAction<any>>
   reRenderCounter: number
   charCount: number
   setCharCount: React.Dispatch<React.SetStateAction<number>>
+  editMode: boolean
 }
 
 const InputField: React.FC<Props> = ({
   placeholder = "Write a comment...",
   setSearchTerm,
   setShowTagDropDown,
-  newReviewComment,
-  setNewReviewComment,
+  newMessage,
+  setNewMessage,
   reRenderCounter,
   charCount,
   setCharCount,
+  editMode,
 }) => {
   const pRef = useRef<HTMLParagraphElement>(null)
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(true)
 
   useEffect(() => {
       if (pRef.current) {
-        if (!newReviewComment?.text) {
+        if (!newMessage?.text) {
           setIsPlaceholderShown(true)
         }
-        pRef.current.innerHTML = newReviewComment?.text || placeholder
+        pRef.current.innerHTML = newMessage?.text || placeholder
       }
   }, [reRenderCounter])
 
@@ -84,8 +87,8 @@ const InputField: React.FC<Props> = ({
       setSearchTerm("")
     }
 
-    const comment = { ...newReviewComment, text: commentText }
-    setNewReviewComment(comment)
+    const comment = { ...newMessage, text: commentText }
+    setNewMessage(comment)
   }
 
   const handleFocus = () => {

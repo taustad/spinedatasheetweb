@@ -1,5 +1,6 @@
 import React, {
-    FC, useState,
+    Dispatch,
+    FC, SetStateAction, useState,
 } from "react"
 import styled from "styled-components"
 import { Message } from "../../../../Models/Message"
@@ -16,32 +17,31 @@ const Container = styled.div<{ commentIsByCurrentUser: boolean }>`
         color: ${(props) => (props.commentIsByCurrentUser ? "white" : "black")};
     }
 `
-
 interface MessageBoxProps {
     messageObject: Message
     userId?: string
     isCurrentUser: boolean
+    initEditMode: (message: Message) => void
 }
 
 const MessageBox: FC<MessageBoxProps> = ({
     messageObject,
     userId,
     isCurrentUser,
-}) => {
-    const [isUpdateMode, setUpdateMode] = useState(false)
-
-    return (
-        <Container key={messageObject.id} commentIsByCurrentUser={isCurrentUser}>
-            <div>
-                <RenderComment
-                    comment={messageObject}
-                    isUpdateMode={isUpdateMode}
-                    setUpdateMode={setUpdateMode}
-                    isCurrentUser={isCurrentUser}
-                />
-            </div>
-        </Container>
-    )
-}
+    initEditMode,
+}) => (
+    <Container
+        key={messageObject.id}
+        commentIsByCurrentUser={isCurrentUser}
+    >
+        <div>
+            <RenderComment
+                comment={messageObject}
+                isCurrentUser={isCurrentUser}
+                initEditMode={initEditMode}
+            />
+        </div>
+    </Container>
+)
 
 export default MessageBox

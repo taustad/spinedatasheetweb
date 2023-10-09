@@ -51,9 +51,11 @@ const PhotoContainer = styled.div<{ isCurrentUser: boolean }>`
 `
 
 interface ClusteredMessagesProps {
+    initEditMode: (message: Message) => void
+    editMode: boolean
 }
 
-const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
+const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode }) => {
     const { activeConversation } = useContext(ViewContext)
     const currentUser: any = useCurrentUser()
     const isCurrentUser = (userId: string) => currentUser?._info.localAccountId === userId
@@ -150,6 +152,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                                     messageObject={cluster.messages[0]}
                                     userId={cluster.userId}
                                     isCurrentUser={isCurrentUser(cluster.userId)}
+                                    initEditMode={initEditMode}
                                 />
                             </PhotoContainer>
 
@@ -167,6 +170,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = () => {
                                         messageObject={message}
                                         userId={cluster.userId}
                                         isCurrentUser={isCurrentUser(cluster.userId)}
+                                        initEditMode={initEditMode}
                                     />
                                 </>
                             ))}
