@@ -7,6 +7,7 @@ import React, {
 } from "react"
 import { useParams } from "react-router-dom"
 import { comment_chat, open_side_sheet } from "@equinor/eds-icons"
+import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { generateGeneralRowData } from "../Components/JIP33Table/RowData/Instrument/GeneralRowData"
 import { generateInstallationConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/InstallationConditionsRowData"
 import { generateOperatingConditionsRowData } from "../Components/JIP33Table/RowData/Instrument/OperatingConditionsRowData"
@@ -88,6 +89,8 @@ function JIP33InstrumentTabView({ }) {
     const [activeTab, setActiveTab] = useState(0)
     const [sheetWidth, setSheetWidth] = useState(0)
 
+    const currentContext = useCurrentContext()
+
     const {
         activeTagData, setActiveTagData, activeSheetTab, setActiveSheetTab, setConversations,
     } = useContext(ViewContext)
@@ -105,9 +108,10 @@ function JIP33InstrumentTabView({ }) {
     }, [setOpen])
 
     const getConversationsForTagReview = async (id: string) => {
-        const newConversations: Conversation[] = await (
+        if (!currentContext.currentContext?.externalId || !activeTagData?.tagNo) { return }
+        const newConversations = await (
             await GetConversationService()
-        ).getConversationsForTagReview(id)
+        ).getConversationsForTag(currentContext.currentContext.externalId, activeTagData.tagNo, true)
         setConversations(newConversations)
     }
 

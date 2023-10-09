@@ -15,7 +15,7 @@ declare namespace Components {
             conversationLevel?: ConversationLevelDto;
             conversationStatus?: ConversationStatusDto;
         }
-        export type ConversationLevelDto = "Tag" | "PurchaserRequirement" | "SupplierOfferedValue";
+        export type ConversationLevelDto = "Tag" | "Property";
         export type ConversationStatusDto = "Open" | "To_be_implemented" | "Closed" | "Implemented";
         export interface CreateContainerReviewDto {
             revisionContainerId?: string; // uuid
@@ -1641,10 +1641,8 @@ declare namespace Paths {
     namespace AddMessage {
         namespace Parameters {
             export type ConversationId = string; // uuid
-            export type ReviewId = string; // uuid
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
         }
         export type RequestBody = Components.Schemas.MessageDto;
@@ -1654,10 +1652,12 @@ declare namespace Paths {
     }
     namespace CreateConversation {
         namespace Parameters {
-            export type ReviewId = string; // uuid
+            export type ProjectId = string; // uuid
+            export type TagNo = string;
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
+            projectId: Parameters.ProjectId /* uuid */;
+            tagNo: Parameters.TagNo;
         }
         export type RequestBody = Components.Schemas.ConversationDto;
         namespace Responses {
@@ -1692,10 +1692,8 @@ declare namespace Paths {
         namespace Parameters {
             export type ConversationId = string; // uuid
             export type MessageId = string; // uuid
-            export type ReviewId = string; // uuid
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
             messageId: Parameters.MessageId /* uuid */;
         }
@@ -1728,10 +1726,12 @@ declare namespace Paths {
     namespace GetConversation {
         namespace Parameters {
             export type ConversationId = string; // uuid
-            export type ReviewId = string; // uuid
+            export type ProjectId = string; // uuid
+            export type TagNo = string;
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
+            projectId: Parameters.ProjectId /* uuid */;
+            tagNo: Parameters.TagNo;
             conversationId: Parameters.ConversationId /* uuid */;
         }
         namespace Responses {
@@ -1741,10 +1741,12 @@ declare namespace Paths {
     namespace GetConversations {
         namespace Parameters {
             export type IncludeLatestMessage = boolean;
-            export type ReviewId = string; // uuid
+            export type ProjectId = string; // uuid
+            export type TagNo = string;
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
+            projectId: Parameters.ProjectId /* uuid */;
+            tagNo: Parameters.TagNo;
         }
         export interface QueryParameters {
             includeLatestMessage?: Parameters.IncludeLatestMessage;
@@ -1777,10 +1779,8 @@ declare namespace Paths {
         namespace Parameters {
             export type ConversationId = string; // uuid
             export type MessageId = string; // uuid
-            export type ReviewId = string; // uuid
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
             messageId: Parameters.MessageId /* uuid */;
         }
@@ -1791,10 +1791,8 @@ declare namespace Paths {
     namespace GetMessages {
         namespace Parameters {
             export type ConversationId = string; // uuid
-            export type ReviewId = string; // uuid
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
         }
         namespace Responses {
@@ -1884,10 +1882,8 @@ declare namespace Paths {
         namespace Parameters {
             export type ConversationId = string; // uuid
             export type MessageId = string; // uuid
-            export type ReviewId = string; // uuid
         }
         export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
             conversationId: Parameters.ConversationId /* uuid */;
             messageId: Parameters.MessageId /* uuid */;
         }
