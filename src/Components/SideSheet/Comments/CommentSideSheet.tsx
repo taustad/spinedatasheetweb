@@ -141,7 +141,7 @@ const CommentSideSheet: FC<Props> = ({
         (async () => {
             try {
                 if (!activeTagData?.tagNo || !currentContext.currentContext?.externalId) { return }
-                const newConversations = await (await GetConversationService()).getConversationsForTag(
+                const newConversations = await (await GetConversationService()).getConversations(
                     currentContext.currentContext?.externalId,
                     activeTagData.tagNo,
                     true,

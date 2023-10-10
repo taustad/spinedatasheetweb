@@ -107,11 +107,11 @@ function JIP33InstrumentTabView({ }) {
         setCurrentProperty("")
     }, [setOpen])
 
-    const getConversationsForTagReview = async (id: string) => {
-        if (!currentContext.currentContext?.externalId || !activeTagData?.tagNo) { return }
+    const getConversationsForTagReview = async (tagNo: string) => {
+        if (!currentContext.currentContext?.externalId) { return }
         const newConversations = await (
             await GetConversationService()
-        ).getConversationsForTag(currentContext.currentContext.externalId, activeTagData.tagNo, true)
+        ).getConversations(currentContext.currentContext.externalId, tagNo, true)
         setConversations(newConversations)
     }
 
@@ -128,13 +128,7 @@ function JIP33InstrumentTabView({ }) {
                     ).getTagData(tagId)
                     setActiveTagData(tagData)
 
-                    const tagDataReviewId = tagData?.review?.id
-                    if (
-                        tagDataReviewId !== null
-                        && tagDataReviewId !== undefined
-                    ) {
-                        await getConversationsForTagReview(tagDataReviewId)
-                    }
+                    await getConversationsForTagReview(tagId)
 
                     setIsLoading(false)
                 } catch {
@@ -143,7 +137,7 @@ function JIP33InstrumentTabView({ }) {
                 }
             }
         })()
-    }, [])
+    }, [tagId])
 
     if (error) {
         return <Dialogue type="error" message="Error loading tag" />

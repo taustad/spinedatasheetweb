@@ -2,9 +2,16 @@ import { BaseService } from "./BaseService"
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class ConversationService extends BaseService {
-    async getConversationsForTag(projectId: string, tagNo: string, includeLatestMessage: boolean = false) {
+    async getConversations(projectId: string, tagNo: string, includeLatestMessage: boolean = false) {
         const result: Components.Schemas.GetConversationDto[] = await this.get(
                 `${projectId}/tags/${tagNo}/conversations?includeLatestMessage=${includeLatestMessage}`,
+            )
+        return result
+    }
+
+    async getConversation(projectId: string, tagNo: string, conversationId: string) {
+        const result: Components.Schemas.GetConversationDto = await this.get(
+                `${projectId}/tags/${tagNo}/conversations/${conversationId}`,
             )
         return result
     }
