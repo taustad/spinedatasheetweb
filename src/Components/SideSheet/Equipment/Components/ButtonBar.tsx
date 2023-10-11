@@ -34,7 +34,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
                 <Icon data={build_wrench} />
             </TabButton>
         </Tooltip>
-        <Tooltip title="Spesifications" placement="right">
+        <Tooltip title="Specifications" placement="right">
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(1)}
