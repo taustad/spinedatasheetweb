@@ -123,6 +123,14 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode 
         return restMessages
     }
 
+    const displayMessageEdited = (message: Message) => (
+        <Typography variant="meta">
+            Edited
+            {" "}
+            {formatDate(message.modifiedDate || "")}
+        </Typography>
+    )
+
     return (
         <>
             {generateMessageCluster(activeConversation.messages).map((cluster, index) => (
@@ -146,6 +154,9 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode 
                                         size="large"
                                     />
                                 )}
+                                {cluster.messages[0].isEdited && (
+                                    displayMessageEdited(cluster.messages[0])
+                                )}
                                 <MessageBox
                                     key={`${cluster.userId}-${index}-${0}`}
                                     messageObject={cluster.messages[0]}
@@ -157,13 +168,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode 
 
                             {getClusterWithoutFirstMessage(cluster).map((message, messageIndex) => (
                                 <>
-                                    {message.isEdited && (
-                                        <Typography variant="meta">
-                                            Edited
-                                            {" "}
-                                            {formatDate(message.modifiedDate || "")}
-                                        </Typography>
-                                    )}
+                                    {message.isEdited && (displayMessageEdited(message))}
                                     <MessageBox
                                         key={`${cluster.userId}-${index}-${messageIndex}`}
                                         messageObject={message}
