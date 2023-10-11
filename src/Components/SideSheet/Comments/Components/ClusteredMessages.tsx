@@ -140,10 +140,9 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode 
                         <MessageContainer>
                             {/* TODO: change to PersonAvatar when docs are better */}
                             <PhotoContainer isCurrentUser={isCurrentUser(cluster.userId)}>
-                                {!isCurrentUser && (
+                                {!isCurrentUser(cluster.userId) && (
                                     <PersonPhoto
                                         personId={cluster.userId}
-                                        key={`${cluster.userId}-${index}`}
                                         size="large"
                                     />
                                 )}
