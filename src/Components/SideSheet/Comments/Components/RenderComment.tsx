@@ -11,7 +11,7 @@ import {
 import { Message } from "../../../../Models/Message"
 import { Conversation } from "../../../../Models/Conversation"
 import { ViewContext } from "../../../../Context/ViewContext"
-import { wrapInSpan } from "../../../../utils/helpers"
+import { wrapInSpan, sanitizeContent } from "../../../../utils/helpers"
 import { GetMessageService } from "../../../../api/MessageService"
 
 const Container = styled.div`
@@ -113,7 +113,7 @@ const RenderComment: FC<RenderCommentProps> = ({
                 dangerouslySetInnerHTML={{
             __html: comment.softDeleted
                 ? "Message deleted by user"
-                : wrapInSpan(comment.text || ""),
+                : sanitizeContent(wrapInSpan(comment.text || "")),
         }}
             />
             <Popover

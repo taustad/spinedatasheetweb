@@ -1,4 +1,4 @@
-
+import DOMPurify from "dompurify"
 /**
  * Formats a date string into a user-friendly format.
  * - If the date is within the current day, it returns "Today" with the time.
@@ -125,16 +125,16 @@ export function wrapInSpan(inputString: string): string {
     return partsWithSpan.join("")
 }
 
-// TODO: replace with dompurify
 /**
- * Sanitizes the text content.
+ * Sanitizes the text content using DOMPurify.
+ * Removes all HTML elements that are not <span>.
  *
  * @param {string} content - The text content to sanitize.
  * @returns {string} The sanitized text content.
  */
 export const sanitizeContent = (content: string): string => {
-    // Remove hidden/non-printable characters
-    const sanitizedContent = content.replace(/[\u200B-\u200D\uFEFF]/g, "")
+    const config = { ALLOWED_TAGS: ["span"] }
+    const sanitizedContent = DOMPurify.sanitize(content, config)
 
     return sanitizedContent
 }

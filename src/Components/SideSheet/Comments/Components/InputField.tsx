@@ -130,7 +130,20 @@ const handleInput = () => {
 const handlePaste = (e: React.ClipboardEvent) => {
     e.preventDefault()
     const text = e.clipboardData.getData("text/plain")
-    document.execCommand("insertHTML", false, text)
+
+    const selection = window.getSelection()
+    if (!selection) return
+
+    const range = selection.getRangeAt(0)
+    const textNode = document.createTextNode(text)
+
+    range.deleteContents()
+    range.insertNode(textNode)
+
+    selection.removeAllRanges()
+    range.setStartAfter(textNode)
+    range.setEndAfter(textNode)
+    selection.addRange(range)
 }
 
 const handleDragOver = (e: React.DragEvent) => {

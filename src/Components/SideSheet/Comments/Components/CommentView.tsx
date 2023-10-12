@@ -13,7 +13,9 @@ import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
-import { processMessageInput, wrapInSpan, formatCamelCase } from "../../../../utils/helpers"
+import {
+ processMessageInput, wrapInSpan, formatCamelCase, sanitizeContent,
+} from "../../../../utils/helpers"
 import { GetProjectService } from "../../../../api/ProjectService"
 import { GetMessageService } from "../../../../api/MessageService"
 
@@ -205,7 +207,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     }
 
     const initEditMode = (commentObjectToEdit: Message) => {
-        const messageText = wrapInSpan(commentObjectToEdit.text ?? "")
+        const messageText = sanitizeContent(wrapInSpan(commentObjectToEdit.text ?? ""))
         const wrappedCommentObject = { ...commentObjectToEdit, text: messageText }
         setEditMode(true)
         setNewMessage(wrappedCommentObject)
