@@ -66,17 +66,19 @@ export function getPropertyName<T>(property: keyof T): keyof T {
  * @returns {string} processedString - The processed string.
  * @returns {number[]} mentions - An array of mention IDs.
  */
-export function processMessageInput(input: string): { processedString: string, mentions: number[] } {
-    const regex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
+export function processMessageInput(input: string): { processedString: string, mentions: string[] } {
+    const mentions: string[] = []
 
-    let match
-    const mentions: number[] = []
+    const mentionRegex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
 
-    let processedString = input.replace(regex, (fullMatch, mentionId, content) => {
-        mentions.push(Number(mentionId))
+    let processedString = input.replace(mentionRegex, (fullMatch, mentionId, content) => {
+        mentions.push(mentionId)
         return `{{${content}}} `
     })
 
+    const nonMentionRegex = /<span(?: [^>]*)?>([^<]+)<\/span>/g
+
+    processedString = processedString.replace(nonMentionRegex, (fullMatch, content) => `{{${content}}} `)
     processedString = processedString.replace(/&nbsp;/g, " ")
 
     return {
@@ -97,6 +99,17 @@ export function unescapeHtmlEntities(str: string): string {
     return doc.documentElement.textContent || ""
 }
 
+/**
+ * The function will identify any text located between double curly braces and wrap
+ * it with a <span> HTML element, with the `contenteditable` attribute set to `false`.
+ * This makes the enclosed content appear visually distinct and uneditable in content-editable areas.
+ *
+ * input: 'Hello {{World}}'
+ * output: 'Hello <span contenteditable="false">World</span>'
+ *
+ * @param {string} inputString - The input string possibly containing content within {{}} to be wrapped in <span> elements.
+ * @returns {string} - The processed string with content within {{}} wrapped in non-editable <span> elements.
+ */
 export function wrapInSpan(inputString: string): string {
     const parts = inputString.split(/{{(.*?)}}/)
 
@@ -110,4 +123,31 @@ export function wrapInSpan(inputString: string): string {
         return part
     })
     return partsWithSpan.join("")
+}
+
+// TODO: replace with dompurify
+/**
+ * Sanitizes the text content.
+ *
+ * @param {string} content - The text content to sanitize.
+ * @returns {string} The sanitized text content.
+ */
+export const sanitizeContent = (content: string): string => {
+    // Remove hidden/non-printable characters
+    const sanitizedContent = content.replace(/[\u200B-\u200D\uFEFF]/g, "")
+
+    return sanitizedContent
+}
+
+/**
+ * Format a camelCase string by adding a space before each uppercase letter and capitalizing the first letter of the string.
+ *
+ * @function
+ * @param {string} property - The string to be formatted.
+ * @returns {string} - The formatted string.
+ */
+export function formatCamelCase(property: string) {
+    return property
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (str) => str.toUpperCase())
 }

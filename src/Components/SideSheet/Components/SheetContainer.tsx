@@ -88,11 +88,8 @@ type TabType = {
 };
 
 type Props = {
-    isOpen: boolean
     onClose: () => void
     currentProperty: any
-    width: number
-    setWidth: (width: number) => void
     activeTagData: any
     tabs: TabType[],
 }
@@ -100,10 +97,7 @@ type Props = {
 const SheetContainer: React.FC<Props> = ({
     activeTagData,
     onClose,
-    isOpen,
     currentProperty,
-    width,
-    setWidth,
     tabs,
 }) => {
     const {
@@ -112,6 +106,10 @@ const SheetContainer: React.FC<Props> = ({
         setActiveSheetTab,
         SideSheetScrollPos,
         setSideSheetScrollPos,
+        sideSheetOpen,
+        sheetWidth,
+        setSheetWidth,
+
     } = useContext(ViewContext)
     const scrollableRef = useRef<HTMLDivElement>(null)
 
@@ -155,6 +153,7 @@ const SheetContainer: React.FC<Props> = ({
         if (scrollableRef.current) scrollableRef.current.scrollTop = SideSheetScrollPos
     }, [])
 
+    // Scrolls to top when the user opens a new tag
     useEffect(() => {
         if (SideSheetScrollPos === 0) scrollToTop()
     }, [SideSheetScrollPos])
@@ -165,20 +164,20 @@ const SheetContainer: React.FC<Props> = ({
         return () => {
             scrollableRef.current?.removeEventListener("scroll", handleScroll)
         }
-    }, [scrollableRef, isOpen])
+    }, [scrollableRef, sideSheetOpen])
 
     // adds escape key listener when side sheet is open
     useEffect(() => {
-        if (isOpen) {
+        if (sideSheetOpen) {
             document.addEventListener("keydown", handleEscapeKey)
             return () => {
                 document.removeEventListener("keydown", handleEscapeKey)
             }
         }
         return () => {}
-    }, [isOpen])
+    }, [sideSheetOpen])
 
-    if (!isOpen) return null
+    if (!sideSheetOpen) return null
 
     if (activeTagData === undefined
         || activeTagData.tagNo === undefined
@@ -194,7 +193,7 @@ const SheetContainer: React.FC<Props> = ({
                 zIndex: 100,
             }}
             defaultSize={{
-                width,
+                width: sheetWidth,
                 height: "100%",
             }}
             minWidth={620}
@@ -210,7 +209,7 @@ const SheetContainer: React.FC<Props> = ({
                 topLeft: false,
             }}
             onResizeStop={(e, direction, ref, d) => {
-                setWidth(width + d.width)
+                setSheetWidth(sheetWidth + d.width)
             }}
             handleComponent={{
                 left: <Handle data={drag_handle} size={24} />,

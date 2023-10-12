@@ -21,20 +21,17 @@ const TableContainer = styled.div`
 `
 interface Props {
     rowData: object[]
-    setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined
-    setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined
-    setWidth?: (width: number) => void
-    width?: number
 }
 
 function JIP33Table({
     rowData,
-    setReviewSideSheetOpen,
-    setCurrentProperty,
-    setWidth,
-    width,
 }: Props) {
-    const { conversations, setActiveSheetTab } = useContext(ViewContext)
+    const {
+    conversations,
+    setActiveSheetTab,
+    setSideSheetOpen,
+    setCurrentProperty,
+} = useContext(ViewContext)
     const styles = useStyles()
 
     const defaultColDef = useMemo<ColDef>(
@@ -49,14 +46,8 @@ function JIP33Table({
     )
 
     const openConversationOnSheet = (paramsData: { property: string }) => {
-        if (setReviewSideSheetOpen && setCurrentProperty) {
-            setReviewSideSheetOpen(true)
-
-            if (width && setWidth) {
-                setWidth(width)
-            } else if (setWidth) {
-                setWidth(620)
-            }
+        if (setSideSheetOpen && setCurrentProperty) {
+            setSideSheetOpen(true)
             setCurrentProperty(paramsData.property)
             setActiveSheetTab(4)
         }
@@ -68,7 +59,7 @@ function JIP33Table({
         )
         if (
             commentsExist
-            && setReviewSideSheetOpen !== undefined
+            && setSideSheetOpen !== undefined
             && setCurrentProperty !== undefined
         ) {
             return (
@@ -80,7 +71,7 @@ function JIP33Table({
             )
         }
         if (
-            setReviewSideSheetOpen !== undefined
+            setSideSheetOpen !== undefined
             && setCurrentProperty !== undefined
         ) {
             return (

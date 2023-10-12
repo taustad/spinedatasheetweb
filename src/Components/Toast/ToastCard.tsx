@@ -90,6 +90,7 @@ const ToastCard = ({
         })
     }
 
+    // Dismiss toast when transitioning is true
     useEffect(() => {
         if (transitioning) {
             setTimeout(() => {
@@ -101,6 +102,7 @@ const ToastCard = ({
     const step = timeOut ? 100 / (timeOut / 100) : 0
     const [timerProgress, setTimerProgress] = useState(100)
 
+    // Start timer
     useEffect(() => {
         if (!timeOut) return undefined
 
@@ -113,6 +115,7 @@ const ToastCard = ({
         }
     }, [timeOut, step])
 
+    // Dismiss toast when timer is done
     useEffect(() => {
         if (timerProgress < 1) {
             setTransitioning(true)

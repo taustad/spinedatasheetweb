@@ -6,11 +6,8 @@ import React, {
     Dispatch, SetStateAction, useContext, useEffect, useState,
 } from "react"
 import styled from "styled-components"
-import { TagData } from "../../Models/TagData"
-import { TagDataReview } from "../../Models/TagDataReview"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetRevisionReviewService } from "../../api/RevisionReviewService"
-import { RevisionContainerReview } from "../../Models/RevisionContainerReview"
 import { GetTagDataService } from "../../api/TagDataService"
 import { ViewContext } from "../../Context/ViewContext"
 
@@ -40,22 +37,14 @@ const ReviewSubmition = styled(Dialog.Actions)`
 `
 
 interface Props {
-    tags?: TagData[],
-    setReviewModalOpen?: Dispatch<SetStateAction<boolean>>,
-    setTagInReview?: Dispatch<SetStateAction<string | undefined>>
     tagNoInReview: string | undefined,
-    setRevisionInReview?: Dispatch<SetStateAction<string | undefined>>
     revisionInReview?: string | undefined,
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 function EquipmentListReview({
-    tags,
-    setReviewModalOpen,
-    setTagInReview,
     tagNoInReview,
-    setRevisionInReview,
     revisionInReview,
     isOpen,
     setIsOpen,

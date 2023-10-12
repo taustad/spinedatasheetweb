@@ -22,6 +22,12 @@ interface ErrorType {
 }
 
 interface ViewContextProps {
+    currentProperty: string;
+    setCurrentProperty: Dispatch<SetStateAction<string>>;
+    sideSheetOpen: boolean;
+    setSideSheetOpen: Dispatch<SetStateAction<boolean>>;
+    sheetWidth: number
+    setSheetWidth: Dispatch<SetStateAction<number>>;
     activeTagData: TagData | undefined;
     setActiveTagData: Dispatch<SetStateAction<TagData | undefined>>;
     activeSheetTab: number;
@@ -37,6 +43,12 @@ interface ViewContextProps {
 }
 
 export const ViewContext = createContext<ViewContextProps>({
+    currentProperty: "",
+    setCurrentProperty: () => { },
+    sideSheetOpen: false,
+    setSideSheetOpen: () => { },
+    sheetWidth: 0,
+    setSheetWidth: () => { },
     activeTagData: undefined,
     setActiveTagData: () => { },
     activeSheetTab: 0,
@@ -57,6 +69,9 @@ interface ViewContextProviderProps {
 export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     children,
 }: ViewContextProviderProps) => {
+    const [currentProperty, setCurrentProperty] = useState<string>("")
+    const [sideSheetOpen, setSideSheetOpen] = useState<boolean>(() => localStorage.getItem("isSideSheetOpen") === "true")
+    const [sheetWidth, setSheetWidth] = useState<number>(() => (sideSheetOpen ? 620 : 0))
     const [activeTagData, setActiveTagData] = useState<TagData>()
     const [activeSheetTab, setActiveSheetTab] = useState<number>(() => parseInt(localStorage.getItem("activeSheetTab") || "0", 10))
     const [SideSheetScrollPos, setSideSheetScrollPos] = useState<number>(() => parseInt(localStorage.getItem("SideSheetScrollPos") || "0", 10))
@@ -65,17 +80,35 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [errors, setErrors] = useState<{}>({})
 
     useEffect(() => {
+        localStorage.setItem("isSideSheetOpen", JSON.stringify(sideSheetOpen))
+    }, [sideSheetOpen])
+
+    // Save activeSheetTab to localStorage
+    useEffect(() => {
         localStorage.setItem("activeSheetTab", activeSheetTab.toString())
     }, [activeSheetTab])
 
+    // Save SideSheetScrollPos to localStorage
     useEffect(() => {
-        localStorage.setItem("SideSheetScrollPos", activeSheetTab.toString())
+        localStorage.setItem("SideSheetScrollPos", SideSheetScrollPos.toString())
     }, [activeSheetTab])
+
+    useEffect(() => {
+        if (sideSheetOpen) {
+            setSheetWidth(620)
+        } else {
+            setSheetWidth(0)
+        }
+    }, [sideSheetOpen])
 
     const value = useMemo(
         () => ({
             activeTagData,
             setActiveTagData,
+            sideSheetOpen,
+            setSideSheetOpen,
+            sheetWidth,
+            setSheetWidth,
             activeSheetTab,
             setActiveSheetTab,
             conversations,
@@ -86,10 +119,16 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            currentProperty,
+            setCurrentProperty,
         }),
         [
             activeTagData,
             setActiveTagData,
+            sideSheetOpen,
+            setSideSheetOpen,
+            sheetWidth,
+            setSheetWidth,
             activeSheetTab,
             setActiveSheetTab,
             conversations,
@@ -100,6 +139,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            currentProperty,
+            setCurrentProperty,
         ],
     )
 

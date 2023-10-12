@@ -11,21 +11,15 @@ const Placeholder = styled.div`
     `
 
 type props = {
-    isOpen: boolean
     onClose: () => void
     currentProperty: any
-    width: number
-    setWidth: (width: number) => void
     activeTagData: any
 }
 
 const TagSideSheet: React.FC<props> = ({
     activeTagData,
     onClose,
-    isOpen,
     currentProperty,
-    width,
-    setWidth,
 }) => {
     const placeholder = (
         <Placeholder>
@@ -36,10 +30,7 @@ const TagSideSheet: React.FC<props> = ({
         currentProperty ? (
             <SheetContainer
                 key={activeTagData?.tagNo}
-                isOpen={isOpen}
                 onClose={onClose}
-                width={width}
-                setWidth={setWidth}
                 activeTagData={activeTagData}
                 currentProperty={currentProperty}
                 tabs={[

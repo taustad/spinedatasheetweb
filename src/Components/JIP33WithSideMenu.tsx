@@ -70,20 +70,12 @@ interface Props {
     sideMenuList: string[]
     rowDataList: object[][]
     customTabList?: string[]
-    setReviewSideSheetOpen?: Dispatch<SetStateAction<boolean>> | undefined
-    setCurrentProperty?: Dispatch<SetStateAction<string>> | undefined
-    setWidth?: (width: number) => void
-    width?: number
 }
 
 const JIP33WithSideMenu: React.FC<Props> = ({
     sideMenuList,
     rowDataList,
     customTabList,
-    setCurrentProperty,
-    setReviewSideSheetOpen,
-    setWidth,
-    width,
 }) => {
     const [activeTab, setActiveTab] = useState(0)
     const selectedColor = tokens.colors.infographic.primary__moss_green_100.rgba
@@ -145,10 +137,6 @@ const JIP33WithSideMenu: React.FC<Props> = ({
                     <StyledTabPanel>
                         <JIP33Table
                             rowData={rowDataList[activeTab]}
-                            setCurrentProperty={setCurrentProperty}
-                            setReviewSideSheetOpen={setReviewSideSheetOpen}
-                            setWidth={setWidth}
-                            width={width}
                         />
                     </StyledTabPanel>
                 </MainView>

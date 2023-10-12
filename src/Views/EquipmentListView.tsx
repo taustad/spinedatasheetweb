@@ -1,6 +1,6 @@
 import { Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import { useNavigate, useParams } from "react-router-dom"
 import { GetTagDataService } from "../api/TagDataService"
@@ -10,6 +10,7 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 import Header from "../Components/Header/Header"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
+import { ViewContext } from "../Context/ViewContext"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -31,7 +32,7 @@ const StyledTabPanel = styled(Panel)`
 `
 
 function EquipmentListView() {
-    const [activeTab, setActiveTab] = useState(0)
+    const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("activeTagTab") || "0", 10))
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [externalId, setExternalId] = useState<string | undefined>()
@@ -39,22 +40,28 @@ function EquipmentListView() {
     const [tagInReview, setTagInReview] = useState<string | undefined>(
         undefined,
     )
-    const [revisionInReview, setRevisionInReview] = useState<
-        string | undefined
-    >(undefined)
+    const [revisionInReview, setRevisionInReview] = useState<string | undefined>(undefined)
     const [tagData, setTagData] = useState<TagData[] | undefined>(undefined)
 
     const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext()
+    const { setSideSheetOpen } = useContext(ViewContext)
 
     const navigate = useNavigate()
 
+    // Set externalId to current project's externalId
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)
         }
     }, [currentProject])
 
+    useEffect(() => {
+        setSideSheetOpen(false)
+        localStorage.setItem("activeTagTab", activeTab.toString())
+    }, [activeTab])
+
+    // Get all tag data
     useEffect(() => {
         let isCancelled = false;
 
@@ -87,6 +94,7 @@ function EquipmentListView() {
         }
     }, [externalId])
 
+    // Redirect to project if no project is selected
     useEffect(() => {
         if (
             currentProject?.currentContext !== null
@@ -142,11 +150,7 @@ function EquipmentListView() {
             <EquipmentListReview
                 isOpen={reviewModalOpen}
                 setIsOpen={setReviewModalOpen}
-                tags={tagData}
-                setReviewModalOpen={setReviewModalOpen}
-                setTagInReview={setTagInReview}
                 tagNoInReview={tagInReview}
-                setRevisionInReview={setRevisionInReview}
                 revisionInReview={revisionInReview}
             />
 

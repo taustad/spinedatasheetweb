@@ -5,15 +5,35 @@ import React, {
 } from "react"
 import styled from "styled-components"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
+import { arrow_back } from "@equinor/eds-icons"
+import { Icon, Button, Typography } from "@equinor/eds-core-react"
 import { GetConversationService } from "../../../../api/ConversationService"
 import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
 import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
-import { processMessageInput, wrapInSpan } from "../../../../utils/helpers"
+import { processMessageInput, wrapInSpan, formatCamelCase } from "../../../../utils/helpers"
 import { GetProjectService } from "../../../../api/ProjectService"
 import { GetMessageService } from "../../../../api/MessageService"
+
+const Header = styled.div`
+    position: sticky;
+    top: 0;
+    width: 100%;
+    background-color: white;
+    padding: 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid LightGray;
+    border-top: 1px solid LightGray;
+    z-index: 10;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+`
 
 const Controls = styled.div`
     position: sticky;
@@ -38,6 +58,12 @@ const ConversationDiv = styled.div`
     width: 100%;
     max-width: 1000px;
 `
+const ConversationContainer = styled.div`
+    flex-grow: 1;
+    width: 100%;
+    display: flex;
+    align-items: end;
+`
 
 type CommentViewProps = {
     currentProperty: string
@@ -60,6 +86,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         setConversations,
         activeConversation,
         setActiveConversation,
+        setCurrentProperty,
     } = useContext(ViewContext)
 
     const currentContext = useCurrentContext()
@@ -68,6 +95,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         conversations.find((conversation) => conversation.property?.toUpperCase() === property.toUpperCase())
     )
 
+    // Get users for tagging
     useEffect(() => {
         (async () => {
             if (currentContext && currentContext.currentContext?.id) {
@@ -81,6 +109,7 @@ const CommentView: React.FC<CommentViewProps> = ({
         })()
     }, [])
 
+    // Get messages for conversation
     useEffect(() => {
         (async () => {
             try {
@@ -145,7 +174,7 @@ const CommentView: React.FC<CommentViewProps> = ({
     const addMessage = async () => {
         const { processedString, mentions } = processMessageInput(newMessage?.text ?? "")
         const message: Components.Schemas.MessageDto = { ...newMessage, text: processedString }
-        console.log("mentions: ", mentions) // to be used for tagging users in the future
+
         try {
             const service = await GetMessageService()
             const savedMessage = await service.addMessage(activeConversation?.id ?? "", message)
@@ -185,12 +214,30 @@ const CommentView: React.FC<CommentViewProps> = ({
 
     return (
         <Container>
-            <ConversationDiv>
-                <ClusteredMessages
-                    initEditMode={initEditMode}
-                    editMode={editMode}
-                />
-            </ConversationDiv>
+            <Header>
+                <Button
+                    variant="ghost_icon"
+                    onClick={() => setCurrentProperty("")}
+                >
+                    <Icon
+                        data={arrow_back}
+                        color="#007079"
+                    />
+                </Button>
+
+                <Typography>
+                    {formatCamelCase(currentProperty)}
+                </Typography>
+            </Header>
+            <ConversationContainer>
+                <ConversationDiv>
+                    <ClusteredMessages
+                        initEditMode={initEditMode}
+                        editMode={editMode}
+                    />
+                </ConversationDiv>
+            </ConversationContainer>
+
             <Controls>
                 {showTagDropDown && (
                     <TagDropDown

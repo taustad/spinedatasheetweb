@@ -2,7 +2,7 @@ import { ColDef, SideBarDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import React, {
-    useCallback, useEffect, useMemo, useRef, useState,
+    useCallback, useEffect, useMemo, useRef, useState, useContext,
 } from "react"
 import { Button, Icon } from "@equinor/eds-core-react"
 import { view_column } from "@equinor/eds-icons"
@@ -18,6 +18,7 @@ import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
 import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
+import { ViewContext } from "../../Context/ViewContext"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -47,9 +48,11 @@ interface Props {
 function TagComparisonTable({ tags }: Props) {
     const styles = useStyles()
     const gridRef = useRef<AgGridReact>(null)
+    const {
+        setSideSheetOpen,
+        sheetWidth,
+    } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
-    const [sideSheetIsOpen, setSideSheetIsOpen] = useState<boolean>(false)
-    const [sheetWidth, setSheetWidth] = useState(0)
     const [activeTagData, setActiveTagData] = useState<ActiveTagData | undefined>(undefined)
     const [currentProperty, setCurrentProperty] = useState<any>(undefined)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
@@ -142,10 +145,9 @@ function TagComparisonTable({ tags }: Props) {
     }
 
     const closeSideSheet = () => {
-        setSideSheetIsOpen(false)
+        setSideSheetOpen(false)
         setActiveTagData(undefined)
         setCurrentProperty(undefined)
-        setSheetWidth(0)
     }
 
     const handleCellClicked = (event: any) => {
@@ -154,10 +156,10 @@ function TagComparisonTable({ tags }: Props) {
         setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
     }
 
+    // Opens side sheet when tag is clicked
     useEffect(() => {
         if (activeTagData !== undefined) {
-            setSideSheetIsOpen(true)
-            if (sheetWidth === 0) setSheetWidth(620)
+            setSideSheetOpen(true)
         }
     }, [activeTagData])
 
@@ -166,20 +168,14 @@ function TagComparisonTable({ tags }: Props) {
             {showTagSideSheet ? (
                 <TagSideSheet
                     key={activeTagData?.tagNo}
-                    isOpen={sideSheetIsOpen}
                     onClose={closeSideSheet}
-                    width={sheetWidth}
-                    setWidth={setSheetWidth}
                     activeTagData={activeTagData}
                     currentProperty={currentProperty}
                 />
             ) : (
                 <TagPropertySideSheet
                     key={activeTagData?.tagNo}
-                    isOpen={sideSheetIsOpen}
                     onClose={closeSideSheet}
-                    width={sheetWidth}
-                    setWidth={setSheetWidth}
                     activeTagData={activeTagData}
                     currentProperty={currentProperty}
                 />

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import { Typography } from "@equinor/eds-core-react"
 import SheetContainer from "./Components/SheetContainer"
@@ -14,21 +14,15 @@ const Placeholder = styled.div`
 `
 
 type Props = {
-  isOpen: boolean;
   onClose: () => void;
   currentProperty: any;
-  width: number;
-  setWidth: (width: number) => void;
   activeTagData: any;
 };
 
 const TagSideSheet: React.FC<Props> = ({
   activeTagData,
   onClose,
-  isOpen,
   currentProperty,
-  width,
-  setWidth,
 }) => {
   const placeholder = (
       <Placeholder>
@@ -39,10 +33,7 @@ const TagSideSheet: React.FC<Props> = ({
   return (
       <SheetContainer
           key={activeTagData?.tagNo}
-          isOpen={isOpen}
           onClose={onClose}
-          width={width}
-          setWidth={setWidth}
           activeTagData={activeTagData}
           currentProperty={currentProperty}
           tabs={[
