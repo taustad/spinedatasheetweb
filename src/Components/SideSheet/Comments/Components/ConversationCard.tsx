@@ -1,8 +1,9 @@
 import React, { FC, useContext } from "react"
 import {
- Icon, Typography, Tooltip,
+    Icon, Typography, Tooltip,
 } from "@equinor/eds-core-react"
 import { tag } from "@equinor/eds-icons"
+import { PersonPhoto } from "@equinor/fusion-components"
 import styled from "styled-components"
 import { ViewContext } from "../../../../Context/ViewContext"
 import Card from "../../Components/Card"
@@ -45,6 +46,7 @@ const Buttons = styled.div`
 const TitleContainer = styled.div`
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
 `
@@ -123,8 +125,14 @@ const Meta = styled.div`
     gap: 15px;
     position: relative;
     top: 15px;
-
 `
+
+const PhotoContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+`
+
 const SenderMeta = styled(Typography)`
     font-size: 12px;
     font-weight: 500;
@@ -160,24 +168,29 @@ const ConversationCard: FC<ConversationCardProps> = ({
                         <Tooltip
                             placement="right"
                             title={
-                            (() => {
-                                switch (conversation.status) {
-                                    case "Open":
-                                        return "Status: Open"
-                                    case "Closed":
-                                        return "Status: Closed"
-                                    case "Implemented":
-                                        return "Status: Implemented"
-                                    case "To_be_implemented":
-                                        return "Status: To be implemented"
-                                    default:
-                                        return "Status: Unknown"
-                                }
-                            })()
-                        }
+                                (() => {
+                                    switch (conversation.status) {
+                                        case "Open":
+                                            return "Status: Open"
+                                        case "Closed":
+                                            return "Status: Closed"
+                                        case "Implemented":
+                                            return "Status: Implemented"
+                                        case "To_be_implemented":
+                                            return "Status: To be implemented"
+                                        default:
+                                            return "Status: Unknown"
+                                    }
+                                })()
+                            }
                         >
                             <StatusCircle status={conversation.status} />
                         </Tooltip>
+                        <PhotoContainer>
+                            {conversation.participants.map((participant) => (
+                                <PersonPhoto personId={participant.userId} size="small" />
+                            ))}
+                        </PhotoContainer>
                     </TitleContainer>
                     <Meta>
                         <SenderMeta>
@@ -185,10 +198,10 @@ const ConversationCard: FC<ConversationCardProps> = ({
                         </SenderMeta>
                         <SenderMeta>
                             {
-                            conversation.messages[0].isEdited
-                                ? formatDate(conversation.messages[0].modifiedDate || "")
-                                : formatDate(conversation.messages[0].createdDate || "")
-                        }
+                                conversation.messages[0].isEdited
+                                    ? formatDate(conversation.messages[0].modifiedDate || "")
+                                    : formatDate(conversation.messages[0].createdDate || "")
+                            }
                         </SenderMeta>
                     </Meta>
                     <NewestMessageContainer>
