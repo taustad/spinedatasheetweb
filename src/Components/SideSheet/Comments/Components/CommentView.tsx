@@ -7,6 +7,7 @@ import styled from "styled-components"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { arrow_back } from "@equinor/eds-icons"
 import { Icon, Button, Typography } from "@equinor/eds-core-react"
+import { PersonPhoto } from "@equinor/fusion-components"
 import { GetConversationService } from "../../../../api/ConversationService"
 import { Message } from "../../../../Models/Message"
 import InputController from "./InputController"
@@ -14,7 +15,7 @@ import { ViewContext } from "../../../../Context/ViewContext"
 import ClusteredMessages from "./ClusteredMessages"
 import TagDropDown from "./TagDropDown"
 import {
- processMessageInput, wrapInSpan, formatCamelCase, sanitizeContent,
+    processMessageInput, wrapInSpan, formatCamelCase, sanitizeContent,
 } from "../../../../utils/helpers"
 import { GetProjectService } from "../../../../api/ProjectService"
 import { GetMessageService } from "../../../../api/MessageService"
@@ -65,6 +66,12 @@ const ConversationContainer = styled.div`
     width: 100%;
     display: flex;
     align-items: end;
+`
+
+const PhotoContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
 `
 
 type CommentViewProps = {
@@ -122,7 +129,7 @@ const CommentView: React.FC<CommentViewProps> = ({
                         currentContext.currentContext.id,
                         activeTagData?.tagNo,
                         currentConversationId,
-                        )
+                    )
                     setActiveConversation(currentConversation)
                 } else {
                     setActiveConversation(undefined)
@@ -230,6 +237,13 @@ const CommentView: React.FC<CommentViewProps> = ({
                 <Typography>
                     {formatCamelCase(currentProperty)}
                 </Typography>
+                {activeConversation?.participants && (
+                    <PhotoContainer>
+                        {activeConversation.participants.map((participant) => (
+                            <PersonPhoto personId={participant.userId} size="medium" />
+                        ))}
+                    </PhotoContainer>
+                )}
             </Header>
             <ConversationContainer>
                 <ConversationDiv>
