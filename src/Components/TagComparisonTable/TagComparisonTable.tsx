@@ -51,10 +51,11 @@ function TagComparisonTable({ tags }: Props) {
     const {
         setSideSheetOpen,
         sheetWidth,
+        setCurrentProperty,
+        activeTagData,
+        setActiveTagData,
     } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
-    const [activeTagData, setActiveTagData] = useState<ActiveTagData | undefined>(undefined)
-    const [currentProperty, setCurrentProperty] = useState<any>(undefined)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
@@ -147,12 +148,17 @@ function TagComparisonTable({ tags }: Props) {
     const closeSideSheet = () => {
         setSideSheetOpen(false)
         setActiveTagData(undefined)
-        setCurrentProperty(undefined)
     }
 
     const handleCellClicked = (event: any) => {
-        setShowTagSideSheet(event.colDef.field === "tagNo")
-        setCurrentProperty(event.colDef.field === "tagNo" ? undefined : { description: event.data.description })
+        const shouldOpenTaggSideSheet = event.colDef.field === "tagNo"
+        if (shouldOpenTaggSideSheet) {
+            setShowTagSideSheet(true)
+            setCurrentProperty("")
+        } else {
+            setShowTagSideSheet(false)
+            setCurrentProperty(event.data.description)
+        }
         setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
     }
 
@@ -160,6 +166,7 @@ function TagComparisonTable({ tags }: Props) {
     useEffect(() => {
         if (activeTagData !== undefined) {
             setSideSheetOpen(true)
+            console.log("opening sidesheet for this tag: ", activeTagData)
         }
     }, [activeTagData])
 
@@ -169,15 +176,11 @@ function TagComparisonTable({ tags }: Props) {
                 <TagSideSheet
                     key={activeTagData?.tagNo}
                     onClose={closeSideSheet}
-                    activeTagData={activeTagData}
-                    currentProperty={currentProperty}
                 />
             ) : (
                 <TagPropertySideSheet
                     key={activeTagData?.tagNo}
                     onClose={closeSideSheet}
-                    activeTagData={activeTagData}
-                    currentProperty={currentProperty}
                 />
             )}
             <ResizableTableContainer sheetWidth={sheetWidth}>

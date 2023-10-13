@@ -68,7 +68,6 @@ export function getPropertyName<T>(property: keyof T): keyof T {
  */
 export function processMessageInput(input: string): { processedString: string, mentions: string[] } {
     const mentions: string[] = []
-
     const mentionRegex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
 
     let processedString = input.replace(mentionRegex, (fullMatch, mentionId, content) => {

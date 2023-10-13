@@ -48,6 +48,7 @@ function JIP33Table({
     const openConversationOnSheet = (paramsData: { property: string }) => {
         if (setSideSheetOpen && setCurrentProperty) {
             setSideSheetOpen(true)
+            console.log("setting current property to: ", paramsData.property)
             setCurrentProperty(paramsData.property)
             setActiveSheetTab(4)
         }

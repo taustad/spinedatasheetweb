@@ -84,8 +84,6 @@ function JIP33InstrumentTabView({ }) {
             activeSheetTab,
             setActiveSheetTab,
             setConversations,
-            currentProperty,
-            setCurrentProperty,
             sideSheetOpen,
             setSideSheetOpen,
             sheetWidth,
@@ -97,13 +95,11 @@ function JIP33InstrumentTabView({ }) {
 
     const onCloseReviewSideSheet = useCallback(() => {
         setSideSheetOpen(false)
-        setCurrentProperty("")
     }, [setSideSheetOpen])
 
     const onOpenReviewSideSheet = useCallback((activatedTab: React.SetStateAction<number>) => {
         setActiveSheetTab(activatedTab)
         setSideSheetOpen(true)
-        setCurrentProperty("")
     }, [setSideSheetOpen])
 
     const getConversationsForTagReview = async (tagNo: string) => {
@@ -243,8 +239,6 @@ function JIP33InstrumentTabView({ }) {
             </TableView>
             <TagSideSheet
                 onClose={onCloseReviewSideSheet}
-                currentProperty={currentProperty}
-                activeTagData={activeTagData}
             />
         </View>
     )

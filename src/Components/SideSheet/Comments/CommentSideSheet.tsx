@@ -38,11 +38,7 @@ const ButtonRow = styled.div`
 
 const TopButton = styled(Button)`
     margin-left: 5px;
-    `
-
-type Props = {
-    currentProperty?: string;
-};
+`
 
 interface DisplayConversation {
     property: string,
@@ -53,14 +49,13 @@ interface DisplayConversation {
     participants: User[]
 }
 
-const CommentSideSheet: FC<Props> = ({
-    currentProperty,
-}) => {
+const CommentSideSheet: FC = () => {
     const {
         setConversations,
         activeTagData,
         conversations,
         setSideSheetScrollPos,
+        currentProperty,
         } = useContext(ViewContext)
     const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveCommentTab") || "0", 10))
     const [conversationsData, setConversationsData] = useState<{[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]}>()

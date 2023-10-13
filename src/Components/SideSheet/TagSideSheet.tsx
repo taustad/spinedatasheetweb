@@ -7,6 +7,7 @@ import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 import ActivitySideSheet from "./Activity/ActivitySideSheet"
+import { ViewContext } from "../../Context/ViewContext"
 
 const Placeholder = styled.div`
   height: 100%;
@@ -15,15 +16,13 @@ const Placeholder = styled.div`
 
 type Props = {
   onClose: () => void;
-  currentProperty: any;
-  activeTagData: any;
 };
 
 const TagSideSheet: React.FC<Props> = ({
-  activeTagData,
   onClose,
-  currentProperty,
 }) => {
+  const { activeTagData } = useContext(ViewContext)
+
   const placeholder = (
       <Placeholder>
           <Typography variant="body_short">Work in progress...</Typography>
@@ -34,8 +33,6 @@ const TagSideSheet: React.FC<Props> = ({
       <SheetContainer
           key={activeTagData?.tagNo}
           onClose={onClose}
-          activeTagData={activeTagData}
-          currentProperty={currentProperty}
           tabs={[
                   { title: "Activity", content: <ActivitySideSheet /> },
                   { title: "Equipment", content: <EquipmentSideSheet /> },
@@ -43,7 +40,7 @@ const TagSideSheet: React.FC<Props> = ({
                   { title: "Connections", content: placeholder },
                   {
                       title: "Comments",
-                      content: <CommentsSideSheet currentProperty={currentProperty} />,
+                      content: <CommentsSideSheet />,
                   },
                   { title: "Changelog", content: <ChangeLogSideSheet /> },
               ]}
