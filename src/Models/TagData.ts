@@ -15,6 +15,7 @@ export class TagData implements Components.Schemas.TagDataDto {
     purchaseOrder?: string | null;
     sequence?: string | null;
     system?: string | null;
+    tagType?: string | null;
     version?: number; // int32
     review?: TagDataReview;
     revisionContainer?: RevisionContainer;

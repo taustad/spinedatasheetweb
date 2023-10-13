@@ -11,6 +11,11 @@ export const comparisonTR3111ColumnDefs = (): ColGroupDef[] => [
                 headerName: "Tag status",
             },
             {
+                field: getPropertyName<TagData>("tagType"),
+                headerName: "Tag type",
+                hide: true,
+            },
+            {
                 field: getPropertyName<TagData>("discipline"),
                 headerName: "Discipline",
             },
