@@ -1565,6 +1565,7 @@ declare namespace Components {
         export type ReviewStatusDto = "New" | "Reviewed" | "Resubmit" | "Diff" | "Duplicate" | "ReviewedWithComment" | "NotReviewed" | "Deleted";
         export interface ReviewerDto {
             status: ReviewStatusDto;
+            displayName?: string | null;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             reviewerId?: string; // uuid

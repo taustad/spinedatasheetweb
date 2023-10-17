@@ -19,6 +19,8 @@ import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
 import { ViewContext } from "../../Context/ViewContext"
+import { comparisonReviewColumnDefs } from "./ColumnDefs/ReviewColumnDefs"
+import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -57,6 +59,7 @@ function TagComparisonTable({ tags }: Props) {
     } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
+    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagDataReviewDto[]>()
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
     const defaultColDef = useMemo<ColDef>(
@@ -70,14 +73,44 @@ function TagComparisonTable({ tags }: Props) {
         [],
     )
 
-    const newColumns = [...comparisonTagsColumnDefs(),
+    useEffect(() => {
+        (async () => {
+            try {
+                const result = await (await GetTagDataReviewService()).getTagDataReviews()
+                setTagReviews(result.data)
+            } catch (error) {
+                console.error(`Couldn't get tag reviews: ${error}`)
+            }
+        })()
+    }, [])
+
+    const getReviewerNamesFromReviews = (tag: InstrumentTagData) => {
+        const reviewers: string[] = []
+        tagReviews?.forEach((tagReview: Components.Schemas.TagDataReviewDto) => {
+            if (tag.tagNo !== tagReview.tagNo) { return }
+            tagReview?.reviewer?.forEach((tR: Components.Schemas.ReviewerDto) => {
+                if (tR.displayName) {
+                    reviewers.push(tR?.displayName)
+                }
+            })
+        })
+        return reviewers.toString()
+    }
+
+    const newColumns = [...comparisonReviewColumnDefs(),
+        ...comparisonTagsColumnDefs(),
         ...comparisonTR3111ColumnDefs(),
         ...comparisonGeneralColumnDefs(),
         ...comparisonEquipmentConditionsColumnDefs(),
         ...comparisonOperatingConditionsColumnDefs(),
     ]
 
-    const tagRows = tags.map((tag) => ({ ...tag.instrumentPurchaserRequirement, ...tag, tagNumber: tag.tagNo }))
+    const tagRows = tags.map((tag) => ({
+        ...tag.instrumentPurchaserRequirement,
+        ...tag,
+        tagNumber: tag.tagNo,
+        displayName: getReviewerNamesFromReviews(tag),
+    }))
 
     const columnSideBar = useMemo<
         SideBarDef | string | string[] | boolean | null
