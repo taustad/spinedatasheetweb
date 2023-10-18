@@ -34,6 +34,10 @@ interface ViewContextProps {
     setErrors: React.Dispatch<React.SetStateAction<ErrorType>>;
     SideSheetScrollPos : number;
     setSideSheetScrollPos : React.Dispatch<React.SetStateAction<number>>;
+    myReviews: Components.Schemas.TagDataReviewDto[]
+    setMyReviews: Dispatch<SetStateAction<Components.Schemas.TagDataReviewDto[]>>
+    currentUserId: string
+    setCurrentUserId: Dispatch<SetStateAction<string>>
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -49,6 +53,10 @@ export const ViewContext = createContext<ViewContextProps>({
     setErrors: () => { },
     SideSheetScrollPos: 0,
     setSideSheetScrollPos: () => { },
+    myReviews: [],
+    setMyReviews: () => {},
+    currentUserId: "",
+    setCurrentUserId: () => "",
 })
 
 interface ViewContextProviderProps {
@@ -62,7 +70,9 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [SideSheetScrollPos, setSideSheetScrollPos] = useState<number>(() => parseInt(localStorage.getItem("SideSheetScrollPos") || "0", 10))
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
+    const [myReviews, setMyReviews] = useState<Components.Schemas.TagDataReviewDto[]>([])
     const [errors, setErrors] = useState<{}>({})
+    const [currentUserId, setCurrentUserId] = useState<string>("")
 
     useEffect(() => {
         localStorage.setItem("activeSheetTab", activeSheetTab.toString())
@@ -86,6 +96,10 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            myReviews,
+            setMyReviews,
+            currentUserId,
+            setCurrentUserId,
         }),
         [
             activeTagData,
@@ -100,6 +114,10 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            myReviews,
+            setMyReviews,
+            currentUserId,
+            setCurrentUserId,
         ],
     )
 

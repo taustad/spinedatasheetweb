@@ -1,8 +1,9 @@
 import { Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import styled from "styled-components"
 import { useNavigate, useParams } from "react-router-dom"
+import { useCurrentUser } from "@equinor/fusion"
 import { GetTagDataService } from "../api/TagDataService"
 import EquipmentListTable from "../Components/EquipmentListView/EquipmentListTable"
 import { TagData } from "../Models/TagData"
@@ -10,6 +11,8 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 import Header from "../Components/Header/Header"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
+import { ViewContext } from "../Context/ViewContext"
+import { GetTagDataReviewService } from "../api/TagDataReviewService"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -48,6 +51,17 @@ function EquipmentListView() {
     const currentProject = useCurrentContext()
 
     const navigate = useNavigate()
+    const currentUser: any = useCurrentUser()
+
+    const {
+        myReviews, setMyReviews, currentUserId, setCurrentUserId,
+    } = useContext(ViewContext)
+
+    useEffect(() => {
+        if (currentUser?._info?.localAccountId) {
+            setCurrentUserId(currentUser?._info?.localAccountId)
+        }
+    }, [currentUser])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -68,6 +82,11 @@ function EquipmentListView() {
                     const allTagData = await (
                         await GetTagDataService()
                     ).getAllTagData()
+
+                    if (currentUser) {
+                        const myReviewsFromServer = await (await GetTagDataReviewService()).getTagDataReviews(currentUser._info.localAccountId)
+                        setMyReviews(myReviewsFromServer.data)
+                    }
 
                     if (!isCancelled) {
                         setTagData(allTagData)

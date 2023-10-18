@@ -1,14 +1,19 @@
-import React, { Dispatch, SetStateAction, useMemo } from "react"
+import React, {
+ Dispatch, SetStateAction, useContext, useMemo,
+} from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { tokens } from "@equinor/eds-tokens"
 import { Icon } from "@equinor/eds-core-react"
-import { block, done, tag } from "@equinor/eds-icons"
+import {
+ block, check, checkbox_outline, close, comment_chat, done, tag,
+} from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
 import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
+import { ViewContext } from "../../Context/ViewContext"
 
 interface Props {
     tags: TagData[]
@@ -41,6 +46,10 @@ function EquipmentListTable({
 }: Props) {
     const location = useLocation()
     const styles = useStyles()
+
+    const {
+        myReviews, currentUserId,
+    } = useContext(ViewContext)
 
     const defaultColDef = useMemo<ColDef>(
         () => ({
@@ -139,6 +148,37 @@ function EquipmentListTable({
         return deadline.toISOString().slice(0, 10)
     }
 
+    const getReviewStatusIcon = (status: Components.Schemas.ReviewStatusDto) => {
+        switch (status) {
+            case "New":
+                return <Icon data={checkbox_outline} color="gray" />
+            case "Reviewed":
+                return <Icon data={check} color="green" />
+            case "Resubmit":
+                return <Icon data={close} color="red" />
+            case "ReviewedWithComment":
+                return <Icon data={comment_chat} color="orange" />
+            default:
+                return null
+        }
+    }
+
+    const reviewStatusRenderer = (params: ICellRendererParams) => {
+        console.log("reviewStatusRenderer params: ", params)
+
+        const rowReview = myReviews.find((r) => r.tagNo === params.data.tagNo)
+
+        if (!rowReview) { return null }
+
+        console.log("currentUserId: ", currentUserId)
+
+        const reviewerReview = rowReview.reviewer?.find((r) => r.reviewerId === currentUserId)
+
+        if (!reviewerReview) { return null }
+
+        return getReviewStatusIcon(reviewerReview.status)
+        }
+
     const columns = [
         {
             headerName: "Tag info",
@@ -147,6 +187,11 @@ function EquipmentListTable({
                     field: "tagNo",
                     headerName: "Tag number",
                     cellRenderer: (params: any) => linkToDocument(params),
+                },
+                {
+                    field: "reviewStatus",
+                    headerName: "Review status",
+                    cellRenderer: (params: any) => reviewStatusRenderer(params),
                 },
                 { field: "version", headerName: "Version number" },
                 {
@@ -181,34 +226,34 @@ function EquipmentListTable({
         {
             headerName: "Review info",
             children: [
-                {
-                    field: "",
-                    headerName: "Review",
-                    cellRenderer: (params: any) => EquipmentListReviewRenderer(
-                        params,
-                        setReviewModalOpen,
-                        setTagInReview,
-                        setRevisionInReview,
-                    ),
-                },
-                {
-                    field: "revisionContainer.revisionContainerReview.status",
-                    headerName: "Revision container review status",
-                    cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params),
-                },
-                {
-                    field: "review.status",
-                    headerName: "Review status",
-                    cellRenderer: (params: any) => tagDataReviewStatusRenderer(params),
-                },
-                {
-                    field: "review.approverId",
-                    headerName: "Reviewers",
-                },
-                {
-                    field: "review.commentResponsible",
-                    headerName: "Comment responsible",
-                },
+                // {
+                //     field: "",
+                //     headerName: "Review",
+                //     cellRenderer: (params: any) => EquipmentListReviewRenderer(
+                //         params,
+                //         setReviewModalOpen,
+                //         setTagInReview,
+                //         setRevisionInReview,
+                //     ),
+                // },
+                // {
+                //     field: "revisionContainer.revisionContainerReview.status",
+                //     headerName: "Revision container review status",
+                //     cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params),
+                // },
+                // {
+                //     field: "review.status",
+                //     headerName: "Review status",
+                //     cellRenderer: (params: any) => tagDataReviewStatusRenderer(params),
+                // },
+                // {
+                //     field: "review.approverId",
+                //     headerName: "Reviewers",
+                // },
+                // {
+                //     field: "review.commentResponsible",
+                //     headerName: "Comment responsible",
+                // },
                 {
                     field: "reviewDeadline",
                     headerName: "Review deadline",
