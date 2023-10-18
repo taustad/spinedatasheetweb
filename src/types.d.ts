@@ -357,6 +357,8 @@ declare namespace Components {
             purchaseOrder?: string | null;
             sequence?: string | null;
             system?: string | null;
+            tagType?: string | null;
+            subTagType?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -399,6 +401,8 @@ declare namespace Components {
             purchaseOrder?: string | null;
             sequence?: string | null;
             system?: string | null;
+            tagType?: string | null;
+            subTagType?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -815,6 +819,8 @@ declare namespace Components {
             purchaseOrder?: string | null;
             sequence?: string | null;
             system?: string | null;
+            tagType?: string | null;
+            subTagType?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1541,6 +1547,8 @@ declare namespace Components {
             purchaseOrder?: string | null;
             sequence?: string | null;
             system?: string | null;
+            tagType?: string | null;
+            subTagType?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;
@@ -1561,6 +1569,7 @@ declare namespace Components {
         export type ReviewStatusDto = "New" | "Reviewed" | "Resubmit" | "Diff" | "Duplicate" | "ReviewedWithComment" | "NotReviewed" | "Deleted";
         export interface ReviewerDto {
             status: ReviewStatusDto;
+            displayName?: string | null;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             reviewerId?: string; // uuid
@@ -1604,6 +1613,8 @@ declare namespace Components {
             purchaseOrder?: string | null;
             sequence?: string | null;
             system?: string | null;
+            tagType?: string | null;
+            subTagType?: string | null;
             version?: number; // int32
             review?: TagDataReviewDto;
             revisionContainer?: RevisionContainerDto;

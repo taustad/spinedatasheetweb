@@ -2,7 +2,7 @@ import { ColDef, SideBarDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import React, {
-    useCallback, useEffect, useMemo, useRef, useState,
+    useCallback, useEffect, useMemo, useRef, useState, useContext,
 } from "react"
 import { Button, Icon } from "@equinor/eds-core-react"
 import { view_column } from "@equinor/eds-icons"
@@ -18,6 +18,9 @@ import CommentFilterToolPanel from "./FilterTabs/CommentFilterToolPanel"
 import IconFilterToolPanel from "./FilterTabs/IconFilterToolPanel"
 import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
+import { ViewContext } from "../../Context/ViewContext"
+import { comparisonReviewColumnDefs } from "./ColumnDefs/ReviewColumnDefs"
+import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -47,12 +50,16 @@ interface Props {
 function TagComparisonTable({ tags }: Props) {
     const styles = useStyles()
     const gridRef = useRef<AgGridReact>(null)
+    const {
+        setSideSheetOpen,
+        sheetWidth,
+        setCurrentProperty,
+        activeTagData,
+        setActiveTagData,
+    } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
-    const [sideSheetIsOpen, setSideSheetIsOpen] = useState<boolean>(false)
-    const [sheetWidth, setSheetWidth] = useState(0)
-    const [activeTagData, setActiveTagData] = useState<ActiveTagData | undefined>(undefined)
-    const [currentProperty, setCurrentProperty] = useState<any>(undefined)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
+    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagDataReviewDto[]>()
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
     const defaultColDef = useMemo<ColDef>(
@@ -66,14 +73,44 @@ function TagComparisonTable({ tags }: Props) {
         [],
     )
 
-    const newColumns = [...comparisonTagsColumnDefs(),
+    useEffect(() => {
+        (async () => {
+            try {
+                const result = await (await GetTagDataReviewService()).getTagDataReviews()
+                setTagReviews(result.data)
+            } catch (error) {
+                console.error(`Couldn't get tag reviews: ${error}`)
+            }
+        })()
+    }, [])
+
+    const getReviewerNamesFromReviews = (tag: InstrumentTagData) => {
+        const reviewers: string[] = []
+        tagReviews?.forEach((tagReview: Components.Schemas.TagDataReviewDto) => {
+            if (tag.tagNo !== tagReview.tagNo) { return }
+            tagReview?.reviewer?.forEach((tR: Components.Schemas.ReviewerDto) => {
+                if (tR.displayName) {
+                    reviewers.push(tR?.displayName)
+                }
+            })
+        })
+        return reviewers.toString()
+    }
+
+    const newColumns = [...comparisonReviewColumnDefs(),
+        ...comparisonTagsColumnDefs(),
         ...comparisonTR3111ColumnDefs(),
         ...comparisonGeneralColumnDefs(),
         ...comparisonEquipmentConditionsColumnDefs(),
         ...comparisonOperatingConditionsColumnDefs(),
     ]
 
-    const tagRows = tags.map((tag) => ({ ...tag.instrumentPurchaserRequirement, ...tag, tagNumber: tag.tagNo }))
+    const tagRows = tags.map((tag) => ({
+        ...tag.instrumentPurchaserRequirement,
+        ...tag,
+        tagNumber: tag.tagNo,
+        displayName: getReviewerNamesFromReviews(tag),
+    }))
 
     const columnSideBar = useMemo<
         SideBarDef | string | string[] | boolean | null
@@ -142,22 +179,27 @@ function TagComparisonTable({ tags }: Props) {
     }
 
     const closeSideSheet = () => {
-        setSideSheetIsOpen(false)
+        setSideSheetOpen(false)
         setActiveTagData(undefined)
-        setCurrentProperty(undefined)
-        setSheetWidth(0)
     }
 
     const handleCellClicked = (event: any) => {
-        setShowTagSideSheet(event.colDef.field === "tagNo")
-        setCurrentProperty(event.colDef.field === "tagNo" ? undefined : { description: event.data.description })
+        const shouldOpenTaggSideSheet = event.colDef.field === "tagNo"
+        if (shouldOpenTaggSideSheet) {
+            setShowTagSideSheet(true)
+            setCurrentProperty("")
+        } else {
+            setShowTagSideSheet(false)
+            setCurrentProperty(event.data.description)
+        }
         setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
     }
 
+    // Opens side sheet when tag is clicked
     useEffect(() => {
         if (activeTagData !== undefined) {
-            setSideSheetIsOpen(true)
-            if (sheetWidth === 0) setSheetWidth(620)
+            setSideSheetOpen(true)
+            console.log("opening sidesheet for this tag: ", activeTagData)
         }
     }, [activeTagData])
 
@@ -166,22 +208,12 @@ function TagComparisonTable({ tags }: Props) {
             {showTagSideSheet ? (
                 <TagSideSheet
                     key={activeTagData?.tagNo}
-                    isOpen={sideSheetIsOpen}
                     onClose={closeSideSheet}
-                    width={sheetWidth}
-                    setWidth={setSheetWidth}
-                    activeTagData={activeTagData}
-                    currentProperty={currentProperty}
                 />
             ) : (
                 <TagPropertySideSheet
                     key={activeTagData?.tagNo}
-                    isOpen={sideSheetIsOpen}
                     onClose={closeSideSheet}
-                    width={sheetWidth}
-                    setWidth={setSheetWidth}
-                    activeTagData={activeTagData}
-                    currentProperty={currentProperty}
                 />
             )}
             <ResizableTableContainer sheetWidth={sheetWidth}>

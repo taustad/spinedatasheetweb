@@ -37,6 +37,7 @@ const ActivitySideSheet: FC = () => {
         3: <OperatingConditions />,
     }
 
+    // Save active tab to local storage and reset scroll position to top when tab is changed
     useEffect(() => {
         const storedTab = parseInt(localStorage.getItem("ActiveActivityTab") || "0", 10)
         if (activeTab !== storedTab) {

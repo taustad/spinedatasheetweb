@@ -3,6 +3,7 @@ import { AgChartsReact } from "ag-charts-react"
 import { AgChartOptions } from "ag-charts-community"
 
 function getData() {
+    // TODO: Get data from API
     return [
         {
             name: "Covered",

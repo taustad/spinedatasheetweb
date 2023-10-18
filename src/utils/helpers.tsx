@@ -1,4 +1,4 @@
-
+import DOMPurify from "dompurify"
 /**
  * Formats a date string into a user-friendly format.
  * - If the date is within the current day, it returns "Today" with the time.
@@ -66,17 +66,18 @@ export function getPropertyName<T>(property: keyof T): keyof T {
  * @returns {string} processedString - The processed string.
  * @returns {number[]} mentions - An array of mention IDs.
  */
-export function processMessageInput(input: string): { processedString: string, mentions: number[] } {
-    const regex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
+export function processMessageInput(input: string): { processedString: string, mentions: string[] } {
+    const mentions: string[] = []
+    const mentionRegex = /<span data-mention="(\w+-\w+-\w+-\w+-\w+)" contenteditable="false">([^<]+)<\/span>/g
 
-    let match
-    const mentions: number[] = []
-
-    let processedString = input.replace(regex, (fullMatch, mentionId, content) => {
-        mentions.push(Number(mentionId))
+    let processedString = input.replace(mentionRegex, (fullMatch, mentionId, content) => {
+        mentions.push(mentionId)
         return `{{${content}}} `
     })
 
+    const nonMentionRegex = /<span(?: [^>]*)?>([^<]+)<\/span>/g
+
+    processedString = processedString.replace(nonMentionRegex, (fullMatch, content) => `{{${content}}} `)
     processedString = processedString.replace(/&nbsp;/g, " ")
 
     return {
@@ -97,6 +98,17 @@ export function unescapeHtmlEntities(str: string): string {
     return doc.documentElement.textContent || ""
 }
 
+/**
+ * The function will identify any text located between double curly braces and wrap
+ * it with a <span> HTML element, with the `contenteditable` attribute set to `false`.
+ * This makes the enclosed content appear visually distinct and uneditable in content-editable areas.
+ *
+ * input: 'Hello {{World}}'
+ * output: 'Hello <span contenteditable="false">World</span>'
+ *
+ * @param {string} inputString - The input string possibly containing content within {{}} to be wrapped in <span> elements.
+ * @returns {string} - The processed string with content within {{}} wrapped in non-editable <span> elements.
+ */
 export function wrapInSpan(inputString: string): string {
     const parts = inputString.split(/{{(.*?)}}/)
 
@@ -110,4 +122,31 @@ export function wrapInSpan(inputString: string): string {
         return part
     })
     return partsWithSpan.join("")
+}
+
+/**
+ * Sanitizes the text content using DOMPurify.
+ * Removes all HTML elements that are not <span>.
+ *
+ * @param {string} content - The text content to sanitize.
+ * @returns {string} The sanitized text content.
+ */
+export const sanitizeContent = (content: string): string => {
+    const config = { ALLOWED_TAGS: ["span"] }
+    const sanitizedContent = DOMPurify.sanitize(content, config)
+
+    return sanitizedContent
+}
+
+/**
+ * Format a camelCase string by adding a space before each uppercase letter and capitalizing the first letter of the string.
+ *
+ * @function
+ * @param {string} property - The string to be formatted.
+ * @returns {string} - The formatted string.
+ */
+export function formatCamelCase(property: string) {
+    return property
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (str) => str.toUpperCase())
 }

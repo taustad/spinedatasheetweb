@@ -19,6 +19,7 @@ const Media: FC = () => {
     const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveMediaTab") || "0", 10))
     const Navigationbuttons = ["Drawings", "Pictures", "Videos"]
 
+    // Save active tab to local storage and reset scroll position to top when tab is changed
     useEffect(() => {
         const storedTab = parseInt(localStorage.getItem("ActiveMediaTab") || "0", 10)
         if (activeTab !== storedTab) {

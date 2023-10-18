@@ -11,6 +11,8 @@ import TabsTitle from "../Components/TabsTitle"
 import ConversationCard from "./Components/ConversationCard"
 import { ViewContext } from "../../../Context/ViewContext"
 import { GetConversationService } from "../../../api/ConversationService"
+import { Message } from "../../../Models/Message"
+import { User } from "../../../Models/User"
 
 const Overview = styled.div`
     padding: 15px;
@@ -36,27 +38,24 @@ const ButtonRow = styled.div`
 
 const TopButton = styled(Button)`
     margin-left: 5px;
-    `
-
-type Props = {
-    currentProperty?: string;
-};
+`
 
 interface DisplayConversation {
-    title: string,
+    property: string,
     value: string,
     status: Components.Schemas.ConversationStatusDto,
     conversationId: string
+    messages: Message[]
+    participants: User[]
 }
 
-const CommentSideSheet: FC<Props> = ({
-    currentProperty,
-}) => {
+const CommentSideSheet: FC = () => {
     const {
         setConversations,
         activeTagData,
         conversations,
         setSideSheetScrollPos,
+        currentProperty,
         } = useContext(ViewContext)
     const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveCommentTab") || "0", 10))
     const [conversationsData, setConversationsData] = useState<{[key in Components.Schemas.ConversationStatusDto] : DisplayConversation[]}>()
@@ -67,6 +66,8 @@ const CommentSideSheet: FC<Props> = ({
         "Closed",
         "Implemented",
     ]
+
+    // Save active tab to local storage and reset scroll position to top when tab is changed
     useEffect(() => {
         const storedTab = parseInt(localStorage.getItem("ActiveCommentTab") || "0", 10)
         if (activeTab !== storedTab) {
@@ -107,10 +108,12 @@ const CommentSideSheet: FC<Props> = ({
             if (!conversation.property) { return }
             const value = getPropertyValue(conversation.property, activeTagData)
             const newConversation: DisplayConversation = {
-                title: conversation.property,
+                property: conversation.property,
                 value: value ?? "",
                 status: conversation.conversationStatus ?? "Open",
                 conversationId: conversation.id ?? "",
+                messages: conversation.messages ?? [],
+                participants: conversation.participants ?? [],
             }
             newConversations[conversation.conversationStatus ?? "Open"].push(newConversation)
         })
@@ -133,10 +136,12 @@ const CommentSideSheet: FC<Props> = ({
         }
     }
 
+    // Build conversations when conversations are updated
     useEffect(() => {
         buildConversations()
     }, [conversations])
 
+    // Get conversations for active tag
     useEffect(() => {
         (async () => {
             try {
@@ -146,6 +151,7 @@ const CommentSideSheet: FC<Props> = ({
                     activeTagData.tagNo,
                     true,
                     )
+                    console.log("newConversations: ", newConversations)
                 setConversations(newConversations)
             } catch (error) {
                 console.error("Error getting messages for conversation: ", error)
@@ -186,11 +192,8 @@ const CommentSideSheet: FC<Props> = ({
                     </Overview>
                     {mapTabToConversations(activeTab)?.map((conversation: DisplayConversation) => (
                         <ConversationCard
-                            key={conversation.title} // Add a key prop for each rendered element
-                            property={conversation.title}
-                            value={conversation.value}
-                            conversationId={conversation.conversationId}
-                            conversationStatus={conversation.status}
+                            key={conversation.property + conversation.conversationId}
+                            conversation={conversation}
                         />
                     ))}
                 </>

@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { IToolPanel } from "@ag-grid-community/core"
 import { Divider, Icon, Accordion } from "@equinor/eds-core-react"
 import { comment_discussion } from "@equinor/eds-icons"
+import { PersonPhoto } from "@equinor/fusion-components"
 import CheckboxWithCount from "./Components/CheckboxWithCount"
 
 const Container = styled.div`
@@ -28,6 +29,18 @@ const CustomAccordion = styled(Accordion)`
     & button > svg {
         margin-right: 5px;
     }
+`
+
+const PeopleContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-right: 5px;
+`
+
+const PhotoContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
 `
 
 const initialCommentCategories = [
@@ -59,33 +72,45 @@ const initialCommentCategories = [
 ]
 
 const initialPeople = [
+    // IAF Hall Of Fame
     {
-        name: "Ole Johansen",
+        name: "Ahmed Abdi",
         id: "1",
+        userId: "7608e4e8-ff71-41e8-a67b-6667b7ceb886",
         count: 3,
         checked: false,
     },
     {
-        name: "Kari Olsen",
+        name: "Eirik Sander-Fjeld",
         id: "2",
-        count: 9,
+        userId: "e4286c0c-b070-4e21-b183-54dfe20ef83d",
+        count: 1,
         checked: false,
     },
     {
-        name: "Andreas Nilsen",
+        name: "Fredrik Leknes",
         id: "3",
-        count: 9,
+        userId: "1b0de22c-9e08-4191-ad4e-4aca14d53a40",
+        count: 3,
         checked: false,
     },
     {
-        name: "Marte Kristiansen",
+        name: "Arian Garshi",
         id: "4",
-        count: 12,
+        userId: "f92a60c8-7a45-40fa-be48-1deb2cf9302a",
+        count: 3,
+        checked: false,
+    },
+    {
+        name: "Manikandan Sellasamy",
+        id: "5",
+        userId: "4186ad9d-932c-43f3-8ae8-a6a20bea1a2d",
+        count: 7,
         checked: false,
     },
 ]
 
-function CommentFilterToolPanel({}: IToolPanel) {
+function CommentFilterToolPanel({ }: IToolPanel) {
     const [commentCategories, setCommentCategories] = useState(initialCommentCategories)
     const [newComments, setNewComments] = useState(false)
     const [people, setPeople] = useState(initialPeople) // New State Variable
@@ -101,7 +126,7 @@ function CommentFilterToolPanel({}: IToolPanel) {
         setCommentCategories((prevCategories) => prevCategories.map((category) => ({ ...category, checked: !areAllChecked })))
     }
 
-     const togglePersonCheckbox = (id: string) => { // New Function
+    const togglePersonCheckbox = (id: string) => { // New Function
         setPeople((prevPeople) => (prevPeople.map((person) => (person.id === id ? { ...person, checked: !person.checked } : person))))
     }
 
@@ -154,13 +179,18 @@ function CommentFilterToolPanel({}: IToolPanel) {
                         />
                         <InlineDivider />
                         {people.map((person) => (
-                            <CheckboxWithCount
-                                key={person.id}
-                                count={person.count}
-                                label={person.name}
-                                checked={person.checked}
-                                onChange={() => togglePersonCheckbox(person.id)}
-                            />
+                            <PeopleContainer>
+                                <CheckboxWithCount
+                                    key={person.id}
+                                    count={person.count}
+                                    label={person.name}
+                                    checked={person.checked}
+                                    onChange={() => togglePersonCheckbox(person.id)}
+                                />
+                                {person.userId && (
+                                    <PhotoContainer><PersonPhoto personId={person.userId} size="small" /></PhotoContainer>
+                                )}
+                            </PeopleContainer>
                         ))}
                     </Accordion.Panel>
                 </Accordion.Item>

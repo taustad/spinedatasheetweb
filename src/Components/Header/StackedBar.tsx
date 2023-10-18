@@ -41,8 +41,8 @@ const StackedBarContainer = styled.div`
 const StackedBar: React.FC<StackedBarProps> = ({ data }) => {
     const [totalPercentage, setTotalPercentage] = useState<number>(0)
 
+    // find percentage of all data items except the one with the title Not reviewed
     useEffect(() => {
-        // find percentage of all data items except the one with the title Not reviewed
         setTotalPercentage(
             data
                 .filter((item) => item.title !== "Not reviewed")

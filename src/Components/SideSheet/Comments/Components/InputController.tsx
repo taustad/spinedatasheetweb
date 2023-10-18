@@ -14,6 +14,7 @@ import { Message } from "../../../../Models/Message"
 import { GetConversationService } from "../../../../api/ConversationService"
 import { Conversation } from "../../../../Models/Conversation"
 import { GetMessageService } from "../../../../api/MessageService"
+import { processMessageInput } from "../../../../utils/helpers"
 
 const Controls = styled.div`
     padding: 30px 15px 10px 15px;
@@ -60,9 +61,10 @@ const updateComment = async (
     setActiveConversation: Dispatch<SetStateAction<Conversation | undefined>>,
 ) => {
     if (newCommentText && message.id) {
+        const { processedString, mentions } = processMessageInput(newCommentText)
         try {
             const newMessage: Components.Schemas.MessageDto = {
-                text: newCommentText,
+                text: processedString,
             }
             const commentService = await GetMessageService()
             const updatedComment = await commentService.updateMessage(activeConversationId, message.id, newMessage)

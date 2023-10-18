@@ -55,6 +55,7 @@ function JIP33ElectricalTabView({}) {
 
     const { tagId } = useParams<Record<string, string | undefined>>()
 
+    // Get all tag data
     useEffect(() => {
         (async () => {
             setError(false)

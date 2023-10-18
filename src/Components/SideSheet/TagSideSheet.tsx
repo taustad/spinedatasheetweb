@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useContext } from "react"
 import styled from "styled-components"
 import { Typography } from "@equinor/eds-core-react"
 import SheetContainer from "./Components/SheetContainer"
@@ -7,6 +7,7 @@ import AreaSideSheet from "./Area/AreaSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
 import EquipmentSideSheet from "./Equipment/EquipmentSideSheet"
 import ActivitySideSheet from "./Activity/ActivitySideSheet"
+import { ViewContext } from "../../Context/ViewContext"
 
 const Placeholder = styled.div`
   height: 100%;
@@ -14,22 +15,14 @@ const Placeholder = styled.div`
 `
 
 type Props = {
-  isOpen: boolean;
   onClose: () => void;
-  currentProperty: any;
-  width: number;
-  setWidth: (width: number) => void;
-  activeTagData: any;
 };
 
 const TagSideSheet: React.FC<Props> = ({
-  activeTagData,
   onClose,
-  isOpen,
-  currentProperty,
-  width,
-  setWidth,
 }) => {
+  const { activeTagData } = useContext(ViewContext)
+
   const placeholder = (
       <Placeholder>
           <Typography variant="body_short">Work in progress...</Typography>
@@ -39,12 +32,7 @@ const TagSideSheet: React.FC<Props> = ({
   return (
       <SheetContainer
           key={activeTagData?.tagNo}
-          isOpen={isOpen}
           onClose={onClose}
-          width={width}
-          setWidth={setWidth}
-          activeTagData={activeTagData}
-          currentProperty={currentProperty}
           tabs={[
                   { title: "Activity", content: <ActivitySideSheet /> },
                   { title: "Equipment", content: <EquipmentSideSheet /> },
@@ -52,7 +40,7 @@ const TagSideSheet: React.FC<Props> = ({
                   { title: "Connections", content: placeholder },
                   {
                       title: "Comments",
-                      content: <CommentsSideSheet currentProperty={currentProperty} />,
+                      content: <CommentsSideSheet />,
                   },
                   { title: "Changelog", content: <ChangeLogSideSheet /> },
               ]}

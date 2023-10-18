@@ -30,6 +30,7 @@ function TagComparisonView({}) {
 
     const [tags, setTags] = useState<InstrumentTagData[]>([])
 
+    // Get all tag data
     useEffect(() => {
         (async () => {
             setError(false)

@@ -17,6 +17,7 @@ const EquipmentSideSheet: FC = () => {
     const { setSideSheetScrollPos } = useContext(ViewContext)
     const [activeTab, setActiveTab] = useState(() => parseInt(localStorage.getItem("ActiveEquipmentTab") || "0", 10))
 
+    // Save active tab to local storage and reset scroll position to top when tab is changed
     useEffect(() => {
         const storedTab = parseInt(localStorage.getItem("ActiveEquipmentTab") || "0", 10)
         if (activeTab !== storedTab) {

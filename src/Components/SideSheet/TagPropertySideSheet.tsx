@@ -1,9 +1,10 @@
-import React from "react"
+import React, { useContext, useEffect } from "react"
 import styled from "styled-components"
 import { Typography } from "@equinor/eds-core-react"
 import SheetContainer from "./Components/SheetContainer"
 import CommentsSideSheet from "./Comments/CommentSideSheet"
 import ChangeLogSideSheet from "./ChangeLog/ChangeLogSideSheet"
+import { ViewContext } from "../../Context/ViewContext"
 
 const Placeholder = styled.div`
     height: 100%;
@@ -11,44 +12,37 @@ const Placeholder = styled.div`
     `
 
 type props = {
-    isOpen: boolean
     onClose: () => void
-    currentProperty: any
-    width: number
-    setWidth: (width: number) => void
-    activeTagData: any
 }
 
 const TagSideSheet: React.FC<props> = ({
-    activeTagData,
     onClose,
-    isOpen,
-    currentProperty,
-    width,
-    setWidth,
+
 }) => {
+    const { activeTagData, activeSheetTab, setActiveSheetTab } = useContext(ViewContext)
     const placeholder = (
         <Placeholder>
             <Typography variant="body_short">Work in progress...</Typography>
         </Placeholder>
     )
+
+    // if user immediately goes from tagSideSheet to tagPropertySideSheet, the activeTab may be > 2. this resets it to 0 to avoid empty content
+    useEffect(() => {
+        if (activeSheetTab > 2) {
+            setActiveSheetTab(0)
+        }
+    }, [])
+
     return (
-        currentProperty ? (
-            <SheetContainer
-                key={activeTagData?.tagNo}
-                isOpen={isOpen}
-                onClose={onClose}
-                width={width}
-                setWidth={setWidth}
-                activeTagData={activeTagData}
-                currentProperty={currentProperty}
-                tabs={[
+        <SheetContainer
+            key={activeTagData?.tagNo}
+            onClose={onClose}
+            tabs={[
                 { title: "Requirements", content: placeholder },
-                { title: "Comments", content: <CommentsSideSheet currentProperty={currentProperty} /> },
+                { title: "Comments", content: <CommentsSideSheet /> },
                 { title: "Changelog", content: <ChangeLogSideSheet /> },
             ]}
-            />
-        ) : null
+        />
     )
 }
 

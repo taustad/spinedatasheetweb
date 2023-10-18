@@ -18,12 +18,60 @@ const ButtonRow = styled.div`
 `
 
 const Specifications: FC = () => {
-    const dummyData = {
-        "Implementation status 1": "Not implemented",
-        "Implementation status 2": "Not implemented",
-        "Implementation status 3": "Not implemented",
-        "Implementation status 4": "Not implemented",
-        "Implementation status 5": "Not implemented",
+    const dummyDataTag001General = {
+        "Code requirement": "0",
+        "Conformity assessment system (CAS) level": "0",
+        "Tag number": "TAG-001",
+        "Service description": "",
+        "Manufacturer": "",
+        "Model number": "",
+        "Equipment manufacturer serial number": "",
+        "Project country": "NO",
+        "Project region": "Norwegian Continental Shelf",
+        "Plant environmental location": "offshore",
+        "P&ID number": "C-156-KR-P-XB-62010-01",
+        "Line or equipment number": "L-62L00003A-0300OF-AD120",
+        "Minimum ambient temperature": "25 °C",
+        "Maximum ambient temperature": "-8 °C",
+        "Base conditions": "normal",
+        "Base temperature": "20 °C",
+        "Base pressure": "1 barg",
+        "Coating durability": "high",
+        "Pressure retaining bolt material": "",
+        "Pressure retaining nut material": "",
+        "SIL rating": "not applicable",
+        "Ingress protection": "IP44",
+        "EX protection": "Exia",
+        "Hazardous area classification standard": "IEC 60079",
+        "Explorsion hazard classification": "Zone 2",
+        "Explosion group": "IIC",
+        "Temperature class": "T3",
+        "Tag status": "",
+        "Discipline": "Instrument",
+        "Contract": "",
+        "Contract name": "Contract 1",
+        "Engineering code": "",
+        "Area": "Area 1",
+        "Purchase order": "",
+        "Pipe class sheet": "",
+        "Set/alarm point": "",
+        "Type": "",
+        "Operating Temp Limits": "",
+        "Operating Press. Limit": "",
+        "Press. loss at full range": "",
+        "Mounting": "",
+        "Weight": "",
+        "Other": "",
+    }
+
+    const dummyDataTag001InstrumentCharacteristics = {
+        "Calibrated range": "",
+        "Characteristics": "",
+        "Accuracy": "+/- 1",
+        "Linearity": "",
+        "Repeatability": "",
+        "Min/Max range limits": "",
+        "Other": "NA",
     }
 
     return (
@@ -49,19 +97,10 @@ const Specifications: FC = () => {
                 </ButtonRow>
             </Header>
             <Card>
-                <Table title="PRODUCT INFORMATION" data={dummyData} />
+                <Table title="GENERAL" data={dummyDataTag001General} />
             </Card>
             <Card>
-                <Table title="PERFORMANCE" data={dummyData} />
-            </Card>
-            <Card>
-                <Table title="BODY/ELEMENT/SENSOR" data={dummyData} />
-            </Card>
-            <Card>
-                <Table title="TRANSMITTER" data={dummyData} />
-            </Card>
-            <Card>
-                <Table title="ACCESSORIES" data={dummyData} />
+                <Table title="INSTRUMENT CHARACTERISTICS" data={dummyDataTag001InstrumentCharacteristics} />
             </Card>
         </div>
     )

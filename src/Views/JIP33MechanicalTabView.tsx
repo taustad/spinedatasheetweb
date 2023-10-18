@@ -49,6 +49,7 @@ function JIP33MechanicalTabView({}) {
 
     const { tagId } = useParams<Record<string, string | undefined>>()
 
+    // Get all tag data
     useEffect(() => {
         (async () => {
             setError(false)

@@ -2,7 +2,7 @@ import React, {
  useRef, useState, useEffect, MutableRefObject,
 } from "react"
 import styled from "styled-components"
-import { wrapInSpan } from "../../../../utils/helpers"
+import { sanitizeContent } from "../../../../utils/helpers"
 
 const StyledDiv = styled.div`
   background-color: #F7F7F7;
@@ -58,6 +58,7 @@ const InputField: React.FC<Props> = ({
   const pRef = useRef<HTMLParagraphElement>(null)
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(true)
 
+  // sets the text in the p element when manual re-render is triggered (needed when user inserts a tagged user from dropdown)
   useEffect(() => {
       if (pRef.current) {
         if (!newMessage?.text) {
@@ -67,6 +68,7 @@ const InputField: React.FC<Props> = ({
       }
   }, [reRenderCounter])
 
+  // sets the placeholder text in the p element when the placeholder state changes to true
   useEffect(() => {
       if (pRef.current && isPlaceholderShown) {
         pRef.current.innerHTML = placeholder
@@ -86,8 +88,8 @@ const InputField: React.FC<Props> = ({
     } else {
       setSearchTerm("")
     }
-
-    const comment = { ...newMessage, text: commentText }
+    console.log("text sanitized")
+    const comment = { ...newMessage, text: sanitizeContent(commentText) }
     setNewMessage(comment)
   }
 
@@ -125,6 +127,28 @@ const handleInput = () => {
     }
 }
 
+const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault()
+    const text = e.clipboardData.getData("text/plain")
+
+    const selection = window.getSelection()
+    if (!selection) return
+
+    const range = selection.getRangeAt(0)
+    const textNode = document.createTextNode(text)
+
+    range.deleteContents()
+    range.insertNode(textNode)
+
+    selection.removeAllRanges()
+    range.setStartAfter(textNode)
+    range.setEndAfter(textNode)
+    selection.addRange(range)
+}
+
+const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+}
   return (
       <>
           <StyledDiv onClick={handleFocus}>
@@ -132,6 +156,8 @@ const handleInput = () => {
                   ref={pRef}
                   onBlur={handleBlur}
                   onInput={handleInput}
+                  onPaste={handlePaste}
+                  onDragOver={handleDragOver}
                   isPlaceholder={isPlaceholderShown}
               />
           </StyledDiv>
