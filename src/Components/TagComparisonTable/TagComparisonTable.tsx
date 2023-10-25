@@ -195,6 +195,22 @@ function TagComparisonTable({ tags }: Props) {
         setActiveTagData({ description: event.data.description, tagNo: event.data.tagNo })
     }
 
+    const hideColumnsWithNoData = useCallback((params: any) => {
+        const comparisonColumns = params.columnApi?.getColumns()
+        const renderedRowNodes = params.api?.getRenderedNodes()
+        comparisonColumns?.forEach((column: any) => {
+          const columnHasNoData = !renderedRowNodes?.some((rowNode: any) => {
+            const nodeValue = params.api?.getValue(column, rowNode)
+            return typeof nodeValue !== "undefined" && nodeValue !== null && nodeValue !== ""
+          })
+          params.columnApi.setColumnVisible(column, !columnHasNoData)
+        })
+    }, [])
+
+    const onGridReady = (params: any) => {
+        hideColumnsWithNoData(params)
+    }
+
     // Opens side sheet when tag is clicked
     useEffect(() => {
         if (activeTagData !== undefined) {
@@ -254,6 +270,7 @@ function TagComparisonTable({ tags }: Props) {
                             enableRangeSelection
                             sideBar={toggleSideBar()}
                             onCellClicked={handleCellClicked}
+                            onGridReady={onGridReady}
                         />
                     </TableContainer>
                 </div>
