@@ -27,8 +27,8 @@ const TableContainer = styled.div`
     width: 100%; 
     height: calc(100vh - 325px);
 `
-const ResizableTableContainer = styled.div<{ sheetWidth: number }>`
-    width: calc(100% - ${(props) => props.sheetWidth}px);
+const ResizableTableContainer = styled.div<{ $sheetWidth: number }>`
+    width: calc(100% - ${(props) => props.$sheetWidth}px);
 `
 const FilterBar = styled.div`
     display: flex;
@@ -232,7 +232,7 @@ function TagComparisonTable({ tags }: Props) {
                     onClose={closeSideSheet}
                 />
             )}
-            <ResizableTableContainer sheetWidth={sheetWidth}>
+            <ResizableTableContainer $sheetWidth={sheetWidth}>
                 <FilterBar>
                     <TextInput
                         icon="search"
