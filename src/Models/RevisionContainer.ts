@@ -3,7 +3,7 @@ import { RevisionContainerReview } from "./RevisionContainerReview"
 import { TagData } from "./TagData"
 import { TagDataReview } from "./TagDataReview"
 
-export class RevisionContainer implements Components.Schemas.RevisionContainerDto {
+export class RevisionContainer { // implements Components.Schemas.RevisionContainerDto {
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time

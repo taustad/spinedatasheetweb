@@ -16,8 +16,8 @@ const Wrapper = styled.div`
 interface Props {
     tagData: TagData[]
     userId: string
-    myTags: Components.Schemas.TagDataReviewDto[]
-    setMyTags: Dispatch<SetStateAction<Components.Schemas.TagDataReviewDto[]>>,
+    myTags: any[]
+    setMyTags: Dispatch<SetStateAction<any[]>>,
 }
 
 function SendForReview({
@@ -30,7 +30,7 @@ function SendForReview({
         const newReviewer: Components.Schemas.CreateReviewerDto = {
             reviewerId: userId,
         }
-        const newReview: Components.Schemas.CreateTagDataReviewDto = {
+        const newReview: any = {
             tagNo: tagno,
             status: "New",
             reviewers: [newReviewer],

@@ -59,7 +59,7 @@ function TagComparisonTable({ tags }: Props) {
     } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
-    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagDataReviewDto[]>()
+    const [tagReviews, setTagReviews] = useState<any[]>()
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
     const defaultColDef = useMemo<ColDef>(
@@ -86,9 +86,9 @@ function TagComparisonTable({ tags }: Props) {
 
     const getReviewerNamesFromReviews = (tag: InstrumentTagData) => {
         const reviewers: string[] = []
-        tagReviews?.forEach((tagReview: Components.Schemas.TagDataReviewDto) => {
+        tagReviews?.forEach((tagReview: any) => {
             if (tag.tagNo !== tagReview.tagNo) { return }
-            tagReview?.reviewer?.forEach((tR: Components.Schemas.ReviewerDto) => {
+            tagReview?.reviewer?.forEach((tR: Components.Schemas.TagReviewerDto) => {
                 if (tR.displayName) {
                     reviewers.push(tR?.displayName)
                 }

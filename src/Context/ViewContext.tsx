@@ -40,8 +40,8 @@ interface ViewContextProps {
     setErrors: React.Dispatch<React.SetStateAction<ErrorType>>;
     SideSheetScrollPos : number;
     setSideSheetScrollPos : React.Dispatch<React.SetStateAction<number>>;
-    myReviews: Components.Schemas.TagDataReviewDto[]
-    setMyReviews: Dispatch<SetStateAction<Components.Schemas.TagDataReviewDto[]>>
+    containerReviews: Components.Schemas.ContainerReviewDto[]
+    setContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewDto[]>>
     currentUserId: string
     setCurrentUserId: Dispatch<SetStateAction<string>>
 }
@@ -65,8 +65,8 @@ export const ViewContext = createContext<ViewContextProps>({
     setErrors: () => { },
     SideSheetScrollPos: 0,
     setSideSheetScrollPos: () => { },
-    myReviews: [],
-    setMyReviews: () => {},
+    containerReviews: [],
+    setContainerReviews: () => { },
     currentUserId: "",
     setCurrentUserId: () => "",
 })
@@ -85,7 +85,7 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [SideSheetScrollPos, setSideSheetScrollPos] = useState<number>(() => parseInt(localStorage.getItem("SideSheetScrollPos") || "0", 10))
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
-    const [myReviews, setMyReviews] = useState<Components.Schemas.TagDataReviewDto[]>([])
+    const [containerReviews, setContainerReviews] = useState<Components.Schemas.ContainerReviewDto[]>([])
     const [errors, setErrors] = useState<{}>({})
     const [currentUserId, setCurrentUserId] = useState<string>("")
 
@@ -129,8 +129,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
-            myReviews,
-            setMyReviews,
+            containerReviews,
+            setContainerReviews,
             currentUserId,
             setCurrentUserId,
             currentProperty,
@@ -153,8 +153,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
-            myReviews,
-            setMyReviews,
+            containerReviews,
+            setContainerReviews,
             currentUserId,
             setCurrentUserId,
             currentProperty,

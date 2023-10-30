@@ -52,7 +52,7 @@ function EquipmentListView() {
     const currentUser: any = useCurrentUser()
 
     const {
-        myReviews, setMyReviews, currentUserId, setCurrentUserId,
+        currentUserId, setCurrentUserId,
     } = useContext(ViewContext)
 
     useEffect(() => {

@@ -48,7 +48,7 @@ function EquipmentListTable({
     const styles = useStyles()
 
     const {
-        myReviews, currentUserId,
+        currentUserId,
     } = useContext(ViewContext)
 
     const defaultColDef = useMemo<ColDef>(
@@ -166,17 +166,19 @@ function EquipmentListTable({
     const reviewStatusRenderer = (params: ICellRendererParams) => {
         console.log("reviewStatusRenderer params: ", params)
 
-        const rowReview = myReviews.find((r) => r.tagNo === params.data.tagNo)
+        const rowReview = undefined // myReviews.find((r) => r.tagNo === params.data.tagNo)
 
         if (!rowReview) { return null }
 
-        console.log("currentUserId: ", currentUserId)
+        return null
 
-        const reviewerReview = rowReview.reviewer?.find((r) => r.reviewerId === currentUserId)
+        // console.log("currentUserId: ", currentUserId)
 
-        if (!reviewerReview) { return null }
+        // const reviewerReview = rowReview.reviewer?.find((r: any) => r.reviewerId === currentUserId)
 
-        return getReviewStatusIcon(reviewerReview.status)
+        // if (!reviewerReview) { return null }
+
+        // return getReviewStatusIcon(reviewerReview.status)
         }
 
     const columns = [

@@ -1,7 +1,7 @@
 import { Message } from "./Message"
 import { TagData } from "./TagData"
 
-export class TagDataReview implements Components.Schemas.TagDataReviewDto {
+export class TagDataReview { // implements Components.Schemas.TagDataReviewDto {
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time

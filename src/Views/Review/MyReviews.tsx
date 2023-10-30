@@ -18,8 +18,8 @@ const Wrapper = styled.div`
 interface Props {
     tagData: TagData[],
     userId: string,
-    myTags: Components.Schemas.TagDataReviewDto[]
-    setMyTags: Dispatch<SetStateAction<Components.Schemas.TagDataReviewDto[]>>,
+    myTags: any[]
+    setMyTags: Dispatch<SetStateAction<any[]>>,
 }
 
 function MyReviews({
@@ -49,7 +49,7 @@ function MyReviews({
         }
     }
 
-    const handleReviewStateChange = async (event: ChangeEvent<HTMLSelectElement>, review: Components.Schemas.TagDataReviewDto, index: number) => {
+    const handleReviewStateChange = async (event: ChangeEvent<HTMLSelectElement>, review: any, index: number) => {
         if (!review?.id) { return }
         const dto: Components.Schemas.UpdateReviewerDto = {
             reviewStatus: mapToEnum(event.currentTarget.selectedOptions[0].value),
@@ -57,15 +57,15 @@ function MyReviews({
         const result = await (await GetTagDataReviewService()).updateReviewer(review.id, userId, dto)
         const updatedReviews = [...myTags]
         const reviewToUpdated = updatedReviews.find((r) => r.id === review.id)
-        const reviewerToUpdate = reviewToUpdated?.reviewer?.find((r) => r.reviewerId === userId)
+        const reviewerToUpdate = reviewToUpdated?.reviewer?.find((r: any) => r.reviewerId === userId)
         if (reviewerToUpdate) {
             reviewerToUpdate.status = dto.reviewStatus
         }
         setMyTags(updatedReviews)
     }
 
-    const getCurrentValue = (review: Components.Schemas.TagDataReviewDto): string => {
-        const myReview = review.reviewer?.find((r) => r.reviewerId === userId)
+    const getCurrentValue = (review: any): string => {
+        const myReview = review.reviewer?.find((r: any) => r.reviewerId === userId)
         if (!myReview) { return "New" }
         return myReview.status
     }

@@ -62,8 +62,8 @@ function EquipmentListReview({
         setActiveTagData(tagData)
     }
 
-    const buildTagReview = (): Components.Schemas.CreateTagDataReviewDto => {
-        const newReview: Components.Schemas.CreateTagDataReviewDto = {
+    const buildTagReview = (): any => {
+        const newReview: any = {
             tagNo: tagNoInReview ?? "",
             status: "New",
         }

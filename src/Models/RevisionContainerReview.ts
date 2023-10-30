@@ -1,7 +1,7 @@
 import { Message } from "./Message"
 import { RevisionContainer } from "./RevisionContainer"
 
-export class RevisionContainerReview implements Components.Schemas.RevisionContainerReviewDto {
+export class RevisionContainerReview { // implements Components.Schemas.RevisionContainerReviewDto {
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time

@@ -29,7 +29,7 @@ class RevisionReviewService extends BaseService {
 
 export async function GetRevisionReviewService() {
     return new RevisionReviewService({
-        ...config.RevisionReviewService,
+        ...config.ContainerReviewService,
         accessToken: await GetToken(LoginAccessTokenKey)!,
     })
 }

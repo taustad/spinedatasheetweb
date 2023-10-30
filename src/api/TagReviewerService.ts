@@ -3,7 +3,7 @@ import { BaseService } from "./BaseService"
 
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
-class TagDataReviewService extends BaseService {
+class TagReviewerService extends BaseService {
     async getTagDataReview(id: string) {
         const result: any = await this.get(`project/${id}`)
         return result.value
@@ -43,8 +43,8 @@ class TagDataReviewService extends BaseService {
     }
 }
 
-export async function GetTagDataReviewService() {
-    return new TagDataReviewService({
+export async function GetTagReviewerService() {
+    return new TagReviewerService({
         ...config.TagReviewerService,
         accessToken: await GetToken(LoginAccessTokenKey)!,
     })
