@@ -8,7 +8,6 @@ import { GetTagDataService } from "../api/TagDataService"
 import EquipmentListTable from "../Components/EquipmentListView/EquipmentListTable"
 import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
-import Header from "../Components/Header/Header"
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
 import { ViewContext } from "../Context/ViewContext"
@@ -110,7 +109,7 @@ function EquipmentListView() {
         }
     }, [externalId])
 
-    // Redirect to project if no project is selected
+    /*
     useEffect(() => {
         if (
             currentProject?.currentContext !== null
@@ -120,6 +119,7 @@ function EquipmentListView() {
             navigate(`/${currentProject.currentContext.id}`)
         }
     }, [currentProject, projectId, navigate])
+    */
 
     if (!currentProject.currentContext) {
         return <Dialogue type="error" message="No project selected" />
@@ -139,7 +139,7 @@ function EquipmentListView() {
 
     return (
         <Wrapper>
-            <Header />
+
             <StyledTabs
                 activeTab={activeTab}
                 onChange={setActiveTab}

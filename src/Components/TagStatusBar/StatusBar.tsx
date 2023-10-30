@@ -1,6 +1,6 @@
 import React, { FC } from "react"
 import styled from "styled-components"
-import StackedBar from "./StackedBar"
+import StackedBar from "./Components/StackedBar"
 import ReviewButton from "../Buttons/ReviewButton"
 
 const WrapperColumn = styled.div`

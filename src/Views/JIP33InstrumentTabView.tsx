@@ -32,7 +32,6 @@ import { transmitterRowData } from "../Components/NORSOKTable/RowData/Transmitte
 import Dialogue from "../Components/Dialogue"
 import TagSideSheet from "../Components/SideSheet/TagSideSheet"
 import { ViewContext } from "../Context/ViewContext"
-import { Conversation } from "../Models/Conversation"
 import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
 
 const TopBar = styled.div`
@@ -55,9 +54,9 @@ const TableView = styled.div``
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
 
-const StyledTabPanel = styled(Panel).attrs<{ sheetWidth: number }>((props) => ({
+const StyledTabPanel = styled(Panel).attrs<{ $sheetWidth: number }>((props) => ({
     style: {
-        width: `calc(100vw - ${props.sheetWidth}px)`,
+        width: `calc(100vw - ${props.$sheetWidth}px)`,
     },
 }))`
     padding: 0px;
@@ -220,13 +219,13 @@ function JIP33InstrumentTabView({ }) {
                     </List>
                     <Content>
                         <Panels>
-                            <StyledTabPanel sheetWidth={sheetWidth}>
+                            <StyledTabPanel $sheetWidth={sheetWidth}>
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListNORSOK}
                                     rowDataList={rowDataListNORSOK}
                                 />
                             </StyledTabPanel>
-                            <StyledTabPanel sheetWidth={sheetWidth}>
+                            <StyledTabPanel $sheetWidth={sheetWidth}>
                                 <JIP33WithSideMenu
                                     sideMenuList={sideMenuListJIP33}
                                     rowDataList={rowDataListJIP33}
