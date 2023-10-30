@@ -1,5 +1,32 @@
 declare namespace Components {
     namespace Schemas {
+        export interface ContainerDto {
+            id?: string; // uuid
+            createdDate?: string; // date-time
+            modifiedDate?: string; // date-time
+            revisionContainerName?: string | null;
+            revisionNumber?: number; // int32
+            revisionContainerDate?: string; // date-time
+            tagData?: ITagDataDto[] | null;
+            contractId?: string; // uuid
+            contract?: ContractDto;
+        }
+        export interface ContainerReviewDto {
+            id?: string; // uuid
+            state?: ContainerReviewStateEnumDto;
+            commentResponsible?: string; // uuid
+            containerId?: string; // uuid
+            containerReviewers?: ContainerReviewerDto[] | null;
+        }
+        export type ContainerReviewStateEnumDto = "Active" | "SentToContractor";
+        export interface ContainerReviewerDto {
+            id?: string; // uuid
+            state?: ContainerReviewerStateEnumDto;
+            userId?: string; // uuid
+            containerReviewId?: string; // uuid
+            tagReviewers?: TagReviewerDto[] | null;
+        }
+        export type ContainerReviewerStateEnumDto = "Complete" | "Abandoned";
         export interface ContractDto {
             id?: string; // uuid
             createdDate?: string; // date-time
@@ -7,7 +34,7 @@ declare namespace Components {
             contractName?: string | null;
             contractorId?: string; // uuid
             projectId?: string; // uuid
-            revisionContainers?: RevisionContainerDto[] | null;
+            revisionContainers?: ContainerDto[] | null;
         }
         export interface ConversationDto {
             text: string;
@@ -23,11 +50,6 @@ declare namespace Components {
         }
         export interface CreateReviewerDto {
             reviewerId: string; // uuid
-        }
-        export interface CreateTagDataReviewDto {
-            tagNo: string;
-            status: ReviewStatusDto;
-            reviewers?: CreateReviewerDto[] | null;
         }
         export interface ElectricalPurchaserRequirement {
             orderStatus?: string | null;
@@ -360,8 +382,7 @@ declare namespace Components {
             tagType?: string | null;
             subTagType?: string | null;
             version?: number; // int32
-            review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainerDto;
+            revisionContainer?: ContainerDto;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             electricalPurchaserRequirement?: ElectricalPurchaserRequirement;
@@ -404,8 +425,6 @@ declare namespace Components {
             tagType?: string | null;
             subTagType?: string | null;
             version?: number; // int32
-            review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainerDto;
         }
         export interface InstrumentPurchaserRequirement {
             codeRequirement?: number | null; // int32
@@ -822,8 +841,7 @@ declare namespace Components {
             tagType?: string | null;
             subTagType?: string | null;
             version?: number; // int32
-            review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainerDto;
+            revisionContainer?: ContainerDto;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             instrumentPurchaserRequirement?: InstrumentPurchaserRequirement;
@@ -1550,8 +1568,7 @@ declare namespace Components {
             tagType?: string | null;
             subTagType?: string | null;
             version?: number; // int32
-            review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainerDto;
+            revisionContainer?: ContainerDto;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
             mechanicalPurchaserRequirement?: MechanicalPurchaserRequirement;
@@ -1567,38 +1584,6 @@ declare namespace Components {
             contracts?: ContractDto[] | null;
         }
         export type ReviewStatusDto = "New" | "Reviewed" | "Resubmit" | "Diff" | "Duplicate" | "ReviewedWithComment" | "NotReviewed" | "Deleted";
-        export interface ReviewerDto {
-            status: ReviewStatusDto;
-            displayName?: string | null;
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            reviewerId?: string; // uuid
-            tagDataReviewId?: string; // uuid
-        }
-        export interface RevisionContainerDto {
-            id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            revisionContainerName?: string | null;
-            revisionNumber?: number; // int32
-            revisionContainerDate?: string; // date-time
-            tagData?: ITagDataDto[] | null;
-            revisionContainerReview?: RevisionContainerReviewDto;
-            contractId?: string; // uuid
-            contract?: ContractDto;
-        }
-        export interface RevisionContainerReviewDto {
-            id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
-            status?: ReviewStatusDto;
-            approverId?: string; // uuid
-            commentResponsible?: string; // uuid
-            approved?: boolean;
-            revisionContainerVersion?: number; // int32
-            revisionContainerId?: string; // uuid
-            revisionContainer?: RevisionContainerDto;
-        }
         export interface TagDataDto {
             id?: string; // uuid
             tagNo?: string | null;
@@ -1616,23 +1601,19 @@ declare namespace Components {
             tagType?: string | null;
             subTagType?: string | null;
             version?: number; // int32
-            review?: TagDataReviewDto;
-            revisionContainer?: RevisionContainerDto;
+            revisionContainer?: ContainerDto;
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
         }
-        export interface TagDataReviewDto {
+        export interface TagReviewerDto {
             id?: string; // uuid
-            createdDate?: string; // date-time
-            modifiedDate?: string; // date-time
+            userId?: string; // uuid
+            displayName?: string | null;
             tagNo?: string | null;
-            status?: ReviewStatusDto;
-            approverId?: string; // uuid
-            commentResponsible?: string; // uuid
-            approved?: boolean;
-            tagDataVersion?: number; // int32
-            reviewer?: ReviewerDto[] | null;
+            state?: TagReviewerStateEnumDto;
+            containerReviewId?: string; // uuid
         }
+        export type TagReviewerStateEnumDto = "NotReviewed" | "Reviewed";
         export interface UpdateReviewerDto {
             reviewStatus: ReviewStatusDto;
         }
@@ -1661,6 +1642,171 @@ declare namespace Paths {
             export type $200 = Components.Schemas.GetMessageDto;
         }
     }
+    namespace ContainerReviewers {
+        namespace Get {
+            namespace Parameters {
+                export type UserId = string; // uuid
+            }
+            export interface QueryParameters {
+                userId?: Parameters.UserId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewerDto[];
+            }
+        }
+    }
+    namespace ContainerReviewers$ContainerReviewerIdTagReviewers {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerReviewerId = string;
+            }
+            export interface PathParameters {
+                containerReviewerId: Parameters.ContainerReviewerId;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto[];
+            }
+        }
+        namespace Post {
+            namespace Parameters {
+                export type ContainerReviewerId = string;
+                export type ReviewId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewerId: Parameters.ContainerReviewerId;
+            }
+            export interface QueryParameters {
+                reviewId?: Parameters.ReviewId /* uuid */;
+            }
+            export type RequestBody = Components.Schemas.CreateReviewerDto[];
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto[];
+            }
+        }
+    }
+    namespace ContainerReviewers$ContainerReviewerIdTagReviewers$TagReviewerId {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerReviewerId = string;
+                export type TagReviewerId = string; // uuid
+            }
+            export interface PathParameters {
+                tagReviewerId: Parameters.TagReviewerId /* uuid */;
+                containerReviewerId: Parameters.ContainerReviewerId;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto;
+            }
+        }
+        namespace Put {
+            namespace Parameters {
+                export type ContainerReviewerId = string;
+                export type TagReviewerId = string; // uuid
+            }
+            export interface PathParameters {
+                tagReviewerId: Parameters.TagReviewerId /* uuid */;
+                containerReviewerId: Parameters.ContainerReviewerId;
+            }
+            export type RequestBody = Components.Schemas.UpdateReviewerDto;
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto;
+            }
+        }
+    }
+    namespace ContainerReviews {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerId = string; // uuid
+            }
+            export interface QueryParameters {
+                containerId?: Parameters.ContainerId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewDto[];
+            }
+        }
+        namespace Post {
+            export type RequestBody = Components.Schemas.CreateContainerReviewDto;
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewDto;
+            }
+        }
+    }
+    namespace ContainerReviews$ContainerReviewId {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerReviewId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewId: Parameters.ContainerReviewId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewDto;
+            }
+        }
+    }
+    namespace ContainerReviews$ContainerReviewIdContainerReviewers {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerReviewId = string; // uuid
+                export type UserId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewId: Parameters.ContainerReviewId /* uuid */;
+            }
+            export interface QueryParameters {
+                userId?: Parameters.UserId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewerDto[];
+            }
+        }
+        namespace Post {
+            namespace Parameters {
+                export type ContainerReviewId = string;
+                export type ReviewId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewId: Parameters.ContainerReviewId;
+            }
+            export interface QueryParameters {
+                reviewId?: Parameters.ReviewId /* uuid */;
+            }
+            export type RequestBody = Components.Schemas.CreateReviewerDto;
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto[];
+            }
+        }
+    }
+    namespace ContainerReviews$ContainerReviewIdContainerReviewers$ContainerReviewerId {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerReviewId = string;
+                export type ContainerReviewerId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewerId: Parameters.ContainerReviewerId /* uuid */;
+                containerReviewId: Parameters.ContainerReviewId;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ContainerReviewerDto;
+            }
+        }
+        namespace Put {
+            namespace Parameters {
+                export type ContainerReviewId = string;
+                export type ContainerReviewerId = string; // uuid
+            }
+            export interface PathParameters {
+                containerReviewerId: Parameters.ContainerReviewerId /* uuid */;
+                containerReviewId: Parameters.ContainerReviewId;
+            }
+            export type RequestBody = Components.Schemas.UpdateReviewerDto;
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto;
+            }
+        }
+    }
     namespace CreateConversation {
         namespace Parameters {
             export type ProjectId = string; // uuid
@@ -1675,30 +1821,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.GetConversationDto;
         }
     }
-    namespace CreateReview {
-        export type RequestBody = Components.Schemas.CreateTagDataReviewDto;
-        namespace Responses {
-            export type $200 = Components.Schemas.TagDataReviewDto;
-        }
-    }
-    namespace CreateReviewers {
-        namespace Parameters {
-            export type ReviewId = string; // uuid
-        }
-        export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
-        }
-        export type RequestBody = Components.Schemas.CreateReviewerDto[];
-        namespace Responses {
-            export type $200 = Components.Schemas.ReviewerDto[];
-        }
-    }
-    namespace CreateRevisionReview {
-        export type RequestBody = Components.Schemas.CreateContainerReviewDto;
-        namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReviewDto;
-        }
-    }
     namespace DeleteMessage {
         namespace Parameters {
             export type ConversationId = string; // uuid
@@ -1711,11 +1833,6 @@ declare namespace Paths {
         namespace Responses {
             export interface $200 {
             }
-        }
-    }
-    namespace GetAllTagData {
-        namespace Responses {
-            export type $200 = Components.Schemas.ITagDataDto[];
         }
     }
     namespace GetContract {
@@ -1821,55 +1938,6 @@ declare namespace Paths {
             export type $200 = Components.Schemas.ProjectDto;
         }
     }
-    namespace GetReviewById {
-        namespace Parameters {
-            export type ReviewId = string; // uuid
-        }
-        export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.TagDataReviewDto;
-        }
-    }
-    namespace GetReviews {
-        namespace Parameters {
-            export type ReviewerId = string; // uuid
-        }
-        export interface QueryParameters {
-            reviewerId?: Parameters.ReviewerId /* uuid */;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.TagDataReviewDto[];
-        }
-    }
-    namespace GetRevisionReview {
-        namespace Parameters {
-            export type ReviewId = string; // uuid
-        }
-        export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReviewDto;
-        }
-    }
-    namespace GetRevisionReviews {
-        namespace Responses {
-            export type $200 = Components.Schemas.RevisionContainerReviewDto[];
-        }
-    }
-    namespace GetTagDataByTagNo {
-        namespace Parameters {
-            export type TagNo = string;
-        }
-        export interface PathParameters {
-            tagNo: Parameters.TagNo;
-        }
-        namespace Responses {
-            export type $200 = Components.Schemas.ITagDataDto;
-        }
-    }
     namespace GetUsersForProject {
         namespace Parameters {
             export type FusionContextId = string; // uuid
@@ -1889,6 +1957,39 @@ declare namespace Paths {
             export type $200 = Components.Schemas.UserTagDto[];
         }
     }
+    namespace TagReviewers {
+        namespace Get {
+            namespace Parameters {
+                export type UserId = string; // uuid
+            }
+            export interface QueryParameters {
+                userId?: Parameters.UserId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.TagReviewerDto[];
+            }
+        }
+    }
+    namespace Tagdata {
+        namespace Get {
+            namespace Responses {
+                export type $200 = Components.Schemas.ITagDataDto[];
+            }
+        }
+    }
+    namespace Tagdata$TagNo {
+        namespace Get {
+            namespace Parameters {
+                export type TagNo = string;
+            }
+            export interface PathParameters {
+                tagNo: Parameters.TagNo;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.ITagDataDto;
+            }
+        }
+    }
     namespace UpdateMessage {
         namespace Parameters {
             export type ConversationId = string; // uuid
@@ -1901,20 +2002,6 @@ declare namespace Paths {
         export type RequestBody = Components.Schemas.MessageDto;
         namespace Responses {
             export type $200 = Components.Schemas.GetMessageDto;
-        }
-    }
-    namespace UpdateReview {
-        namespace Parameters {
-            export type ReviewId = string; // uuid
-            export type ReviewerId = string; // uuid
-        }
-        export interface PathParameters {
-            reviewId: Parameters.ReviewId /* uuid */;
-            reviewerId: Parameters.ReviewerId /* uuid */;
-        }
-        export type RequestBody = Components.Schemas.UpdateReviewerDto;
-        namespace Responses {
-            export type $200 = Components.Schemas.ReviewerDto;
         }
     }
 }

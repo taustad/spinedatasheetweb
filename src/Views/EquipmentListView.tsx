@@ -85,14 +85,12 @@ function EquipmentListView() {
                 try {
                     setIsLoading(true)
 
-                    const allTagData = await (
-                        await GetTagDataService()
-                    ).getAllTagData()
+                    const allTagData = await (await GetTagDataService()).getAllTagData()
 
-                    if (currentUser) {
-                        const myReviewsFromServer = await (await GetTagDataReviewService()).getTagDataReviews(currentUser._info.localAccountId)
-                        setMyReviews(myReviewsFromServer.data)
-                    }
+                    // if (currentUser) {
+                    //     const myReviewsFromServer = await (await GetTagDataReviewService()).getTagDataReviews(currentUser._info.localAccountId)
+                    //     setMyReviews(myReviewsFromServer.data)
+                    // }
 
                     if (!isCancelled) {
                         setTagData(allTagData)
