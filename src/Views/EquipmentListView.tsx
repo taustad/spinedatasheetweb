@@ -43,9 +43,8 @@ function EquipmentListView() {
     const [revisionInReview, setRevisionInReview] = useState<string | undefined>(undefined)
     const [tagData, setTagData] = useState<TagData[] | undefined>(undefined)
 
-    const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext()
-    const { setSideSheetOpen } = useContext(ViewContext)
+    const { setSideSheetOpen, setActiveTagData } = useContext(ViewContext)
 
     const navigate = useNavigate()
     const currentUser: any = useCurrentUser()
@@ -69,6 +68,8 @@ function EquipmentListView() {
 
     useEffect(() => {
         setSideSheetOpen(false)
+        setActiveTagData(undefined)
+
         localStorage.setItem("activeTagTab", activeTab.toString())
     }, [activeTab])
 
