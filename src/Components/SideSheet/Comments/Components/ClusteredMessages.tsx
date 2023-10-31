@@ -32,14 +32,16 @@ const TimeStamp = styled.div`
     }
 `
 
-const SubContainer = styled.div`
+const SubContainer = styled.div<{ isCurrentUser: boolean }>`
     display: flex;
     flex-direction: row;
+    justify-content: ${(props) => (props.isCurrentUser ? "flex-end" : "flex-start")};
 `
 
 const MessageContainer = styled.div`
     display: flex;
     flex-direction: column;
+    
 `
 
 const PhotoContainer = styled.div<{ isCurrentUser: boolean }>`
@@ -144,7 +146,7 @@ const ClusteredMessages: FC<ClusteredMessagesProps> = ({ initEditMode, editMode 
                         </TimeStamp>
                     </Header>
 
-                    <SubContainer>
+                    <SubContainer isCurrentUser={isCurrentUser(cluster.userId)}>
                         <MessageContainer>
                             {/* TODO: change to PersonAvatar when docs are better */}
                             <PhotoContainer isCurrentUser={isCurrentUser(cluster.userId)}>

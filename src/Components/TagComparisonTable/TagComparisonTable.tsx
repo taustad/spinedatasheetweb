@@ -215,7 +215,6 @@ function TagComparisonTable({ tags }: Props) {
     useEffect(() => {
         if (activeTagData !== undefined) {
             setSideSheetOpen(true)
-            console.log("opening sidesheet for this tag: ", activeTagData)
         }
     }, [activeTagData])
 

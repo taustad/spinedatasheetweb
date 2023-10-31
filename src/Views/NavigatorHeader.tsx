@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react"
-import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import LocalNavigation from "../Components/SideSheet/Components/LocalNavigation"
@@ -23,17 +23,16 @@ const initialActiveTab = Object.entries(tabPath)
     const Navigationbuttons = ["Tags", "Containers"]
 
     const navigate = useNavigate()
-    const { projectId } = useParams<Record<string, string | undefined>>()
     const currentProject = useCurrentContext()
 
     useEffect(() => {
-        if (projectId) {
-            const currentPath = `/${projectId}${tabPath[activeTab]}`
+        if (currentProject) {
+            const currentPath = `/${currentProject.currentContext?.id}${tabPath[activeTab]}`
             if (window.location.pathname !== currentPath) {
                 navigate(currentPath)
             }
         }
-    }, [projectId, navigate, activeTab])
+    }, [navigate, activeTab, currentProject])
 
         if (!currentProject.currentContext) {
         return <Dialogue type="error" message="No project selected" />
