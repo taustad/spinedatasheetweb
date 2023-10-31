@@ -113,7 +113,7 @@ const initialPeople = [
 function CommentFilterToolPanel({ }: IToolPanel) {
     const [commentCategories, setCommentCategories] = useState(initialCommentCategories)
     const [newComments, setNewComments] = useState(false)
-    const [people, setPeople] = useState(initialPeople) // New State Variable
+    const [people, setPeople] = useState(initialPeople)
 
     const totalCount = commentCategories.reduce((acc, category) => acc + category.count, 0)
 
@@ -126,11 +126,11 @@ function CommentFilterToolPanel({ }: IToolPanel) {
         setCommentCategories((prevCategories) => prevCategories.map((category) => ({ ...category, checked: !areAllChecked })))
     }
 
-    const togglePersonCheckbox = (id: string) => { // New Function
+    const togglePersonCheckbox = (id: string) => {
         setPeople((prevPeople) => (prevPeople.map((person) => (person.id === id ? { ...person, checked: !person.checked } : person))))
     }
 
-    const toggleSelectAllPeople = () => { // New Function
+    const toggleSelectAllPeople = () => {
         const areAllChecked = people.every((person) => person.checked)
         setPeople((prevPeople) => prevPeople.map((person) => ({ ...person, checked: !areAllChecked })))
     }
