@@ -87,12 +87,6 @@ function EquipmentListView() {
 
                     const allTagData = await (await GetTagDataService()).getAllTagData()
 
-                    if (currentUser) {
-                        const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUser._info.localAccountId)
-                        console.log("myReviewsFromServer: ", myReviewsFromServer)
-                        // setMyReviews(myReviewsFromServer.data)
-                    }
-
                     if (!isCancelled) {
                         setTagData(allTagData)
                         setIsLoading(false)

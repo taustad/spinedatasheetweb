@@ -32,11 +32,11 @@ class TagReviewerService extends BaseService {
     }
 
     async updateReviewer(
-        reviewId: string,
-        reviewerId: string,
+        containerReviewerId: string,
+        tagReviewerId: string,
         updateReviewerDto: Components.Schemas.UpdateTagReviewerDto,
     ) {
-        const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
+        const result: any = await this.put(`container-reviewers/${containerReviewerId}/tag-reviewers/${tagReviewerId}`, {
             body: updateReviewerDto,
         })
         return result

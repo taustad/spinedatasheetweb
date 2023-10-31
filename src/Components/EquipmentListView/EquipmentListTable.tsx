@@ -1,19 +1,19 @@
 import React, {
- Dispatch, SetStateAction, useContext, useMemo,
+    Dispatch, SetStateAction, useContext, useEffect, useMemo, useState,
 } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { tokens } from "@equinor/eds-tokens"
-import { Icon } from "@equinor/eds-core-react"
+import { Checkbox, Icon } from "@equinor/eds-core-react"
 import {
- block, check, checkbox_outline, close, comment_chat, done, tag,
+    block, tag,
 } from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
-import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
 import { ViewContext } from "../../Context/ViewContext"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 interface Props {
     tags: TagData[]
@@ -47,6 +47,8 @@ function EquipmentListTable({
     const location = useLocation()
     const styles = useStyles()
 
+    const [tagReviewers, setTagReviewers] = useState<any[]>()
+
     const {
         currentUserId,
     } = useContext(ViewContext)
@@ -60,6 +62,27 @@ function EquipmentListTable({
         }),
         [],
     )
+
+    useEffect(() => {
+        let isCancelled = false;
+        (async () => {
+            try {
+                if (currentUserId) {
+                    const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUserId)
+                    console.log("myReviewsFromServer: ", myReviewsFromServer)
+                    setTagReviewers(myReviewsFromServer.data)
+                }
+            } catch {
+                if (!isCancelled) {
+                    console.error("Error loading tags")
+                }
+            }
+        })()
+
+        return () => {
+            isCancelled = true
+        }
+    }, [currentUserId])
 
     const typeOfJIP33 = ({ data: { discipline } }: any) => {
         if (discipline === "Mechanical") {
@@ -97,32 +120,6 @@ function EquipmentListTable({
         </Link>
     )
 
-    const tagDataReviewStatusRenderer = (params: any) => {
-        const status = params.data.review?.status
-        switch (status) {
-            case "Reviewed":
-                return <Icon data={done} color="green" />
-            case "Resubmit":
-                return <Icon data={block} color="red" />
-            default:
-                return null
-        }
-    }
-
-    const revisionContainerReviewStatusRenderer = (
-        params: ICellRendererParams,
-    ) => {
-        const status = params.data.revisionContainer?.revisionContainerReview?.status
-        switch (status) {
-            case "Reviewed":
-                return <Icon data={done} color="green" />
-            case "Resubmit":
-                return <Icon data={block} color="red" />
-            default:
-                return null
-        }
-    }
-
     const reviewDeadlineRenderer = (params: ICellRendererParams) => {
         if (
             params.data.revisionContainer === null
@@ -148,34 +145,34 @@ function EquipmentListTable({
         return deadline.toISOString().slice(0, 10)
     }
 
-    const getReviewStatusIcon = (status: Components.Schemas.ReviewStatusDto) => {
-        switch (status) {
-            case "Reviewed":
-                return <Icon data={check} color="green" />
-            case "NotReviewed":
-                return <Icon data={close} color="red" />
-            default:
-                return null
+    const handleTagReviewerCheckboxClick = async (rowState: any) => {
+        const newState = rowState.state === "NotReviewed" ? "Reviewed" : "NotReviewed"
+        const dto: Components.Schemas.UpdateTagReviewerDto = {
+            state: newState,
         }
+        const result = await (await GetTagReviewerService()).updateReviewer(rowState.containerReviewId, rowState.id, dto)
+        console.log("Result after click: ", result)
+
+        setTagReviewers(tagReviewers?.map((tr) => (tr.id === rowState.id ? { ...tr, state: newState } : tr)))
     }
 
     const reviewStatusRenderer = (params: ICellRendererParams) => {
         console.log("reviewStatusRenderer params: ", params)
 
-        const rowReview = undefined // myReviews.find((r) => r.tagNo === params.data.tagNo)
+        if (!tagReviewers) { return null }
 
-        if (!rowReview) { return null }
+        const rowState = tagReviewers.find((r) => r.tagNo === params.data.tagNo)
 
-        return null
+        if (!rowState) { return null }
 
-        // console.log("currentUserId: ", currentUserId)
+        console.log("rewState: ", rowState)
 
-        // const reviewerReview = rowReview.reviewer?.find((r: any) => r.reviewerId === currentUserId)
-
-        // if (!reviewerReview) { return null }
-
-        // return getReviewStatusIcon(reviewerReview.status)
+        if (rowState.state === "NotReviewed") {
+            return (<Checkbox onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
         }
+
+        return (<Checkbox defaultChecked onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
+    }
 
     const columns = [
         {
@@ -224,34 +221,6 @@ function EquipmentListTable({
         {
             headerName: "Review info",
             children: [
-                // {
-                //     field: "",
-                //     headerName: "Review",
-                //     cellRenderer: (params: any) => EquipmentListReviewRenderer(
-                //         params,
-                //         setReviewModalOpen,
-                //         setTagInReview,
-                //         setRevisionInReview,
-                //     ),
-                // },
-                // {
-                //     field: "revisionContainer.revisionContainerReview.status",
-                //     headerName: "Revision container review status",
-                //     cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params),
-                // },
-                // {
-                //     field: "review.status",
-                //     headerName: "Review status",
-                //     cellRenderer: (params: any) => tagDataReviewStatusRenderer(params),
-                // },
-                // {
-                //     field: "review.approverId",
-                //     headerName: "Reviewers",
-                // },
-                // {
-                //     field: "review.commentResponsible",
-                //     headerName: "Comment responsible",
-                // },
                 {
                     field: "reviewDeadline",
                     headerName: "Review deadline",
