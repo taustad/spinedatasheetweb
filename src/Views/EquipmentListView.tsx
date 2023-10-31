@@ -11,8 +11,6 @@ import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTa
 import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
 import { ViewContext } from "../Context/ViewContext"
-import { GetTagDataReviewService } from "../api/TagDataReviewService"
-import { GetTagReviewerService } from "../api/TagReviewerService"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -104,18 +102,6 @@ function EquipmentListView() {
             isCancelled = true
         }
     }, [externalId])
-
-    /*
-    useEffect(() => {
-        if (
-            currentProject?.currentContext !== null
-            && currentProject.currentContext !== undefined
-            && (projectId === null || projectId === undefined)
-        ) {
-            navigate(`/${currentProject.currentContext.id}`)
-        }
-    }, [currentProject, projectId, navigate])
-    */
 
     if (!currentProject.currentContext) {
         return <Dialogue type="error" message="No project selected" />

@@ -24,9 +24,12 @@ class TagReviewerService extends BaseService {
         return result
     }
 
-    async createTagDataReview(review: any) {
-        const result: any = await this.post("", {
-            body: review,
+    async createTagDataReview(
+        tagReviewerDto: Components.Schemas.CreateTagReviewerDto[],
+        containerReviewerId: string,
+    ) {
+        const result: any = await this.post(`container-reviewers/${containerReviewerId}/tag-reviewers`, {
+            body: tagReviewerDto,
         })
         return result
     }

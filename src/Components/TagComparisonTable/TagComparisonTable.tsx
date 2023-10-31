@@ -20,7 +20,6 @@ import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
 import { ViewContext } from "../../Context/ViewContext"
 import { comparisonReviewColumnDefs } from "./ColumnDefs/ReviewColumnDefs"
-import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;

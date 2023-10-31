@@ -1,14 +1,13 @@
 import React, {
- Dispatch, SetStateAction, useEffect, useState,
+    Dispatch, SetStateAction,
 } from "react"
 import {
- Button, Checkbox, Tabs, Typography,
+    Button, Typography,
 } from "@equinor/eds-core-react"
 import { styled } from "styled-components"
 import { TagData } from "../../Models/TagData"
-import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
-import MyReviews from "./MyReviews"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 const Wrapper = styled.div`
     display: flex;
@@ -18,8 +17,10 @@ const Wrapper = styled.div`
 interface Props {
     tagData: TagData[]
     userId: string
-    myReviews: any[]
-    setMyReviews: Dispatch<SetStateAction<any[]>>,
+    myContainerReviews: Components.Schemas.ContainerReviewerDto[]
+    setMyContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewerDto[]>>,
+    myTagReviewers: Components.Schemas.TagReviewerDto[]
+    setMyTagReviewers: Dispatch<SetStateAction<Components.Schemas.TagReviewerDto[]>>,
     containerReviews: any[]
     containers: any[]
 }
@@ -27,55 +28,57 @@ interface Props {
 function SendForReview({
     tagData,
     userId,
-    myReviews,
-    setMyReviews,
+    myContainerReviews,
+    setMyContainerReviews,
     containerReviews,
     containers,
+    myTagReviewers,
+    setMyTagReviewers,
 }: Props) {
     const handleButtonClick = async (tagNo: string, containerReviewId: string) => {
-        const newContainerReview: Components.Schemas.CreateContainerReviewerDto = {
-            userId,
-            tagReviewers: [
-                {
-                    reviewerId: userId,
-                    tagNo,
-                },
-            ],
+        const existingContainerReviewer = myContainerReviews.find((cr) => cr.containerReviewId === containerReviewId)
+        if (existingContainerReviewer === undefined) {
+            const newContainerReview: Components.Schemas.CreateContainerReviewerDto = {
+                userId,
+                tagReviewers: [
+                    {
+                        reviewerId: userId,
+                        tagNo,
+                    },
+                ],
+            }
+
+            const result = await (await GetContainerReviewerService()).createContainerReviewer(newContainerReview, containerReviewId)
+            const updatedMyReviews = myContainerReviews.concat(result)
+            setMyContainerReviews(updatedMyReviews)
+            return
         }
 
-        const result = await (await GetContainerReviewerService()).createContainerReviewer(newContainerReview, containerReviewId)
-        const updatedMyReviews = myReviews.concat(result)
-        setMyReviews(updatedMyReviews)
+        const newTagReviewer: Components.Schemas.CreateTagReviewerDto = {
+            reviewerId: userId,
+            tagNo,
+        }
 
-        // const newReviewer: Components.Schemas.CreateTagReviewerDto = {
-        //     reviewerId: userId,
-        // }
-        // const newReview: any = {
-        //     tagNo: tagno,
-        //     status: "New",
-        //     reviewers: [newReviewer],
-        // }
+        const dtoList = [newTagReviewer]
 
-        // const result = await (await GetTagDataReviewService()).createTagDataReview(newReview)
-        // const newAssignedTags = myTags.concat(result)
-
-        // setMyTags(newAssignedTags)
+        const result = await (await GetTagReviewerService()).createTagDataReview(dtoList, existingContainerReviewer.id ?? "")
+        console.log("Result: ", result)
+        const updatedMyTagReviewers = myTagReviewers.concat(result[0])
+        setMyTagReviewers(updatedMyTagReviewers)
     }
 
-    const disableAssignButton = (tagno: string) => myReviews.find((r) => r.tagNo === tagno) !== undefined
+    const disableAssignButton = (tagno: string): boolean => {
+        console.log("disableAssignButton: ", myContainerReviews)
+        const exists = myTagReviewers.find((r) => r.tagNo?.includes(tagno))
+        return exists !== undefined
+    }
 
     const getContainerReviewIdForTagNo = (tagNo: string) => {
-        console.log("Containers in method: ", containers)
-
         const container = containers?.find((c) => c.tagNos.includes(tagNo))
         if (!container) { return null }
         const containerReview = containerReviews.find((cr) => cr.containerId === container.id)
         return containerReview
     }
-
-    getContainerReviewIdForTagNo("TAG-001")
-    getContainerReviewIdForTagNo("TAG-444")
-    getContainerReviewIdForTagNo("ASD")
 
     const buildTagDataList = () => {
         const tagNumbers = tagData.map((t) => t.tagNo)
@@ -85,8 +88,6 @@ function SendForReview({
                     if (!number) { return null }
 
                     const containerReview = getContainerReviewIdForTagNo(number)
-                    console.log("Contaienr in buildTagDataList: ", containerReview)
-
                     return (
                         <Wrapper>
                             <Typography>{number}</Typography>

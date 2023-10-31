@@ -6,12 +6,11 @@ import { useCurrentUser } from "@equinor/fusion"
 import SendForReview from "./SendForReview"
 import { TagData } from "../../Models/TagData"
 import { GetTagDataService } from "../../api/TagDataService"
-import MyReviews from "./MyReviews"
-import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetContainerReviewService } from "../../api/ContainerReviewService"
 import { ViewContext } from "../../Context/ViewContext"
 import { GetContainerService } from "../../api/ContainerService"
 import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
@@ -23,7 +22,8 @@ function ReviewView() {
     const [externalId, setExternalId] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-    const [myReviews, setMyReviews] = useState<any[]>([])
+    const [myContainerReviews, setMyContainerReviews] = useState<Components.Schemas.ContainerReviewerDto[]>([])
+    const [myTagReviewers, setMyTagReviewers] = useState<Components.Schemas.TagReviewerDto[]>([])
 
     const [containers, setContainers] = useState([])
 
@@ -45,33 +45,18 @@ function ReviewView() {
     useEffect(() => {
         (async () => {
             const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
-            console.log("ContainerReviews: ", containerReviewsResult)
             setContainerReviews(containerReviewsResult.data)
 
-            console.log("current user id : ", currentUser?._info.localAccountId)
-
             const containerResults = await (await GetContainerService()).getContainers()
-            console.log("Containers: ", containerResults)
             setContainers(containerResults)
 
             const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
-            console.log("myReviewsresult: ", myReviewsResult)
-            setMyReviews(myReviewsResult.data)
-            // if (currentUser) {
-            //     const userId = currentUser._info.localAccountId
-            //     setCurrentUserId(userId)
+            setMyContainerReviews(myReviewsResult.data)
 
-            //     const result = await (await GetTagDataReviewService()).getTagDataReviews(userId)
-            //     const reviewsAssignedToMe: any[] = result.data
-
-            //     setMyReviews(reviewsAssignedToMe)
-            // }
+            const myTagReviewersResult = await (await GetTagReviewerService()).getTagReviewers(currentUser._info.localAccountId)
+            setMyTagReviewers(myTagReviewersResult.data)
         })()
     }, [])
-
-    useEffect(() => {
-        console.log("Containers in useEffect: ", containers)
-    }, [containers])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -112,8 +97,6 @@ function ReviewView() {
 
     if (!tagData) { return null }
 
-    console.log("containerReviews before return: ", containerReviews)
-
     return (
         <>
             <p>Containers</p>
@@ -149,18 +132,12 @@ function ReviewView() {
                         <SendForReview
                             tagData={tagData}
                             userId={currentUserId}
-                            myReviews={myReviews}
-                            setMyReviews={setMyReviews}
+                            myContainerReviews={myContainerReviews}
+                            setMyContainerReviews={setMyContainerReviews}
                             containerReviews={containerReviews}
                             containers={containers}
-                        />
-                    </Panel>
-                    <Panel>
-                        <MyReviews
-                            tagData={tagData}
-                            userId={currentUserId}
-                            myTags={myReviews}
-                            setMyTags={setMyReviews}
+                            myTagReviewers={myTagReviewers}
+                            setMyTagReviewers={setMyTagReviewers}
                         />
                     </Panel>
                 </Panels>
