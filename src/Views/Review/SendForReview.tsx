@@ -7,6 +7,8 @@ import {
 import { styled } from "styled-components"
 import { TagData } from "../../Models/TagData"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"
+import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
+import MyReviews from "./MyReviews"
 
 const Wrapper = styled.div`
     display: flex;
@@ -16,33 +18,64 @@ const Wrapper = styled.div`
 interface Props {
     tagData: TagData[]
     userId: string
-    myTags: any[]
-    setMyTags: Dispatch<SetStateAction<any[]>>,
+    myReviews: any[]
+    setMyReviews: Dispatch<SetStateAction<any[]>>,
+    containerReviews: any[]
+    containers: any[]
 }
 
 function SendForReview({
     tagData,
     userId,
-    myTags,
-    setMyTags,
+    myReviews,
+    setMyReviews,
+    containerReviews,
+    containers,
 }: Props) {
-    const handleButtonClick = async (tagno: string) => {
-        const newReviewer: Components.Schemas.CreateReviewerDto = {
-            reviewerId: userId,
-        }
-        const newReview: any = {
-            tagNo: tagno,
-            status: "New",
-            reviewers: [newReviewer],
+    const handleButtonClick = async (tagNo: string, containerReviewId: string) => {
+        const newContainerReview: Components.Schemas.CreateContainerReviewerDto = {
+            userId,
+            tagReviewers: [
+                {
+                    reviewerId: userId,
+                    tagNo,
+                },
+            ],
         }
 
-        const result = await (await GetTagDataReviewService()).createTagDataReview(newReview)
-        const newAssignedTags = myTags.concat(result)
+        const result = await (await GetContainerReviewerService()).createContainerReviewer(newContainerReview, containerReviewId)
+        const updatedMyReviews = myReviews.concat(result)
+        setMyReviews(updatedMyReviews)
 
-        setMyTags(newAssignedTags)
+        // const newReviewer: Components.Schemas.CreateTagReviewerDto = {
+        //     reviewerId: userId,
+        // }
+        // const newReview: any = {
+        //     tagNo: tagno,
+        //     status: "New",
+        //     reviewers: [newReviewer],
+        // }
+
+        // const result = await (await GetTagDataReviewService()).createTagDataReview(newReview)
+        // const newAssignedTags = myTags.concat(result)
+
+        // setMyTags(newAssignedTags)
     }
 
-    const disableAssignButton = (tagno: string) => myTags.find((r) => r.tagNo === tagno) !== undefined
+    const disableAssignButton = (tagno: string) => myReviews.find((r) => r.tagNo === tagno) !== undefined
+
+    const getContainerReviewIdForTagNo = (tagNo: string) => {
+        console.log("Containers in method: ", containers)
+
+        const container = containers?.find((c) => c.tagNos.includes(tagNo))
+        if (!container) { return null }
+        const containerReview = containerReviews.find((cr) => cr.containerId === container.id)
+        return containerReview
+    }
+
+    getContainerReviewIdForTagNo("TAG-001")
+    getContainerReviewIdForTagNo("TAG-444")
+    getContainerReviewIdForTagNo("ASD")
 
     const buildTagDataList = () => {
         const tagNumbers = tagData.map((t) => t.tagNo)
@@ -50,11 +83,15 @@ function SendForReview({
             <>
                 {tagNumbers.map((number) => {
                     if (!number) { return null }
+
+                    const containerReview = getContainerReviewIdForTagNo(number)
+                    console.log("Contaienr in buildTagDataList: ", containerReview)
+
                     return (
                         <Wrapper>
                             <Typography>{number}</Typography>
                             <Button
-                                onClick={() => handleButtonClick(number)}
+                                onClick={() => handleButtonClick(number, containerReview.id)}
                                 disabled={disableAssignButton(number)}
                             >
                                 Assign

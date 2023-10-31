@@ -32,34 +32,22 @@ function MyReviews({
         switch (input) {
             case "Reviewed":
                 return "Reviewed"
-            case "Resubmit":
-                return "Resubmit"
-            case "Diff":
-                return "Diff"
-            case "Duplicate":
-                return "Duplicate"
-            case "ReviewedWithComment":
-                return "ReviewedWithComment"
-            case "NotReviewed":
-                return "NotReviewed"
-            case "Deleted":
-                return "Deleted"
             default:
-                return "New"
+                return "NotReviewed"
         }
     }
 
     const handleReviewStateChange = async (event: ChangeEvent<HTMLSelectElement>, review: any, index: number) => {
         if (!review?.id) { return }
-        const dto: Components.Schemas.UpdateReviewerDto = {
-            reviewStatus: mapToEnum(event.currentTarget.selectedOptions[0].value),
+        const dto: Components.Schemas.UpdateTagReviewerDto = {
+            state: mapToEnum(event.currentTarget.selectedOptions[0].value),
         }
         const result = await (await GetTagDataReviewService()).updateReviewer(review.id, userId, dto)
         const updatedReviews = [...myTags]
         const reviewToUpdated = updatedReviews.find((r) => r.id === review.id)
         const reviewerToUpdate = reviewToUpdated?.reviewer?.find((r: any) => r.reviewerId === userId)
         if (reviewerToUpdate) {
-            reviewerToUpdate.status = dto.reviewStatus
+            reviewerToUpdate.status = dto.state
         }
         setMyTags(updatedReviews)
     }

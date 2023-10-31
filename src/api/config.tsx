@@ -23,6 +23,9 @@ const configuration = {
     UserTagService: {
         BASE_URL: "",
     },
+    ContainerService: {
+        BASE_URL: "",
+    },
     ContainerReviewService: {
         BASE_URL: "",
     },
@@ -41,9 +44,10 @@ export const buildConfig = (baseUrl: string) => {
     configuration.ConversationService.BASE_URL = `${baseUrl}/projects`
     configuration.MessageService.BASE_URL = `${baseUrl}/conversations`
     configuration.UserTagService.BASE_URL = `${baseUrl}/usertags`
+    configuration.ContainerService.BASE_URL = `${baseUrl}/containers`
     configuration.ContainerReviewService.BASE_URL = `${baseUrl}/container-reviews`
-    configuration.ContainerReviewerService.BASE_URL = `${baseUrl}/container-reviewers`
-    configuration.TagReviewerService.BASE_URL = `${baseUrl}/tag-reviewers`
+    configuration.ContainerReviewerService.BASE_URL = `${baseUrl}`
+    configuration.TagReviewerService.BASE_URL = `${baseUrl}`
 }
 
 export const config = Object.freeze(configuration)

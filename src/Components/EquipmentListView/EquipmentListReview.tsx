@@ -73,7 +73,7 @@ function EquipmentListReview({
     const buildPackageReview = (): Components.Schemas.CreateContainerReviewDto => {
         const newReview: Components.Schemas.CreateContainerReviewDto = {
             revisionContainerId: revisionInReview ?? "",
-            status: "New",
+            status: "NotReviewed",
         }
         return newReview
     }
@@ -101,7 +101,7 @@ function EquipmentListReview({
 
     const rejectPackage = async () => {
         const review = buildPackageReview()
-        review.status = "Resubmit"
+        review.status = "NotReviewed"
         const result = await (await GetRevisionReviewService()).createRevisionReview(review)
         await updateTagData()
     }

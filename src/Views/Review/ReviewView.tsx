@@ -10,6 +10,8 @@ import MyReviews from "./MyReviews"
 import { GetTagDataReviewService } from "../../api/TagDataReviewService"
 import { GetContainerReviewService } from "../../api/ContainerReviewService"
 import { ViewContext } from "../../Context/ViewContext"
+import { GetContainerService } from "../../api/ContainerService"
+import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
@@ -22,6 +24,8 @@ function ReviewView() {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
     const [myReviews, setMyReviews] = useState<any[]>([])
+
+    const [containers, setContainers] = useState([])
 
     const { projectId } = useParams<Record<string, string>>()
 
@@ -43,6 +47,16 @@ function ReviewView() {
             const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
             console.log("ContainerReviews: ", containerReviewsResult)
             setContainerReviews(containerReviewsResult.data)
+
+            console.log("current user id : ", currentUser?._info.localAccountId)
+
+            const containerResults = await (await GetContainerService()).getContainers()
+            console.log("Containers: ", containerResults)
+            setContainers(containerResults)
+
+            const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
+            console.log("myReviewsresult: ", myReviewsResult)
+            setMyReviews(myReviewsResult.data)
             // if (currentUser) {
             //     const userId = currentUser._info.localAccountId
             //     setCurrentUserId(userId)
@@ -53,7 +67,11 @@ function ReviewView() {
             //     setMyReviews(reviewsAssignedToMe)
             // }
         })()
-    }, [currentUser])
+    }, [])
+
+    useEffect(() => {
+        console.log("Containers in useEffect: ", containers)
+    }, [containers])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -63,7 +81,6 @@ function ReviewView() {
 
     useEffect(() => {
         let isCancelled = false;
-
         (async () => {
             if (externalId !== undefined) {
                 setError(false)
@@ -132,8 +149,10 @@ function ReviewView() {
                         <SendForReview
                             tagData={tagData}
                             userId={currentUserId}
-                            myTags={myReviews}
-                            setMyTags={setMyReviews}
+                            myReviews={myReviews}
+                            setMyReviews={setMyReviews}
+                            containerReviews={containerReviews}
+                            containers={containers}
                         />
                     </Panel>
                     <Panel>

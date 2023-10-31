@@ -9,9 +9,9 @@ class TagReviewerService extends BaseService {
         return result.value
     }
 
-    async getTagDataReviews(reviewerId?: string) {
+    async getTagReviewers(reviewerId: string) {
         const result = await this.getWithParams(
-            "",
+            "tag-reviewers",
             {
                 params: { reviewerId },
             },
@@ -34,7 +34,7 @@ class TagReviewerService extends BaseService {
     async updateReviewer(
         reviewId: string,
         reviewerId: string,
-        updateReviewerDto: Components.Schemas.UpdateReviewerDto,
+        updateReviewerDto: Components.Schemas.UpdateTagReviewerDto,
     ) {
         const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
             body: updateReviewerDto,

@@ -150,14 +150,10 @@ function EquipmentListTable({
 
     const getReviewStatusIcon = (status: Components.Schemas.ReviewStatusDto) => {
         switch (status) {
-            case "New":
-                return <Icon data={checkbox_outline} color="gray" />
             case "Reviewed":
                 return <Icon data={check} color="green" />
-            case "Resubmit":
+            case "NotReviewed":
                 return <Icon data={close} color="red" />
-            case "ReviewedWithComment":
-                return <Icon data={comment_chat} color="orange" />
             default:
                 return null
         }

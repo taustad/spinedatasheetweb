@@ -12,6 +12,7 @@ import EquipmentListReview from "../Components/EquipmentListView/EquipmentListRe
 import Dialogue from "../Components/Dialogue"
 import { ViewContext } from "../Context/ViewContext"
 import { GetTagDataReviewService } from "../api/TagDataReviewService"
+import { GetTagReviewerService } from "../api/TagReviewerService"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -86,10 +87,11 @@ function EquipmentListView() {
 
                     const allTagData = await (await GetTagDataService()).getAllTagData()
 
-                    // if (currentUser) {
-                    //     const myReviewsFromServer = await (await GetTagDataReviewService()).getTagDataReviews(currentUser._info.localAccountId)
-                    //     setMyReviews(myReviewsFromServer.data)
-                    // }
+                    if (currentUser) {
+                        const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUser._info.localAccountId)
+                        console.log("myReviewsFromServer: ", myReviewsFromServer)
+                        // setMyReviews(myReviewsFromServer.data)
+                    }
 
                     if (!isCancelled) {
                         setTagData(allTagData)

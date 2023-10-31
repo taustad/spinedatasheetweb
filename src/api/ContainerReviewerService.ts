@@ -4,39 +4,53 @@ import { BaseService } from "./BaseService"
 import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class ContainerReviewerService extends BaseService {
-    async getTagDataReview(id: string) {
-        const result: any = await this.get(`project/${id}`)
+    async getContainerReviewer(containerReviewId: string, containerReviewerId: string) {
+        const result: any = await this.get(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`)
         return result.value
     }
 
-    async getTagDataReviews(reviewerId?: string) {
-        const result = await this.getWithParams(
-            "",
+    async getContainerReviewersForContainer(containerReviewId: string, userId: string = "") {
+        if (userId === "") {
+            const result: any = await this.get(`/container-reviews/${containerReviewId}/container-reviewers`)
+            return result
+        }
+
+        // Get container reviewer for specific user
+        const result: any = await this.getWithParams(
+            `/container-reviews/${containerReviewId}/container-reviewers`,
             {
-                params: { reviewerId },
+                params: { userId },
             },
         )
+
         return result
     }
 
-    async getTagDataReviewsForTag(id: string) {
-        const result: any = await this.get(`tag/${id}`)
+    async getContainerReviewers(userId: string) {
+        // Get container reviewer for specific user
+        const result: any = await this.getWithParams(
+            "/container-reviewers",
+            {
+                params: { userId },
+            },
+        )
+
         return result
     }
 
-    async createTagDataReview(review: any) {
-        const result: any = await this.post("", {
+    async createContainerReviewer(review: Components.Schemas.CreateContainerReviewerDto, containerReviewId: string) {
+        const result: Components.Schemas.ContainerReviewerDto = await this.post(`/container-reviews/${containerReviewId}/container-reviewers`, {
             body: review,
         })
         return result
     }
 
     async updateReviewer(
-        reviewId: string,
-        reviewerId: string,
-        updateReviewerDto: Components.Schemas.UpdateReviewerDto,
+        updateReviewerDto: Components.Schemas.UpdateContainerReviewerDto,
+        containerReviewId: string,
+        containerReviewerId: string,
     ) {
-        const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
+        const result: any = await this.put(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`, {
             body: updateReviewerDto,
         })
         return result
