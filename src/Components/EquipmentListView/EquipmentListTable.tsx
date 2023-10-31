@@ -245,7 +245,7 @@ function EquipmentListTable({
                     rowSelection="multiple"
                     suppressMovableColumns
                     headerHeight={48}
-                    rowHeight={35}
+                    rowHeight={50}
                     enableRangeSelection
                 />
             </TableContainer>
