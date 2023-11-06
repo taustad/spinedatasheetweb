@@ -3,11 +3,11 @@ import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import React, { useEffect, useState, useContext } from "react"
 import styled from "styled-components"
 import { useNavigate, useParams } from "react-router-dom"
+import { useCurrentUser } from "@equinor/fusion"
 import { GetTagDataService } from "../api/TagDataService"
 import EquipmentListTable from "../Components/EquipmentListView/EquipmentListTable"
 import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
-import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
 import { ViewContext } from "../Context/ViewContext"
 
@@ -46,6 +46,17 @@ function EquipmentListView() {
     const { setSideSheetOpen, setActiveTagData } = useContext(ViewContext)
 
     const navigate = useNavigate()
+    const currentUser: any = useCurrentUser()
+
+    const {
+        currentUserId, setCurrentUserId,
+    } = useContext(ViewContext)
+
+    useEffect(() => {
+        if (currentUser?._info?.localAccountId) {
+            setCurrentUserId(currentUser?._info?.localAccountId)
+        }
+    }, [currentUser])
 
     // Set externalId to current project's externalId
     useEffect(() => {
@@ -72,9 +83,7 @@ function EquipmentListView() {
                 try {
                     setIsLoading(true)
 
-                    const allTagData = await (
-                        await GetTagDataService()
-                    ).getAllTagData()
+                    const allTagData = await (await GetTagDataService()).getAllTagData()
 
                     if (!isCancelled) {
                         setTagData(allTagData)
@@ -93,18 +102,6 @@ function EquipmentListView() {
             isCancelled = true
         }
     }, [externalId])
-
-    /*
-    useEffect(() => {
-        if (
-            currentProject?.currentContext !== null
-            && currentProject.currentContext !== undefined
-            && (projectId === null || projectId === undefined)
-        ) {
-            navigate(`/${currentProject.currentContext.id}`)
-        }
-    }, [currentProject, projectId, navigate])
-    */
 
     if (!currentProject.currentContext) {
         return <Dialogue type="error" message="No project selected" />
@@ -147,14 +144,6 @@ function EquipmentListView() {
                     </StyledTabPanel>
                 </Panels>
             </StyledTabs>
-
-            <EquipmentListReview
-                isOpen={reviewModalOpen}
-                setIsOpen={setReviewModalOpen}
-                tagNoInReview={tagInReview}
-                revisionInReview={revisionInReview}
-            />
-
         </Wrapper>
     )
 }

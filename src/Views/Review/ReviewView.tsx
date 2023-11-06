@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { Tabs } from "@equinor/eds-core-react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { useParams } from "react-router-dom"
@@ -6,8 +6,11 @@ import { useCurrentUser } from "@equinor/fusion"
 import SendForReview from "./SendForReview"
 import { TagData } from "../../Models/TagData"
 import { GetTagDataService } from "../../api/TagDataService"
-import MyReviews from "./MyReviews"
-import { GetTagDataReviewService } from "../../api/TagDataReviewService"
+import { GetContainerReviewService } from "../../api/ContainerReviewService"
+import { ViewContext } from "../../Context/ViewContext"
+import { GetContainerService } from "../../api/ContainerService"
+import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
@@ -18,9 +21,14 @@ function ReviewView() {
     const [externalId, setExternalId] = useState<string | undefined>()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
-    const [myReviews, setMyReviews] = useState<Components.Schemas.TagDataReviewDto[]>([])
+    const [myContainerReviews, setMyContainerReviews] = useState<Components.Schemas.ContainerReviewerDto[]>([])
+    const [myTagReviewers, setMyTagReviewers] = useState<Components.Schemas.TagReviewerDto[]>([])
+
+    const [containers, setContainers] = useState([])
 
     const { projectId } = useParams<Record<string, string>>()
+
+    const { setContainerReviews, containerReviews } = useContext(ViewContext)
     const currentProject = useCurrentContext()
 
     const currentUser: any = useCurrentUser()
@@ -35,17 +43,19 @@ function ReviewView() {
 
     useEffect(() => {
         (async () => {
-            if (currentUser) {
-                const userId = currentUser._info.localAccountId
-                setCurrentUserId(userId)
+            const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
+            setContainerReviews(containerReviewsResult.data)
 
-                const result = await (await GetTagDataReviewService()).getTagDataReviews(userId)
-                const reviewsAssignedToMe: Components.Schemas.TagDataReviewDto[] = result.data
+            const containerResults = await (await GetContainerService()).getContainers()
+            setContainers(containerResults)
 
-                setMyReviews(reviewsAssignedToMe)
-            }
+            const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
+            setMyContainerReviews(myReviewsResult.data)
+
+            const myTagReviewersResult = await (await GetTagReviewerService()).getTagReviewers(currentUser._info.localAccountId)
+            setMyTagReviewers(myTagReviewersResult.data)
         })()
-    }, [currentUser])
+    }, [])
 
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
@@ -55,7 +65,6 @@ function ReviewView() {
 
     useEffect(() => {
         let isCancelled = false;
-
         (async () => {
             if (externalId !== undefined) {
                 setError(false)
@@ -88,33 +97,51 @@ function ReviewView() {
     if (!tagData) { return null }
 
     return (
-        <Tabs
-            activeTab={activeTab}
-            onChange={setActiveTab}
-        >
-            <List>
-                <Tab>Send for review</Tab>
-                <Tab>My reviews</Tab>
-            </List>
-            <Panels>
-                <Panel>
-                    <SendForReview
-                        tagData={tagData}
-                        userId={currentUserId}
-                        myTags={myReviews}
-                        setMyTags={setMyReviews}
-                    />
-                </Panel>
-                <Panel>
-                    <MyReviews
-                        tagData={tagData}
-                        userId={currentUserId}
-                        myTags={myReviews}
-                        setMyTags={setMyReviews}
-                    />
-                </Panel>
-            </Panels>
-        </Tabs>
+        <>
+            <p>Containers</p>
+            {containerReviews && containerReviews.map((cr) => (
+                <>
+                    <p>
+                        containerId
+                        <br />
+                        {cr.containerId}
+                    </p>
+                    <p>
+                        containerReviewId
+                        <br />
+                        {cr.id}
+                    </p>
+                    <p>
+                        State:
+                        <br />
+                        {cr.state}
+                    </p>
+                </>
+            ))}
+            <Tabs
+                activeTab={activeTab}
+                onChange={setActiveTab}
+            >
+                <List>
+                    <Tab>Send for review</Tab>
+                    <Tab>My reviews</Tab>
+                </List>
+                <Panels>
+                    <Panel>
+                        <SendForReview
+                            tagData={tagData}
+                            userId={currentUserId}
+                            myContainerReviews={myContainerReviews}
+                            setMyContainerReviews={setMyContainerReviews}
+                            containerReviews={containerReviews}
+                            containers={containers}
+                            myTagReviewers={myTagReviewers}
+                            setMyTagReviewers={setMyTagReviewers}
+                        />
+                    </Panel>
+                </Panels>
+            </Tabs>
+        </>
     )
 }
 

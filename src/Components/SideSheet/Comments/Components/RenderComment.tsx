@@ -35,7 +35,6 @@ interface RenderCommentProps {
 }
 
 const deleteComment = async (
-    reviewId: string,
     activeConversationId: string,
     message: Message,
     activeConversation: Conversation,
@@ -136,7 +135,6 @@ const RenderComment: FC<RenderCommentProps> = ({
                     <Button
                         variant="ghost_icon"
                         onClick={() => deleteComment(
-                            activeTagData?.review?.id ?? "",
                             activeConversation?.id ?? "",
                             comment,
                             activeConversation,

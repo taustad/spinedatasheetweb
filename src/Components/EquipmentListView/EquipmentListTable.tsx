@@ -1,14 +1,20 @@
-import React, { Dispatch, SetStateAction, useMemo } from "react"
+import React, {
+    Dispatch, SetStateAction, useContext, useEffect, useMemo, useState,
+} from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import { tokens } from "@equinor/eds-tokens"
-import { Icon } from "@equinor/eds-core-react"
-import { block, done, tag } from "@equinor/eds-icons"
+import { Checkbox, Icon } from "@equinor/eds-core-react"
+import {
+    block, tag,
+} from "@equinor/eds-icons"
 import styled from "styled-components"
 import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
 import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
-import EquipmentListReviewRenderer from "./EquipmentListReviewRenderer"
+import { ViewContext } from "../../Context/ViewContext"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
+import { GetContainerService } from "../../api/ContainerService"
 
 interface Props {
     tags: TagData[]
@@ -42,6 +48,13 @@ function EquipmentListTable({
     const location = useLocation()
     const styles = useStyles()
 
+    const [tagReviewers, setTagReviewers] = useState<Components.Schemas.TagReviewerDto[]>([])
+    const [containers, setContainers] = useState<Components.Schemas.ContainerDto[]>([])
+
+    const {
+        currentUserId,
+    } = useContext(ViewContext)
+
     const defaultColDef = useMemo<ColDef>(
         () => ({
             sortable: true,
@@ -51,6 +64,29 @@ function EquipmentListTable({
         }),
         [],
     )
+
+    useEffect(() => {
+        let isCancelled = false;
+        (async () => {
+            try {
+                if (currentUserId) {
+                    const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUserId)
+                    setTagReviewers(myReviewsFromServer.data)
+
+                    const containerResults = await (await GetContainerService()).getContainers()
+                    setContainers(containerResults)
+                }
+            } catch {
+                if (!isCancelled) {
+                    console.error("Error loading user reviews")
+                }
+            }
+        })()
+
+        return () => {
+            isCancelled = true
+        }
+    }, [currentUserId])
 
     const typeOfJIP33 = ({ data: { discipline } }: any) => {
         if (discipline === "Mechanical") {
@@ -88,41 +124,15 @@ function EquipmentListTable({
         </Link>
     )
 
-    const tagDataReviewStatusRenderer = (params: any) => {
-        const status = params.data.review?.status
-        switch (status) {
-            case "Reviewed":
-                return <Icon data={done} color="green" />
-            case "Resubmit":
-                return <Icon data={block} color="red" />
-            default:
-                return null
-        }
-    }
-
-    const revisionContainerReviewStatusRenderer = (
-        params: ICellRendererParams,
-    ) => {
-        const status = params.data.revisionContainer?.revisionContainerReview?.status
-        switch (status) {
-            case "Reviewed":
-                return <Icon data={done} color="green" />
-            case "Resubmit":
-                return <Icon data={block} color="red" />
-            default:
-                return null
-        }
-    }
-
     const reviewDeadlineRenderer = (params: ICellRendererParams) => {
         if (
-            params.data.revisionContainer === null
-            || params.data.revisionContainer === undefined
+            params.data.container === null
+            || params.data.container === undefined
         ) {
             return null
         }
         const packageDate = new Date(
-            params.data.revisionContainer.revisionContainerDate,
+            params.data.container.containerDate,
         )
         const deadline = new Date(
             packageDate.setDate(packageDate.getDate() + 10),
@@ -139,6 +149,39 @@ function EquipmentListTable({
         return deadline.toISOString().slice(0, 10)
     }
 
+    const handleTagReviewerCheckboxClick = async (rowState: any) => {
+        const newState = rowState.state === "NotReviewed" ? "Reviewed" : "NotReviewed"
+        const dto: Components.Schemas.UpdateTagReviewerDto = {
+            state: newState,
+        }
+        const result = await (await GetTagReviewerService()).updateReviewer(rowState.containerReviewId, rowState.id, dto)
+
+        setTagReviewers(tagReviewers?.map((tr) => (tr.id === rowState.id ? { ...tr, state: newState } : tr)))
+    }
+
+    const reviewStatusRenderer = (params: ICellRendererParams) => {
+        if (!tagReviewers) { return null }
+
+        const rowState = tagReviewers.find((r) => r.tagNo === params.data.tagNo)
+
+        if (!rowState) { return null }
+
+        if (rowState.state === "NotReviewed") {
+            return (<Checkbox onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
+        }
+
+        return (<Checkbox defaultChecked onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
+    }
+
+    const buildEquipmentListRowData = () => {
+        const tagDataWithContainer = tags.map((t) => {
+            const container = containers.find((c) => c.tagNos?.includes(t.tagNo ?? ""))
+            return { ...t, container }
+        })
+
+        return tagDataWithContainer
+    }
+
     const columns = [
         {
             headerName: "Tag info",
@@ -148,13 +191,18 @@ function EquipmentListTable({
                     headerName: "Tag number",
                     cellRenderer: (params: any) => linkToDocument(params),
                 },
+                {
+                    field: "reviewStatus",
+                    headerName: "My assigned tags",
+                    cellRenderer: (params: any) => reviewStatusRenderer(params),
+                },
                 { field: "version", headerName: "Version number" },
                 {
-                    field: "revisionContainer.revisionNumber",
+                    field: "container.revisionNumber",
                     headerName: "Revision number",
                 },
                 {
-                    field: "revisionContainer.revisionContainerName",
+                    field: "container.containerName",
                     headerName: "Collection group",
                 },
                 {
@@ -182,34 +230,6 @@ function EquipmentListTable({
             headerName: "Review info",
             children: [
                 {
-                    field: "",
-                    headerName: "Review",
-                    cellRenderer: (params: any) => EquipmentListReviewRenderer(
-                        params,
-                        setReviewModalOpen,
-                        setTagInReview,
-                        setRevisionInReview,
-                    ),
-                },
-                {
-                    field: "revisionContainer.revisionContainerReview.status",
-                    headerName: "Revision container review status",
-                    cellRenderer: (params: any) => revisionContainerReviewStatusRenderer(params),
-                },
-                {
-                    field: "review.status",
-                    headerName: "Review status",
-                    cellRenderer: (params: any) => tagDataReviewStatusRenderer(params),
-                },
-                {
-                    field: "review.approverId",
-                    headerName: "Reviewers",
-                },
-                {
-                    field: "review.commentResponsible",
-                    headerName: "Comment responsible",
-                },
-                {
                     field: "reviewDeadline",
                     headerName: "Review deadline",
                     cellRenderer: (params: any) => reviewDeadlineRenderer(params),
@@ -224,7 +244,7 @@ function EquipmentListTable({
                 className="ag-theme-alpine-fusion"
             >
                 <AgGridReact
-                    rowData={tags}
+                    rowData={buildEquipmentListRowData()}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     animateRows
@@ -233,7 +253,7 @@ function EquipmentListTable({
                     rowSelection="multiple"
                     suppressMovableColumns
                     headerHeight={48}
-                    rowHeight={35}
+                    rowHeight={50}
                     enableRangeSelection
                 />
             </TableContainer>

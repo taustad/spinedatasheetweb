@@ -40,6 +40,10 @@ interface ViewContextProps {
     setErrors: React.Dispatch<React.SetStateAction<ErrorType>>;
     SideSheetScrollPos : number;
     setSideSheetScrollPos : React.Dispatch<React.SetStateAction<number>>;
+    containerReviews: Components.Schemas.ContainerReviewDto[]
+    setContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewDto[]>>
+    currentUserId: string
+    setCurrentUserId: Dispatch<SetStateAction<string>>
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -61,6 +65,10 @@ export const ViewContext = createContext<ViewContextProps>({
     setErrors: () => { },
     SideSheetScrollPos: 0,
     setSideSheetScrollPos: () => { },
+    containerReviews: [],
+    setContainerReviews: () => { },
+    currentUserId: "",
+    setCurrentUserId: () => "",
 })
 
 interface ViewContextProviderProps {
@@ -77,7 +85,9 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [SideSheetScrollPos, setSideSheetScrollPos] = useState<number>(() => parseInt(localStorage.getItem("SideSheetScrollPos") || "0", 10))
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
+    const [containerReviews, setContainerReviews] = useState<Components.Schemas.ContainerReviewDto[]>([])
     const [errors, setErrors] = useState<{}>({})
+    const [currentUserId, setCurrentUserId] = useState<string>("")
 
     useEffect(() => {
         localStorage.setItem("isSideSheetOpen", JSON.stringify(sideSheetOpen))
@@ -119,6 +129,10 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            containerReviews,
+            setContainerReviews,
+            currentUserId,
+            setCurrentUserId,
             currentProperty,
             setCurrentProperty,
         }),
@@ -139,6 +153,10 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setErrors,
             SideSheetScrollPos,
             setSideSheetScrollPos,
+            containerReviews,
+            setContainerReviews,
+            currentUserId,
+            setCurrentUserId,
             currentProperty,
             setCurrentProperty,
         ],

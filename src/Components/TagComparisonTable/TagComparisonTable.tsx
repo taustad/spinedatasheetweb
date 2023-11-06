@@ -2,7 +2,7 @@ import { ColDef, SideBarDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import React, {
-    useCallback, useEffect, useMemo, useRef, useState, useContext,
+    useCallback, useEffect, useMemo, useRef, useState, useContext, Component,
 } from "react"
 import { Button, Icon } from "@equinor/eds-core-react"
 import { view_column } from "@equinor/eds-icons"
@@ -20,7 +20,7 @@ import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
 import { ViewContext } from "../../Context/ViewContext"
 import { comparisonReviewColumnDefs } from "./ColumnDefs/ReviewColumnDefs"
-import { GetTagDataReviewService } from "../../api/TagDataReviewService"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -59,7 +59,7 @@ function TagComparisonTable({ tags }: Props) {
     } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
-    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagDataReviewDto[]>()
+    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagReviewerDto[]>()
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
     const defaultColDef = useMemo<ColDef>(
@@ -76,7 +76,7 @@ function TagComparisonTable({ tags }: Props) {
     useEffect(() => {
         (async () => {
             try {
-                const result = await (await GetTagDataReviewService()).getTagDataReviews()
+                const result = await (await GetTagReviewerService()).getTagReviewers()
                 setTagReviews(result.data)
             } catch (error) {
                 console.error(`Couldn't get tag reviews: ${error}`)
@@ -86,13 +86,11 @@ function TagComparisonTable({ tags }: Props) {
 
     const getReviewerNamesFromReviews = (tag: InstrumentTagData) => {
         const reviewers: string[] = []
-        tagReviews?.forEach((tagReview: Components.Schemas.TagDataReviewDto) => {
+        tagReviews?.forEach((tagReview: Components.Schemas.TagReviewerDto) => {
             if (tag.tagNo !== tagReview.tagNo) { return }
-            tagReview?.reviewer?.forEach((tR: Components.Schemas.ReviewerDto) => {
-                if (tR.displayName) {
-                    reviewers.push(tR?.displayName)
-                }
-            })
+            if (tagReview.displayName) {
+                reviewers.push(tagReview?.displayName)
+            }
         })
         return reviewers.toString()
     }
@@ -199,11 +197,11 @@ function TagComparisonTable({ tags }: Props) {
         const comparisonColumns = params.columnApi?.getColumns()
         const renderedRowNodes = params.api?.getRenderedNodes()
         comparisonColumns?.forEach((column: any) => {
-          const columnHasNoData = !renderedRowNodes?.some((rowNode: any) => {
-            const nodeValue = params.api?.getValue(column, rowNode)
-            return typeof nodeValue !== "undefined" && nodeValue !== null && nodeValue !== ""
-          })
-          params.columnApi.setColumnVisible(column, !columnHasNoData)
+            const columnHasNoData = !renderedRowNodes?.some((rowNode: any) => {
+                const nodeValue = params.api?.getValue(column, rowNode)
+                return typeof nodeValue !== "undefined" && nodeValue !== null && nodeValue !== ""
+            })
+            params.columnApi.setColumnVisible(column, !columnHasNoData)
         })
     }, [])
 

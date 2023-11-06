@@ -53,7 +53,6 @@ const EditControls = styled.div`
 `
 
 const updateComment = async (
-    reviewId: string,
     activeConversationId: string,
     message: Message,
     newCommentText: string,
@@ -137,7 +136,6 @@ const InputController: FC<InputControllerProps> = ({
         }
 
         updateComment(
-            activeTagData?.review?.id ?? "",
             activeConversation.id ?? "",
             newMessage,
             newMessage.text,

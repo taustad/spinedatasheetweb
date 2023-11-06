@@ -20,13 +20,19 @@ const configuration = {
     MessageService: {
         BASE_URL: "",
     },
-    TagDataReviewService: {
-        BASE_URL: "",
-    },
-    RevisionReviewService: {
-        BASE_URL: "",
-    },
     UserTagService: {
+        BASE_URL: "",
+    },
+    ContainerService: {
+        BASE_URL: "",
+    },
+    ContainerReviewService: {
+        BASE_URL: "",
+    },
+    ContainerReviewerService: {
+        BASE_URL: "",
+    },
+    TagReviewerService: {
         BASE_URL: "",
     },
 }
@@ -37,9 +43,11 @@ export const buildConfig = (baseUrl: string) => {
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
     configuration.ConversationService.BASE_URL = `${baseUrl}/projects`
     configuration.MessageService.BASE_URL = `${baseUrl}/conversations`
-    configuration.TagDataReviewService.BASE_URL = `${baseUrl}/tagdatareviews`
-    configuration.RevisionReviewService.BASE_URL = `${baseUrl}/revisionreviews`
     configuration.UserTagService.BASE_URL = `${baseUrl}/usertags`
+    configuration.ContainerService.BASE_URL = `${baseUrl}/containers`
+    configuration.ContainerReviewService.BASE_URL = `${baseUrl}/container-reviews`
+    configuration.ContainerReviewerService.BASE_URL = `${baseUrl}`
+    configuration.TagReviewerService.BASE_URL = `${baseUrl}`
 }
 
 export const config = Object.freeze(configuration)

@@ -1,6 +1,3 @@
-import { RevisionContainer } from "./RevisionContainer"
-import { TagDataReview } from "./TagDataReview"
-
 export class TagData implements Components.Schemas.TagDataDto {
     id?: string; // uuid
     tagNo?: string | null;
@@ -18,8 +15,7 @@ export class TagData implements Components.Schemas.TagDataDto {
     tagType?: string | null;
     subTagType?: string | null;
     version?: number; // int32
-    review?: TagDataReview;
-    revisionContainer?: RevisionContainer;
+    revisionContainer?: Components.Schemas.ContainerDto;
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time
 
