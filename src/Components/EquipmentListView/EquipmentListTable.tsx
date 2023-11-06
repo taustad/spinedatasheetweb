@@ -179,7 +179,7 @@ function EquipmentListTable({
                 },
                 {
                     field: "reviewStatus",
-                    headerName: "Review status",
+                    headerName: "My assigned tags",
                     cellRenderer: (params: any) => reviewStatusRenderer(params),
                 },
                 { field: "version", headerName: "Version number" },
