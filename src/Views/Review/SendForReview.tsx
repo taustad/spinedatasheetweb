@@ -51,6 +51,10 @@ function SendForReview({
             const result = await (await GetContainerReviewerService()).createContainerReviewer(newContainerReview, containerReviewId)
             const updatedMyReviews = myContainerReviews.concat(result)
             setMyContainerReviews(updatedMyReviews)
+            if (result.tagReviewers?.length && result.tagReviewers.length > 0) {
+                const updatedMyTagReviewers = myTagReviewers.concat(result.tagReviewers)
+                setMyTagReviewers(updatedMyTagReviewers)
+            }
             return
         }
 

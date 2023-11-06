@@ -9,7 +9,7 @@ class TagReviewerService extends BaseService {
         return result.value
     }
 
-    async getTagReviewers(reviewerId: string) {
+    async getTagReviewers(reviewerId: string = "00000000-0000-0000-0000-000000000000") {
         const result = await this.getWithParams(
             "tag-reviewers",
             {

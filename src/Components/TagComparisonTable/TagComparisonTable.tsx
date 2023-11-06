@@ -20,6 +20,7 @@ import TagPropertySideSheet from "../SideSheet/TagPropertySideSheet"
 import TagSideSheet from "../SideSheet/TagSideSheet"
 import { ViewContext } from "../../Context/ViewContext"
 import { comparisonReviewColumnDefs } from "./ColumnDefs/ReviewColumnDefs"
+import { GetTagReviewerService } from "../../api/TagReviewerService"
 
 const TableContainer = styled.div`
     flex: 1 1 auto;
@@ -75,8 +76,8 @@ function TagComparisonTable({ tags }: Props) {
     useEffect(() => {
         (async () => {
             try {
-                // const result = await (await GetTagDataReviewService()).getTagDataReviews()
-                // setTagReviews(result.data)
+                const result = await (await GetTagReviewerService()).getTagReviewers()
+                setTagReviews(result.data)
             } catch (error) {
                 console.error(`Couldn't get tag reviews: ${error}`)
             }
@@ -87,11 +88,9 @@ function TagComparisonTable({ tags }: Props) {
         const reviewers: string[] = []
         tagReviews?.forEach((tagReview: any) => {
             if (tag.tagNo !== tagReview.tagNo) { return }
-            tagReview?.reviewer?.forEach((tR: Components.Schemas.TagReviewerDto) => {
-                if (tR.displayName) {
-                    reviewers.push(tR?.displayName)
-                }
-            })
+            if (tagReview.displayName) {
+                reviewers.push(tagReview?.displayName)
+            }
         })
         return reviewers.toString()
     }
@@ -198,11 +197,11 @@ function TagComparisonTable({ tags }: Props) {
         const comparisonColumns = params.columnApi?.getColumns()
         const renderedRowNodes = params.api?.getRenderedNodes()
         comparisonColumns?.forEach((column: any) => {
-          const columnHasNoData = !renderedRowNodes?.some((rowNode: any) => {
-            const nodeValue = params.api?.getValue(column, rowNode)
-            return typeof nodeValue !== "undefined" && nodeValue !== null && nodeValue !== ""
-          })
-          params.columnApi.setColumnVisible(column, !columnHasNoData)
+            const columnHasNoData = !renderedRowNodes?.some((rowNode: any) => {
+                const nodeValue = params.api?.getValue(column, rowNode)
+                return typeof nodeValue !== "undefined" && nodeValue !== null && nodeValue !== ""
+            })
+            params.columnApi.setColumnVisible(column, !columnHasNoData)
         })
     }, [])
 
