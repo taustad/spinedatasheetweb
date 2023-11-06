@@ -21,8 +21,8 @@ interface Props {
     setMyContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewerDto[]>>,
     myTagReviewers: Components.Schemas.TagReviewerDto[]
     setMyTagReviewers: Dispatch<SetStateAction<Components.Schemas.TagReviewerDto[]>>,
-    containerReviews: any[]
-    containers: any[]
+    containerReviews: Components.Schemas.ContainerReviewDto[]
+    containers: Components.Schemas.ContainerDto[]
 }
 
 function SendForReview({
@@ -35,7 +35,8 @@ function SendForReview({
     myTagReviewers,
     setMyTagReviewers,
 }: Props) {
-    const handleButtonClick = async (tagNo: string, containerReviewId: string) => {
+    const handleButtonClick = async (tagNo: string, containerReviewId: string | undefined) => {
+        if (containerReviewId === undefined) { return }
         const existingContainerReviewer = myContainerReviews.find((cr) => cr.containerReviewId === containerReviewId)
         if (existingContainerReviewer === undefined) {
             const newContainerReview: Components.Schemas.CreateContainerReviewerDto = {
@@ -49,10 +50,10 @@ function SendForReview({
             }
 
             const result = await (await GetContainerReviewerService()).createContainerReviewer(newContainerReview, containerReviewId)
-            const updatedMyReviews = myContainerReviews.concat(result)
+            const updatedMyReviews = [...myContainerReviews, result]
             setMyContainerReviews(updatedMyReviews)
             if (result.tagReviewers?.length && result.tagReviewers.length > 0) {
-                const updatedMyTagReviewers = myTagReviewers.concat(result.tagReviewers)
+                const updatedMyTagReviewers = [...myTagReviewers, ...result.tagReviewers]
                 setMyTagReviewers(updatedMyTagReviewers)
             }
             return
@@ -66,7 +67,7 @@ function SendForReview({
         const dtoList = [newTagReviewer]
 
         const result = await (await GetTagReviewerService()).createTagDataReview(dtoList, existingContainerReviewer.id ?? "")
-        const updatedMyTagReviewers = myTagReviewers.concat(result[0])
+        const updatedMyTagReviewers = [...myTagReviewers, result[0]]
         setMyTagReviewers(updatedMyTagReviewers)
     }
 
@@ -76,7 +77,7 @@ function SendForReview({
     }
 
     const getContainerReviewIdForTagNo = (tagNo: string) => {
-        const container = containers?.find((c) => c.tagNos.includes(tagNo))
+        const container = containers?.find((c) => c.tagNos?.includes(tagNo))
         if (!container) { return null }
         const containerReview = containerReviews.find((cr) => cr.containerId === container.id)
         return containerReview
@@ -94,7 +95,7 @@ function SendForReview({
                         <Wrapper>
                             <Typography>{number}</Typography>
                             <Button
-                                onClick={() => handleButtonClick(number, containerReview.id)}
+                                onClick={() => handleButtonClick(number, containerReview?.id)}
                                 disabled={disableAssignButton(number)}
                             >
                                 Assign

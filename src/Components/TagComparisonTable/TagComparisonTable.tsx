@@ -2,7 +2,7 @@ import { ColDef, SideBarDef } from "@ag-grid-community/core"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
 import React, {
-    useCallback, useEffect, useMemo, useRef, useState, useContext,
+    useCallback, useEffect, useMemo, useRef, useState, useContext, Component,
 } from "react"
 import { Button, Icon } from "@equinor/eds-core-react"
 import { view_column } from "@equinor/eds-icons"
@@ -59,7 +59,7 @@ function TagComparisonTable({ tags }: Props) {
     } = useContext(ViewContext)
     const [FilterSidebarIsOpen, SetFilterSidebarIsOpen] = useState<boolean>(false)
     const [showTagSideSheet, setShowTagSideSheet] = useState<boolean>(false)
-    const [tagReviews, setTagReviews] = useState<any[]>()
+    const [tagReviews, setTagReviews] = useState<Components.Schemas.TagReviewerDto[]>()
 
     const toggleFilterSidebar = () => SetFilterSidebarIsOpen(!FilterSidebarIsOpen)
     const defaultColDef = useMemo<ColDef>(
@@ -86,7 +86,7 @@ function TagComparisonTable({ tags }: Props) {
 
     const getReviewerNamesFromReviews = (tag: InstrumentTagData) => {
         const reviewers: string[] = []
-        tagReviews?.forEach((tagReview: any) => {
+        tagReviews?.forEach((tagReview: Components.Schemas.TagReviewerDto) => {
             if (tag.tagNo !== tagReview.tagNo) { return }
             if (tagReview.displayName) {
                 reviewers.push(tagReview?.displayName)

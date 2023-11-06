@@ -73,7 +73,7 @@ function EquipmentListTable({
                 }
             } catch {
                 if (!isCancelled) {
-                    console.error("Error loading tags")
+                    console.error("Error loading user reviews")
                 }
             }
         })()
