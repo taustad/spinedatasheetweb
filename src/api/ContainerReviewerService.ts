@@ -4,18 +4,18 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class ContainerReviewerService extends BaseService {
     async getContainerReviewer(containerReviewId: string, containerReviewerId: string) {
-        const result: any = await this.get(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`)
+        const result = await this.get(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`)
         return result.value
     }
 
     async getContainerReviewersForContainer(containerReviewId: string, userId: string = "") {
         if (userId === "") {
-            const result: any = await this.get(`/container-reviews/${containerReviewId}/container-reviewers`)
+            const result = await this.get(`/container-reviews/${containerReviewId}/container-reviewers`)
             return result
         }
 
         // Get container reviewer for specific user
-        const result: any = await this.getWithParams(
+        const result = await this.getWithParams(
             `/container-reviews/${containerReviewId}/container-reviewers`,
             {
                 params: { userId },
@@ -27,7 +27,7 @@ class ContainerReviewerService extends BaseService {
 
     async getContainerReviewers(userId: string) {
         // Get container reviewer for specific user
-        const result: any = await this.getWithParams(
+        const result = await this.getWithParams(
             "/container-reviewers",
             {
                 params: { userId },
@@ -49,7 +49,7 @@ class ContainerReviewerService extends BaseService {
         containerReviewId: string,
         containerReviewerId: string,
     ) {
-        const result: any = await this.put(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`, {
+        const result = await this.put(`/container-reviews/${containerReviewId}/container-reviewers/${containerReviewerId}`, {
             body: updateReviewerDto,
         })
         return result

@@ -4,7 +4,7 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class ContainerService extends BaseService {
     async getContainer(id: string) {
-        const result: any = await this.get(`/${id}`)
+        const result = await this.get(`/${id}`)
         return result.value
     }
 

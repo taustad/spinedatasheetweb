@@ -4,7 +4,7 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 
 class TagReviewerService extends BaseService {
     async getTagDataReview(id: string) {
-        const result: any = await this.get(`project/${id}`)
+        const result = await this.get(`project/${id}`)
         return result.value
     }
 
@@ -19,7 +19,7 @@ class TagReviewerService extends BaseService {
     }
 
     async getTagDataReviewsForTag(id: string) {
-        const result: any = await this.get(`tag/${id}`)
+        const result = await this.get(`tag/${id}`)
         return result
     }
 
@@ -27,7 +27,7 @@ class TagReviewerService extends BaseService {
         tagReviewerDto: Components.Schemas.CreateTagReviewerDto[],
         containerReviewerId: string,
     ) {
-        const result: any = await this.post(`container-reviewers/${containerReviewerId}/tag-reviewers`, {
+        const result = await this.post(`container-reviewers/${containerReviewerId}/tag-reviewers`, {
             body: tagReviewerDto,
         })
         return result
@@ -38,7 +38,7 @@ class TagReviewerService extends BaseService {
         tagReviewerId: string,
         updateReviewerDto: Components.Schemas.UpdateTagReviewerDto,
     ) {
-        const result: any = await this.put(`container-reviewers/${containerReviewerId}/tag-reviewers/${tagReviewerId}`, {
+        const result = await this.put(`container-reviewers/${containerReviewerId}/tag-reviewers/${tagReviewerId}`, {
             body: updateReviewerDto,
         })
         return result
