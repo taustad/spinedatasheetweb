@@ -45,7 +45,7 @@ declare namespace Components {
         export type ConversationStatusDto = "Open" | "To_be_implemented" | "Closed" | "Implemented";
         export interface CreateContainerReviewDto {
             revisionContainerId?: string; // uuid
-            status: ReviewStatusDto;
+            state: ContainerReviewStateEnumDto;
         }
         export interface CreateContainerReviewerDto {
             userId?: string; // uuid
@@ -1587,7 +1587,6 @@ declare namespace Components {
             modifiedDate?: string; // date-time
             contracts?: ContractDto[] | null;
         }
-        export type ReviewStatusDto = "NotReviewed" | "Reviewed";
         export interface TagDataDto {
             id?: string; // uuid
             tagNo?: string | null;

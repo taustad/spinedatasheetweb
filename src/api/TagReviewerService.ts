@@ -1,4 +1,3 @@
-import { TagDataReview } from "../Models/TagDataReview"
 import { BaseService } from "./BaseService"
 
 import { config, GetToken, LoginAccessTokenKey } from "./config"

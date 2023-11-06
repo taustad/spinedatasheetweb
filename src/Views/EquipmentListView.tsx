@@ -8,7 +8,6 @@ import { GetTagDataService } from "../api/TagDataService"
 import EquipmentListTable from "../Components/EquipmentListView/EquipmentListTable"
 import { TagData } from "../Models/TagData"
 import TagComparisonTable from "../Components/TagComparisonTable/TagComparisonTable"
-import EquipmentListReview from "../Components/EquipmentListView/EquipmentListReview"
 import Dialogue from "../Components/Dialogue"
 import { ViewContext } from "../Context/ViewContext"
 
@@ -145,14 +144,6 @@ function EquipmentListView() {
                     </StyledTabPanel>
                 </Panels>
             </StyledTabs>
-
-            <EquipmentListReview
-                isOpen={reviewModalOpen}
-                setIsOpen={setReviewModalOpen}
-                tagNoInReview={tagInReview}
-                revisionInReview={revisionInReview}
-            />
-
         </Wrapper>
     )
 }
