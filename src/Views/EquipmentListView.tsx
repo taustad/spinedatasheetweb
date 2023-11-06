@@ -52,13 +52,14 @@ function EquipmentListView() {
         currentUserId, setCurrentUserId,
     } = useContext(ViewContext)
 
+    //should probably be moved to main nav component
     useEffect(() => {
         if (currentUser?._info?.localAccountId) {
             setCurrentUserId(currentUser?._info?.localAccountId)
         }
     }, [currentUser])
-
-    // Set externalId to current project's externalId
+  
+    //should probably be moved to main nav component
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)
@@ -121,7 +122,6 @@ function EquipmentListView() {
 
     return (
         <Wrapper>
-
             <StyledTabs
                 activeTab={activeTab}
                 onChange={setActiveTab}

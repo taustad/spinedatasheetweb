@@ -1,10 +1,12 @@
 
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import {
  Breadcrumbs, Button, Search, Typography, Icon, Chip,
 } from "@equinor/eds-core-react"
-import { Link } from "react-router-dom"
+import {
+ Link, useLocation, Outlet,
+} from "react-router-dom"
 import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
 import ReviewButton from "../Components/Buttons/ReviewButton"
@@ -69,6 +71,44 @@ const ReviewStatus = styled.div`
     flex-wrap: nowrap;
 `
 
+const Content = styled.div`
+    box-sizing: border-box;
+    padding:  15px;
+    width: 100%;
+    height: 100%;
+    border-top: 1px solid LightGray;
+    background-color: #F7F7F7;
+`
+
+const StyledLink = styled(Link)`
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+        background-color: #e0e0e0;
+    }
+
+    &.active {
+        color: #fff;
+        background-color: #1976d2;
+    }
+`
+
+const Links = styled.nav`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-top: 1px solid LightGray;
+`
+
 const initialPeople = [
     {
         name: "Ahmed Abdi",
@@ -93,59 +133,83 @@ const initialPeople = [
     },
 ]
 
-const ContainerView = () => (
-    <div>
-        <Wrapper>
-            <Breadcrumbs>
-                <Breadcrumbs.Breadcrumb as={Link} to="/test1">
-                    test1
-                </Breadcrumbs.Breadcrumb>
-                <Breadcrumbs.Breadcrumb as={Link} to="/test2">
-                    tes2
-                </Breadcrumbs.Breadcrumb>
-            </Breadcrumbs>
-            <FormWrapper>
-                <Search aria-label="Search for something" />
-                <Button variant="ghost_icon">
-                    <Icon data={search} />
-                </Button>
-            </FormWrapper>
-        </Wrapper>
-        <Wrapper>
-            <HeaderWrapper $alignment="baseline">
-                <ReviewStatus>
-                    <Typography variant="h2">Container A</Typography>
-                    <Chip variant="active">Active</Chip>
-                </ReviewStatus>
+const ContainerView = () => {
+    const location = useLocation()
 
-                <ReviewStatus>
-                    <Typography variant="body_short_bold">Revision 1</Typography>
-                    <Typography variant="body_short"> - 23. Juni 2023</Typography>
-                </ReviewStatus>
+    useEffect(() => {
+        console.log(location.pathname)
+    }, [location.pathname])
 
-            </HeaderWrapper>
+    return (
+        <div>
+            <Wrapper>
+                <Breadcrumbs>
+                    <Breadcrumbs.Breadcrumb as={Link} to="/test1">
+                        test1
+                    </Breadcrumbs.Breadcrumb>
+                    <Breadcrumbs.Breadcrumb as={Link} to="/test2">
+                        tes2
+                    </Breadcrumbs.Breadcrumb>
+                </Breadcrumbs>
+                <FormWrapper>
+                    <Search aria-label="Search for something" />
+                    <Button variant="ghost_icon">
+                        <Icon data={search} />
+                    </Button>
+                </FormWrapper>
+            </Wrapper>
+            <Wrapper>
+                <HeaderWrapper $alignment="baseline">
+                    <ReviewStatus>
+                        <Typography variant="h2">Container A</Typography>
+                        <Chip variant="active">Active</Chip>
+                    </ReviewStatus>
 
-            <HeaderWrapper $alignment="flex-end">
-                <ReviewStatus>
-                    <Typography variant="body_short">review due in 2 days</Typography>
-                    <PersonPhoto personId={initialPeople[0].userId} size="medium" />
-                    <GreyDivider />
-                    <PeopleWrapper>
+                    <ReviewStatus>
+                        <Typography variant="body_short_bold">Revision 1</Typography>
+                        <Typography variant="body_short"> - 23. Juni 2023</Typography>
+                    </ReviewStatus>
 
-                        <AvatarGroup>
-                            {initialPeople.map((person) => (
-                        person.userId && (
-                        <PersonPhoto personId={person.userId} size="medium" />
-                        )
-                    ))}
-                        </AvatarGroup>
-                    </PeopleWrapper>
-                </ReviewStatus>
+                </HeaderWrapper>
 
-                <ReviewButton />
-            </HeaderWrapper>
-        </Wrapper>
-    </div>
+                <HeaderWrapper $alignment="flex-end">
+                    <ReviewStatus>
+                        <Typography variant="body_short">review due in 2 days</Typography>
+                        <PersonPhoto personId={initialPeople[0].userId} size="medium" />
+                        <GreyDivider />
+                        <PeopleWrapper>
+
+                            <AvatarGroup>
+                                {initialPeople.map((person) => (
+                                    person.userId && (
+                                    <PersonPhoto key={person.userId} personId={person.userId} size="medium" />
+                                    )
+                                ))}
+                            </AvatarGroup>
+                        </PeopleWrapper>
+                    </ReviewStatus>
+                    <ReviewButton />
+
+                </HeaderWrapper>
+            </Wrapper>
+            <Links>
+                <StyledLink
+                    to="comments"
+                >
+                    Comments
+                </StyledLink>
+                <StyledLink
+                    to="."
+                >
+                    Tags
+                </StyledLink>
+            </Links>
+
+            <Content>
+                <Outlet />
+            </Content>
+        </div>
     )
+}
 
 export default ContainerView

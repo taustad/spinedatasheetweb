@@ -9,7 +9,7 @@ const Navigation = styled.div`
     border-bottom: 2px solid lightgray;
 `
 
-const StyledButton = styled.button<{ isActive: boolean }>`
+const StyledButton = styled.button<{ $isActive: boolean }>`
     position: relative;
     bottom: -2px;
     padding: 10px 20px;
@@ -17,20 +17,20 @@ const StyledButton = styled.button<{ isActive: boolean }>`
     background-color: transparent;
     color: black;
     border: none;
-    border-bottom: ${(props) => (props.isActive ? "2px solid #007079" : "2px solid lightgray")};
-    color: ${(props) => (props.isActive ? "#007079" : "black")};
+    border-bottom: ${(props) => (props.$isActive ? "2px solid #007079" : "2px solid lightgray")};
+    color: ${(props) => (props.$isActive ? "#007079" : "black")};
     border-radius: 0;
 
     &:hover {
         background-color: transparent;
-        color: ${(props) => (props.isActive ? "#007079" : "black")};        
+        color: ${(props) => (props.$isActive ? "#007079" : "black")};        
         border-bottom: 2px solid #007079;
         border-radius: 0;
     }
 
     &:focus {
         background-color: transparent;
-        color: ${(props) => (props.isActive ? "#007079" : "black")};
+        color: ${(props) => (props.$isActive ? "#007079" : "black")};
         border-bottom: 2px solid #007079;
         border-radius: 0;
     }
@@ -47,7 +47,7 @@ const LocalNavigation: FC<Props> = ({ activeTab, setActiveTab, buttons }) => (
         {buttons.map((button, index) => (
             <StyledButton
                 key={`${button}-${index}`}
-                isActive={index === activeTab}
+                $isActive={index === activeTab}
                 onClick={() => setActiveTab(index)}
             >
                 {button}

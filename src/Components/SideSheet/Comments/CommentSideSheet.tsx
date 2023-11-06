@@ -151,7 +151,6 @@ const CommentSideSheet: FC = () => {
                     activeTagData.tagNo,
                     true,
                     )
-                    console.log("newConversations: ", newConversations)
                 setConversations(newConversations)
             } catch (error) {
                 console.error("Error getting messages for conversation: ", error)

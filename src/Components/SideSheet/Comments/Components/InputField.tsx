@@ -88,7 +88,6 @@ const InputField: React.FC<Props> = ({
     } else {
       setSearchTerm("")
     }
-    console.log("text sanitized")
     const comment = { ...newMessage, text: sanitizeContent(commentText) }
     setNewMessage(comment)
   }

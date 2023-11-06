@@ -13,9 +13,9 @@ const Container = styled.div`
     position: fixed;
 `
 
-const TabButton = styled(Button)<{isActive: boolean}>`
+const TabButton = styled(Button)<{$isActive: boolean}>`
     margin-bottom: 15px;
-    background-color: ${(props) => (props.isActive ? "#EBF1F2" : "transparent")};
+    background-color: ${(props) => (props.$isActive ? "#EBF1F2" : "transparent")};
 `
 
 interface ButtonBarProps {
@@ -29,7 +29,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(0)}
-                isActive={activeTab === 0}
+                $isActive={activeTab === 0}
             >
                 <Icon data={build_wrench} />
             </TabButton>
@@ -38,7 +38,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(1)}
-                isActive={activeTab === 1}
+                $isActive={activeTab === 1}
             >
                 <Icon data={library_books} />
             </TabButton>
@@ -47,7 +47,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(2)}
-                isActive={activeTab === 2}
+                $isActive={activeTab === 2}
             >
                 {" "}
                 <Icon data={help_outline} />
@@ -57,7 +57,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(3)}
-                isActive={activeTab === 3}
+                $isActive={activeTab === 3}
             >
                 {" "}
                 <Icon data={library_image} />
@@ -67,7 +67,7 @@ const ButtonBar: FC<ButtonBarProps> = ({ setActiveTab, activeTab }) => (
             <TabButton
                 variant="ghost"
                 onClick={() => setActiveTab(4)}
-                isActive={activeTab === 4}
+                $isActive={activeTab === 4}
             >
                 {" "}
                 <Icon data={shopping_card} />

@@ -8,13 +8,19 @@ import JIP33InstrumentTabView from "./Views/JIP33InstrumentTabView"
 import ReviewView from "./Views/Review/ReviewView"
 import LandingPage from "./Views/NavigatorHeader"
 import ContainerView from "./Views/ContainerView"
+import DraggableCardTable from "./Components/Containers/DraggableCardTable"
+import ContainerTable from "./Components/Containers/ContainerTable"
 
 const AppRouter: FC = () => (
     <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/:projectId" element={<LandingPage />}>
-            <Route path="tags" element={<EquipmentListView />} />
-            <Route path="containers" element={<ContainerView />} />
+            <Route path="/:projectId/tags" element={<EquipmentListView />} />
+            <Route path="containers" element={<ContainerView />}>
+                <Route index element={<ContainerTable />} />
+                <Route path="comments" element={<DraggableCardTable />} />
+
+            </Route>
         </Route>
         <Route path="/comparison" element={<TagComparisonView />} />
         <Route path="/:projectId/tags/JIP33Instrument/:tagId" element={<JIP33InstrumentTabView />} />
