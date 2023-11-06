@@ -15,6 +15,7 @@ import { TagData } from "../../Models/TagData"
 import { ViewContext } from "../../Context/ViewContext"
 import { GetTagReviewerService } from "../../api/TagReviewerService"
 import { GetContainerService } from "../../api/ContainerService"
+import { GetConversationService } from "../../api/ConversationService"
 
 interface Props {
     tags: TagData[]
@@ -75,6 +76,12 @@ function EquipmentListTable({
 
                     const containerResults = await (await GetContainerService()).getContainers()
                     setContainers(containerResults)
+
+                    if (containerResults.length > 0) {
+                        const allConversationsForContainer = await (await GetConversationService())
+                            .getConversationsForContainer(containerResults[0].id)
+                        console.log("allConversationsForContainer: ", allConversationsForContainer)
+                    }
                 }
             } catch {
                 if (!isCancelled) {
