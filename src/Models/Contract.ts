@@ -1,5 +1,5 @@
-import { RevisionContainer } from "./RevisionContainer"
-import { RevisionContainerReview } from "./RevisionContainerReview"
+import { Container } from "./Container"
+import { ContainerReview } from "./ContainerReview"
 import { TagDataReview } from "./TagDataReview"
 
 export class Contract implements Components.Schemas.ContractDto {
@@ -9,7 +9,7 @@ export class Contract implements Components.Schemas.ContractDto {
     contractName?: string | null;
     contractorId?: string; // uuid
     projectId?: string; // uuid
-    revisionContainers?: RevisionContainer[] | null;
+    revisionContainers?: Container[] | null;
 
     constructor(init?: Partial<Contract>) {
         Object.assign(this, init)

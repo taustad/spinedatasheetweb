@@ -1,5 +1,5 @@
 import { Contract } from "@equinor/fusion"
-import { RevisionContainerReview } from "./RevisionContainerReview"
+import { ContainerReview } from "./ContainerReview"
 import { TagData } from "./TagData"
 import { TagDataReview } from "./TagDataReview"
 

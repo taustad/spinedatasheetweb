@@ -13,17 +13,6 @@ class ContainerService extends BaseService {
         const result = await this.get("")
         return result
     }
-
-    // async updateContainerReview(
-    //     reviewId: string,
-    //     reviewerId: string,
-    //     updateReviewerDto: Components.Schemas.UpdateReviewerDto,
-    // ) {
-    //     const result: any = await this.put(`${reviewId}/reviewers/${reviewerId}`, {
-    //         body: updateReviewerDto,
-    //     })
-    //     return result
-    // }
 }
 
 export async function GetContainerService() {

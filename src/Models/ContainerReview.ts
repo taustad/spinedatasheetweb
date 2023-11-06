@@ -1,7 +1,7 @@
 import { Message } from "./Message"
-import { RevisionContainer } from "./RevisionContainer"
+import { Container } from "./Container"
 
-export class RevisionContainerReview { // implements Components.Schemas.RevisionContainerReviewDto {
+export class ContainerReview { // implements Components.Schemas.RevisionContainerReviewDto {
     id?: string; // uuid
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time
@@ -11,10 +11,10 @@ export class RevisionContainerReview { // implements Components.Schemas.Revision
     approved?: boolean;
     revisionContainerVersion?: number; // int32
     revisionContainerId?: string; // uuid
-    revisionContainer?: RevisionContainer;
+    revisionContainer?: Container;
     comments?: Message[] | null;
 
-    constructor(init?: Partial<RevisionContainerReview>) {
+    constructor(init?: Partial<ContainerReview>) {
         Object.assign(this, init)
     }
 }

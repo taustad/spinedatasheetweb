@@ -1,4 +1,4 @@
-import { RevisionContainer } from "./RevisionContainer"
+import { Container } from "./Container"
 import { TagDataReview } from "./TagDataReview"
 
 export class TagData implements Components.Schemas.TagDataDto {
@@ -19,7 +19,7 @@ export class TagData implements Components.Schemas.TagDataDto {
     subTagType?: string | null;
     version?: number; // int32
     review?: TagDataReview;
-    revisionContainer?: RevisionContainer;
+    revisionContainer?: Container;
     createdDate?: string; // date-time
     modifiedDate?: string; // date-time
 
