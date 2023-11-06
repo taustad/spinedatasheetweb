@@ -16,7 +16,6 @@ const { Panel } = Tabs
 const { List, Tab, Panels } = Tabs
 
 function ReviewView() {
-    console.log("ReviewView")
     const [activeTab, setActiveTab] = useState(0)
     const [tagData, setTagData] = useState<TagData[] | undefined>(undefined)
     const [externalId, setExternalId] = useState<string | undefined>()

@@ -66,13 +66,11 @@ function SendForReview({
         const dtoList = [newTagReviewer]
 
         const result = await (await GetTagReviewerService()).createTagDataReview(dtoList, existingContainerReviewer.id ?? "")
-        console.log("Result: ", result)
         const updatedMyTagReviewers = myTagReviewers.concat(result[0])
         setMyTagReviewers(updatedMyTagReviewers)
     }
 
     const disableAssignButton = (tagno: string): boolean => {
-        console.log("disableAssignButton: ", myContainerReviews)
         const exists = myTagReviewers.find((r) => r.tagNo?.includes(tagno))
         return exists !== undefined
     }

@@ -69,7 +69,6 @@ function EquipmentListTable({
             try {
                 if (currentUserId) {
                     const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUserId)
-                    console.log("myReviewsFromServer: ", myReviewsFromServer)
                     setTagReviewers(myReviewsFromServer.data)
                 }
             } catch {
@@ -151,21 +150,16 @@ function EquipmentListTable({
             state: newState,
         }
         const result = await (await GetTagReviewerService()).updateReviewer(rowState.containerReviewId, rowState.id, dto)
-        console.log("Result after click: ", result)
 
         setTagReviewers(tagReviewers?.map((tr) => (tr.id === rowState.id ? { ...tr, state: newState } : tr)))
     }
 
     const reviewStatusRenderer = (params: ICellRendererParams) => {
-        console.log("reviewStatusRenderer params: ", params)
-
         if (!tagReviewers) { return null }
 
         const rowState = tagReviewers.find((r) => r.tagNo === params.data.tagNo)
 
         if (!rowState) { return null }
-
-        console.log("rewState: ", rowState)
 
         if (rowState.state === "NotReviewed") {
             return (<Checkbox onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
