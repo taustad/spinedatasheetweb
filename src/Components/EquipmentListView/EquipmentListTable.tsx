@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom"
 import { TagData } from "../../Models/TagData"
 import { ViewContext } from "../../Context/ViewContext"
 import { GetTagReviewerService } from "../../api/TagReviewerService"
+import { GetContainerService } from "../../api/ContainerService"
 
 interface Props {
     tags: TagData[]
@@ -47,7 +48,8 @@ function EquipmentListTable({
     const location = useLocation()
     const styles = useStyles()
 
-    const [tagReviewers, setTagReviewers] = useState<any[]>()
+    const [tagReviewers, setTagReviewers] = useState<Components.Schemas.TagReviewerDto[]>([])
+    const [containers, setContainers] = useState<Components.Schemas.ContainerDto[]>([])
 
     const {
         currentUserId,
@@ -70,6 +72,9 @@ function EquipmentListTable({
                 if (currentUserId) {
                     const myReviewsFromServer = await (await GetTagReviewerService()).getTagReviewers(currentUserId)
                     setTagReviewers(myReviewsFromServer.data)
+
+                    const containerResults = await (await GetContainerService()).getContainers()
+                    setContainers(containerResults)
                 }
             } catch {
                 if (!isCancelled) {
@@ -121,13 +126,13 @@ function EquipmentListTable({
 
     const reviewDeadlineRenderer = (params: ICellRendererParams) => {
         if (
-            params.data.revisionContainer === null
-            || params.data.revisionContainer === undefined
+            params.data.container === null
+            || params.data.container === undefined
         ) {
             return null
         }
         const packageDate = new Date(
-            params.data.revisionContainer.revisionContainerDate,
+            params.data.container.containerDate,
         )
         const deadline = new Date(
             packageDate.setDate(packageDate.getDate() + 10),
@@ -168,6 +173,15 @@ function EquipmentListTable({
         return (<Checkbox defaultChecked onClick={() => handleTagReviewerCheckboxClick(rowState)} />)
     }
 
+    const buildEquipmentListRowData = () => {
+        const tagDataWithContainer = tags.map((t) => {
+            const container = containers.find((c) => c.tagNos?.includes(t.tagNo ?? ""))
+            return { ...t, container }
+        })
+
+        return tagDataWithContainer
+    }
+
     const columns = [
         {
             headerName: "Tag info",
@@ -184,11 +198,11 @@ function EquipmentListTable({
                 },
                 { field: "version", headerName: "Version number" },
                 {
-                    field: "revisionContainer.revisionNumber",
+                    field: "container.revisionNumber",
                     headerName: "Revision number",
                 },
                 {
-                    field: "revisionContainer.revisionContainerName",
+                    field: "container.containerName",
                     headerName: "Collection group",
                 },
                 {
@@ -230,7 +244,7 @@ function EquipmentListTable({
                 className="ag-theme-alpine-fusion"
             >
                 <AgGridReact
-                    rowData={tags}
+                    rowData={buildEquipmentListRowData()}
                     columnDefs={columns}
                     defaultColDef={defaultColDef}
                     animateRows
