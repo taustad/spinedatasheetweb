@@ -52,14 +52,14 @@ function EquipmentListView() {
         currentUserId, setCurrentUserId,
     } = useContext(ViewContext)
 
-    //should probably be moved to main nav component
+    // should probably be moved to main nav component
     useEffect(() => {
         if (currentUser?._info?.localAccountId) {
             setCurrentUserId(currentUser?._info?.localAccountId)
         }
     }, [currentUser])
-  
-    //should probably be moved to main nav component
+
+    // should probably be moved to main nav component
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)
