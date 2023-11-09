@@ -38,13 +38,6 @@ function ContainerPicker() {
                     if (currentUserId) {
                         const containerResults = await (await GetContainerService()).getContainers()
                         setContainers(containerResults)
-
-                        if (containerResults.length > 0) {
-                            const allConversationsForContainer = await (await GetConversationService())
-                                .getConversationsForContainer(containerResults[0].id)
-
-                            setContainerComments(allConversationsForContainer)
-                        }
                     }
                 } catch {
                     if (!isCancelled) {
