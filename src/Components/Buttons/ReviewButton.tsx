@@ -1,7 +1,9 @@
 import React, {
     useContext, useEffect, useRef, useState,
 } from "react"
-import { Button, Dialog, Icon } from "@equinor/eds-core-react"
+import {
+    Button, Dialog, Icon, Typography,
+} from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { chevron_down, chevron_up } from "@equinor/eds-icons"
 import { useCurrentUser } from "@equinor/fusion"
@@ -63,11 +65,9 @@ const ReviewButton = () => {
         (async () => {
             const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
             setContainerReviewers(myReviewsResult.data)
-            console.log("MyReviewsResult", myReviewsResult)
             if (myReviewsResult.data.length === 0) {
                 setDisableButton(true)
             } else if (myReviewsResult.data[0].state !== "Open") {
-                console.log("Setting disabled true")
                 setDisableButton(true)
             }
         })()
@@ -96,53 +96,65 @@ const ReviewButton = () => {
         setDropdownOpen(false)
     }
 
+    const getButtonReplacementText = () => {
+        if (containerReviewers.length === 0) {
+            return "No review assigned"
+        }
+        const reviewer = containerReviewers[0]
+        if (reviewer.state === "Open") {
+            return "Review complete"
+        }
+        return "Review abandoned"
+    }
+
     return (
-        <DropDownButton>
-            <Wrapper>
-                <Button
-                    onClick={() => openDialog("Are you sure you want to finish the review?", "complete")}
-                    disabled={disableButton}
-                >
-                    Finish Review
-                </Button>
-                <DropButton
-                    ref={dropButtonRef}
-                    disabled={disableButton}
-                    onClick={() => setDropdownOpen(!dropdownOpen)}
-                >
-                    {
+        <div>
+            {disableButton ? <Typography>{getButtonReplacementText()}</Typography> : (
+                <DropDownButton>
+                    <Wrapper>
+                        <Button
+                            onClick={() => openDialog("Are you sure you want to finish the review?", "complete")}
+                        >
+                            Finish Review
+                        </Button>
+                        <DropButton
+                            ref={dropButtonRef}
+                            onClick={() => setDropdownOpen(!dropdownOpen)}
+                        >
+                            {
                         dropdownOpen ? (
                             <Icon data={chevron_up} />
                         ) : (
                             <Icon data={chevron_down} />
                         )
                     }
-                </DropButton>
-            </Wrapper>
-            {dropdownOpen && (
-                <AbandonButton
-                    onClick={() => openDialog("Are you sure you want to abandon the review?", "abandon")}
-                    disabled={disableButton}
-                >
-                    Abandon review
-                </AbandonButton>
+                        </DropButton>
+                    </Wrapper>
+                    {dropdownOpen && (
+                        <AbandonButton
+                            onClick={() => openDialog("Are you sure you want to abandon the review?", "abandon")}
+                        >
+                            Abandon review
+                        </AbandonButton>
             )}
 
-            <Confirmation open={isDialogOpen} onClose={() => setDialogOpen(false)}>
-                <Dialog.Header>
-                    <Dialog.Title>
-                        {actionType === "complete" ? "Complete Review" : "Abandon Review"}
-                    </Dialog.Title>
-                </Dialog.Header>
-                <Dialog.Content>
-                    {dialogMessage}
-                </Dialog.Content>
-                <Dialog.Actions>
-                    <Button variant="ghost" onClick={handleCancel}>Cancel</Button>
-                    <Button onClick={handleConfirm}>Confirm</Button>
-                </Dialog.Actions>
-            </Confirmation>
-        </DropDownButton>
+                    <Confirmation open={isDialogOpen} onClose={() => setDialogOpen(false)}>
+                        <Dialog.Header>
+                            <Dialog.Title>
+                                {actionType === "complete" ? "Complete Review" : "Abandon Review"}
+                            </Dialog.Title>
+                        </Dialog.Header>
+                        <Dialog.Content>
+                            {dialogMessage}
+                        </Dialog.Content>
+                        <Dialog.Actions>
+                            <Button variant="ghost" onClick={handleCancel}>Cancel</Button>
+                            <Button onClick={handleConfirm}>Confirm</Button>
+                        </Dialog.Actions>
+                    </Confirmation>
+                </DropDownButton>
+            )}
+        </div>
     )
 }
 
