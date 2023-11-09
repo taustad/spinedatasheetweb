@@ -1,11 +1,13 @@
-import React, { useState, DragEvent } from "react"
+import React, { useState, DragEvent, useEffect } from "react"
 import styled from "styled-components"
+import { useOutletContext } from "react-router-dom"
 import { formatCamelCase } from "../../utils/helpers"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    flex-grow: 1;
+    align-items: stretch;
     justify-content: space-around;
     flex-direction: row;
     gap: 5px;
@@ -14,7 +16,7 @@ const Wrapper = styled.div`
 const DragContainer = styled.div<{ $isOver?: boolean }>`
     box-sizing: border-box;
     width: 100%;
-    height: 450px;
+    flex-grow: 1;
     overflow-y: auto;
     padding: 5px;
     display: flex;
@@ -23,7 +25,6 @@ const DragContainer = styled.div<{ $isOver?: boolean }>`
     transition: background-color 0.1s ease-in-out;
     background-color: ${(props) => (props.$isOver ? "#E6F9EC" : "none")};
     border-radius: 5px;
-
 `
 
 const ContainerHeader = styled.div<{ $status: string }>`
@@ -56,7 +57,6 @@ const DraggableElement = styled.div`
     box-sizing: border-box;
     width:  100%;
     height: 40px;
-    background-color: lightblue;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -79,13 +79,14 @@ const initialDraggables: Draggable[] = Array.from({ length: 10 }, (_, index) => 
     status: statuses[Math.floor(Math.random() * statuses.length)],
 }))
 
-interface ContainerData {
+interface StatusOptions {
     [key: string]: Draggable[];
 }
 
 const DragableCardTable: React.FC = () => {
+    const [, containerComments] = useOutletContext<any>()
     const [hoveredContainer, setHoveredContainer] = useState<string | null>(null)
-    const [containerData, setContainerData] = useState<ContainerData>({
+    const [statusOptions, setStatusOptions] = useState<StatusOptions>({
         open: initialDraggables.filter((item) => item.status === "Open"),
         toBeImplemented: initialDraggables.filter((item) => item.status === "To_be_implemented"),
         closed: initialDraggables.filter((item) => item.status === "Closed"),
@@ -110,15 +111,19 @@ const DragableCardTable: React.FC = () => {
         e.dataTransfer.setData("text/plain", id.toString())
     }
 
+    useEffect(() => {
+        console.log(containerComments)
+    }, [containerComments])
+
     const handleDrop = (status: string, e: DragEvent<HTMLDivElement>) => {
         const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10)
         const draggable = initialDraggables.find((item) => item.id === itemId)
 
         if (draggable) {
-        const sourceStatus = Object.keys(containerData).find((key) => containerData[key].some((item) => item.id === itemId)) || "notReviewed"
-        const updatedSource = containerData[sourceStatus].filter((item) => item.id !== itemId)
-        setContainerData((prev) => ({ ...prev, [sourceStatus]: updatedSource }))
-        setContainerData((prev) => ({ ...prev, [status]: [...prev[status], draggable] }))
+        const sourceStatus = Object.keys(statusOptions).find((key) => statusOptions[key].some((item) => item.id === itemId)) || "notReviewed"
+        const updatedSource = statusOptions[sourceStatus].filter((item) => item.id !== itemId)
+        setStatusOptions((prev) => ({ ...prev, [sourceStatus]: updatedSource }))
+        setStatusOptions((prev) => ({ ...prev, [status]: [...prev[status], draggable] }))
         handleLogChange(itemId, sourceStatus, status)
         }
         setHoveredContainer(null)
@@ -126,7 +131,7 @@ const DragableCardTable: React.FC = () => {
 
     return (
         <Wrapper>
-            {Object.keys(containerData).map((status) => (
+            {Object.keys(statusOptions).map((status) => (
                 <DragContainer
                     key={status}
                     onDragOver={(e) => handleDragEnterOrOver(status, e)}
@@ -135,8 +140,8 @@ const DragableCardTable: React.FC = () => {
                     onDrop={(e) => handleDrop(status, e)}
                     $isOver={hoveredContainer === status}
                 >
-                    <ContainerHeader $status={status}>{`${formatCamelCase(status)} (${containerData[status].length})`}</ContainerHeader>
-                    {containerData[status].map((item) => (
+                    <ContainerHeader $status={status}>{`${formatCamelCase(status)} (${statusOptions[status].length})`}</ContainerHeader>
+                    {statusOptions[status].map((item) => (
                         <DraggableElement
                             key={item.id}
                             draggable

@@ -4,21 +4,28 @@ import { config, GetToken, LoginAccessTokenKey } from "./config"
 class ConversationService extends BaseService {
     async getConversations(projectId: string, tagNo: string, includeLatestMessage: boolean = false) {
         const result: Components.Schemas.GetConversationDto[] = await this.get(
-                `${projectId}/tags/${tagNo}/conversations?includeLatestMessage=${includeLatestMessage}`,
-            )
+            `projects/${projectId}/tags/${tagNo}/conversations?includeLatestMessage=${includeLatestMessage}`,
+        )
+        return result
+    }
+
+    async getConversationsForContainer(containerId: string) {
+        const result: Components.Schemas.GetConversationDto[] = await this.get(
+            `containers/${containerId}/conversations`,
+        )
         return result
     }
 
     async getConversation(projectId: string, tagNo: string, conversationId: string) {
         const result: Components.Schemas.GetConversationDto = await this.get(
-                `${projectId}/tags/${tagNo}/conversations/${conversationId}`,
+            `projects/${projectId}/tags/${tagNo}/conversations/${conversationId}`,
             )
         return result
     }
 
     async createConversation(projectId: string, tagNo: string, message: Components.Schemas.ConversationDto) {
         const result: Components.Schemas.ConversationDto = await this.post(
-                `${projectId}/tags/${tagNo}/conversations`,
+            `projects/${projectId}/tags/${tagNo}/conversations`,
                 {
                     body: message,
                 },

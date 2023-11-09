@@ -34,25 +34,30 @@ import TagSideSheet from "../Components/SideSheet/TagSideSheet"
 import { ViewContext } from "../Context/ViewContext"
 import { generateTR3111GeneralRowData } from "../Components/JIP33Table/TR3111GeneralRowData"
 
+const { Panel } = Tabs
+const { List, Tab, Panels } = Tabs
+
 const TopBar = styled.div`
     z-index: 100;
-    padding-top: 20px;
+    padding: 15px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 15px;
 `
 
 const View = styled.div`
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
+    width: 100%;
+`
+
+const HeaderList = styled(List)`
+    margin: 0 15px;
 `
 
 const TableView = styled.div``
-
-const { Panel } = Tabs
-const { List, Tab, Panels } = Tabs
 
 const StyledTabPanel = styled(Panel).attrs<{ $sheetWidth: number }>((props) => ({
     style: {
@@ -72,6 +77,14 @@ const Content = styled.div`
 
 const SheetIcon = styled(Icon)`
     transform: rotate(180deg);
+`
+
+const GoBack = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+    margin-left: 5px;
 `
 
 function JIP33InstrumentTabView({ }) {
@@ -197,15 +210,18 @@ function JIP33InstrumentTabView({ }) {
         <View id="View">
             <TableView>
                 <TopBar>
-                    <Typography variant="h3">
+                    <GoBack>
                         <BackButton />
-                        {activeTagData.tagNo}
+                        <Typography variant="h3">
+                            {activeTagData.tagNo}
+                        </Typography>
                         <Icon
                             data={comment_chat}
                             onClick={() => onOpenReviewSideSheet(4)}
                             color="#007079"
                         />
-                    </Typography>
+                    </GoBack>
+
                     {!sideSheetOpen && (
                         <Button variant="ghost_icon" onClick={() => onOpenReviewSideSheet(activeSheetTab)}>
                             <SheetIcon size={24} data={open_side_sheet} />
@@ -213,10 +229,10 @@ function JIP33InstrumentTabView({ }) {
                     )}
                 </TopBar>
                 <Tabs activeTab={activeTab} onChange={setActiveTab}>
-                    <List style={{ border: "1px solid white", position: "relative", bottom: "-0.5px" }}>
+                    <HeaderList>
                         <Tab>NORSOK</Tab>
                         <Tab>JIP33</Tab>
-                    </List>
+                    </HeaderList>
                     <Content>
                         <Panels>
                             <StyledTabPanel $sheetWidth={sheetWidth}>

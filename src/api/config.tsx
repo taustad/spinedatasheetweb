@@ -41,7 +41,7 @@ export const buildConfig = (baseUrl: string) => {
     configuration.ProjectService.BASE_URL = `${baseUrl}/projects`
     configuration.TagDataService.BASE_URL = `${baseUrl}/tagdata`
     configuration.ContractService.BASE_URL = `${baseUrl}/contracts`
-    configuration.ConversationService.BASE_URL = `${baseUrl}/projects`
+    configuration.ConversationService.BASE_URL = `${baseUrl}`
     configuration.MessageService.BASE_URL = `${baseUrl}/conversations`
     configuration.UserTagService.BASE_URL = `${baseUrl}/usertags`
     configuration.ContainerService.BASE_URL = `${baseUrl}/containers`

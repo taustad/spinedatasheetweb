@@ -396,6 +396,7 @@ declare namespace Components {
             id?: string; // uuid
             createdDate?: string; // date-time
             modifiedDate?: string; // date-time
+            tagNo?: string | null;
             property?: string | null;
             conversationStatus?: ConversationStatusDto;
             conversationLevel?: ConversationLevelDto;
@@ -1687,19 +1688,6 @@ declare namespace Paths {
         }
     }
     namespace ContainerReviewers$ContainerReviewerIdTagReviewers$TagReviewerId {
-        namespace Get {
-            namespace Parameters {
-                export type ContainerReviewerId = string;
-                export type TagReviewerId = string; // uuid
-            }
-            export interface PathParameters {
-                tagReviewerId: Parameters.TagReviewerId /* uuid */;
-                containerReviewerId: Parameters.ContainerReviewerId;
-            }
-            namespace Responses {
-                export type $200 = Components.Schemas.TagReviewerDto;
-            }
-        }
         namespace Put {
             namespace Parameters {
                 export type ContainerReviewerId = string; // uuid
@@ -1822,6 +1810,19 @@ declare namespace Paths {
             }
             namespace Responses {
                 export type $200 = Components.Schemas.ContainerDto;
+            }
+        }
+    }
+    namespace Containers$ContainerIdConversations {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerId = string; // uuid
+            }
+            export interface PathParameters {
+                containerId: Parameters.ContainerId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.GetConversationDto[];
             }
         }
     }

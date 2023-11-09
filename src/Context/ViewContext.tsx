@@ -44,6 +44,9 @@ interface ViewContextProps {
     setContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewDto[]>>
     currentUserId: string
     setCurrentUserId: Dispatch<SetStateAction<string>>
+    pathSegments: string[]
+    setPathSegments: Dispatch<SetStateAction<string[]>>
+
 }
 
 export const ViewContext = createContext<ViewContextProps>({
@@ -69,6 +72,8 @@ export const ViewContext = createContext<ViewContextProps>({
     setContainerReviews: () => { },
     currentUserId: "",
     setCurrentUserId: () => "",
+    pathSegments: [],
+    setPathSegments: () => { },
 })
 
 interface ViewContextProviderProps {
@@ -88,6 +93,7 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [containerReviews, setContainerReviews] = useState<Components.Schemas.ContainerReviewDto[]>([])
     const [errors, setErrors] = useState<{}>({})
     const [currentUserId, setCurrentUserId] = useState<string>("")
+    const [pathSegments, setPathSegments] = useState<string[]>([])
 
     useEffect(() => {
         localStorage.setItem("isSideSheetOpen", JSON.stringify(sideSheetOpen))
@@ -135,6 +141,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setCurrentUserId,
             currentProperty,
             setCurrentProperty,
+            pathSegments,
+            setPathSegments,
         }),
         [
             activeTagData,
@@ -159,6 +167,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setCurrentUserId,
             currentProperty,
             setCurrentProperty,
+            pathSegments,
+            setPathSegments,
         ],
     )
 

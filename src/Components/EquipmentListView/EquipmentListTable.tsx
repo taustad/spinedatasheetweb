@@ -15,12 +15,10 @@ import { TagData } from "../../Models/TagData"
 import { ViewContext } from "../../Context/ViewContext"
 import { GetTagReviewerService } from "../../api/TagReviewerService"
 import { GetContainerService } from "../../api/ContainerService"
+import { GetConversationService } from "../../api/ConversationService"
 
 interface Props {
     tags: TagData[]
-    setReviewModalOpen: Dispatch<SetStateAction<boolean>>
-    setTagInReview: Dispatch<SetStateAction<string | undefined>>
-    setRevisionInReview: Dispatch<SetStateAction<string | undefined>>
 }
 
 const Wrapper = styled.div`
@@ -39,12 +37,7 @@ const TagIcon = styled(Icon)`
     padding-right: 9px;
 `
 
-function EquipmentListTable({
-    tags,
-    setReviewModalOpen,
-    setTagInReview,
-    setRevisionInReview,
-}: Props) {
+function EquipmentListTable({ tags }: Props) {
     const location = useLocation()
     const styles = useStyles()
 
