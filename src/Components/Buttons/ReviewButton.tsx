@@ -1,7 +1,12 @@
-import React, { useRef, useState } from "react"
+import React, {
+    useContext, useEffect, useRef, useState,
+} from "react"
 import { Button, Dialog, Icon } from "@equinor/eds-core-react"
 import styled from "styled-components"
 import { chevron_down, chevron_up } from "@equinor/eds-icons"
+import { useCurrentUser } from "@equinor/fusion"
+import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
+import { ViewContext } from "../../Context/ViewContext"
 
 const Wrapper = styled.div`
     display: flex;
@@ -42,6 +47,7 @@ const ReviewButton = () => {
     const [dialogMessage, setDialogMessage] = useState("")
     const [actionType, setActionType] = useState("")
     const dropButtonRef = useRef(null)
+    const [disableButton, setDisableButton] = useState<boolean>(false)
 
     const openDialog = (message: string, action: string) => {
         setDialogMessage(message)
@@ -49,12 +55,38 @@ const ReviewButton = () => {
         setDialogOpen(true)
     }
 
-    const handleConfirm = () => {
-        if (actionType === "complete") {
-            console.log("Review completed")
-        } else if (actionType === "abandon") {
-            console.log("Review abandoned")
+    const { containerReviewers, setContainerReviewers } = useContext(ViewContext)
+
+    const currentUser: any = useCurrentUser()
+
+    useEffect(() => {
+        (async () => {
+            const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
+            setContainerReviewers(myReviewsResult.data)
+            console.log("MyReviewsResult", myReviewsResult)
+            if (myReviewsResult.data.length === 0) {
+                setDisableButton(true)
+            } else if (myReviewsResult.data[0].state !== "Open") {
+                console.log("Setting disabled true")
+                setDisableButton(true)
+            }
+        })()
+    }, [])
+
+    const handleConfirm = async () => {
+        const containerReviewerService = await GetContainerReviewerService()
+        if (containerReviewers.length > 0 && containerReviewers[0].id && containerReviewers[0].containerReviewId) {
+            if (actionType === "complete") {
+                console.log("Review completed")
+                containerReviewerService.updateReviewer({ state: "Complete" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
+            } else if (actionType === "abandon") {
+                console.log("Review abandoned")
+                containerReviewerService.updateReviewer({ state: "Abandoned" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
+            }
+        } else {
+            console.info("No active container reviewers")
         }
+
         setDialogOpen(false)
         setDropdownOpen(false)
     }
@@ -67,9 +99,15 @@ const ReviewButton = () => {
     return (
         <DropDownButton>
             <Wrapper>
-                <Button onClick={() => openDialog("Are you sure you want to finish the review?", "complete")}> Finish Review </Button>
+                <Button
+                    onClick={() => openDialog("Are you sure you want to finish the review?", "complete")}
+                    disabled={disableButton}
+                >
+                    Finish Review
+                </Button>
                 <DropButton
                     ref={dropButtonRef}
+                    disabled={disableButton}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                 >
                     {
@@ -82,7 +120,12 @@ const ReviewButton = () => {
                 </DropButton>
             </Wrapper>
             {dropdownOpen && (
-                <AbandonButton onClick={() => openDialog("Are you sure you want to abandon the review?", "abandon")}> Abandon Review </AbandonButton>
+                <AbandonButton
+                    onClick={() => openDialog("Are you sure you want to abandon the review?", "abandon")}
+                    disabled={disableButton}
+                >
+                    Abandon review
+                </AbandonButton>
             )}
 
             <Confirmation open={isDialogOpen} onClose={() => setDialogOpen(false)}>

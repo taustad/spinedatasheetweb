@@ -28,14 +28,17 @@ function ReviewView() {
 
     const { projectId } = useParams<Record<string, string>>()
 
-    const { setContainerReviews, containerReviews, currentUserId } = useContext(ViewContext)
+    const {
+        setContainerReviews, containerReviews, currentUserId, setCurrentUserId,
+    } = useContext(ViewContext)
     const currentProject = useCurrentContext()
 
     const currentUser: any = useCurrentUser()
 
-
     useEffect(() => {
         (async () => {
+            setCurrentUserId(currentUser._info.localAccountId)
+
             const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
             setContainerReviews(containerReviewsResult.data)
 

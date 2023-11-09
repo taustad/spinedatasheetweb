@@ -42,6 +42,8 @@ interface ViewContextProps {
     setSideSheetScrollPos : React.Dispatch<React.SetStateAction<number>>;
     containerReviews: Components.Schemas.ContainerReviewDto[]
     setContainerReviews: Dispatch<SetStateAction<Components.Schemas.ContainerReviewDto[]>>
+    containerReviewers: Components.Schemas.ContainerReviewerDto[]
+    setContainerReviewers: Dispatch<SetStateAction<Components.Schemas.ContainerReviewerDto[]>>
     currentUserId: string
     setCurrentUserId: Dispatch<SetStateAction<string>>
     pathSegments: string[]
@@ -70,6 +72,8 @@ export const ViewContext = createContext<ViewContextProps>({
     setSideSheetScrollPos: () => { },
     containerReviews: [],
     setContainerReviews: () => { },
+    containerReviewers: [],
+    setContainerReviewers: () => { },
     currentUserId: "",
     setCurrentUserId: () => "",
     pathSegments: [],
@@ -91,6 +95,7 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
     const [conversations, setConversations] = useState<Conversation[]>([])
     const [activeConversation, setActiveConversation] = useState<Conversation>()
     const [containerReviews, setContainerReviews] = useState<Components.Schemas.ContainerReviewDto[]>([])
+    const [containerReviewers, setContainerReviewers] = useState<Components.Schemas.ContainerReviewerDto[]>([])
     const [errors, setErrors] = useState<{}>({})
     const [currentUserId, setCurrentUserId] = useState<string>("")
     const [pathSegments, setPathSegments] = useState<string[]>([])
@@ -137,6 +142,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setSideSheetScrollPos,
             containerReviews,
             setContainerReviews,
+            containerReviewers,
+            setContainerReviewers,
             currentUserId,
             setCurrentUserId,
             currentProperty,
@@ -163,6 +170,8 @@ export const ViewContextProvider: React.FC<ViewContextProviderProps> = ({
             setSideSheetScrollPos,
             containerReviews,
             setContainerReviews,
+            containerReviewers,
+            setContainerReviewers,
             currentUserId,
             setCurrentUserId,
             currentProperty,
