@@ -1,7 +1,14 @@
 import React, { FC } from "react"
+import styled from "styled-components"
 import TabsTitle from "../../Components/TabsTitle"
 import Card from "../../Components/Card"
 import Table from "../../Components/Table"
+
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    Gap: 10px;
+`
 
 const Implementation: FC = () => {
     const dummyData = {
@@ -13,7 +20,7 @@ const Implementation: FC = () => {
     }
 
     return (
-        <div>
+        <Wrapper>
             <TabsTitle>Implementation</TabsTitle>
             <Card>
                 <Table title="HEALTH" data={dummyData} />
@@ -24,7 +31,7 @@ const Implementation: FC = () => {
             <Card>
                 <Table title="SPATIAL ATTRIBUTES" data={dummyData} />
             </Card>
-        </div>
+        </Wrapper>
     )
     }
 

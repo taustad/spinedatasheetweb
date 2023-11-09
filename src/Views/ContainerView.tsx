@@ -79,14 +79,9 @@ const ReviewStatus = styled.div`
     flex-wrap: nowrap;
 `
 
-const Content = styled.div`
-    box-sizing: border-box;
-    padding:  15px;
-    width: 100%;
-    border-top: 1px solid LightGray;
-    height: 100%;
-    flex-grow: 1;
-`
+const Wrapper = styled.div`
+    padding: 15px;
+    `
 
 const StyledLink = styled(Link)`
     padding: 10px 15px;
@@ -148,21 +143,18 @@ const ContainerView = () => {
         const [containerComments, setContainerComments] = useState<Components.Schemas.GetConversationDto[]>([])
 
         useEffect(() => {
-            console.log("currentUserId: ", currentUserId)
             let isCancelled = false;
             (async () => {
                 try {
                     if (currentUserId) {
                         const containerResults = await (await GetContainerService()).getContainers()
                         setContainers(containerResults)
-                        console.log("containerResults: ", containerResults)
 
                         if (containerResults.length > 0) {
                             const allConversationsForContainer = await (await GetConversationService())
                                 .getConversationsForContainer(containerResults[0].id)
 
                             setContainerComments(allConversationsForContainer)
-                            console.log("allConversationsForContainer: ", allConversationsForContainer)
                         }
                     }
                 } catch {
@@ -232,7 +224,9 @@ const ContainerView = () => {
                 </StyledLink>
 
             </Links>
-            <Outlet context={[containers, containerComments]} />
+            <Wrapper>
+                <Outlet context={[containers, containerComments]} />
+            </Wrapper>
         </Container>
     )
 }

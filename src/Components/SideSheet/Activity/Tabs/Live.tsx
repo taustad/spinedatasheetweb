@@ -8,8 +8,14 @@ const Image = styled.img`
     object-fit: cover;
 `
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    Gap: 10px;
+`
+
 const Live: FC = () => (
-    <>
+    <Wrapper>
         <Card title="Flow Rate">
             <Image src="https://via.placeholder.com/250" alt="Flow Rate" />
         </Card>
@@ -28,7 +34,7 @@ const Live: FC = () => (
         <Card title="Pressure">
             <Image src="https://via.placeholder.com/250" alt="Pressure" />
         </Card>
-    </>
+    </Wrapper>
     )
 
 export default Live

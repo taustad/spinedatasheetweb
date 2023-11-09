@@ -9,6 +9,12 @@ import Card from "../../Components/Card"
 import Table from "../../Components/Table"
 import MatchIndicator from "../Components/MatchIndicator"
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    Gap: 10px;
+`
+
 const Header = styled.div`
     margin-bottom: 15px;
 `
@@ -41,7 +47,7 @@ const Replacements: FC = () => {
     }
 
     return (
-        <div>
+        <Wrapper>
             <Header>
                 <TabsTitle>Replacements</TabsTitle>
                 <Typography variant="body_short">
@@ -106,7 +112,7 @@ const Replacements: FC = () => {
                 </Divider>
                 <Table data={dummyData} />
             </Card>
-        </div>
+        </Wrapper>
     )
 }
 

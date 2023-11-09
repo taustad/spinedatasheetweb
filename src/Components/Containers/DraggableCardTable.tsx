@@ -2,6 +2,9 @@ import React, { useState, DragEvent, useEffect } from "react"
 import styled from "styled-components"
 import { useOutletContext } from "react-router-dom"
 import { formatCamelCase } from "../../utils/helpers"
+import DraggableConversationCard from "./Components/DraggableConversationCard"
+import { Message } from "../../Models/Message"
+import { User } from "../../Models/User"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -54,30 +57,23 @@ const ContainerHeader = styled.div<{ $status: string }>`
 `
 
 const DraggableElement = styled.div`
-    box-sizing: border-box;
     width:  100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    background-color: white;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
 `
-
+interface DisplayConversation {
+    property: string,
+    value: string,
+    status: Components.Schemas.ConversationStatusDto,
+    conversationId: string
+    messages: Message[]
+    participants: User[]
+}
 interface Draggable {
-    id: number;
-    title: string;
-    status: "Open" | "Closed" | "Implemented" | "To_be_implemented";
+    id: string;
+    status: "open" | "closed" | "implemented" | "toBeImplemented";
+    conversationObject: DisplayConversation
 }
 
-const statuses = ["Open", "Closed", "Implemented", "To_be_implemented"] as const
-
-const initialDraggables: Draggable[] = Array.from({ length: 10 }, (_, index) => ({
-    id: index + 1,
-    title: `Item ${index + 1}`,
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-}))
+type Status = "Open" | "toBeImplemented" | "closed" | "implemented";
 
 interface StatusOptions {
     [key: string]: Draggable[];
@@ -87,15 +83,33 @@ const DragableCardTable: React.FC = () => {
     const [, containerComments] = useOutletContext<any>()
     const [hoveredContainer, setHoveredContainer] = useState<string | null>(null)
     const [statusOptions, setStatusOptions] = useState<StatusOptions>({
-        open: initialDraggables.filter((item) => item.status === "Open"),
-        toBeImplemented: initialDraggables.filter((item) => item.status === "To_be_implemented"),
-        closed: initialDraggables.filter((item) => item.status === "Closed"),
-        implemented: initialDraggables.filter((item) => item.status === "Implemented"),
+        open: [],
+        toBeImplemented: [],
+        closed: [],
+        implemented: [],
     })
 
-        const handleLogChange = (itemId: number, oldStatus: string, newStatus: string) => {
-        console.log(`Item with ID: ${itemId} moved from ${oldStatus} to ${newStatus}`)
-    }
+    useEffect(() => {
+        const newStatusOptions: StatusOptions = {
+            open: [],
+            toBeImplemented: [],
+            closed: [],
+            implemented: [],
+        }
+
+        containerComments.forEach((conversation: any) => {
+            const status = conversation.conversationStatus.charAt(0).toLowerCase() + conversation.conversationStatus.slice(1)
+            if (status in newStatusOptions) {
+                const item = {
+                    id: conversation.id,
+                    status,
+                    conversationObject: conversation,
+                }
+                newStatusOptions[status].push(item)
+            }
+        })
+        setStatusOptions(newStatusOptions)
+    }, [containerComments])
 
     const handleDragEnterOrOver = (status: string, e: DragEvent<HTMLDivElement>) => {
         e.preventDefault()
@@ -107,25 +121,17 @@ const DragableCardTable: React.FC = () => {
         setHoveredContainer(null)
     }
 
-    const handleDragStart = (e: DragEvent<HTMLDivElement>, id: number) => {
-        e.dataTransfer.setData("text/plain", id.toString())
+    const handleDragStart = (e: DragEvent<HTMLDivElement>, id: string) => {
+        e.dataTransfer.setData("text/plain", id)
     }
 
-    useEffect(() => {
-        console.log(containerComments)
-    }, [containerComments])
+    const handleDrop = (newStatus: string, e: DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        const itemId = e.dataTransfer.getData("text/plain")
+        console.log("Item ID:", itemId, "will be given this status: ", newStatus)
+    }
 
-    const handleDrop = (status: string, e: DragEvent<HTMLDivElement>) => {
-        const itemId = parseInt(e.dataTransfer.getData("text/plain"), 10)
-        const draggable = initialDraggables.find((item) => item.id === itemId)
-
-        if (draggable) {
-        const sourceStatus = Object.keys(statusOptions).find((key) => statusOptions[key].some((item) => item.id === itemId)) || "notReviewed"
-        const updatedSource = statusOptions[sourceStatus].filter((item) => item.id !== itemId)
-        setStatusOptions((prev) => ({ ...prev, [sourceStatus]: updatedSource }))
-        setStatusOptions((prev) => ({ ...prev, [status]: [...prev[status], draggable] }))
-        handleLogChange(itemId, sourceStatus, status)
-        }
+        const handleDragEnd = () => {
         setHoveredContainer(null)
     }
 
@@ -146,8 +152,11 @@ const DragableCardTable: React.FC = () => {
                             key={item.id}
                             draggable
                             onDragStart={(e) => handleDragStart(e, item.id)}
+                            onDragEnd={handleDragEnd}
                         >
-                            {item.title}
+                            <DraggableConversationCard
+                                conversation={item.conversationObject}
+                            />
                         </DraggableElement>
             ))}
                 </DragContainer>
