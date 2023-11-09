@@ -1,18 +1,16 @@
-
-import React, { useState, useEffect, useContext } from "react"
 import styled from "styled-components"
 import {
  Button, Search, Typography, Icon, Chip,
 } from "@equinor/eds-core-react"
 import {
  Link, Outlet,
+ useOutletContext,
 } from "react-router-dom"
 import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
+import React from "react"
 import ReviewButton from "../Components/Buttons/ReviewButton"
-import { GetContainerService } from "../api/ContainerService"
-import { GetConversationService } from "../api/ConversationService"
-import { ViewContext } from "../Context/ViewContext"
+import { formatDate } from "../utils/helpers"
 
 const Container = styled.div`
     min-height: 100%;
@@ -137,37 +135,7 @@ const initialPeople = [
 ]
 
 const ContainerView = () => {
-        const { currentUserId } = useContext(ViewContext)
-
-        const [containers, setContainers] = useState<Components.Schemas.ContainerDto[]>([])
-        const [containerComments, setContainerComments] = useState<Components.Schemas.GetConversationDto[]>([])
-
-        useEffect(() => {
-            let isCancelled = false;
-            (async () => {
-                try {
-                    if (currentUserId) {
-                        const containerResults = await (await GetContainerService()).getContainers()
-                        setContainers(containerResults)
-
-                        if (containerResults.length > 0) {
-                            const allConversationsForContainer = await (await GetConversationService())
-                                .getConversationsForContainer(containerResults[0].id)
-
-                            setContainerComments(allConversationsForContainer)
-                        }
-                    }
-                } catch {
-                    if (!isCancelled) {
-                        console.error("Error loading user reviews")
-                    }
-                }
-            })()
-
-            return () => {
-                isCancelled = true
-            }
-        }, [currentUserId])
+    const [pickedContainer, containerComments] = useOutletContext<any>()
 
     return (
         <Container>
@@ -180,13 +148,20 @@ const ContainerView = () => {
                 </FormWrapper>
                 <HeaderSection $alignment="baseline">
                     <ReviewStatus>
-                        <Typography variant="h2">Container A</Typography>
+                        <Typography variant="h2">{pickedContainer.containerName}</Typography>
                         <Chip variant="active">Active</Chip>
                     </ReviewStatus>
 
                     <ReviewStatus>
-                        <Typography variant="body_short_bold">Revision 1</Typography>
-                        <Typography variant="body_short"> - 23. Juni 2023</Typography>
+                        <Typography variant="body_short_bold">
+                            Revision
+                            {" "}
+                            {pickedContainer.revisionNumber}
+                        </Typography>
+                        <Typography variant="body_short">
+                            {" "}
+                            {formatDate(pickedContainer.createdDate)}
+                        </Typography>
                     </ReviewStatus>
                 </HeaderSection>
             </HeaderRow>
@@ -225,7 +200,7 @@ const ContainerView = () => {
 
             </Links>
             <Wrapper>
-                <Outlet context={[containers, containerComments]} />
+                <Outlet context={[pickedContainer, containerComments]} />
             </Wrapper>
         </Container>
     )

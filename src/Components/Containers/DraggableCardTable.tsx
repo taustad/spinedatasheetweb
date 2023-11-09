@@ -62,8 +62,8 @@ const DraggableElement = styled.div`
 interface DisplayConversation {
     property: string,
     value: string,
-    status: Components.Schemas.ConversationStatusDto,
-    conversationId: string
+    conversationStatus: Components.Schemas.ConversationStatusDto,
+    id: string
     messages: Message[]
     participants: User[]
 }
@@ -99,6 +99,7 @@ const DragableCardTable: React.FC = () => {
 
         containerComments.forEach((conversation: any) => {
             const status = conversation.conversationStatus.charAt(0).toLowerCase() + conversation.conversationStatus.slice(1)
+
             if (status in newStatusOptions) {
                 const item = {
                     id: conversation.id,

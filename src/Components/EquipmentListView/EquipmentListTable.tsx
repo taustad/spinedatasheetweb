@@ -1,5 +1,5 @@
 import React, {
-    Dispatch, SetStateAction, useContext, useEffect, useMemo, useState,
+    useContext, useEffect, useMemo, useState,
 } from "react"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
@@ -15,7 +15,6 @@ import { TagData } from "../../Models/TagData"
 import { ViewContext } from "../../Context/ViewContext"
 import { GetTagReviewerService } from "../../api/TagReviewerService"
 import { GetContainerService } from "../../api/ContainerService"
-import { GetConversationService } from "../../api/ConversationService"
 
 interface Props {
     tags: TagData[]

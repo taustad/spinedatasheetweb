@@ -124,17 +124,19 @@ const SenderMeta = styled(Typography)`
     word-break: keep-all;
     white-space: nowrap;
 `
-interface ConversationCardProps {
-    conversation: DisplayConversation;
-}
+
 interface DisplayConversation {
     property: string,
     value: string,
-    status: Components.Schemas.ConversationStatusDto,
-    conversationId: string
+    conversationStatus: Components.Schemas.ConversationStatusDto,
+    id: string
     messages: Message[]
     participants: User[]
 }
+interface ConversationCardProps {
+    conversation: DisplayConversation;
+}
+
 const DraggableConversationCard: FC<ConversationCardProps> = ({
     conversation,
 }) => {
@@ -164,7 +166,7 @@ const DraggableConversationCard: FC<ConversationCardProps> = ({
                             placement="right"
                             title={
                                 (() => {
-                                    switch (conversation.status) {
+                                    switch (conversation.conversationStatus) {
                                         case "Open":
                                             return "Status: Open"
                                         case "Closed":
@@ -179,7 +181,7 @@ const DraggableConversationCard: FC<ConversationCardProps> = ({
                                 })()
                             }
                         >
-                            <StatusCircle status={conversation.status} />
+                            <StatusCircle status={conversation.conversationStatus} />
                         </Tooltip>
                         <PhotoContainer>
                             {conversation.participants.map((participant) => (

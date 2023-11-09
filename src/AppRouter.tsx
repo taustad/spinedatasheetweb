@@ -10,6 +10,7 @@ import NavigatorHeader from "./Views/NavigatorHeader"
 import ContainerView from "./Views/ContainerView"
 import DraggableCardTable from "./Components/Containers/DraggableCardTable"
 import ContainerTable from "./Components/Containers/ContainerTable"
+import ContainerPicker from "./Views/ContainerPicker"
 
 const AppRouter: FC = () => (
     <Routes>
@@ -21,11 +22,13 @@ const AppRouter: FC = () => (
                 <Route path="JIP33Mechanical/:tagId" element={<JIP33MechanicalTabView />} />
                 <Route path="tags/review/" element={<ReviewView />} />
             </Route>
-            <Route path="containers" element={<ContainerView />}>
-                <Route index element={<ContainerTable />} />
-                <Route path="comments" element={<DraggableCardTable />} />
-
+            <Route path="containers" element={<ContainerPicker />}>
+                <Route path=":containerId" element={<ContainerView />}>
+                    <Route index element={<ContainerTable />} />
+                    <Route path="comments" element={<DraggableCardTable />} />
+                </Route>
             </Route>
+
         </Route>
         <Route path="/comparison" element={<TagComparisonView />} />
 
