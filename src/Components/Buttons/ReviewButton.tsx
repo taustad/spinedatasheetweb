@@ -77,10 +77,8 @@ const ReviewButton = () => {
         const containerReviewerService = await GetContainerReviewerService()
         if (containerReviewers.length > 0 && containerReviewers[0].id && containerReviewers[0].containerReviewId) {
             if (actionType === "complete") {
-                console.log("Review completed")
                 containerReviewerService.updateReviewer({ state: "Complete" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
             } else if (actionType === "abandon") {
-                console.log("Review abandoned")
                 containerReviewerService.updateReviewer({ state: "Abandoned" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
             }
         } else {
