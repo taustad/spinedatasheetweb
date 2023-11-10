@@ -11,6 +11,7 @@ import styled from "styled-components"
 import { ViewContext } from "../Context/ViewContext"
 import { GetContainerService } from "../api/ContainerService"
 import { GetConversationService } from "../api/ConversationService"
+import { GetTagDataService } from "../api/TagDataService"
 
 const TableContainer = styled.div`
     padding: 15px;
@@ -60,6 +61,9 @@ function ContainerPicker() {
                             .getConversationsForContainer(pickedContainer.id)
 
                         setContainerComments(allConversationsForContainer)
+
+                        const containerTagData = await (await GetTagDataService()).getTagDataForContainer(pickedContainer.id)
+                        console.log("Container tags: ", containerTagData)
                     }
                 } catch {
                     if (!iscCancelled) {
