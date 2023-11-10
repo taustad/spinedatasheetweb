@@ -14,13 +14,13 @@ import ContainerPicker from "./Views/ContainerPicker"
 
 const AppRouter: FC = () => (
     <Routes>
+        <Route path="/:projectId/tags/review/" element={<ReviewView />} />
         <Route path="/" element={<NavigatorHeader />} />
         <Route path="/:projectId" element={<NavigatorHeader />}>
             <Route path="tags" element={<EquipmentListView />}>
                 <Route path="JIP33Instrument/:tagId" element={<JIP33InstrumentTabView />} />
                 <Route path="JIP33Electrical/:tagId" element={<JIP33ElectricalTabView />} />
                 <Route path="JIP33Mechanical/:tagId" element={<JIP33MechanicalTabView />} />
-                <Route path="tags/review/" element={<ReviewView />} />
             </Route>
             <Route path="containers" element={<ContainerPicker />}>
                 <Route path=":containerId" element={<ContainerView />}>
