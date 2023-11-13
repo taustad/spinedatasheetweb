@@ -135,7 +135,7 @@ const initialPeople = [
 ]
 
 const ContainerView = () => {
-    const [pickedContainer, containerComments] = useOutletContext<any>()
+    const [pickedContainer, containerComments, tagsInContainer] = useOutletContext<any>()
 
     return (
         <Container>
@@ -206,7 +206,7 @@ const ContainerView = () => {
 
             </Links>
             <Wrapper>
-                <Outlet context={[pickedContainer, containerComments]} />
+                <Outlet context={[pickedContainer, containerComments, tagsInContainer]} />
             </Wrapper>
         </Container>
     )

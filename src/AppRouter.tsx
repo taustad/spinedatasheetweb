@@ -28,7 +28,6 @@ const AppRouter: FC = () => (
                     <Route path="comments" element={<DraggableCardTable />} />
                 </Route>
             </Route>
-
         </Route>
         <Route path="/comparison" element={<TagComparisonView />} />
 
