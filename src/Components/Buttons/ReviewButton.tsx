@@ -7,6 +7,7 @@ import {
 import styled from "styled-components"
 import { chevron_down, chevron_up } from "@equinor/eds-icons"
 import { useCurrentUser } from "@equinor/fusion"
+import { useParams } from "react-router-dom"
 import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
 import { ViewContext } from "../../Context/ViewContext"
 
@@ -51,6 +52,8 @@ const ReviewButton = () => {
     const dropButtonRef = useRef(null)
     const [disableButton, setDisableButton] = useState<boolean>(false)
 
+    const { containerId } = useParams<Record<string, string>>()
+
     const openDialog = (message: string, action: string) => {
         setDialogMessage(message)
         setActionType(action)
@@ -77,9 +80,35 @@ const ReviewButton = () => {
         const containerReviewerService = await GetContainerReviewerService()
         if (containerReviewers.length > 0 && containerReviewers[0].id && containerReviewers[0].containerReviewId) {
             if (actionType === "complete") {
-                containerReviewerService.updateReviewer({ state: "Complete" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
+                console.log("Action complete")
+                const result = await containerReviewerService.updateReviewer({ state: "Complete" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
+
+                const state: Components.Schemas.ContainerReviewerStateEnumDto = "Complete"
+
+                const updatedContainerReviewers = containerReviewers.map((cr, i) => {
+                    if (i === 0) {
+                        return { ...cr, state }
+                    }
+                    return cr
+                })
+
+                console.log("UpdatedContainerReviewers: ", updatedContainerReviewers)
+                setContainerReviewers(updatedContainerReviewers)
+                setDisableButton(true)
             } else if (actionType === "abandon") {
                 containerReviewerService.updateReviewer({ state: "Abandoned" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
+                const state: Components.Schemas.ContainerReviewerStateEnumDto = "Abandoned"
+
+                const updatedContainerReviewers = containerReviewers.map((cr, i) => {
+                    if (i === 0) {
+                        return { ...cr, state }
+                    }
+                    return cr
+                })
+
+                console.log("UpdatedContainerReviewers: ", updatedContainerReviewers)
+                setContainerReviewers(updatedContainerReviewers)
+                setDisableButton(true)
             }
         } else {
             console.info("No active container reviewers")
@@ -99,7 +128,7 @@ const ReviewButton = () => {
             return "No review assigned"
         }
         const reviewer = containerReviewers[0]
-        if (reviewer.state === "Open") {
+        if (reviewer.state === "Complete") {
             return "Review complete"
         }
         return "Review abandoned"
