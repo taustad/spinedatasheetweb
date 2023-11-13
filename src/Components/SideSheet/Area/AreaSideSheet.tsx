@@ -14,6 +14,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: stretch;
     padding: 15px;
+    gap: 10px;
 `
 
 const ModelImage = styled.img`

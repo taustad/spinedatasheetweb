@@ -17,13 +17,19 @@ const ButtonRow = styled.div`
     margin-bottom: 8px;
 `
 
+const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    Gap: 10px;
+`
+
 const Specifications: FC = () => {
     const dummyDataTag001General = {
         "Code requirement": "0",
         "Conformity assessment system (CAS) level": "0",
         "Tag number": "TAG-001",
         "Service description": "",
-        "Manufacturer": "",
+        Manufacturer: "",
         "Model number": "",
         "Equipment manufacturer serial number": "",
         "Project country": "NO",
@@ -47,35 +53,35 @@ const Specifications: FC = () => {
         "Explosion group": "IIC",
         "Temperature class": "T3",
         "Tag status": "",
-        "Discipline": "Instrument",
-        "Contract": "",
+        Discipline: "Instrument",
+        Contract: "",
         "Contract name": "Contract 1",
         "Engineering code": "",
-        "Area": "Area 1",
+        Area: "Area 1",
         "Purchase order": "",
         "Pipe class sheet": "",
         "Set/alarm point": "",
-        "Type": "",
+        Type: "",
         "Operating Temp Limits": "",
         "Operating Press. Limit": "",
         "Press. loss at full range": "",
-        "Mounting": "",
-        "Weight": "",
-        "Other": "",
+        Mounting: "",
+        Weight: "",
+        Other: "",
     }
 
     const dummyDataTag001InstrumentCharacteristics = {
         "Calibrated range": "",
-        "Characteristics": "",
-        "Accuracy": "+/- 1",
-        "Linearity": "",
-        "Repeatability": "",
+        Characteristics: "",
+        Accuracy: "+/- 1",
+        Linearity: "",
+        Repeatability: "",
         "Min/Max range limits": "",
-        "Other": "NA",
+        Other: "NA",
     }
 
     return (
-        <div>
+        <Wrapper>
             <Header>
                 <TabsTitle>Specifications</TabsTitle>
                 <ButtonRow>
@@ -102,7 +108,7 @@ const Specifications: FC = () => {
             <Card>
                 <Table title="INSTRUMENT CHARACTERISTICS" data={dummyDataTag001InstrumentCharacteristics} />
             </Card>
-        </div>
+        </Wrapper>
     )
 }
 

@@ -1,61 +1,68 @@
-
-import React, { useState, useEffect } from "react"
-import { Outlet, useNavigate } from "react-router-dom"
+import React, { useState, useEffect, useContext } from "react"
+import {
+ Outlet, useNavigate, Link, useLocation,
+} from "react-router-dom"
 import styled from "styled-components"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
+import { Breadcrumbs, Typography } from "@equinor/eds-core-react"
+import { useCurrentUser } from "@equinor/fusion"
 import LocalNavigation from "../Components/SideSheet/Components/LocalNavigation"
 import Dialogue from "../Components/Dialogue"
+import { ViewContext } from "../Context/ViewContext"
 
 const Wrapper = styled.div`
     padding: 15px;
 `
 
-const LandingPage = () => {
+const NavigatorHeader = () => {
+        const { setPathSegments, pathSegments, setCurrentUserId } = useContext(ViewContext)
         const tabPath: { [index: number]: string } = {
         0: "tags",
         1: "containers",
     }
 
     const [activeTab, setActiveTab] = useState<number>(0)
+    const [header, setHeader] = useState<string>("")
+    const [externalId, setExternalId] = useState<string | undefined>()
+
     const Navigationbuttons = ["Tags", "Containers"]
 
     const navigate = useNavigate()
     const currentProject = useCurrentContext()
+    const location = useLocation()
+    const currentUser: any = useCurrentUser()
 
-    // makes sure the correct tab is active when project loads
     useEffect(() => {
-        const pathMatchesActiveTab = window.location.pathname.split("/")[2] === tabPath[activeTab]
-        const isOnRoot = window.location.pathname.split("/")[3] === undefined
-
-        if (!pathMatchesActiveTab) {
-            const activeTabFromPath = Object.keys(tabPath).find((key) => tabPath[parseInt(key, 10)] === window.location.pathname.split("/")[2])
-            const isOnProjectRoot = window.location.pathname.split("/")[1] === currentProject.currentContext?.id
-            && window.location.pathname.split("/")[2] === undefined
-
-            if (activeTabFromPath) {
-                setActiveTab(parseInt(activeTabFromPath, 10))
-                if (isOnRoot) navigate(`/${currentProject.currentContext?.id}/${tabPath[parseInt(activeTabFromPath, 10)]}`)
-            } else if (isOnProjectRoot) {
-                // if on project root, we navigate to the first tab
-                setActiveTab(0)
-                navigate(`/${currentProject.currentContext?.id}/${tabPath[0]}`)
-            }
+        if (currentUser?._info?.localAccountId) {
+            setCurrentUserId(currentUser?._info?.localAccountId)
         }
-    }, [])
+    }, [currentUser])
 
-    // makes sure the correct tab is active when new project loads
     useEffect(() => {
-        if (currentProject) {
-           if (window.location.pathname === `/${currentProject.currentContext?.id}`) {
-            setActiveTab(0)
-            navigate(`/${currentProject.currentContext?.id}/${tabPath[0]}`)
-           }
+        if (currentProject.currentContext?.externalId !== externalId) {
+            setExternalId(currentProject.currentContext?.externalId)
         }
     }, [currentProject])
 
+    // setting path segments for keeping track of users location in the app
+    useEffect(() => {
+        const segments = location.pathname.split("/").filter(Boolean)
+        setPathSegments(segments)
+        if (currentProject.currentContext) {
+            setHeader(currentProject.currentContext.value.description as string)
+        }
+
+        // if project was just selected, navigate to the first tab
+        if (segments.length <= 1 && currentProject.currentContext?.id) {
+            navigate(`/${currentProject.currentContext.id}/${tabPath[0]}`)
+        }
+    }, [location, currentProject.currentContext?.id])
+
     const changeTab = (activatedTab: number) => {
         setActiveTab(activatedTab)
-        navigate(`/${currentProject.currentContext?.id}/${tabPath[activatedTab]}`)
+        if (currentProject.currentContext) {
+            navigate(`/${currentProject.currentContext.id}/${tabPath[activatedTab]}`)
+        }
     }
 
         if (!currentProject.currentContext) {
@@ -66,14 +73,44 @@ const LandingPage = () => {
         <>
             <Wrapper>
                 <LocalNavigation
-                    activeTab={activeTab}
+                    activeTab={pathSegments[1] === "tags" ? 0 : 1}
                     setActiveTab={changeTab}
                     buttons={Navigationbuttons}
                 />
+                <Breadcrumbs>
+                    <Typography>
+                        {header}
+                    </Typography>
+                    <Breadcrumbs.Breadcrumb id="firstLayer" as={Link} to={`/${currentProject.currentContext?.id}/${pathSegments[1]}`}>
+                        {pathSegments[1]}
+                    </Breadcrumbs.Breadcrumb>
+                    {pathSegments[2] && (
+                        pathSegments[2] !== "JIP33Instrument"
+                        && pathSegments[2] !== "JIP33Electrical"
+                        && pathSegments[2] !== "JIP33Mechanical" ? (
+                            <Breadcrumbs.Breadcrumb
+                                id="secondLayer"
+                                as={Link}
+                                to={`/${currentProject.currentContext?.id}/${pathSegments[1]}/${pathSegments[2]}`}
+                            >
+                                {pathSegments[2]}
+                            </Breadcrumbs.Breadcrumb>
+                        ) : null
+                        )}
+                    {pathSegments[3] && (
+                    <Breadcrumbs.Breadcrumb
+                        id="thirdLayer"
+                        as={Link}
+                        to={`/${currentProject.currentContext?.id}/${pathSegments[1]}/${pathSegments[2]}/${pathSegments[3]}`}
+                    >
+                        {pathSegments[3]}
+                    </Breadcrumbs.Breadcrumb>
+                    )}
+                </Breadcrumbs>
             </Wrapper>
             <Outlet />
         </>
-    )
+)
 }
 
-export default LandingPage
+export default NavigatorHeader

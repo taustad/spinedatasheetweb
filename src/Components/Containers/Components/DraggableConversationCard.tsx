@@ -5,13 +5,13 @@ import {
 import { tag } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
 import styled from "styled-components"
-import { ViewContext } from "../../../../Context/ViewContext"
-import Card from "../../Components/Card"
-import { Message } from "../../../../Models/Message"
-import { User } from "../../../../Models/User"
+import { ViewContext } from "../../../Context/ViewContext"
+import Card from "../../SideSheet/Components/Card"
+import { Message } from "../../../Models/Message"
+import { User } from "../../../Models/User"
 import {
  formatDate, wrapInSpan, formatCamelCase, sanitizeContent,
-} from "../../../../utils/helpers"
+} from "../../../utils/helpers"
 
 const ClickableCard = styled.button`
     width: 100%;
@@ -28,7 +28,6 @@ const ClickableCard = styled.button`
     }
 `
 const ConversationCardContainer = styled.div`
-    padding:  0 15px 10px 15px;
 `
 const TagInfo = styled.div`
     display: flex;
@@ -58,15 +57,6 @@ const CommentText = styled(Typography)`
         font-weight: 500;
     }
 `
-
-interface DisplayConversation {
-    property: string,
-    value: string,
-    status: Components.Schemas.ConversationStatusDto,
-    conversationId: string
-    messages: Message[]
-    participants: User[]
-}
 
 const StatusCircle = styled.div<{ status: Components.Schemas.ConversationStatusDto }>`
     height: 10px;
@@ -134,11 +124,20 @@ const SenderMeta = styled(Typography)`
     word-break: keep-all;
     white-space: nowrap;
 `
+
+interface DisplayConversation {
+    property: string,
+    value: string,
+    conversationStatus: Components.Schemas.ConversationStatusDto,
+    id: string
+    messages: Message[]
+    participants: User[]
+}
 interface ConversationCardProps {
-    conversation: DisplayConversation
+    conversation: DisplayConversation;
 }
 
-const ConversationCard: FC<ConversationCardProps> = ({
+const DraggableConversationCard: FC<ConversationCardProps> = ({
     conversation,
 }) => {
     const { setCurrentProperty } = useContext(ViewContext)
@@ -146,7 +145,11 @@ const ConversationCard: FC<ConversationCardProps> = ({
     const conversationTitle = `${formattedProperty}: `
 
     return (
-        <ClickableCard type="button" onClick={() => { setCurrentProperty(conversation.property) }}>
+        <ClickableCard
+            draggable
+            type="button"
+            onClick={() => { setCurrentProperty(conversation.property) }}
+        >
             <ConversationCardContainer>
                 <Card>
                     <TitleContainer>
@@ -163,7 +166,7 @@ const ConversationCard: FC<ConversationCardProps> = ({
                             placement="right"
                             title={
                                 (() => {
-                                    switch (conversation.status) {
+                                    switch (conversation.conversationStatus) {
                                         case "Open":
                                             return "Status: Open"
                                         case "Closed":
@@ -178,7 +181,7 @@ const ConversationCard: FC<ConversationCardProps> = ({
                                 })()
                             }
                         >
-                            <StatusCircle status={conversation.status} />
+                            <StatusCircle status={conversation.conversationStatus} />
                         </Tooltip>
                         <PhotoContainer>
                             {conversation.participants.map((participant) => (
@@ -211,4 +214,4 @@ const ConversationCard: FC<ConversationCardProps> = ({
     )
 }
 
-export default ConversationCard
+export default DraggableConversationCard

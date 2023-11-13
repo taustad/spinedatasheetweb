@@ -1,22 +1,28 @@
-
-import React, { useEffect } from "react"
 import styled from "styled-components"
 import {
- Breadcrumbs, Button, Search, Typography, Icon, Chip,
+ Button, Search, Typography, Icon, Chip,
 } from "@equinor/eds-core-react"
 import {
- Link, useLocation, Outlet,
+ Link, Outlet,
+ useOutletContext,
 } from "react-router-dom"
 import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
+import React from "react"
 import ReviewButton from "../Components/Buttons/ReviewButton"
+import { formatDate } from "../utils/helpers"
 
-const Wrapper = styled.div`
+const Container = styled.div`
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+`
+const HeaderRow = styled.div`
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-direction: row;
+    flex-direction: row-reverse;
     margin: 15px;
 `
 
@@ -31,7 +37,7 @@ interface HeaderWrapperProps {
   $alignment?: "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
 }
 
-const HeaderWrapper = styled.div<HeaderWrapperProps>`
+const HeaderSection = styled.div<HeaderWrapperProps>`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -71,14 +77,9 @@ const ReviewStatus = styled.div`
     flex-wrap: nowrap;
 `
 
-const Content = styled.div`
-    box-sizing: border-box;
-    padding:  15px;
-    width: 100%;
-    height: 100%;
-    border-top: 1px solid LightGray;
-    background-color: #F7F7F7;
-`
+const Wrapper = styled.div`
+    padding: 15px;
+    `
 
 const StyledLink = styled(Link)`
     padding: 10px 15px;
@@ -134,45 +135,39 @@ const initialPeople = [
 ]
 
 const ContainerView = () => {
-    const location = useLocation()
-
-    useEffect(() => {
-        console.log(location.pathname)
-    }, [location.pathname])
+    const [pickedContainer, containerComments] = useOutletContext<any>()
 
     return (
-        <div>
-            <Wrapper>
-                <Breadcrumbs>
-                    <Breadcrumbs.Breadcrumb as={Link} to="/test1">
-                        test1
-                    </Breadcrumbs.Breadcrumb>
-                    <Breadcrumbs.Breadcrumb as={Link} to="/test2">
-                        tes2
-                    </Breadcrumbs.Breadcrumb>
-                </Breadcrumbs>
+        <Container>
+            <HeaderRow>
                 <FormWrapper>
                     <Search aria-label="Search for something" />
                     <Button variant="ghost_icon">
                         <Icon data={search} />
                     </Button>
                 </FormWrapper>
-            </Wrapper>
-            <Wrapper>
-                <HeaderWrapper $alignment="baseline">
+                <HeaderSection $alignment="baseline">
                     <ReviewStatus>
-                        <Typography variant="h2">Container A</Typography>
+                        <Typography variant="h2">{pickedContainer.containerName}</Typography>
                         <Chip variant="active">Active</Chip>
                     </ReviewStatus>
 
                     <ReviewStatus>
-                        <Typography variant="body_short_bold">Revision 1</Typography>
-                        <Typography variant="body_short"> - 23. Juni 2023</Typography>
+                        <Typography variant="body_short_bold">
+                            Revision
+                            {" "}
+                            {pickedContainer.revisionNumber}
+                        </Typography>
+                        <Typography variant="body_short">
+                            {" "}
+                            {formatDate(pickedContainer.createdDate)}
+                        </Typography>
                     </ReviewStatus>
+                </HeaderSection>
+            </HeaderRow>
+            <HeaderRow>
 
-                </HeaderWrapper>
-
-                <HeaderWrapper $alignment="flex-end">
+                <HeaderSection $alignment="flex-end">
                     <ReviewStatus>
                         <Typography variant="body_short">review due in 2 days</Typography>
                         <PersonPhoto personId={initialPeople[0].userId} size="medium" />
@@ -189,26 +184,25 @@ const ContainerView = () => {
                         </PeopleWrapper>
                     </ReviewStatus>
                     <ReviewButton />
-
-                </HeaderWrapper>
-            </Wrapper>
+                </HeaderSection>
+            </HeaderRow>
             <Links>
-                <StyledLink
-                    to="comments"
-                >
-                    Comments
-                </StyledLink>
                 <StyledLink
                     to="."
                 >
                     Tags
                 </StyledLink>
-            </Links>
+                <StyledLink
+                    to="comments"
+                >
+                    Comments
+                </StyledLink>
 
-            <Content>
-                <Outlet />
-            </Content>
-        </div>
+            </Links>
+            <Wrapper>
+                <Outlet context={[pickedContainer, containerComments]} />
+            </Wrapper>
+        </Container>
     )
 }
 
