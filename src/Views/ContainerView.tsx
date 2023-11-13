@@ -10,7 +10,7 @@ import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
 import React from "react"
 import ReviewButton from "../Components/Buttons/ReviewButton"
-import { formatDate } from "../utils/helpers"
+import { getDueInDays, formatDate } from "../utils/helpers"
 
 const Container = styled.div`
     min-height: 100%;
@@ -160,7 +160,7 @@ const ContainerView = () => {
                         </Typography>
                         <Typography variant="body_short">
                             {" "}
-                            {formatDate(pickedContainer.createdDate)}
+                            {formatDate(pickedContainer.containerDate)}
                         </Typography>
                     </ReviewStatus>
                 </HeaderSection>
@@ -169,7 +169,13 @@ const ContainerView = () => {
 
                 <HeaderSection $alignment="flex-end">
                     <ReviewStatus>
-                        <Typography variant="body_short">review due in 2 days</Typography>
+                        <Typography variant="body_short">
+                            review due in
+                            {" "}
+                            {getDueInDays(pickedContainer.containerDate, 10)}
+                            {" "}
+                            days
+                        </Typography>
                         <PersonPhoto personId={initialPeople[0].userId} size="medium" />
                         <GreyDivider />
                         <PeopleWrapper>
