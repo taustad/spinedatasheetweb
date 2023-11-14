@@ -19,17 +19,27 @@ class ConversationService extends BaseService {
     async getConversation(projectId: string, tagNo: string, conversationId: string) {
         const result: Components.Schemas.GetConversationDto = await this.get(
             `projects/${projectId}/tags/${tagNo}/conversations/${conversationId}`,
-            )
+        )
         return result
     }
 
     async createConversation(projectId: string, tagNo: string, message: Components.Schemas.ConversationDto) {
         const result: Components.Schemas.ConversationDto = await this.post(
             `projects/${projectId}/tags/${tagNo}/conversations`,
-                {
-                    body: message,
-                },
-            )
+            {
+                body: message,
+            },
+        )
+        return result
+    }
+
+    async updateConversation(projectId: string, tagNo: string, conversationId: string, message: Components.Schemas.UpdateConversationDto) {
+        const result: Components.Schemas.ConversationDto = await this.put(
+            `projects/${projectId}/tags/${tagNo}/conversations/${conversationId}`,
+            {
+                body: message,
+            },
+        )
         return result
     }
 }
