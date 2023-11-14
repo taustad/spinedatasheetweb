@@ -69,7 +69,6 @@ function EquipmentListView() {
                     setIsLoading(true)
 
                     const allTagData = await (await GetTagDataService()).getAllTagData()
-                    console.log("all tag data", allTagData)
                     if (!isCancelled) {
                         setTagData(allTagData)
                         setIsLoading(false)

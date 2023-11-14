@@ -8,9 +8,10 @@ import {
 } from "react-router-dom"
 import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
-import React from "react"
+import React, { useContext } from "react"
 import ReviewButton from "../Components/Buttons/ReviewButton"
 import { getDueInDays, formatDate } from "../utils/helpers"
+import { ViewContext } from "../Context/ViewContext"
 
 const Container = styled.div`
     min-height: 100%;
@@ -136,6 +137,9 @@ const initialPeople = [
 
 const ContainerView = () => {
     const [pickedContainer, containerComments, tagsInContainer] = useOutletContext<any>()
+    const { containerReviews } = useContext(ViewContext)
+
+    const activeContainerReview = containerReviews.find((c) => c.containerId === pickedContainer.id)
 
     return (
         <Container>
@@ -149,7 +153,7 @@ const ContainerView = () => {
                 <HeaderSection $alignment="baseline">
                     <ReviewStatus>
                         <Typography variant="h2">{pickedContainer.containerName}</Typography>
-                        <Chip variant="active">Active</Chip>
+                        <Chip variant="active">{activeContainerReview?.state}</Chip>
                     </ReviewStatus>
 
                     <ReviewStatus>

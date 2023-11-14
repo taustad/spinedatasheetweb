@@ -10,6 +10,7 @@ import { useCurrentUser } from "@equinor/fusion"
 import { useParams } from "react-router-dom"
 import { GetContainerReviewerService } from "../../api/ContainerReviewerService"
 import { ViewContext } from "../../Context/ViewContext"
+import { GetContainerReviewService } from "../../api/ContainerReviewService"
 
 const Wrapper = styled.div`
     display: flex;
@@ -50,7 +51,7 @@ const ReviewButton = () => {
     const [dialogMessage, setDialogMessage] = useState("")
     const [actionType, setActionType] = useState("")
     const dropButtonRef = useRef(null)
-    const [disableButton, setDisableButton] = useState<boolean>(false)
+    const [currentContainerReviewer, setCurrentContainerReviewer] = useState<Components.Schemas.ContainerReviewerDto>()
 
     const { containerId } = useParams<Record<string, string>>()
 
@@ -60,7 +61,9 @@ const ReviewButton = () => {
         setDialogOpen(true)
     }
 
-    const { containerReviewers, setContainerReviewers } = useContext(ViewContext)
+    const {
+        containerReviewers, setContainerReviewers, setContainerReviews, containerReviews,
+    } = useContext(ViewContext)
 
     const currentUser: any = useCurrentUser()
 
@@ -68,47 +71,44 @@ const ReviewButton = () => {
         (async () => {
             const myReviewsResult = await (await GetContainerReviewerService()).getContainerReviewers(currentUser._info.localAccountId)
             setContainerReviewers(myReviewsResult.data)
-            if (myReviewsResult.data.length === 0) {
-                setDisableButton(true)
-            } else if (myReviewsResult.data[0].state !== "Open") {
-                setDisableButton(true)
-            }
+
+            const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
+            setContainerReviews(containerReviewsResult.data)
+
+            const currentContainerReview = containerReviewsResult.data.find((r: any) => r.containerId === containerId)
+
+            const current: Components.Schemas.ContainerReviewerDto = myReviewsResult.data
+                .find((r: any) => r.containerReviewId === currentContainerReview.id)
+
+            setCurrentContainerReviewer(current)
         })()
     }, [])
 
     const handleConfirm = async () => {
         const containerReviewerService = await GetContainerReviewerService()
-        if (containerReviewers.length > 0 && containerReviewers[0].id && containerReviewers[0].containerReviewId) {
+        if (currentContainerReviewer !== undefined && currentContainerReviewer.containerReviewId && currentContainerReviewer.id) {
+            const updateReviewer = async (state: Components.Schemas.ContainerReviewerStateEnumDto) => {
+                const result = await containerReviewerService.updateReviewer(
+                    { state },
+                    currentContainerReviewer.containerReviewId!,
+                    currentContainerReviewer.id!,
+                )
+                setCurrentContainerReviewer(result)
+
+                const updatedContainerReviewers = containerReviewers.map((cr, i) => {
+                    if (i === 0) {
+                        return { ...cr, state }
+                    }
+                    return cr
+                })
+
+                setContainerReviewers(updatedContainerReviewers)
+            }
+
             if (actionType === "complete") {
-                console.log("Action complete")
-                const result = await containerReviewerService.updateReviewer({ state: "Complete" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
-
-                const state: Components.Schemas.ContainerReviewerStateEnumDto = "Complete"
-
-                const updatedContainerReviewers = containerReviewers.map((cr, i) => {
-                    if (i === 0) {
-                        return { ...cr, state }
-                    }
-                    return cr
-                })
-
-                console.log("UpdatedContainerReviewers: ", updatedContainerReviewers)
-                setContainerReviewers(updatedContainerReviewers)
-                setDisableButton(true)
+                await updateReviewer("Complete")
             } else if (actionType === "abandon") {
-                containerReviewerService.updateReviewer({ state: "Abandoned" }, containerReviewers[0].containerReviewId, containerReviewers[0].id)
-                const state: Components.Schemas.ContainerReviewerStateEnumDto = "Abandoned"
-
-                const updatedContainerReviewers = containerReviewers.map((cr, i) => {
-                    if (i === 0) {
-                        return { ...cr, state }
-                    }
-                    return cr
-                })
-
-                console.log("UpdatedContainerReviewers: ", updatedContainerReviewers)
-                setContainerReviewers(updatedContainerReviewers)
-                setDisableButton(true)
+                await updateReviewer("Abandoned")
             }
         } else {
             console.info("No active container reviewers")
@@ -124,11 +124,10 @@ const ReviewButton = () => {
     }
 
     const getButtonReplacementText = () => {
-        if (containerReviewers.length === 0) {
+        if (!currentContainerReviewer) {
             return "No review assigned"
         }
-        const reviewer = containerReviewers[0]
-        if (reviewer.state === "Complete") {
+        if (currentContainerReviewer.state === "Complete") {
             return "Review complete"
         }
         return "Review abandoned"
@@ -136,7 +135,7 @@ const ReviewButton = () => {
 
     return (
         <div>
-            {disableButton ? <Typography>{getButtonReplacementText()}</Typography> : (
+            {!currentContainerReviewer || currentContainerReviewer.state !== "Open" ? <Typography>{getButtonReplacementText()}</Typography> : (
                 <DropDownButton>
                     <Wrapper>
                         <Button
@@ -149,12 +148,12 @@ const ReviewButton = () => {
                             onClick={() => setDropdownOpen(!dropdownOpen)}
                         >
                             {
-                        dropdownOpen ? (
-                            <Icon data={chevron_up} />
-                        ) : (
-                            <Icon data={chevron_down} />
-                        )
-                    }
+                                dropdownOpen ? (
+                                    <Icon data={chevron_up} />
+                                ) : (
+                                    <Icon data={chevron_down} />
+                                )
+                            }
                         </DropButton>
                     </Wrapper>
                     {dropdownOpen && (
@@ -163,7 +162,7 @@ const ReviewButton = () => {
                         >
                             Abandon review
                         </AbandonButton>
-            )}
+                    )}
 
                     <Confirmation open={isDialogOpen} onClose={() => setDialogOpen(false)}>
                         <Dialog.Header>
