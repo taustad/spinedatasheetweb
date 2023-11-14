@@ -9,7 +9,6 @@ const ContainerTable = () => {
     const [,, tagsInContainer] = useOutletContext<any>()
     const [externalId, setExternalId] = useState<string | undefined>()
 
-    console.log("tagsInContainer", tagsInContainer)
     useEffect(() => {
         if (currentProject.currentContext?.externalId !== externalId) {
             setExternalId(currentProject.currentContext?.externalId)

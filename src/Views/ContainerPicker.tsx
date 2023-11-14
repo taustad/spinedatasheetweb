@@ -64,8 +64,6 @@ function ContainerPicker() {
 
                         const containerTagData = await (await GetTagDataService()).getTagDataForContainer(pickedContainer.id)
                         setTagsInContainer(containerTagData)
-                        console.log("setting containerTagData", containerTagData)
-                        console.log("pickedContainer", pickedContainer.id)
                     }
                 } catch {
                     if (!iscCancelled) {

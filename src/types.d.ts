@@ -1621,6 +1621,9 @@ declare namespace Components {
         export interface UpdateContainerReviewerDto {
             state: ContainerReviewerStateEnumDto;
         }
+        export interface UpdateConversationDto {
+            conversationStatus?: ConversationStatusDto;
+        }
         export interface UpdateTagReviewerDto {
             state: TagReviewerStateEnumDto;
         }
@@ -1826,6 +1829,19 @@ declare namespace Paths {
             }
         }
     }
+    namespace Containers$ContainerIdTags {
+        namespace Get {
+            namespace Parameters {
+                export type ContainerId = string; // uuid
+            }
+            export interface PathParameters {
+                containerId: Parameters.ContainerId /* uuid */;
+            }
+            namespace Responses {
+                export type $200 = Components.Schemas.TagDataDto[];
+            }
+        }
+    }
     namespace CreateConversation {
         namespace Parameters {
             export type ProjectId = string; // uuid
@@ -2007,6 +2023,22 @@ declare namespace Paths {
             namespace Responses {
                 export type $200 = Components.Schemas.ITagDataDto;
             }
+        }
+    }
+    namespace UpdateConversation {
+        namespace Parameters {
+            export type ConversationId = string; // uuid
+            export type ProjectId = string; // uuid
+            export type TagNo = string;
+        }
+        export interface PathParameters {
+            projectId: Parameters.ProjectId /* uuid */;
+            tagNo: Parameters.TagNo;
+            conversationId: Parameters.ConversationId /* uuid */;
+        }
+        export type RequestBody = Components.Schemas.UpdateConversationDto;
+        namespace Responses {
+            export type $200 = Components.Schemas.GetConversationDto;
         }
     }
     namespace UpdateMessage {

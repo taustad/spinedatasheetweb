@@ -5,6 +5,7 @@ import { formatCamelCase } from "../../utils/helpers"
 import DraggableConversationCard from "./Components/DraggableConversationCard"
 import { Message } from "../../Models/Message"
 import { User } from "../../Models/User"
+import { GetConversationService } from "../../api/ConversationService"
 
 const Wrapper = styled.div`
     box-sizing: border-box;
@@ -126,13 +127,35 @@ const DragableCardTable: React.FC = () => {
         e.dataTransfer.setData("text/plain", id)
     }
 
-    const handleDrop = (newStatus: string, e: DragEvent<HTMLDivElement>) => {
+    const mapStatusToConversationStatusDto = (status: string): Components.Schemas.UpdateConversationDto => {
+        switch (status) {
+            case "Open":
+                return { conversationStatus: "Open" }
+            case "toBeImplemented":
+                return { conversationStatus: "To_be_implemented" }
+            case "closed":
+                return { conversationStatus: "Closed" }
+            case "implemented":
+                return { conversationStatus: "Implemented" }
+            default:
+                throw new Error(`State ${status} is not a valid conversation state`)
+        }
+    }
+
+    const handleDrop = async (newStatus: string, e: DragEvent<HTMLDivElement>) => {
         e.preventDefault()
         const itemId = e.dataTransfer.getData("text/plain")
+        const dto: Components.Schemas.UpdateConversationDto = mapStatusToConversationStatusDto(newStatus)
+        const result = await (await GetConversationService()).updateConversation(
+            "00000000-0000-0000-0000-000000000000",
+            "00000000-0000-0000-0000-000000000000",
+            itemId,
+            dto,
+        )
         console.log("Item ID:", itemId, "will be given this status: ", newStatus)
     }
 
-        const handleDragEnd = () => {
+    const handleDragEnd = () => {
         setHoveredContainer(null)
     }
 
@@ -159,9 +182,9 @@ const DragableCardTable: React.FC = () => {
                                 conversation={item.conversationObject}
                             />
                         </DraggableElement>
-            ))}
+                    ))}
                 </DragContainer>
-        ))}
+            ))}
         </Wrapper>
     )
 }
