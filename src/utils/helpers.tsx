@@ -150,3 +150,17 @@ export function formatCamelCase(property: string) {
         .replace(/([A-Z])/g, " $1")
         .replace(/^./, (str) => str.toUpperCase())
 }
+
+export function getDueInDays(dateTime: string, days: number): number {
+    const startDate = new Date(dateTime)
+
+    const futureDate = new Date(startDate)
+    futureDate.setDate(startDate.getDate() + days)
+
+    const currentDate = new Date()
+
+    const differenceInTime = futureDate.getTime() - currentDate.getTime()
+    const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24))
+
+    return differenceInDays
+}

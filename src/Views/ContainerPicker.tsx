@@ -5,8 +5,7 @@ import React, {
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { AgGridReact } from "@ag-grid-community/react"
 import useStyles from "@equinor/fusion-react-ag-grid-styles"
-import { tokens } from "@equinor/eds-tokens"
-import { ColDef, ICellRendererParams } from "@ag-grid-community/core"
+import { ColDef } from "@ag-grid-community/core"
 import styled from "styled-components"
 import { ViewContext } from "../Context/ViewContext"
 import { GetContainerService } from "../api/ContainerService"
@@ -30,6 +29,7 @@ function ContainerPicker() {
 
     const [pickedContainer, setPickedContainer] = useState<Components.Schemas.ContainerDto | undefined>(undefined)
     const [containers, setContainers] = useState<Components.Schemas.ContainerDto[]>([])
+    const [tagsInContainer, setTagsInContainer] = useState<Components.Schemas.TagDataDto[]>([])
     const [containerComments, setContainerComments] = useState<Components.Schemas.GetConversationDto[]>([])
 
             useEffect(() => {
@@ -63,7 +63,9 @@ function ContainerPicker() {
                         setContainerComments(allConversationsForContainer)
 
                         const containerTagData = await (await GetTagDataService()).getTagDataForContainer(pickedContainer.id)
-                        console.log("Container tags: ", containerTagData)
+                        setTagsInContainer(containerTagData)
+                        console.log("setting containerTagData", containerTagData)
+                        console.log("pickedContainer", pickedContainer.id)
                     }
                 } catch {
                     if (!iscCancelled) {
@@ -131,7 +133,7 @@ return (
         </div>
 
     ) : (
-        <Outlet context={[pickedContainer, containerComments]} />
+        <Outlet context={[pickedContainer, containerComments, tagsInContainer]} />
     )
 )
 }
