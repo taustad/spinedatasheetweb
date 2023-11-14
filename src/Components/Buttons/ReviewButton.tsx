@@ -75,10 +75,12 @@ const ReviewButton = () => {
             const containerReviewsResult = await (await GetContainerReviewService()).getContainerReviews()
             setContainerReviews(containerReviewsResult.data)
 
-            const currentContainerReview = containerReviewsResult.data.find((r: any) => r.containerId === containerId)
+            const currentContainerReview = containerReviewsResult.data.find(
+                (r: Components.Schemas.ContainerReviewDto) => r.containerId === containerId,
+            )
 
             const current: Components.Schemas.ContainerReviewerDto = myReviewsResult.data
-                .find((r: any) => r.containerReviewId === currentContainerReview.id)
+                .find((r: Components.Schemas.ContainerReviewerDto) => r.containerReviewId === currentContainerReview.id)
 
             setCurrentContainerReviewer(current)
         })()
