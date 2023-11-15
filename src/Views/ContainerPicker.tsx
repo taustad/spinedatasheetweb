@@ -1,6 +1,6 @@
 import { Outlet, useNavigate, useParams } from "react-router-dom"
 import React, {
- useState, useEffect, useContext, useMemo,
+    useState, useEffect, useContext, useMemo,
 } from "react"
 import { useCurrentContext } from "@equinor/fusion-framework-react-app/context"
 import { AgGridReact } from "@ag-grid-community/react"
@@ -32,108 +32,108 @@ function ContainerPicker() {
     const [tagsInContainer, setTagsInContainer] = useState<Components.Schemas.TagDataDto[]>([])
     const [containerComments, setContainerComments] = useState<Components.Schemas.GetConversationDto[]>([])
 
-            useEffect(() => {
-            let isCancelled = false;
-            (async () => {
-                try {
-                    if (currentUserId) {
-                        const containerResults = await (await GetContainerService()).getContainers()
-                        setContainers(containerResults)
-                    }
-                } catch {
-                    if (!isCancelled) {
-                        console.error("Error loading user reviews")
-                    }
+    useEffect(() => {
+        let isCancelled = false;
+        (async () => {
+            try {
+                if (currentUserId) {
+                    const containerResults = await (await GetContainerService()).getContainers()
+                    setContainers(containerResults)
                 }
-            })()
-
-            return () => {
-                isCancelled = true
-            }
-        }, [currentUserId])
-
-        useEffect(() => {
-            let iscCancelled = false;
-            (async () => {
-                try {
-                    if (containers.length > 0 && pickedContainer && pickedContainer.id) {
-                        const allConversationsForContainer = await (await GetConversationService())
-                            .getConversationsForContainer(pickedContainer.id)
-
-                        setContainerComments(allConversationsForContainer)
-
-                        const containerTagData = await (await GetTagDataService()).getTagDataForContainer(pickedContainer.id)
-                        setTagsInContainer(containerTagData)
-                    }
-                } catch {
-                    if (!iscCancelled) {
-                        console.error("Error loading user reviews")
-                    }
+            } catch {
+                if (!isCancelled) {
+                    console.error("Error loading user reviews")
                 }
-            })()
-            return () => {
-                iscCancelled = true
             }
-        }, [pickedContainer])
+        })()
 
-        useEffect(() => {
-            if (params.containerId) {
-                const container = containers.find((item) => item.id === params.containerId)
-                if (container) {
-                    setPickedContainer(container)
+        return () => {
+            isCancelled = true
+        }
+    }, [currentUserId])
+
+    useEffect(() => {
+        let iscCancelled = false;
+        (async () => {
+            try {
+                if (containers.length > 0 && pickedContainer && pickedContainer.id) {
+                    const allConversationsForContainer = await (await GetConversationService())
+                        .getConversationsForContainer(pickedContainer.id)
+
+                    setContainerComments(allConversationsForContainer)
+
+                    const containerTagData = await (await GetTagDataService()).getTagDataForContainer(pickedContainer.id)
+                    setTagsInContainer(containerTagData)
                 }
-            } else {
-                setPickedContainer(undefined)
+            } catch {
+                if (!iscCancelled) {
+                    console.error("Error loading user reviews")
+                }
             }
-        }, [params, containers])
+        })()
+        return () => {
+            iscCancelled = true
+        }
+    }, [pickedContainer])
 
-        const goToContainer = (container: Components.Schemas.ContainerDto) => {
-            setPickedContainer(container)
-            if (currentProject.currentContext) {
+    useEffect(() => {
+        if (params.containerId) {
+            const container = containers.find((item) => item.id === params.containerId)
+            if (container) {
+                setPickedContainer(container)
+            }
+        } else {
+            setPickedContainer(undefined)
+        }
+    }, [params, containers])
+
+    const goToContainer = (container: Components.Schemas.ContainerDto) => {
+        setPickedContainer(container)
+        if (currentProject.currentContext) {
             navigate(`/${currentProject.currentContext.id}/containers/${container.id}`)
         }
-        }
+    }
 
-        const defaultColDef = useMemo<ColDef>(
-            () => ({
-                sortable: true,
-                filter: "agMultiColumnFilter",
-                resizable: true,
-                editable: false,
-            }),
+    const defaultColDef = useMemo<ColDef>(
+        () => ({
+            sortable: true,
+            filter: "agMultiColumnFilter",
+            resizable: true,
+            editable: false,
+        }),
         [],
-        )
-        const columnDefs: ColDef[] = [
-            { field: "containerName", headerName: "Container Name" },
-            { field: "revisionNumber", headerName: "Revision Number" },
-            { field: "containerDate", headerName: "Container Date" },
-        ]
-
-return (
-    !pickedContainer ? (
-        <div>
-            <TableContainer className={styles.root}>
-                <TableWrapper className="ag-theme-alpine-fusion">
-                    <AgGridReact
-                        rowData={containers}
-                        columnDefs={columnDefs}
-                        onRowClicked={(row) => goToContainer(row.data)}
-                        defaultColDef={defaultColDef}
-                        animateRows
-                        domLayout="autoHeight"
-                        suppressMovableColumns
-                        headerHeight={48}
-                        rowHeight={50}
-                        enableRangeSelection
-                    />
-                </TableWrapper>
-            </TableContainer>
-        </div>
-
-    ) : (
-        <Outlet context={[pickedContainer, containerComments, tagsInContainer]} />
     )
-)
+    const columnDefs: ColDef[] = [
+        { field: "containerName", headerName: "Container Name" },
+        { field: "revisionNumber", headerName: "Revision Number" },
+        { field: "containerDate", headerName: "Container Date" },
+    ]
+
+    return (
+        !pickedContainer ? (
+            <div>
+                <TableContainer className={styles.root}>
+                    <TableWrapper className="ag-theme-alpine-fusion">
+                        <AgGridReact
+                            rowData={containers}
+                            columnDefs={columnDefs}
+                            onRowClicked={(row) => goToContainer(row.data)}
+                            defaultColDef={defaultColDef}
+                            animateRows
+                            domLayout="autoHeight"
+                            suppressMovableColumns
+                            headerHeight={48}
+                            rowHeight={50}
+                            enableRangeSelection
+                        />
+                    </TableWrapper>
+                </TableContainer>
+            </div>
+
+        ) : (
+            <Outlet context={[pickedContainer, containerComments, tagsInContainer, setContainerComments]} />
+        )
+    )
 }
 
 export default ContainerPicker

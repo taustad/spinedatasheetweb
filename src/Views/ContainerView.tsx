@@ -136,7 +136,7 @@ const initialPeople = [
 ]
 
 const ContainerView = () => {
-    const [pickedContainer, containerComments, tagsInContainer] = useOutletContext<any>()
+    const [pickedContainer, containerComments, tagsInContainer, setContainerComments] = useOutletContext<any>()
     const { containerReviews } = useContext(ViewContext)
 
     const activeContainerReview = containerReviews.find((c) => c.containerId === pickedContainer.id)
@@ -210,7 +210,7 @@ const ContainerView = () => {
 
             </Links>
             <Wrapper>
-                <Outlet context={[pickedContainer, containerComments, tagsInContainer]} />
+                <Outlet context={[pickedContainer, containerComments, tagsInContainer, setContainerComments]} />
             </Wrapper>
         </Container>
     )

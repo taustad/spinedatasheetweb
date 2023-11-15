@@ -81,7 +81,7 @@ interface StatusOptions {
 }
 
 const DragableCardTable: React.FC = () => {
-    const [, containerComments] = useOutletContext<any>()
+    const [, containerComments, , setContainerComments] = useOutletContext<any>()
     const [hoveredContainer, setHoveredContainer] = useState<string | null>(null)
     const [statusOptions, setStatusOptions] = useState<StatusOptions>({
         open: [],
@@ -99,7 +99,11 @@ const DragableCardTable: React.FC = () => {
         }
 
         containerComments.forEach((conversation: any) => {
-            const status = conversation.conversationStatus.charAt(0).toLowerCase() + conversation.conversationStatus.slice(1)
+            let status = conversation.conversationStatus.charAt(0).toLowerCase() + conversation.conversationStatus.slice(1)
+
+            if (conversation.conversationStatus === "To_be_implemented") {
+                status = "toBeImplemented"
+            }
 
             if (status in newStatusOptions) {
                 const item = {
@@ -129,7 +133,7 @@ const DragableCardTable: React.FC = () => {
 
     const mapStatusToConversationStatusDto = (status: string): Components.Schemas.UpdateConversationDto => {
         switch (status) {
-            case "Open":
+            case "open":
                 return { conversationStatus: "Open" }
             case "toBeImplemented":
                 return { conversationStatus: "To_be_implemented" }
@@ -152,7 +156,8 @@ const DragableCardTable: React.FC = () => {
             itemId,
             dto,
         )
-        console.log("Item ID:", itemId, "will be given this status: ", newStatus)
+        const newConversations = containerComments.map((c: any) => (c.id === itemId ? { ...c, conversationStatus: result.conversationStatus } : c))
+        setContainerComments(newConversations)
     }
 
     const handleDragEnd = () => {
