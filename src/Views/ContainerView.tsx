@@ -1,10 +1,10 @@
 import styled from "styled-components"
 import {
- Button, Search, Typography, Icon, Chip,
+    Button, Search, Typography, Icon, Chip,
 } from "@equinor/eds-core-react"
 import {
- Link, Outlet,
- useOutletContext,
+    Link, Outlet,
+    useOutletContext,
 } from "react-router-dom"
 import { search } from "@equinor/eds-icons"
 import { PersonPhoto } from "@equinor/fusion-components"
@@ -35,7 +35,7 @@ const FormWrapper = styled.form`
 `
 
 interface HeaderWrapperProps {
-  $alignment?: "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
+    $alignment?: "flex-start" | "flex-end" | "center" | "baseline" | "stretch";
 }
 
 const HeaderSection = styled.div<HeaderWrapperProps>`
@@ -187,7 +187,7 @@ const ContainerView = () => {
                             <AvatarGroup>
                                 {initialPeople.map((person) => (
                                     person.userId && (
-                                    <PersonPhoto key={person.userId} personId={person.userId} size="medium" />
+                                        <PersonPhoto key={person.userId} personId={person.userId} size="medium" />
                                     )
                                 ))}
                             </AvatarGroup>
