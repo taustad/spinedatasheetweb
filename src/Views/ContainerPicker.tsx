@@ -42,7 +42,7 @@ function ContainerPicker() {
                 }
             } catch {
                 if (!isCancelled) {
-                    console.error("Error loading user reviews")
+                    console.error("Error getting containers")
                 }
             }
         })()
@@ -67,7 +67,7 @@ function ContainerPicker() {
                 }
             } catch {
                 if (!iscCancelled) {
-                    console.error("Error loading user reviews")
+                    console.error("Error getting conversations or tags for container")
                 }
             }
         })()
